@@ -1,0 +1,41 @@
+contact:
+  NAME: first_name
+  LAST_NAME: last_name
+  PHONE_WORK: phone
+  EMAIL_WORK: email
+  BIRTHDATE: birth_date
+  ADDRESS: registration_address
+  UF_CRM_1753957395750: preferred_language
+  UF_CRM_CONTACT_1686145698592: passport_series_number
+
+company:
+  TITLE: company_title
+  UF_CRM_COMPANY_1692911328252: company_inn
+  UF_CRM_1709019759168: ceo_full_name
+  UF_CRM_1709019814756: ceo_title
+
+deal:
+  TITLE: deal_title
+  CONTACT_ID: contact_id
+  COMPANY_ID: company_id
+  COMMENTS: comment
+  UF_CRM_1686152306664: vehicle_country_registration
+  UF_CRM_1686152567597: vehicle_type
+  UF_CRM_1686152209741: insurance_period_days
+  UF_CRM_1686152149204: insurance_start_date
+  UF_CRM_1686152485641: license_plate
+  UF_CRM_1686152659867: vin
+  UF_CRM_1686152515152: brand_model
+  UF_CRM_1686152614718: manufacture_year
+  UF_CRM_1686152745455: engine_type
+  UF_CRM_1686152831791: engine_capacity_cc
+  UF_CRM_1686152861297: engine_power
+  UF_CRM_1686152902186: power_unit
+  UF_CRM_1686154280439: vehicle_docs
+
+deal_defaults:
+  UF_CRM_1693578066803: "401"
+  UF_CRM_1686682902533: "813"
+  UF_CRM_1690539097: "425"
+  UF_CRM_1700656576088: ""
+  UF_CRM_1686683031442: "231"
