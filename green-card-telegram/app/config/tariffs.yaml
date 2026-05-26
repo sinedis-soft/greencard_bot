@@ -1,0 +1,27 @@
+currency: "USD"
+disclaimer: "Estimated price. Final quote is calculated by operator."
+tariffs:
+  car:
+    "15": 40
+    "30": 70
+    default: 70
+  truck:
+    "15": 60
+    "30": 100
+    default: 100
+  bus:
+    "15": 80
+    "30": 120
+    default: 120
+  moto:
+    "15": 25
+    "30": 45
+    default: 45
+  trailer:
+    "15": 20
+    "30": 35
+    default: 35
+  special:
+    "15": 90
+    "30": 150
+    default: 150

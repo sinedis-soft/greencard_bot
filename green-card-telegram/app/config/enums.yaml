@@ -1,0 +1,20 @@
+policyholder_type:
+  - individual
+  - company
+vehicle_type:
+  - car
+  - truck
+  - bus
+  - moto
+  - trailer
+  - special
+engine_type:
+  - petrol
+  - diesel
+  - gas
+  - gasoline
+  - electric
+  - hybrid
+power_unit:
+  - hp
+  - kw
