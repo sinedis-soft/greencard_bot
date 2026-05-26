@@ -14,4 +14,9 @@ async def coverage_command(message: Message, i18n: I18nService, lang_store: dict
 
 
 async def send_coverage(message: Message) -> None:
-    await coverage_command(message, message.bot["i18n"], message.bot["lang_store"], message.bot["default_language"])
+    await coverage_command(
+    message,
+    message.bot.i18n,
+    message.bot.lang_store,
+    message.bot.default_language,
+)

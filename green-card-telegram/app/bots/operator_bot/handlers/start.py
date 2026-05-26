@@ -7,7 +7,7 @@ router = Router()
 
 
 def _allowed(message: Message) -> bool:
-    ids = message.bot.get("operator_ids", set())
+    ids = getattr(message.bot, "operator_ids", set())
     return message.from_user and message.from_user.id in ids
 
 

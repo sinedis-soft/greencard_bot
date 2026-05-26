@@ -15,13 +15,18 @@ async def calc_command(message: Message, i18n: I18nService, lang_store: dict[int
 
 
 async def start_calculator(message: Message) -> None:
-    await calc_command(message, message.bot["i18n"], message.bot["lang_store"], message.bot["default_language"])
+    await calc_command(
+    message,
+    message.bot.i18n,
+    message.bot.lang_store,
+    message.bot.default_language,
+)
 
 
 @router.callback_query(F.data.startswith("calc:vehicle:"))
 async def calc_choose_vehicle(callback: CallbackQuery, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     vehicle_type = callback.data.split(":")[-1]
-    callback.bot[f"vehicle:{callback.from_user.id}"] = vehicle_type
+    callback.bot.storage[f"vehicle:{callback.from_user.id}"] = vehicle_type
     lang = lang_store.get(callback.from_user.id, default_language)
     await callback.message.answer(i18n.get_text(lang, "calculator.select_period"), reply_markup=periods_keyboard())
     await callback.answer()
@@ -37,7 +42,7 @@ async def calc_choose_period(
 ) -> None:
     lang = lang_store.get(callback.from_user.id, default_language)
     period = int(callback.data.split(":")[-1])
-    vehicle_type = callback.bot.get(f"vehicle:{callback.from_user.id}", "car")
+    vehicle_type = callback.bot.storage.get(f"vehicle:{callback.from_user.id}", "car")
     result = calculator_service.estimate(vehicle_type=vehicle_type, insurance_period_days=period)
     text = i18n.get_text(lang, "calculator.result_template").format(
         estimated_price=result["estimated_price"],

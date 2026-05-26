@@ -22,6 +22,12 @@ async def main() -> None:
     calculator_service = CalculatorService(app_dir / "config" / "tariffs.yaml")
 
     lang_store: dict[int, str] = {}
+    bot.i18n = i18n
+    bot.lang_store = lang_store
+    bot.default_language = default_language
+    bot.calculator_service = calculator_service
+    bot.mini_app_url = mini_app_url
+    bot.storage = {}
 
     dp["i18n"] = i18n
     dp["lang_store"] = lang_store

@@ -19,7 +19,12 @@ async def faq_command(message: Message, i18n: I18nService, lang_store: dict[int,
 
 
 async def show_faq_categories(message: Message) -> None:
-    await faq_command(message, message.bot["i18n"], message.bot["lang_store"], message.bot["default_language"])
+    await faq_command(
+    message,
+    message.bot.i18n,
+    message.bot.lang_store,
+    message.bot.default_language,
+)
 
 
 @router.callback_query(F.data.startswith("faq:"))

@@ -10,7 +10,7 @@ router = Router()
 @router.message(F.text == "/apply")
 async def apply_command(message: Message, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     lang = lang_store.get(message.from_user.id, default_language)
-    mini_app_url = message.bot.get("mini_app_url", "")
+    mini_app_url = message.bot.mini_app_url
     if not mini_app_url:
         await message.answer(i18n.get_text(lang, "application.temporarily_unavailable"))
         return
@@ -22,4 +22,9 @@ async def apply_command(message: Message, i18n: I18nService, lang_store: dict[in
 
 
 async def send_apply(message: Message) -> None:
-    await apply_command(message, message.bot["i18n"], message.bot["lang_store"], message.bot["default_language"])
+    await apply_command(
+    message,
+    message.bot.i18n,
+    message.bot.lang_store,
+    message.bot.default_language,
+)
