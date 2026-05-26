@@ -1,3 +1,4 @@
+
 # Green Card Telegram MVP — пошаговый запуск для новичка
 
 Ниже инструкция максимально простыми шагами: **что установить, как заполнить `.env`, как поднять локально, как проверить работу**, и отдельно — **как развернуть в продакшене на Ubuntu**, чтобы сервис стартовал после перезагрузки.
@@ -71,9 +72,11 @@ DEFAULT_LANGUAGE=ru
 
 Из корня проекта:
 
+
 ```bash
 docker compose up -d --build
 ```
+
 
 Проверить, что контейнеры поднялись:
 
@@ -178,6 +181,7 @@ curl -H "x-admin-token: YOUR_ADMIN_API_TOKEN" \
 ## 8) Как смотреть логи
 
 Живые логи:
+
 
 ```bash
 docker compose logs -f backend
@@ -300,3 +304,4 @@ docker compose ps
 Проверять через:
 - логи `backend` и `bitrix_retry_worker`;
 - таблицы `applications` и `bitrix_sync_jobs`.
+
