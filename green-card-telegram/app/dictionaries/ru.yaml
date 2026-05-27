@@ -42,7 +42,9 @@ application:
   prefilled_from_bitrix: "Нашли ваш профиль в Bitrix по имени пользователя Telegram. Контакты и данные страхователя подставлены автоматически."
   prefilled_from_bitrix_editable: "Нашли ваш профиль в Bitrix по username Telegram. Данные подставлены — проверьте и при необходимости исправьте. Если всё верно, можно отправлять пустое сообщение на шаге."
   ask_first_name_prefilled: "Имя * (текущее: {value})"
+
   prefill_next_button: "ДА, СЛЕДУЮЩИЙ ВОПРОС"
+
   ask_last_name_prefilled: "Фамилия * (текущее: {value})"
   ask_phone_prefilled: "Телефон (с кодом страны) * (текущий: {value})"
   ask_email_prefilled: "E-mail * (текущий: {value})"
@@ -65,7 +67,9 @@ application:
   ask_vehicle_country: "Страна регистрации авто *"
   validation_vehicle_country: "Укажите страну регистрации авто."
   ask_vehicle_country_prefilled: "Страна регистрации авто * (текущая: {value})"
+
   choose_from_buttons: "Выберите значение кнопкой ниже."
+
   ask_vehicle_type: "Тип ТС *"
   ask_vehicle_type_prefilled: "Тип ТС * (текущий: {value})"
   ask_license_plate: "Госномер *"
@@ -80,9 +84,11 @@ application:
   ask_engine_power: "Мощность двигателя *"
   skip_engine_capacity_electric: "Для типа топлива Электро объем двигателя не требуется."
   ask_power_unit: "Единица измерения мощности *"
+
   ask_power_unit_prefilled: "Единица измерения мощности * (текущая: {value})"
   ask_comment: "Комментарий (опционально)"
   skip_comment_button: "ПРОПУСТИТЬ"
+
   ask_vehicle_docs: "Техпаспорт (фото или PDF) *
 Можно прикрепить несколько файлов."
   ask_techpass_changed: "В Bitrix уже есть фото техпаспорта. Техпаспорт менялся?"
@@ -98,6 +104,7 @@ application:
   validation_name: "Введите минимум 2 символа."
   validation_phone: "Некорректный телефон. Используйте формат +48123456789."
   validation_email: "Некорректный e-mail."
+
   validation_date: "Некорректная дата. Допустимые форматы: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. Формат мм/дд/гггг запрещен."
 
   validation_age_18: "Страхователь должен быть не младше 18 полных лет."
@@ -106,6 +113,7 @@ application:
   ask_brand_model_prefilled: "Марка и модель ТС * (текущие: {value})"
   ask_manufacture_year_prefilled: "Год выпуска ТС * (текущий: {value})"
   ask_fuel_type_prefilled: "Тип топлива * (текущий: {value})"
+
   validation_passport: "Некорректные серия и номер паспорта (без пробелов)."
   validation_address: "Укажите полный адрес регистрации."
   validation_license_plate: "Некорректный госномер."

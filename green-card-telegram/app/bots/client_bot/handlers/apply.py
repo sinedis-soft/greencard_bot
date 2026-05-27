@@ -1,10 +1,13 @@
 import re
+
 from datetime import datetime, date
+
 
 from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import CallbackQuery, Message
+
 
 from app.bots.client_bot.keyboards.apply import (
     consent_keyboard,
@@ -15,6 +18,7 @@ from app.bots.client_bot.keyboards.apply import (
     power_units_keyboard,
     prefill_next_keyboard,
     skip_comment_keyboard,
+
     techpass_changed_keyboard,
     vehicle_types_keyboard,
 )
@@ -120,6 +124,8 @@ def _birthdate_to_ddmmyyyy(value: str) -> str:
 
 
 
+
+
 def _parse_common_date(value: str) -> date | None:
     raw = value.strip()
     for fmt in ("%d/%m/%Y", "%d.%m.%Y", "%d.%m.%y", "%d-%m-%Y", "%Y-%m-%d"):
@@ -138,8 +144,10 @@ def _to_ddmmyyyy(d: date) -> str:
     return d.strftime("%d.%m.%Y")
 
 
+
 @router.message(F.text == "/apply")
 async def apply_command(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+
     lang = lang_store.get(message.from_user.id, default_language)
     await state.clear()
     await state.update_data(vehicles=[], current_vehicle={})
@@ -298,6 +306,7 @@ async def prefill_next(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
 
 @router.message(ApplyForm.first_name)
 async def first_name(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+
     lang = lang_store.get(message.from_user.id, default_language)
     value = (message.text or "").strip()
     data = await state.get_data()
@@ -336,10 +345,12 @@ async def last_name(message: Message, state: FSMContext, i18n: I18nService, lang
 
 @router.message(ApplyForm.phone)
 async def phone(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+
     lang = lang_store.get(message.from_user.id, default_language)
     value = (message.text or "").strip()
     data = await state.get_data()
     if not value:
+
         value = str(data.get("phone", "")).strip()
     if not PHONE_RE.match(value):
         await message.answer(i18n.get_text(lang, "application.validation_phone"))
@@ -505,6 +516,7 @@ async def vehicle_type(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
     await callback.answer()
 
 
+
 @router.message(ApplyForm.license_plate)
 async def license_plate(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     lang = lang_store.get(message.from_user.id, default_language)
@@ -630,6 +642,7 @@ async def power_unit(callback: CallbackQuery, state: FSMContext, i18n: I18nServi
     value = callback.data.split(":", 2)[-1]
     await state.update_data(power_unit=value)
     await state.set_state(ApplyForm.comment)
+
     await callback.message.answer(i18n.get_text(lang, "application.ask_comment"), reply_markup=skip_comment_keyboard(i18n.get_text(lang, "application.skip_comment_button")))
     await callback.answer()
 
@@ -651,6 +664,7 @@ async def comment_skip(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
     else:
         await state.set_state(ApplyForm.vehicle_docs)
         await callback.message.answer(i18n.get_text(lang, "application.ask_vehicle_docs"))
+
     await callback.answer()
 
 
@@ -671,8 +685,6 @@ async def comment(message: Message, state: FSMContext, i18n: I18nService, lang_s
     else:
         await state.set_state(ApplyForm.vehicle_docs)
         await message.answer(i18n.get_text(lang, "application.ask_vehicle_docs"))
-
-
 
 
 @router.callback_query(F.data == "apply:techpass:unchanged", ApplyForm.techpass_changed)

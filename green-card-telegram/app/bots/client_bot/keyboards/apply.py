@@ -72,6 +72,7 @@ def consent_keyboard(agree_text: str, decline_text: str) -> InlineKeyboardMarkup
 
 
 def techpass_changed_keyboard(yes_text: str, no_text: str) -> InlineKeyboardMarkup:
+
     builder = InlineKeyboardBuilder()
     builder.button(text=yes_text, callback_data="apply:techpass:changed")
     builder.button(text=no_text, callback_data="apply:techpass:unchanged")
@@ -80,6 +81,7 @@ def techpass_changed_keyboard(yes_text: str, no_text: str) -> InlineKeyboardMark
 
 
 def prefill_next_keyboard(button_text: str, field_key: str) -> InlineKeyboardMarkup:
+
     builder = InlineKeyboardBuilder()
     builder.button(text=button_text, callback_data=f"apply:prefill-next:{field_key}")
     return builder.as_markup()
@@ -88,4 +90,5 @@ def prefill_next_keyboard(button_text: str, field_key: str) -> InlineKeyboardMar
 def skip_comment_keyboard(button_text: str) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.button(text=button_text, callback_data="apply:comment:skip")
+
     return builder.as_markup()
