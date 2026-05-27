@@ -1,6 +1,7 @@
 from aiogram import F, Router
 from aiogram.types import Message
 
+from app.bots.operator_bot.handlers.start import _operator_ids
 from app.bots.operator_bot.keyboards.ticket_actions import ticket_actions_keyboard
 from app.services.operator_ticket_service import OperatorTicketService
 from app.db.session import SessionLocal
@@ -11,8 +12,7 @@ router = Router()
 
 @router.message(F.text == "/tickets")
 async def tickets(message: Message) -> None:
-    ids = message.bot.get("operator_ids", set())
-    if message.from_user.id not in ids:
+    if message.from_user.id not in _operator_ids():
         await message.answer(message.bot["i18n"].get_text("en", "operator.access_denied"))
         return
     items = OperatorTicketService().list_new()
