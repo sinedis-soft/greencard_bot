@@ -87,8 +87,9 @@ application:
   ask_power_unit: "Единица измерения мощности *"
 
   ask_power_unit_prefilled: "Единица измерения мощности * (текущая: {value})"
-
   ask_comment: "Комментарий (опционально)"
+  skip_comment_button: "ПРОПУСТИТЬ"
+
   ask_vehicle_docs: "Техпаспорт (фото или PDF) *
 Можно прикрепить несколько файлов."
   ask_techpass_changed: "В базе уже есть фото техпаспорта. Техпаспорт менялся?"
