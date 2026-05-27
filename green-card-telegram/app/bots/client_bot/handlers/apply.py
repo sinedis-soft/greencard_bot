@@ -1,5 +1,8 @@
 import re
-from datetime import datetime
+
+from datetime import datetime, date
+
+
 
 from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
@@ -13,6 +16,9 @@ from app.bots.client_bot.keyboards.apply import (
     finalize_vehicle_keyboard,
     periods_keyboard,
     power_units_keyboard,
+
+    prefill_next_keyboard,
+
     techpass_changed_keyboard,
     vehicle_types_keyboard,
 )
@@ -116,16 +122,31 @@ def _birthdate_to_ddmmyyyy(value: str) -> str:
             continue
     return value
 
-def _valid_date_ddmmyyyy(value: str) -> bool:
-    try:
-        datetime.strptime(value, "%d.%m.%Y")
-        return True
-    except ValueError:
-        return False
+
+
+
+def _parse_common_date(value: str) -> date | None:
+    raw = value.strip()
+    for fmt in ("%d/%m/%Y", "%d.%m.%Y", "%d.%m.%y", "%d-%m-%Y", "%Y-%m-%d"):
+        try:
+            dt = datetime.strptime(raw, fmt).date()
+            if fmt == "%d.%m.%y":
+                # normalize 2-digit year to 1900/2000 by stdlib, keep as parsed
+                pass
+            return dt
+        except ValueError:
+            continue
+    return None
+
+
+def _to_ddmmyyyy(d: date) -> str:
+    return d.strftime("%d.%m.%Y")
+
 
 
 @router.message(F.text == "/apply")
 async def apply_command(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+
     lang = lang_store.get(message.from_user.id, default_language)
     await state.clear()
     await state.update_data(vehicles=[], current_vehicle={})
@@ -161,14 +182,126 @@ async def apply_command(message: Message, state: FSMContext, i18n: I18nService, 
     data = await state.get_data()
     first_name_prefill = str(data.get("first_name", "")).strip()
     if first_name_prefill:
-        await message.answer(i18n.get_text(lang, "application.ask_first_name_prefilled").format(value=first_name_prefill))
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_first_name_prefilled", first_name_prefill, "first_name")
     else:
         await message.answer(i18n.get_text(lang, "application.ask_first_name"))
+
+
+
+
+async def _send_prefilled_prompt(message: Message, i18n: I18nService, lang: str, text_key: str, value: str, field_key: str) -> None:
+    await message.answer(
+        i18n.get_text(lang, text_key).format(value=value),
+        reply_markup=prefill_next_keyboard(i18n.get_text(lang, "application.prefill_next_button"), field_key),
+    )
 
 
 async def send_apply(message: Message, state: FSMContext) -> None:
     await apply_command(message, state, message.bot.i18n, message.bot.lang_store, message.bot.default_language)
 
+
+
+
+@router.callback_query(F.data.startswith("apply:prefill-next:"))
+async def prefill_next(callback: CallbackQuery, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+    lang = lang_store.get(callback.from_user.id, default_language)
+    field = callback.data.split(":", 2)[-1]
+    data = await state.get_data()
+
+    if field == "first_name":
+        await state.update_data(first_name=str(data.get("first_name", "")).strip())
+        await state.set_state(ApplyForm.last_name)
+        value = str(data.get("last_name", "")).strip()
+        if value:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_last_name_prefilled", value, "last_name")
+        else:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_last_name"))
+    elif field == "last_name":
+        await state.update_data(last_name=str(data.get("last_name", "")).strip())
+        await state.set_state(ApplyForm.phone)
+        value = str(data.get("phone", "")).strip()
+        if value:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_phone_prefilled", value, "phone")
+        else:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_phone"))
+    elif field == "phone":
+        await state.update_data(phone=str(data.get("phone", "")).strip())
+        await state.set_state(ApplyForm.email)
+        value = str(data.get("email", "")).strip()
+        if value:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_email_prefilled", value, "email")
+        else:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_email"))
+    elif field == "email":
+        await state.update_data(email=str(data.get("email", "")).strip())
+        await state.set_state(ApplyForm.birth_date)
+        value = str(data.get("birth_date", "")).strip()
+        if value:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_birth_date_prefilled", value, "birth_date")
+        else:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_birth_date"))
+    elif field == "birth_date":
+        await state.update_data(birth_date=str(data.get("birth_date", "")).strip())
+        await state.set_state(ApplyForm.passport)
+        value = str(data.get("passport", "")).strip()
+        if value:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_passport_prefilled", value, "passport")
+        else:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_passport"))
+    elif field == "passport":
+        await state.update_data(passport=str(data.get("passport", "")).strip())
+        await state.set_state(ApplyForm.registration_address)
+        value = str(data.get("registration_address", "")).strip()
+        if value:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_registration_address_prefilled", value, "registration_address")
+        else:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_registration_address"))
+    elif field == "registration_address":
+        await state.update_data(registration_address=str(data.get("registration_address", "")).strip())
+        await state.set_state(ApplyForm.insurance_period)
+        await callback.message.answer(i18n.get_text(lang, "application.step_2"))
+        await callback.message.answer(i18n.get_text(lang, "application.ask_insurance_period"), reply_markup=periods_keyboard())
+    elif field == "vehicle_country":
+        await state.update_data(vehicle_country=str(data.get("vehicle_country", "")).strip())
+        await state.set_state(ApplyForm.vehicle_type)
+        value = str(data.get("vehicle_type", "")).strip()
+        if value:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_vehicle_type_prefilled").format(value=value))
+        await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard())
+    elif field == "vehicle_type":
+        await state.update_data(vehicle_type=str(data.get("vehicle_type", "")).strip())
+        await state.set_state(ApplyForm.vin)
+        value = str(data.get("vin", "")).strip().upper()
+        if value:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vin_prefilled", value, "vin")
+        else:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_vin"))
+    elif field == "vin":
+        await state.update_data(vin=str(data.get("vin", "")).strip().upper())
+        await state.set_state(ApplyForm.brand_model)
+        value = str(data.get("brand_model", "")).strip()
+        if value:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_brand_model_prefilled", value, "brand_model")
+        else:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_brand_model"))
+    elif field == "brand_model":
+        await state.update_data(brand_model=str(data.get("brand_model", "")).strip())
+        await state.set_state(ApplyForm.manufacture_year)
+        value = str(data.get("manufacture_year", "")).strip()
+        if value:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_manufacture_year_prefilled", value, "manufacture_year")
+        else:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_manufacture_year"))
+    elif field == "manufacture_year":
+        await state.update_data(manufacture_year=str(data.get("manufacture_year", "")).strip())
+        await state.set_state(ApplyForm.fuel_type)
+        value = str(data.get("fuel_type", "")).strip()
+        if value:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_fuel_type_prefilled", value, "fuel_type")
+        else:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_fuel_type"), reply_markup=fuel_types_keyboard())
+
+    await callback.answer()
 
 @router.message(ApplyForm.first_name)
 async def first_name(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
@@ -184,7 +317,7 @@ async def first_name(message: Message, state: FSMContext, i18n: I18nService, lan
     await state.set_state(ApplyForm.last_name)
     last_name_prefill = str(data.get("last_name", "")).strip()
     if last_name_prefill:
-        await message.answer(i18n.get_text(lang, "application.ask_last_name_prefilled").format(value=last_name_prefill))
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_last_name_prefilled", last_name_prefill, "last_name")
     else:
         await message.answer(i18n.get_text(lang, "application.ask_last_name"))
 
@@ -203,7 +336,7 @@ async def last_name(message: Message, state: FSMContext, i18n: I18nService, lang
     await state.set_state(ApplyForm.phone)
     phone_prefill = str(data.get("phone", "")).strip()
     if phone_prefill:
-        await message.answer(i18n.get_text(lang, "application.ask_phone_prefilled").format(value=phone_prefill))
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_phone_prefilled", phone_prefill, "phone")
     else:
         await message.answer(i18n.get_text(lang, "application.ask_phone"))
 
@@ -222,7 +355,7 @@ async def phone(message: Message, state: FSMContext, i18n: I18nService, lang_sto
     await state.set_state(ApplyForm.email)
     email_prefill = str(data.get("email", "")).strip()
     if email_prefill:
-        await message.answer(i18n.get_text(lang, "application.ask_email_prefilled").format(value=email_prefill))
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_email_prefilled", email_prefill, "email")
     else:
         await message.answer(i18n.get_text(lang, "application.ask_email"))
 
@@ -241,7 +374,7 @@ async def email(message: Message, state: FSMContext, i18n: I18nService, lang_sto
     await state.set_state(ApplyForm.birth_date)
     birth_prefill = str(data.get("birth_date", "")).strip()
     if birth_prefill:
-        await message.answer(i18n.get_text(lang, "application.ask_birth_date_prefilled").format(value=birth_prefill))
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_birth_date_prefilled", birth_prefill, "birth_date")
     else:
         await message.answer(i18n.get_text(lang, "application.ask_birth_date"))
 
@@ -253,14 +386,20 @@ async def birth_date(message: Message, state: FSMContext, i18n: I18nService, lan
     data = await state.get_data()
     if not value:
         value = str(data.get("birth_date", "")).strip()
-    if not _valid_date_ddmmyyyy(value):
+    parsed = _parse_common_date(value)
+    if not parsed:
         await message.answer(i18n.get_text(lang, "application.validation_date"))
         return
-    await state.update_data(birth_date=value)
+    today = date.today()
+    age = today.year - parsed.year - ((today.month, today.day) < (parsed.month, parsed.day))
+    if age < 18:
+        await message.answer(i18n.get_text(lang, "application.validation_age_18"))
+        return
+    await state.update_data(birth_date=_to_ddmmyyyy(parsed))
     await state.set_state(ApplyForm.passport)
     passport_prefill = str(data.get("passport", "")).strip()
     if passport_prefill:
-        await message.answer(i18n.get_text(lang, "application.ask_passport_prefilled").format(value=passport_prefill))
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_passport_prefilled", passport_prefill, "passport")
     else:
         await message.answer(i18n.get_text(lang, "application.ask_passport"))
 
@@ -279,7 +418,7 @@ async def passport(message: Message, state: FSMContext, i18n: I18nService, lang_
     await state.set_state(ApplyForm.registration_address)
     address_prefill = str(data.get("registration_address", "")).strip()
     if address_prefill:
-        await message.answer(i18n.get_text(lang, "application.ask_registration_address_prefilled").format(value=address_prefill))
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_registration_address_prefilled", address_prefill, "registration_address")
     else:
         await message.answer(i18n.get_text(lang, "application.ask_registration_address"))
 
@@ -314,10 +453,14 @@ async def insurance_period(callback: CallbackQuery, state: FSMContext, i18n: I18
 async def insurance_start_date(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     lang = lang_store.get(message.from_user.id, default_language)
     value = (message.text or "").strip()
-    if not _valid_date_ddmmyyyy(value):
+    parsed = _parse_common_date(value)
+    if not parsed:
         await message.answer(i18n.get_text(lang, "application.validation_date"))
         return
-    await state.update_data(insurance_start_date=value)
+    if parsed < date.today():
+        await message.answer(i18n.get_text(lang, "application.validation_insurance_start_not_past"))
+        return
+    await state.update_data(insurance_start_date=_to_ddmmyyyy(parsed))
     await state.set_state(ApplyForm.license_plate)
     await message.answer(i18n.get_text(lang, "application.ask_license_plate_after_start"))
 
@@ -337,8 +480,7 @@ async def vehicle_country_text(message: Message, state: FSMContext, i18n: I18nSe
     type_prefill = str(data.get("vehicle_type", "")).strip()
     if type_prefill:
         await message.answer(i18n.get_text(lang, "application.ask_vehicle_type_prefilled").format(value=type_prefill))
-    else:
-        await message.answer(i18n.get_text(lang, "application.ask_vehicle_type"), reply_markup=vehicle_types_keyboard())
+    await message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard())
 
 
 @router.callback_query(F.data.startswith("apply:country:"), ApplyForm.vehicle_country)
@@ -356,8 +498,8 @@ async def vehicle_type(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
     lang = lang_store.get(callback.from_user.id, default_language)
     value = callback.data.split(":", 2)[-1]
     await state.update_data(vehicle_type=value)
-    await state.set_state(ApplyForm.license_plate)
-    await callback.message.answer(i18n.get_text(lang, "application.ask_license_plate"))
+    await state.set_state(ApplyForm.vin)
+    await callback.message.answer(i18n.get_text(lang, "application.ask_vin"))
     await callback.answer()
 
 
@@ -395,8 +537,7 @@ async def license_plate(message: Message, state: FSMContext, i18n: I18nService, 
     country_prefill = str(data.get("vehicle_country", "")).strip()
     if country_prefill:
         await message.answer(i18n.get_text(lang, "application.ask_vehicle_country_prefilled").format(value=country_prefill))
-    else:
-        await message.answer(i18n.get_text(lang, "application.ask_vehicle_country"), reply_markup=countries_keyboard())
+    await message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=countries_keyboard())
 
 @router.message(ApplyForm.vin)
 async def vin(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
@@ -475,6 +616,9 @@ async def engine_power(message: Message, state: FSMContext, i18n: I18nService, l
         return
     await state.update_data(engine_power=parsed)
     await state.set_state(ApplyForm.power_unit)
+    current = str((await state.get_data()).get("power_unit", "")).strip()
+    if current:
+        await message.answer(i18n.get_text(lang, "application.ask_power_unit_prefilled").format(value=current))
     await message.answer(i18n.get_text(lang, "application.ask_power_unit"), reply_markup=power_units_keyboard())
 
 
@@ -505,6 +649,7 @@ async def comment(message: Message, state: FSMContext, i18n: I18nService, lang_s
     else:
         await state.set_state(ApplyForm.vehicle_docs)
         await message.answer(i18n.get_text(lang, "application.ask_vehicle_docs"))
+
 
 
 
