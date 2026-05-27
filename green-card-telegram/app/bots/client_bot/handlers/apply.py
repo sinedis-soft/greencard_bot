@@ -1,5 +1,8 @@
 import re
+
 from datetime import datetime, date
+
+
 
 from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
@@ -13,7 +16,9 @@ from app.bots.client_bot.keyboards.apply import (
     finalize_vehicle_keyboard,
     periods_keyboard,
     power_units_keyboard,
+
     prefill_next_keyboard,
+
     techpass_changed_keyboard,
     vehicle_types_keyboard,
 )
@@ -119,6 +124,7 @@ def _birthdate_to_ddmmyyyy(value: str) -> str:
 
 
 
+
 def _parse_common_date(value: str) -> date | None:
     raw = value.strip()
     for fmt in ("%d/%m/%Y", "%d.%m.%Y", "%d.%m.%y", "%d-%m-%Y", "%Y-%m-%d"):
@@ -137,8 +143,10 @@ def _to_ddmmyyyy(d: date) -> str:
     return d.strftime("%d.%m.%Y")
 
 
+
 @router.message(F.text == "/apply")
 async def apply_command(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+
     lang = lang_store.get(message.from_user.id, default_language)
     await state.clear()
     await state.update_data(vehicles=[], current_vehicle={})
@@ -641,6 +649,7 @@ async def comment(message: Message, state: FSMContext, i18n: I18nService, lang_s
     else:
         await state.set_state(ApplyForm.vehicle_docs)
         await message.answer(i18n.get_text(lang, "application.ask_vehicle_docs"))
+
 
 
 
