@@ -1,7 +1,10 @@
 from aiogram import F, Router
 from aiogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, Message
+from uuid import uuid4
 
 from app.services.i18n_service import I18nService
+from app.services.operator_notifier_service import OperatorNotifierService
+from app.services.operator_ticket_service import OperatorTicketService, TicketPayload
 
 router = Router()
 FAQ_CATEGORIES = ["documents", "payment", "coverage", "mistakes", "refund"]
@@ -43,6 +46,26 @@ async def faq_answer(callback: CallbackQuery, i18n: I18nService, lang_store: dic
 @router.callback_query(F.data == "faq_fb:down")
 async def faq_feedback_down(callback: CallbackQuery, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     lang = lang_store.get(callback.from_user.id, default_language)
+    request_id = f"faq-{callback.from_user.id}-{uuid4().hex[:8]}"
+    client_name = callback.from_user.full_name if callback.from_user else ""
+    OperatorTicketService().create_ticket(
+        TicketPayload(
+            request_id=request_id,
+            telegram_user_id=callback.from_user.id if callback.from_user else None,
+            client_name=client_name,
+            client_phone="",
+            preferred_language=lang,
+            vehicle_type="",
+            license_plate="",
+            vin="",
+            insurance_period_days=0,
+            insurance_start_date="",
+            comment="FAQ dislike: user requested operator assistance.",
+        )
+    )
+    OperatorNotifierService().notify_new_ticket(
+        f"🆘 Новый запрос оператора\nID: {request_id}\nКлиент: {client_name}\nИсточник: FAQ (dislike)"
+    )
     await callback.message.answer(i18n.get_text(lang, "operator.operator_connected"))
     await callback.answer()
 
