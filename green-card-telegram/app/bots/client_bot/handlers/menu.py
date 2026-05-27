@@ -1,4 +1,5 @@
 from aiogram import F, Router
+from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from app.bots.client_bot.handlers.apply import send_apply
@@ -10,7 +11,7 @@ router = Router()
 
 
 @router.message(F.text)
-async def menu_click_router(message: Message) -> None:
+async def menu_click_router(message: Message, state: FSMContext) -> None:
     text = message.text.lower()
     if "калькуля" in text or "calculator" in text:
         await start_calculator(message)
@@ -19,4 +20,4 @@ async def menu_click_router(message: Message) -> None:
     elif "coverage" in text or "покрыт" in text:
         await send_coverage(message)
     elif "оформ" in text or "apply" in text:
-        await send_apply(message)
+        await send_apply(message, state)

@@ -41,6 +41,8 @@ class LeadService:
         field_map = self.mapping["deal"]
         deal_data = {"deal_title": f"Lead {app_data.last_name} {app_data.first_name} {vehicle.get('license_plate', '')}".strip(), "contact_id": contact_id, "company_id": company_id, "comment": vehicle.get("comment", ""), **vehicle}
         payload = {crm_key: deal_data.get(local_key) for crm_key, local_key in field_map.items()}
+        if vehicle.get("reuse_existing_vehicle_docs"):
+            payload.pop("UF_CRM_1686154280439", None)
         payload.update(self.mapping.get("deal_defaults", {}))
         return payload
 

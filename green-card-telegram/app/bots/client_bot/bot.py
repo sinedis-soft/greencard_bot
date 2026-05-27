@@ -5,6 +5,7 @@ from pathlib import Path
 from aiogram import Bot, Dispatcher
 
 from app.bots.client_bot.handlers import apply, calculator, coverage, faq, language, menu
+from app.services.bitrix24_client import Bitrix24Client
 from app.services.calculator_service import CalculatorService
 from app.services.i18n_service import I18nService
 
@@ -13,6 +14,7 @@ async def main() -> None:
     token = os.getenv("BOT_TOKEN", "")
     default_language = os.getenv("DEFAULT_LANGUAGE", "ru")
     mini_app_url = os.getenv("MINI_APP_URL", "")
+    bitrix_webhook = os.getenv("BITRIX24_WEBHOOK_URL", "https://example.bitrix24.com/rest")
 
     bot = Bot(token=token)
     dp = Dispatcher()
@@ -28,6 +30,7 @@ async def main() -> None:
     bot.calculator_service = calculator_service
     bot.mini_app_url = mini_app_url
     bot.storage = {}
+    bot.bitrix_client = Bitrix24Client(bitrix_webhook)
 
     dp["i18n"] = i18n
     dp["lang_store"] = lang_store
