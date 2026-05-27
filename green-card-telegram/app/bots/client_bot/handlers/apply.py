@@ -58,6 +58,11 @@ BITRIX_VTYPE_MAP = {
 }
 BITRIX_POWER_UNIT_MAP = {"145": "Киловат", "147": "Лошадиные силы"}
 BITRIX_FUEL_MAP = {
+    "133": "Бензин",
+    "135": "Дизель",
+    "137": "Газ / бензин",
+    "139": "Электро",
+    "141": "Гибрид",
     "petrol": "Бензин",
     "diesel": "Дизель",
     "gas": "Газ / бензин",
@@ -65,6 +70,8 @@ BITRIX_FUEL_MAP = {
     "electric": "Электро",
     "hybrid": "Гибрид",
 }
+FUEL_TYPES = {"Бензин", "Дизель", "Газ / бензин", "Электро", "Гибрид"}
+POWER_UNITS = {"Лошадиные силы", "Киловат"}
 
 
 def _map_bitrix_enum(value: object, mapping: dict[str, str]) -> str:
@@ -297,10 +304,9 @@ async def prefill_next(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
         await state.update_data(manufacture_year=str(data.get("manufacture_year", "")).strip())
         await state.set_state(ApplyForm.fuel_type)
         value = str(data.get("fuel_type", "")).strip()
-        if value:
+        if value in FUEL_TYPES:
             await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_fuel_type_prefilled", value, "fuel_type")
-        else:
-            await callback.message.answer(i18n.get_text(lang, "application.ask_fuel_type"), reply_markup=fuel_types_keyboard())
+        await callback.message.answer(i18n.get_text(lang, "application.ask_fuel_type"), reply_markup=fuel_types_keyboard())
 
     await callback.answer()
 
@@ -631,7 +637,7 @@ async def engine_power(message: Message, state: FSMContext, i18n: I18nService, l
     await state.update_data(engine_power=parsed)
     await state.set_state(ApplyForm.power_unit)
     current = str((await state.get_data()).get("power_unit", "")).strip()
-    if current:
+    if current in POWER_UNITS:
         await message.answer(i18n.get_text(lang, "application.ask_power_unit_prefilled").format(value=current))
     await message.answer(i18n.get_text(lang, "application.ask_power_unit"), reply_markup=power_units_keyboard())
 
