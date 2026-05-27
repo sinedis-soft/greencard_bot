@@ -18,3 +18,4 @@ class VehicleData(BaseModel):
     engine_power: Optional[float] = Field(default=None, ge=0)
     power_unit: str
     vehicle_docs: Optional[str] = None
+    reuse_existing_vehicle_docs: bool = False
