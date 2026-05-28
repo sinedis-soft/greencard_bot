@@ -31,7 +31,9 @@ class OperatorTicketService:
             payload = data.__dict__.copy()
             payload.setdefault("first_response_deadline", datetime.utcnow() + timedelta(minutes=10))
             payload.setdefault("last_client_message_at", datetime.utcnow())
-            db.merge(OperatorTicket(**payload))
+            model_fields = {column.name for column in OperatorTicket.__table__.columns}
+            ticket_payload = {key: value for key, value in payload.items() if key in model_fields}
+            db.merge(OperatorTicket(**ticket_payload))
             db.commit()
 
     def list_new(self) -> list[OperatorTicket]:
