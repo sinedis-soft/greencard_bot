@@ -31,7 +31,9 @@ class OperatorTicketService:
             payload = data.__dict__.copy()
             payload.setdefault("first_response_deadline", datetime.utcnow() + timedelta(minutes=10))
             payload.setdefault("last_client_message_at", datetime.utcnow())
-            db.merge(OperatorTicket(**payload))
+            model_fields = {column.name for column in OperatorTicket.__table__.columns}
+            ticket_payload = {key: value for key, value in payload.items() if key in model_fields}
+            db.merge(OperatorTicket(**ticket_payload))
             db.commit()
 
     def list_new(self) -> list[OperatorTicket]:
@@ -50,6 +52,27 @@ class OperatorTicketService:
     def get_ticket(self, request_id: str) -> OperatorTicket | None:
         with SessionLocal() as db:
             return db.get(OperatorTicket, request_id)
+
+    def get_active_by_user(self, telegram_user_id: int) -> OperatorTicket | None:
+        with SessionLocal() as db:
+            return db.scalars(
+                select(OperatorTicket)
+                .where(
+                    OperatorTicket.telegram_user_id == telegram_user_id,
+                    OperatorTicket.status.in_(("new", "in_progress", "waiting_client")),
+                )
+                .order_by(OperatorTicket.created_at.desc())
+            ).first()
+
+    def mark_client_message(self, request_id: str) -> None:
+        with SessionLocal() as db:
+            ticket = db.get(OperatorTicket, request_id)
+            if not ticket:
+                return
+            ticket.last_client_message_at = datetime.utcnow()
+            if ticket.status == "waiting_client":
+                ticket.status = "in_progress"
+            db.commit()
 
     def log_action(self, request_id: str, operator_id: int, action: str, message: str = "") -> None:
         with SessionLocal() as db:

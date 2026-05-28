@@ -2,10 +2,10 @@ from aiogram import F, Router
 from aiogram.types import Message
 
 from app.bots.operator_bot.handlers.start import _operator_ids
-from app.bots.operator_bot.keyboards.ticket_actions import ticket_actions_keyboard
-from app.services.operator_ticket_service import OperatorTicketService
-from app.db.session import SessionLocal
+from app.bots.operator_bot.keyboards.ticket_actions import reply_instruction, ticket_actions_keyboard
 from app.db.models import Application
+from app.db.session import SessionLocal
+from app.services.operator_ticket_service import OperatorTicketService
 
 router = Router()
 
@@ -28,4 +28,7 @@ async def tickets(message: Message) -> None:
             elif app and app.status == "failed":
                 crm_status = "failed"
         sla = "SLA breached" if t.sla_breach else "SLA ok"
-        await message.answer(f"{t.request_id} | CRM status: {crm_status} | {sla}", reply_markup=ticket_actions_keyboard(t.request_id))
+        await message.answer(
+            f"ID: {t.request_id}\nCRM status: {crm_status}\n{sla}\n{reply_instruction(t.request_id)}",
+            reply_markup=ticket_actions_keyboard(t.request_id),
+        )
