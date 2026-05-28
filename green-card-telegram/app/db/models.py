@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import DateTime, Float, ForeignKey, Integer, BigInteger, String, Text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -12,7 +12,7 @@ class Application(Base):
     __tablename__ = "applications"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     request_id: Mapped[str] = mapped_column(String(64), unique=True, index=True)
-    telegram_user_id: Mapped[int | None] = mapped_column(Integer, nullable=True, index=True)
+    telegram_user_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True, index=True)
     telegram_username: Mapped[str | None] = mapped_column(String(255), nullable=True)
     telegram_language_code: Mapped[str | None] = mapped_column(String(16), nullable=True)
     source_channel: Mapped[str] = mapped_column(String(32), default="telegram_miniapp")
@@ -66,9 +66,9 @@ class Vehicle(Base):
 class OperatorTicket(Base):
     __tablename__ = "operator_tickets"
     request_id: Mapped[str] = mapped_column(String(64), primary_key=True)
-    telegram_user_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    telegram_user_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
     status: Mapped[str] = mapped_column(String(32), default="new")
-    operator_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    operator_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
     first_response_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     closed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     first_response_deadline: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
@@ -84,7 +84,7 @@ class OperatorActionLog(Base):
     __tablename__ = "operator_action_logs"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     request_id: Mapped[str] = mapped_column(String(64), index=True)
-    operator_id: Mapped[int] = mapped_column(Integer)
+    operator_id: Mapped[int] = mapped_column(BigInteger)
     action: Mapped[str] = mapped_column(String(64))
     message: Mapped[str] = mapped_column(Text, default="")
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
@@ -121,7 +121,7 @@ class AnalyticsEvent(Base):
     __tablename__ = "analytics_events"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     request_id: Mapped[str | None] = mapped_column(String(64), nullable=True, index=True)
-    telegram_user_id: Mapped[int | None] = mapped_column(Integer, nullable=True, index=True)
+    telegram_user_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True, index=True)
     event_name: Mapped[str] = mapped_column(String(128), index=True)
     event_payload_json: Mapped[str] = mapped_column(Text, default="{}")
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
