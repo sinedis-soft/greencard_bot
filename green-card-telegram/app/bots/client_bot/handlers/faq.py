@@ -2,6 +2,7 @@ from aiogram import F, Router
 from aiogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, Message
 from uuid import uuid4
 
+from app.bots.operator_bot.keyboards.ticket_actions import reply_instruction
 from app.services.i18n_service import I18nService
 from app.services.operator_notifier_service import OperatorNotifierService
 from app.services.operator_ticket_service import OperatorTicketService, TicketPayload
@@ -23,11 +24,11 @@ async def faq_command(message: Message, i18n: I18nService, lang_store: dict[int,
 
 async def show_faq_categories(message: Message) -> None:
     await faq_command(
-    message,
-    message.bot.i18n,
-    message.bot.lang_store,
-    message.bot.default_language,
-)
+        message,
+        message.bot.i18n,
+        message.bot.lang_store,
+        message.bot.default_language,
+    )
 
 
 @router.callback_query(F.data.startswith("faq:"))
@@ -64,7 +65,11 @@ async def faq_feedback_down(callback: CallbackQuery, i18n: I18nService, lang_sto
         )
     )
     OperatorNotifierService().notify_new_ticket(
-        f"🆘 Новый запрос оператора\nID: {request_id}\nКлиент: {client_name}\nИсточник: FAQ (dislike)"
+        "🆘 Новый запрос оператора\n"
+        f"ID: {request_id}\n"
+        f"Клиент: {client_name}\n"
+        "Источник: FAQ (dislike)\n"
+        f"{reply_instruction(request_id)}"
     )
     await callback.message.answer(i18n.get_text(lang, "operator.operator_connected"))
     await callback.answer()

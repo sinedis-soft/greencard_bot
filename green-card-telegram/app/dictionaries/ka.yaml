@@ -61,5 +61,4 @@ faq:
     refund: "Refund is handled by operator after review."
 
 coverage:
-  text: "Coverage territories are available per Green Card agreement."
-  map_todo: "TODO: coverage map integration in next stage."
+  text: "Green Card coverage territories are shown on the map. Check the country code on your policy before travel."
