@@ -8,7 +8,12 @@ from app.bots.client_bot.handlers.apply import send_apply
 from app.bots.client_bot.handlers.calculator import start_calculator
 from app.bots.client_bot.handlers.coverage import send_coverage
 from app.bots.client_bot.handlers.faq import show_faq_categories
-from app.bots.operator_bot.keyboards.ticket_actions import reply_command, reply_instruction
+from app.bots.client_bot.keyboards.language import language_keyboard
+from app.bots.client_bot.menu_actions import menu_action_for_text
+from app.bots.operator_bot.keyboards.ticket_actions import (
+    reply_command,
+    reply_instruction,
+)
 from app.services.operator_notifier_service import OperatorNotifierService
 from app.services.operator_ticket_service import OperatorTicketService, TicketPayload
 
@@ -41,22 +46,40 @@ async def _forward_client_message_to_operator(message: Message) -> bool:
         f"{reply_instruction(ticket.request_id)}",
         reply_command(ticket.request_id),
     )
-    await message.answer(message.bot.i18n.get_text(message.bot.lang_store.get(message.from_user.id, message.bot.default_language), "operator.request_received"))
+    await message.answer(
+        message.bot.i18n.get_text(
+            message.bot.lang_store.get(
+                message.from_user.id, message.bot.default_language
+            ),
+            "operator.request_received",
+        )
+    )
     return True
 
 
 @router.message(F.text)
 async def menu_click_router(message: Message, state: FSMContext) -> None:
-    text = message.text.lower()
-    if "калькуля" in text or "calculator" in text:
+    lang = message.bot.lang_store.get(
+        message.from_user.id, message.bot.default_language
+    )
+    action = menu_action_for_text(
+        message.bot.i18n, message.text, lang, message.bot.default_language
+    )
+
+    if action == "calculator":
         await start_calculator(message)
-    elif "faq" in text:
+    elif action == "faq":
         await show_faq_categories(message)
-    elif "coverage" in text or "покрыт" in text or "работает" in text:
+    elif action == "coverage":
         await send_coverage(message)
-    elif "оформ" in text or "apply" in text:
+    elif action == "apply":
         await send_apply(message, state)
-    elif "оператор" in text or "operator" in text:
+    elif action == "language":
+        await message.answer(
+            message.bot.i18n.get_text(lang, "language.select"),
+            reply_markup=language_keyboard(),
+        )
+    elif action == "operator":
         request_id = f"op-{message.from_user.id}-{uuid4().hex[:8]}"
         client_name = message.from_user.full_name if message.from_user else ""
         OperatorTicketService().create_ticket(
@@ -65,7 +88,7 @@ async def menu_click_router(message: Message, state: FSMContext) -> None:
                 telegram_user_id=message.from_user.id if message.from_user else None,
                 client_name=client_name,
                 client_phone="",
-                preferred_language=message.bot.lang_store.get(message.from_user.id, message.bot.default_language),
+                preferred_language=lang,
                 vehicle_type="",
                 license_plate="",
                 vin="",
@@ -74,7 +97,12 @@ async def menu_click_router(message: Message, state: FSMContext) -> None:
                 comment="Main menu: user requested operator assistance.",
             )
         )
-        OperatorNotifierService().notify_new_ticket(_operator_ticket_text(request_id, client_name, "Главное меню"), reply_command(request_id))
-        await message.answer(message.bot.i18n.get_text(message.bot.lang_store.get(message.from_user.id, message.bot.default_language), "operator.operator_connected"))
+        OperatorNotifierService().notify_new_ticket(
+            _operator_ticket_text(request_id, client_name, "Главное меню"),
+            reply_command(request_id),
+        )
+        await message.answer(
+            message.bot.i18n.get_text(lang, "operator.operator_connected")
+        )
     else:
         await _forward_client_message_to_operator(message)
