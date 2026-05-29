@@ -1,65 +1,204 @@
 main_menu:
-  calculator: "🧮 Calculator"
+  calculator: "🧮 კალკულატორი"
   faq: "❓ FAQ"
-  coverage: "🌍 Coverage"
-  apply: "📝 Apply"
-  operator: "👨‍💼 Contact operator"
-  language: "🌐 Language"
+  coverage: "🌍 სად მოქმედებს?"
+  apply: "📝 გაფორმება"
+  operator: "👨‍💼 ოპერატორთან დაკავშირება"
+  language: "🌐 ენა"
 
 menu:
-  title: "Main menu"
+  title: "მთავარი მენიუ"
 
 language:
-  select: "Please choose language"
-  changed: "Language updated"
+  select: "გთხოვთ, აირჩიოთ ენა"
+  changed: "ენა განახლდა"
 
 calculator:
-  result_title: "Estimated price"
-  disclaimer: "Estimated price only"
-  apply_cta: "📝 Apply"
-  select_vehicle_type: "Choose vehicle type"
-  select_period: "Choose insurance period (days)"
-  result_template: "Estimated price: {estimated_price} {currency}\n{disclaimer}"
+  result_title: "წინასწარი ღირებულება"
+  disclaimer: "წინასწარი გამოთვლა"
+  apply_cta: "📝 განაცხადის გაფორმება"
+  select_vehicle_type: "აირჩიეთ სატრანსპორტო საშუალების ტიპი"
+  select_period: "აირჩიეთ დაზღვევის ვადა (დღეები)"
+  result_template: "წინასწარი ღირებულება: {estimated_price} {currency}\n{disclaimer}"
   vehicle:
-    car: "Car"
-    truck: "Truck"
-    bus: "Bus"
-    moto: "Moto"
-    trailer: "Trailer"
-    special: "Special"
+    car: "მსუბუქი ავტომობილი"
+    truck: "სატვირთო ავტომობილი"
+    bus: "ავტობუსი"
+    moto: "მოტოციკლი"
+    trailer: "მისაბმელი"
+    special: "სპეცტექნიკა"
 
 application:
-  submitted: "Application submitted"
-  validation_error: "Validation error"
-  bitrix_error: "Bitrix error"
-  mini_app_soon: "Mini App form will be connected in the next stage."
-  open_form_button: "Open application form"
-  temporarily_unavailable: "Application form is temporarily unavailable."
-  vehicle_not_found_manual: "Vehicle was not found in the database. Please enter vehicle details manually."
+  submitted: "განაცხადი გაგზავნილია. ჩვენ მოვამზადებთ პოლისს და გამოგიგზავნით გადახდის რეკვიზიტებს."
+  validation_error: "მონაცემების შემოწმების შეცდომა"
+  bitrix_error: "Bitrix-ის შეცდომა"
+  mini_app_soon: "Mini App-ის ფორმა შემდეგ ეტაპზე იქნება ჩართული."
+  open_form_button: "განაცხადის ფორმის გახსნა"
+  temporarily_unavailable: "განაცხადის ფორმა დროებით მიუწვდომელია."
+  form_header: |
+    განაცხადი პოლისის გასაფორმებლად
+    შეავსეთ მონაცემები. ჩვენ მოვამზადებთ პოლისს და გამოგიგზავნით გადახდის რეკვიზიტებს.
+    ⚠️ყურადღება! აპლიკაციის გამოყენების გაგრძელებით, თქვენ ეთანხმებით თქვენი Telegram username-ის დამუშავებას.⚠️
+  step_1: "1. საკონტაქტო მონაცემები"
+  step_2: "2. დაზღვევისა და სატრანსპორტო საშუალების მონაცემები"
+  prefilled_from_bitrix: "თქვენი პროფილი ჩვენს ბაზაში Telegram-ის მომხმარებლის სახელით მოიძებნა. საკონტაქტო მონაცემები და დამზღვევის მონაცემები ავტომატურად ჩაიწერა."
+  prefilled_from_bitrix_editable: "თქვენი პროფილი ჩვენს ბაზაში Telegram username-ით მოიძებნა. მონაცემები ჩასმულია — შეამოწმეთ და საჭიროების შემთხვევაში შეცვალეთ. თუ ყველაფერი სწორია, ამ ეტაპზე შეგიძლიათ ცარიელი შეტყობინება გაგზავნოთ."
+  ask_first_name_prefilled: "სახელი * (გამოყენება: {value})"
+
+  prefill_next_button: "დიახ, შემდეგი კითხვა"
+
+  ask_last_name_prefilled: "გვარი * (გამოყენება: {value})"
+  ask_phone_prefilled: "ტელეფონი (ქვეყნის კოდით) * (გამოყენება: {value})"
+  ask_email_prefilled: "E-mail * (გამოყენება: {value})"
+  ask_first_name: "სახელი *"
+  ask_last_name: "გვარი *"
+  ask_phone: |
+    ტელეფონი (ქვეყნის კოდით)
+    მაგალითი: +48123456789
+  ask_email: |
+    E-mail
+    მაგალითი: exempl@mail.pl"
+  ask_birth_date: |
+    დაბადების თარიღი
+    ფორმატი: დდ.თთ.წწწწ
+  ask_birth_date_prefilled: "დაბადების თარიღი * (გამოყენება: {value})"
+  ask_passport: "პასპორტის სერია და ნომერი გამოტოვებების გარეშე *"
+  ask_passport_prefilled: "პასპორტის სერია და ნომერი გამოტოვებების გარეშე * (გამოყენება: {value})"
+  ask_registration_address: "რეგისტრაციის მისამართი *"
+  ask_registration_address_prefilled: "რეგისტრაციის მისამართი * (გამოყენება: {value})"
+  ask_insurance_period: "დაზღვევის ვადა (აირჩიეთ) *"
+  ask_insurance_start_date: |
+    დაზღვევის მოქმედების დაწყების თარიღი
+    ფორმატი: დდ.თთ.წწწწ
+  ask_vehicle_country: "ავტომობილის რეგისტრაციის ქვეყანა *"
+  validation_vehicle_country: "მიუთითეთ ავტომობილის რეგისტრაციის ქვეყანა."
+  ask_vehicle_country_prefilled: "ავტომობილის რეგისტრაციის ქვეყანა * (მიმდინარე: {value})"
+
+  choose_from_buttons: "აირჩიეთ მნიშვნელობა ქვემოთ მოცემული ღილაკით."
+
+  ask_vehicle_type: "სატრანსპორტო საშუალების ტიპი *"
+  ask_vehicle_type_prefilled: "სატრანსპორტო საშუალების ტიპი * (მიმდინარე: {value})"
+  ask_license_plate: "სახელმწიფო ნომერი *"
+  ask_license_plate_after_start: "სახელმწიფო ნომერი *"
+  validation_license_plate_strict: "სახელმწიფო ნომერი: მხოლოდ ლათინური ასოები და ციფრები, გამოტოვებების/ტირეების გარეშე, მაქსიმუმ 8 სიმბოლო."
+  prefilled_vehicle_from_bitrix_editable: "სახელმწიფო ნომრით ჩვენს ბაზაში ავტომობილის მონაცემები მოიძებნა. მნიშვნელობები ჩასმულია — შეამოწმეთ და საჭიროების შემთხვევაში შეცვალეთ."
+  vehicle_not_found_manual: "ავტომობილი ბაზაში ვერ მოიძებნა. გთხოვთ, ავტომობილის მონაცემები ხელით შეიყვანოთ."
+  ask_vin: "VIN ნომერი *"
+  ask_brand_model: "სატრანსპორტო საშუალების მარკა და მოდელი *"
+  ask_manufacture_year: "სატრანსპორტო საშუალების გამოშვების წელი *"
+  ask_fuel_type: "საწვავის ტიპი *"
+  ask_engine_capacity: "ძრავის მოცულობა, კუბ. სმ *"
+  ask_engine_capacity_prefilled: "ძრავის მოცულობა, კუბ. სმ * (გამოყენება: {value})"
+  ask_engine_power: "ძრავის სიმძლავრე *"
+  ask_engine_power_prefilled: "ძრავის სიმძლავრე * (გამოყენება: {value})"
+  skip_engine_capacity_electric: "ელექტრო საწვავის ტიპისთვის ძრავის მოცულობა არ არის საჭირო."
+  ask_power_unit: "სიმძლავრის საზომი ერთეული *"
+
+  ask_power_unit_prefilled: "სიმძლავრის საზომი ერთეული * (მიმდინარე: {value})"
+  ask_comment: "კომენტარი (არასავალდებულო)"
+  skip_comment_button: "გამოტოვება"
+
+  ask_vehicle_docs: |
+    ტექნიკური პასპორტი (ფოტო ან PDF)
+    შესაძლებელია რამდენიმე ფაილის მიმაგრება.
+  ask_techpass_changed: "ბაზაში უკვე არის ტექნიკური პასპორტის ფოტო. შეიცვალა ტექნიკური პასპორტი?"
+  techpass_changed_yes: "დიახ, შეიცვალა"
+  techpass_changed_no: "არა, არ შეცვლილა"
+  ask_vehicle_finalize: "დავამატოთ კიდევ ერთი ავტომობილი თუ დავასრულოთ გაფორმება?"
+  add_vehicle: "კიდევ ერთი ავტომობილის დამატება"
+  finish_application: "გაფორმების დასრულება"
+  ask_consent: |
+    SINEDIS-ის პერსონალური მონაცემების დამუშავების პოლიტიკა
+    SINEDIS Sp. z o.o. პერსონალურ მონაცემებს ამუშავებს ევროკავშირის რეგლამენტის 2016/679 (GDPR / RODO) და პოლონეთის კანონმდებლობის შესაბამისად.
+    მონაცემები გამოიყენება:
+    • სადაზღვევო შეთავაზებების გამოსათვლელად;
+    • სადაზღვევო ხელშეკრულებების გასაფორმებლად და მომსახურებისთვის;
+    • კლიენტთან დასაკავშირებლად;
+    • კანონმდებლობით გათვალისწინებული მოთხოვნების შესასრულებლად;
+    • მარკეტინგული კომუნიკაციისთვის მომხმარებლის თანხმობის არსებობის შემთხვევაში.
+    შეიძლება დამუშავდეს:
+    სახელი, ტელეფონი, e-mail, მისამართი, სატრანსპორტო საშუალების მონაცემები, სადაზღვევო ინფორმაცია, გადახდის და ტექნიკური მონაცემები.
+    მონაცემები შეიძლება გადაეცეს სადაზღვევო კომპანიებს, IT-კონტრაქტორებს და სხვა პარტნიორებს, რომლებიც აუცილებელია მომსახურების გასაწევად.
+    მომხმარებელს აქვს უფლება:
+    • მიიღოს წვდომა მონაცემებზე;
+    • შეასწოროს ან წაშალოს მონაცემები;
+    • შეზღუდოს დამუშავება;
+    • გააუქმოს თანხმობა;
+    • შეიტანოს საჩივარი PUODO-ში.
+    მონაცემთა ადმინისტრატორი შეიძლება იყოს სადაზღვევო კომპანია, რომელმაც გასცა პოლისი, ან SINEDIS Sp. z o.o.
+    კონტაქტები:
+    SINEDIS Sp. z o.o.
+    ul. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    info@sinedis.pl
+    odo@sinedis.pl - მონაცემთა დაცვის ინსპექტორი
+    პოლიტიკის სრული ვერსია:
+    https://greencard.agency
+    ________________________
+    ეთანხმებით პერსონალური მონაცემების დამუშავებას და გადაცემას?"
+  consent_agree: "✅ თანხმობა და გაგზავნა"
+  consent_decline: "❌ უარი"
+  declined: "თქვენ უარი თქვით მონაცემების გადაცემაზე. განაცხადი გაუქმებულია."
+  validation_name: "შეიყვანეთ მინიმუმ 2 სიმბოლო."
+  validation_phone: "ტელეფონის ნომერი არასწორია. გამოიყენეთ ფორმატი +48123456789."
+  validation_email: "E-mail არასწორია."
+
+  validation_date: "თარიღი არასწორია. დაშვებული ფორმატებია: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. ფორმატი თთ/დდ/წწწწ აკრძალულია."
+
+  validation_age_18: "დამზღვევი უნდა იყოს მინიმუმ 18 სრული წლის."
+  validation_insurance_start_not_past: "დაზღვევის დაწყების თარიღი წარსულში არ შეიძლება იყოს."
+  ask_vin_prefilled: "VIN ნომერი * (გამოყენება: {value})"
+  ask_brand_model_prefilled: "სატრანსპორტო საშუალების მარკა და მოდელი * (გამოყენება: {value})"
+  ask_manufacture_year_prefilled: "სატრანსპორტო საშუალების გამოშვების წელი * (გამოყენება: {value})"
+  ask_fuel_type_prefilled: "საწვავის ტიპი * (მიმდინარე: {value})"
+
+  validation_passport: "პასპორტის სერია და ნომერი არასწორია (გამოტოვებების გარეშე)."
+  validation_address: "მიუთითეთ რეგისტრაციის სრული მისამართი."
+  validation_license_plate: "სახელმწიფო ნომერი არასწორია."
+  validation_vin: "VIN უნდა შეიცავდეს 17 სიმბოლოს."
+  validation_brand_model: "მიუთითეთ მარკა და მოდელი."
+  validation_year: "მიუთითეთ გამოშვების სწორი წელი."
+  validation_positive_integer: "შეიყვანეთ დადებითი მთელი რიცხვი."
+  validation_positive_number: "შეიყვანეთ დადებითი რიცხვი."
+  validation_docs: "გამოგზავნეთ ტექნიკური პასპორტის ფოტო ან PDF/დოკუმენტი."
+
 
 operator:
-  request_received: "Request received"
-  operator_connected: "Operator connected"
-  access_denied: "Access denied"
-  no_tickets: "No tickets"
-  taken: "Ticket taken"
-  closed: "Ticket closed"
-  reply_sent: "Reply sent"
+  request_received: "მოთხოვნა მიღებულია"
+  operator_connected: "ოპერატორი ჩაერთო"
+  access_denied: "წვდომა აკრძალულია"
+  no_tickets: "მიმართვები არ არის"
+  taken: "მიმართვა მიღებულია"
+  closed: "მიმართვა დახურულია"
+  reply_sent: "პასუხი გაგზავნილია"
 
 faq:
-  title: "Choose FAQ category"
+  title: "აირჩიეთ FAQ კატეგორია"
   categories:
-    documents: "Documents"
-    payment: "Payment"
-    coverage: "Coverage"
-    mistakes: "Mistakes"
-    refund: "Refund"
+    documents: "დოკუმენტები გასაფორმებლად"
+    payment: "გადახდა"
+    coverage: "დაფარვა"
+    mistakes: "რას უნდა მიაქციოთ ყურადღება"
+    refund: "თანხის დაბრუნება"
   answers:
-    documents: "Prepare passport, vehicle docs and registration address."
-    payment: "Payment methods will be available in Mini App."
-    coverage: "Coverage depends on Green Card zones."
-    mistakes: "Please check VIN, plate number and period before submit."
-    refund: "Refund is handled by operator after review."
+    documents: |
+      პოლისის გასაფორმებლად საჭიროა შემდეგი მონაცემები: პასპორტის მონაცემები, სატრანსპორტო საშუალების მონაცემები და დაზღვევის მოქმედების თარიღები
+      ამიტომ უნდა მოამზადოთ:
+      - პასპორტი
+      - სატრანსპორტო საშუალების რეგისტრაციის მოწმობა
+      - ავტომობილის ტექნიკური მონაცემები
+      - ტელეფონის ნომერი
+      - e-Mail
+    payment: |
+      ხელმისაწვდომია:
+      - გადახდა პოლონურ ბარათზე გადარიცხვით, 
+      - გადახდა BLIK-ით ტელეფონის ნომერზე, 
+      - გადახდა პოლონურ საბანკო ანგარიშზე გადარიცხვით"
+    coverage: "დაფარვის ტერიტორია: A - ავსტრია, B - ბელგია, BG - ბულგარეთი, CY - კვიპროსი, CZ - ჩეხეთი, D - გერმანია, DK - დანია, E - ესპანეთი, EST - ესტონეთი, F - საფრანგეთი, FIN - ფინეთი, GR - საბერძნეთი, H - უნგრეთი, HR - ხორვატია, I - იტალია, IRL - ირლანდია, IS - ისლანდია, L - ლუქსემბურგი, LT - ლიეტუვა, LV - ლატვია, M - მალტა, N - ნორვეგია, NL - ნიდერლანდები, P - პორტუგალია, PL - პოლონეთი, RO - რუმინეთი, S - შვედეთი, SK - სლოვაკეთი, SLO - სლოვენია, CH - შვეიცარია."
+    mistakes: "გაგზავნამდე ორჯერ შეამოწმეთ VIN, სახელმწიფო ნომერი და დაზღვევის პერიოდი. შემდგომში ცვლილებების შეტანა შეუძლებელი იქნება!"
+    refund: "თანხის დაბრუნება არ ხორციელდება."
 
 coverage:
-  text: "Green Card coverage territories are shown on the map. Check the country code on your policy before travel."
+  text: |
+    Green Card-ის დაფარვის რუკა. 
+    გამგზავრებამდე შეამოწმეთ ქვეყნის კოდი თქვენს პოლისში. 
+    A - ავსტრია, B - ბელგია, BG - ბულგარეთი, CY - კვიპროსი, CZ - ჩეხეთი, D - გერმანია, DK - დანია, E - ესპანეთი, EST - ესტონეთი, F - საფრანგეთი, FIN - ფინეთი, GR - საბერძნეთი, H - უნგრეთი, HR - ხორვატია, I - იტალია, IRL - ირლანდია, IS - ისლანდია, L - ლუქსემბურგი, LT - ლიეტუვა, LV - ლატვია, M - მალტა, N - ნორვეგია, NL - ნიდერლანდები, P - პორტუგალია, PL - პოლონეთი, RO - რუმინეთი, S - შვედეთი, SK - სლოვაკეთი, SLO - სლოვენია, CH - შვეიცარია.

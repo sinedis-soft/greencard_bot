@@ -1,65 +1,204 @@
 main_menu:
-  calculator: "🧮 Calculator"
+  calculator: "🧮 Калькулятор"
   faq: "❓ FAQ"
-  coverage: "🌍 Coverage"
-  apply: "📝 Apply"
-  operator: "👨‍💼 Contact operator"
-  language: "🌐 Language"
+  coverage: "🌍 Қай жерде жұмыс істейді?"
+  apply: "📝 Рәсімдеу"
+  operator: "👨‍💼 Оператормен байланысу"
+  language: "🌐 Тіл"
 
 menu:
-  title: "Main menu"
+  title: "Негізгі мәзір"
 
 language:
-  select: "Please choose language"
-  changed: "Language updated"
+  select: "Тілді таңдаңыз"
+  changed: "Тіл жаңартылды"
 
 calculator:
-  result_title: "Estimated price"
-  disclaimer: "Estimated price only"
-  apply_cta: "📝 Apply"
-  select_vehicle_type: "Choose vehicle type"
-  select_period: "Choose insurance period (days)"
-  result_template: "Estimated price: {estimated_price} {currency}\n{disclaimer}"
+  result_title: "Алдын ала құны"
+  disclaimer: "Алдын ала есеп"
+  apply_cta: "📝 Өтінім беру"
+  select_vehicle_type: "Көлік құралының түрін таңдаңыз"
+  select_period: "Сақтандыру мерзімін таңдаңыз (күн)"
+  result_template: "Алдын ала құны: {estimated_price} {currency}\n{disclaimer}"
   vehicle:
-    car: "Car"
-    truck: "Truck"
-    bus: "Bus"
-    moto: "Moto"
-    trailer: "Trailer"
-    special: "Special"
+    car: "Жеңіл автомобиль"
+    truck: "Жүк автомобилі"
+    bus: "Автобус"
+    moto: "Мотоцикл"
+    trailer: "Тіркеме"
+    special: "Арнайы техника"
 
 application:
-  submitted: "Application submitted"
-  validation_error: "Validation error"
-  bitrix_error: "Bitrix error"
-  mini_app_soon: "Mini App form will be connected in the next stage."
-  open_form_button: "Open application form"
-  temporarily_unavailable: "Application form is temporarily unavailable."
-  vehicle_not_found_manual: "Vehicle was not found in the database. Please enter vehicle details manually."
+  submitted: "Өтінім жіберілді. Біз полисті дайындап, төлем деректерін жібереміз."
+  validation_error: "Деректерді тексеру қатесі"
+  bitrix_error: "Bitrix қатесі"
+  mini_app_soon: "Mini App формасы келесі кезеңде қосылады."
+  open_form_button: "Өтінім формасын ашу"
+  temporarily_unavailable: "Өтінім формасы уақытша қолжетімсіз."
+  form_header: |
+    Полисті рәсімдеуге өтінім
+    Деректерді толтырыңыз. Біз полисті дайындап, төлем деректерін жібереміз.
+    ⚠️НАЗАР АУДАРЫҢЫЗ! Қосымшаны пайдалануды жалғастыра отырып, сіз Telegram username өңдеуге келісесіз.⚠️
+  step_1: "1. Байланыс деректері"
+  step_2: "2. Сақтандыру және көлік құралы туралы деректер"
+  prefilled_from_bitrix: "Telegram пайдаланушы аты бойынша профиліңіз біздің базадан табылды. Байланыс және сақтанушы деректері автоматты түрде толтырылды."
+  prefilled_from_bitrix_editable: "Telegram username бойынша профиліңіз біздің базадан табылды. Деректер толтырылды — тексеріп, қажет болса түзетіңіз. Егер бәрі дұрыс болса, осы қадамда бос хабарлама жіберуге болады."
+  ask_first_name_prefilled: "Аты * (Қолдану: {value})"
+
+  prefill_next_button: "ИӘ, КЕЛЕСІ СҰРАҚ"
+
+  ask_last_name_prefilled: "Тегі * (Қолдану: {value})"
+  ask_phone_prefilled: "Телефон (ел коды бар) * (Қолдану: {value})"
+  ask_email_prefilled: "E-mail * (Қолдану: {value})"
+  ask_first_name: "Аты *"
+  ask_last_name: "Тегі *"
+  ask_phone: |
+    Телефон (ел коды бар)
+    Мысалы: +48123456789
+  ask_email: |
+    E-mail
+    Мысалы: exempl@mail.pl"
+  ask_birth_date: |
+    Туған күні
+    Формат: кк.аа.жжжж
+  ask_birth_date_prefilled: "Туған күні * (Қолдану: {value})"
+  ask_passport: "Паспорт сериясы мен нөмірі бос орынсыз *"
+  ask_passport_prefilled: "Паспорт сериясы мен нөмірі бос орынсыз * (Қолдану: {value})"
+  ask_registration_address: "Тіркелу мекенжайы *"
+  ask_registration_address_prefilled: "Тіркелу мекенжайы * (Қолдану: {value})"
+  ask_insurance_period: "Сақтандыру мерзімі (таңдау) *"
+  ask_insurance_start_date: |
+    Сақтандырудың басталу күні
+    Формат: кк.аа.жжжж
+  ask_vehicle_country: "Автокөліктің тіркелген елі *"
+  validation_vehicle_country: "Автокөліктің тіркелген елін көрсетіңіз."
+  ask_vehicle_country_prefilled: "Автокөліктің тіркелген елі * (ағымдағы: {value})"
+
+  choose_from_buttons: "Төмендегі батырма арқылы мәнді таңдаңыз."
+
+  ask_vehicle_type: "Көлік құралының түрі *"
+  ask_vehicle_type_prefilled: "Көлік құралының түрі * (ағымдағы: {value})"
+  ask_license_plate: "Мемлекеттік нөмір *"
+  ask_license_plate_after_start: "Мемлекеттік нөмір *"
+  validation_license_plate_strict: "Мемлекеттік нөмір: тек латын әріптері мен сандар, бос орынсыз/сызықшасыз, максимум 8 таңба."
+  prefilled_vehicle_from_bitrix_editable: "Мемлекеттік нөмір бойынша автокөлік деректері біздің базадан табылды. Мәндер толтырылды — тексеріп, қажет болса түзетіңіз."
+  vehicle_not_found_manual: "Автокөлік базадан табылмады. Автокөлік деректерін қолмен енгізіңіз."
+  ask_vin: "VIN нөмірі *"
+  ask_brand_model: "Көлік құралының маркасы мен моделі *"
+  ask_manufacture_year: "Көлік құралының шығарылған жылы *"
+  ask_fuel_type: "Отын түрі *"
+  ask_engine_capacity: "Қозғалтқыш көлемі, текше см *"
+  ask_engine_capacity_prefilled: "Қозғалтқыш көлемі, текше см * (Қолдану: {value})"
+  ask_engine_power: "Қозғалтқыш қуаты *"
+  ask_engine_power_prefilled: "Қозғалтқыш қуаты * (Қолдану: {value})"
+  skip_engine_capacity_electric: "Электр отыны түрі үшін қозғалтқыш көлемі қажет емес."
+  ask_power_unit: "Қуат өлшем бірлігі *"
+
+  ask_power_unit_prefilled: "Қуат өлшем бірлігі * (ағымдағы: {value})"
+  ask_comment: "Пікір (міндетті емес)"
+  skip_comment_button: "ӨТКІЗІП ЖІБЕРУ"
+
+  ask_vehicle_docs: |
+    Техпаспорт (фото немесе PDF)
+    Бірнеше файл тіркеуге болады.
+  ask_techpass_changed: "Базада техпаспорттың фотосы бар. Техпаспорт өзгертілді ме?"
+  techpass_changed_yes: "Иә, өзгертілді"
+  techpass_changed_no: "Жоқ, өзгертілмеді"
+  ask_vehicle_finalize: "Тағы бір автокөлік қосу немесе рәсімдеуді аяқтау?"
+  add_vehicle: "Тағы бір автокөлік қосу"
+  finish_application: "Рәсімдеуді аяқтау"
+  ask_consent: |
+    SINEDIS дербес деректерді өңдеу саясаты
+    SINEDIS Sp. z o.o. дербес деректерді ЕО 2016/679 Регламентіне (GDPR / RODO) және Польша заңнамасына сәйкес өңдейді.
+    Деректер келесі мақсаттарда пайдаланылады:
+    • сақтандыру ұсыныстарын есептеу;
+    • сақтандыру шарттарын рәсімдеу және сүйемелдеу;
+    • клиентпен байланыс;
+    • заң талаптарын орындау;
+    • пайдаланушының келісімі болған жағдайда маркетингтік коммуникация.
+    Өңделуі мүмкін:
+    аты, телефон, e-mail, мекенжай, көлік құралы туралы деректер, сақтандыру ақпараты, төлем және техникалық деректер.
+    Деректер сақтандыру компанияларына, IT-мердігерлерге және қызмет көрсету үшін қажет басқа серіктестерге берілуі мүмкін.
+    Пайдаланушының құқығы бар:
+    • деректерге қол жеткізу;
+    • деректерді түзету немесе жою;
+    • өңдеуді шектеу;
+    • келісімді қайтарып алу;
+    • PUODO-ға шағым беру.
+    Деректер әкімшісі полисті рәсімдеген сақтандыру компаниясы немесе SINEDIS Sp. z o.o. болуы мүмкін.
+    Байланыс:
+    SINEDIS Sp. z o.o.
+    ul. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    info@sinedis.pl
+    odo@sinedis.pl - деректерді қорғау инспекторы
+    Саясаттың толық нұсқасы:
+    https://greencard.agency
+    ________________________
+    Дербес деректерді өңдеуге және беруге келісесіз бе?"
+  consent_agree: "✅ Келісу және жіберу"
+  consent_decline: "❌ Бас тарту"
+  declined: "Сіз деректерді беруден бас тарттыңыз. Өтінім жойылды."
+  validation_name: "Кемінде 2 таңба енгізіңіз."
+  validation_phone: "Телефон нөмірі қате. +48123456789 форматын пайдаланыңыз."
+  validation_email: "E-mail қате."
+
+  validation_date: "Күн қате. Рұқсат етілген форматтар: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. аа/кк/жжжж форматына тыйым салынады."
+
+  validation_age_18: "Сақтанушы кемінде 18 жаста болуы керек."
+  validation_insurance_start_not_past: "Сақтандырудың басталу күні өткен күн болмауы керек."
+  ask_vin_prefilled: "VIN нөмірі * (Қолдану: {value})"
+  ask_brand_model_prefilled: "Көлік құралының маркасы мен моделі * (Қолдану: {value})"
+  ask_manufacture_year_prefilled: "Көлік құралының шығарылған жылы * (Қолдану: {value})"
+  ask_fuel_type_prefilled: "Отын түрі * (ағымдағы: {value})"
+
+  validation_passport: "Паспорт сериясы мен нөмірі қате (бос орынсыз)."
+  validation_address: "Толық тіркелу мекенжайын көрсетіңіз."
+  validation_license_plate: "Мемлекеттік нөмір қате."
+  validation_vin: "VIN 17 таңбадан тұруы керек."
+  validation_brand_model: "Марка мен модельді көрсетіңіз."
+  validation_year: "Дұрыс шығарылған жылды көрсетіңіз."
+  validation_positive_integer: "Оң бүтін сан енгізіңіз."
+  validation_positive_number: "Оң сан енгізіңіз."
+  validation_docs: "Техпаспорттың фото немесе PDF/құжатын жіберіңіз."
+
 
 operator:
-  request_received: "Request received"
-  operator_connected: "Operator connected"
-  access_denied: "Access denied"
-  no_tickets: "No tickets"
-  taken: "Ticket taken"
-  closed: "Ticket closed"
-  reply_sent: "Reply sent"
+  request_received: "Сұраныс қабылданды"
+  operator_connected: "Оператор қосылды"
+  access_denied: "Қол жеткізуге тыйым салынған"
+  no_tickets: "Өтініштер жоқ"
+  taken: "Өтініш қабылданды"
+  closed: "Өтініш жабылды"
+  reply_sent: "Жауап жіберілді"
 
 faq:
-  title: "Choose FAQ category"
+  title: "FAQ санатын таңдаңыз"
   categories:
-    documents: "Documents"
-    payment: "Payment"
-    coverage: "Coverage"
-    mistakes: "Mistakes"
-    refund: "Refund"
+    documents: "Рәсімдеуге арналған құжаттар"
+    payment: "Төлем"
+    coverage: "Қамту"
+    mistakes: "Назар аудару керек"
+    refund: "Қайтару"
   answers:
-    documents: "Prepare passport, vehicle docs and registration address."
-    payment: "Payment methods will be available in Mini App."
-    coverage: "Coverage depends on Green Card zones."
-    mistakes: "Please check VIN, plate number and period before submit."
-    refund: "Refund is handled by operator after review."
+    documents: |
+      Полисті рәсімдеу үшін келесі деректер қажет: паспорт деректері, көлік құралы туралы деректер және сақтандыру мерзімі туралы ақпарат
+      Сондықтан сізге дайындау қажет:
+      - паспорт
+      - көлік құралын тіркеу куәлігі
+      - автокөліктің техникалық деректері
+      - телефон нөмірі
+      - e-Mail
+    payment: |
+      Қолжетімді:
+      - поляк картасына аударым арқылы төлем, 
+      - телефон нөміріне BLIK арқылы төлем, 
+      - поляк банктік шотына аударым арқылы төлем"
+    coverage: "Қамту аумағы: A - Австрия, B - Бельгия, BG - Болгария, CY - Кипр, CZ - Чехия, D - Германия, DK - Дания, E - Испания, EST - Эстония, F - Франция, FIN - Финляндия, GR - Греция, H - Венгрия, HR - Хорватия, I - Италия, IRL - Ирландия, IS - Исландия, L - Люксембург, LT - Литва, LV - Латвия, M - Мальта, N - Норвегия, NL - Нидерланды, P - Португалия, PL - Польша, RO - Румыния, S - Швеция, SK - Словакия, SLO - Словения, CH - Швейцария."
+    mistakes: "Жібермес бұрын VIN, мемлекеттік нөмір және сақтандыру мерзімін екі рет тексеріңіз. Кейін өзгеріс енгізу мүмкін болмайды!"
+    refund: "Қаражатты қайтару жүргізілмейді."
 
 coverage:
-  text: "Green Card coverage territories are shown on the map. Check the country code on your policy before travel."
+  text: |
+    Green Card қамту картасы. 
+    Сапар алдында полистегі ел кодын тексеріңіз. 
+    A - Австрия, B - Бельгия, BG - Болгария, CY - Кипр, CZ - Чехия, D - Германия, DK - Дания, E - Испания, EST - Эстония, F - Франция, FIN - Финляндия, GR - Греция, H - Венгрия, HR - Хорватия, I - Италия, IRL - Ирландия, IS - Исландия, L - Люксембург, LT - Литва, LV - Латвия, M - Мальта, N - Норвегия, NL - Нидерланды, P - Португалия, PL - Польша, RO - Румыния, S - Швеция, SK - Словакия, SLO - Словения, CH - Швейцария.

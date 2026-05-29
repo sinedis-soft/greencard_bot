@@ -1,65 +1,204 @@
 main_menu:
   calculator: "🧮 Calculator"
   faq: "❓ FAQ"
-  coverage: "🌍 Coverage"
+  coverage: "🌍 Where does it work?"
   apply: "📝 Apply"
-  operator: "👨‍💼 Contact operator"
+  operator: "👨‍💼 Contact an operator"
   language: "🌐 Language"
 
 menu:
   title: "Main menu"
 
 language:
-  select: "Please choose language"
+  select: "Please select a language"
   changed: "Language updated"
 
 calculator:
-  result_title: "Estimated price"
-  disclaimer: "Estimated price only"
-  apply_cta: "📝 Apply"
-  select_vehicle_type: "Choose vehicle type"
-  select_period: "Choose insurance period (days)"
-  result_template: "Estimated price: {estimated_price} {currency}\n{disclaimer}"
+  result_title: "Estimated cost"
+  disclaimer: "Preliminary calculation"
+  apply_cta: "📝 Submit an application"
+  select_vehicle_type: "Select the type of vehicle"
+  select_period: "Select the insurance period (days)"
+  result_template: "Estimated cost: {estimated_price} {currency}\n{disclaimer}"
   vehicle:
-    car: "Car"
+    car: "Passenger car"
     truck: "Truck"
     bus: "Bus"
-    moto: "Moto"
+    moto: "Motorcycle"
     trailer: "Trailer"
-    special: "Special"
+    special: "Special-purpose vehicle"
 
 application:
-  submitted: "Application submitted"
-  validation_error: "Validation error"
+  submitted: "The application has been sent. We will prepare the policy and send you the payment details."
+  validation_error: "Data validation error"
   bitrix_error: "Bitrix error"
-  mini_app_soon: "Mini App form will be connected in the next stage."
+  mini_app_soon: "The Mini App form will be connected at the next stage."
   open_form_button: "Open application form"
-  temporarily_unavailable: "Application form is temporarily unavailable."
-  vehicle_not_found_manual: "Vehicle was not found in the database. Please enter vehicle details manually."
+  temporarily_unavailable: "The application form is temporarily unavailable."
+  form_header: |
+    Application for policy issuance
+    Fill in the data. We will prepare the policy and send you the payment details.
+    ⚠️ATTENTION! By continuing to use the application, you agree to the processing of your Telegram username.⚠️
+  step_1: "1. Contacts"
+  step_2: "2. Insurance and vehicle details"
+  prefilled_from_bitrix: "We found your profile in our database by your Telegram username. Contact details and policyholder data have been filled in automatically."
+  prefilled_from_bitrix_editable: "We found your profile in our database by your Telegram username. The data has been filled in — check it and correct it if necessary. If everything is correct, you may send an empty message at this step."
+  ask_first_name_prefilled: "First name * (Use: {value})"
+
+  prefill_next_button: "YES, NEXT QUESTION"
+
+  ask_last_name_prefilled: "Last name * (Use: {value})"
+  ask_phone_prefilled: "Phone number (with country code) * (Use: {value})"
+  ask_email_prefilled: "E-mail * (Use: {value})"
+  ask_first_name: "First name *"
+  ask_last_name: "Last name *"
+  ask_phone: |
+    Phone number (with country code)
+    Example: +48123456789
+  ask_email: |
+    E-mail
+    Example: exempl@mail.pl"
+  ask_birth_date: |
+    Date of birth
+    Format: dd.mm.yyyy
+  ask_birth_date_prefilled: "Date of birth * (Use: {value})"
+  ask_passport: "Passport series and number without spaces *"
+  ask_passport_prefilled: "Passport series and number without spaces * (Use: {value})"
+  ask_registration_address: "Registration address *"
+  ask_registration_address_prefilled: "Registration address * (Use: {value})"
+  ask_insurance_period: "Insurance period (select) *"
+  ask_insurance_start_date: |
+    Insurance start date
+    Format: dd.mm.yyyy
+  ask_vehicle_country: "Vehicle registration country *"
+  validation_vehicle_country: "Specify the vehicle registration country."
+  ask_vehicle_country_prefilled: "Vehicle registration country * (current: {value})"
+
+  choose_from_buttons: "Select a value using the button below."
+
+  ask_vehicle_type: "Vehicle type *"
+  ask_vehicle_type_prefilled: "Vehicle type * (current: {value})"
+  ask_license_plate: "License plate number *"
+  ask_license_plate_after_start: "License plate number *"
+  validation_license_plate_strict: "License plate number: only Latin letters and digits, no spaces/hyphens, maximum 8 characters."
+  prefilled_vehicle_from_bitrix_editable: "We found the vehicle details in our database by the license plate number. The values have been filled in — check them and correct them if necessary."
+  vehicle_not_found_manual: "The vehicle was not found in the database. Please enter the vehicle details manually."
+  ask_vin: "VIN number *"
+  ask_brand_model: "Vehicle make and model *"
+  ask_manufacture_year: "Vehicle year of manufacture *"
+  ask_fuel_type: "Fuel type *"
+  ask_engine_capacity: "Engine capacity, cc *"
+  ask_engine_capacity_prefilled: "Engine capacity, cc * (Use: {value})"
+  ask_engine_power: "Engine power *"
+  ask_engine_power_prefilled: "Engine power * (Use: {value})"
+  skip_engine_capacity_electric: "For electric fuel type, engine capacity is not required."
+  ask_power_unit: "Power measurement unit *"
+
+  ask_power_unit_prefilled: "Power measurement unit * (current: {value})"
+  ask_comment: "Comment (optional)"
+  skip_comment_button: "SKIP"
+
+  ask_vehicle_docs: |
+    Vehicle registration certificate (photo or PDF)
+    You may attach several files.
+  ask_techpass_changed: "There is already a photo of the vehicle registration certificate in the database. Has the registration certificate changed?"
+  techpass_changed_yes: "Yes, it has changed"
+  techpass_changed_no: "No, it has not changed"
+  ask_vehicle_finalize: "Add another vehicle or complete the application?"
+  add_vehicle: "Add another vehicle"
+  finish_application: "Complete the application"
+  ask_consent: |
+    SINEDIS Personal Data Processing Policy
+    SINEDIS Sp. z o.o. processes personal data in accordance with EU Regulation 2016/679 (GDPR / RODO) and Polish law.
+    The data is used for:
+    • calculating insurance offers;
+    • issuing and servicing insurance contracts;
+    • contacting the client;
+    • fulfilling legal requirements;
+    • marketing communication, subject to the user's consent.
+    The following data may be processed:
+    first name, phone number, e-mail, address, vehicle details, insurance information, payment and technical data.
+    Data may be transferred to insurance companies, IT contractors and other partners necessary for providing services.
+    The user has the right to:
+    • access the data;
+    • correct or delete the data;
+    • restrict processing;
+    • withdraw consent;
+    • file a complaint with PUODO.
+    The data controller may be the insurance company that issued the policy or SINEDIS Sp. z o.o.
+    Contacts:
+    SINEDIS Sp. z o.o.
+    ul. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    info@sinedis.pl
+    odo@sinedis.pl - data protection officer
+    Full version of the policy:
+    https://greencard.agency
+    ________________________
+    Do you agree to the processing and transfer of personal data?"
+  consent_agree: "✅ Agree and send"
+  consent_decline: "❌ Decline"
+  declined: "You have refused to transfer the data. The application has been cancelled."
+  validation_name: "Enter at least 2 characters."
+  validation_phone: "Invalid phone number. Use the format +48123456789."
+  validation_email: "Invalid e-mail."
+
+  validation_date: "Invalid date. Allowed formats: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. The mm/dd/yyyy format is prohibited."
+
+  validation_age_18: "The policyholder must be at least 18 full years old."
+  validation_insurance_start_not_past: "The insurance start date cannot be in the past."
+  ask_vin_prefilled: "VIN number * (Use: {value})"
+  ask_brand_model_prefilled: "Vehicle make and model * (Use: {value})"
+  ask_manufacture_year_prefilled: "Vehicle year of manufacture * (Use: {value})"
+  ask_fuel_type_prefilled: "Fuel type * (current: {value})"
+
+  validation_passport: "Invalid passport series and number (without spaces)."
+  validation_address: "Specify the full registration address."
+  validation_license_plate: "Invalid license plate number."
+  validation_vin: "VIN must contain 17 characters."
+  validation_brand_model: "Specify the make and model."
+  validation_year: "Specify a valid year of manufacture."
+  validation_positive_integer: "Enter a positive integer."
+  validation_positive_number: "Enter a positive number."
+  validation_docs: "Send a photo or PDF/document of the vehicle registration certificate."
+
 
 operator:
   request_received: "Request received"
   operator_connected: "Operator connected"
   access_denied: "Access denied"
-  no_tickets: "No tickets"
-  taken: "Ticket taken"
-  closed: "Ticket closed"
+  no_tickets: "No requests"
+  taken: "Request accepted"
+  closed: "Request closed"
   reply_sent: "Reply sent"
 
 faq:
-  title: "Choose FAQ category"
+  title: "Select an FAQ category"
   categories:
-    documents: "Documents"
+    documents: "Documents for issuance"
     payment: "Payment"
     coverage: "Coverage"
-    mistakes: "Mistakes"
+    mistakes: "Pay attention"
     refund: "Refund"
   answers:
-    documents: "Prepare passport, vehicle docs and registration address."
-    payment: "Payment methods will be available in Mini App."
-    coverage: "Coverage depends on Green Card zones."
-    mistakes: "Please check VIN, plate number and period before submit."
-    refund: "Refund is handled by operator after review."
+    documents: |
+      To issue the policy, the following data will be required: passport details, vehicle details and the insurance validity dates
+      Therefore, you need to prepare:
+      - passport
+      - vehicle registration certificate
+      - technical data of the vehicle
+      - phone number
+      - e-Mail
+    payment: |
+      Available:
+      - payment by transfer to a Polish card, 
+      - payment by BLIK to a phone number, 
+      - payment by transfer to a Polish bank account"
+    coverage: "Coverage territory: A - Austria, B - Belgium, BG - Bulgaria, CY - Cyprus, CZ - Czech Republic, D - Germany, DK - Denmark, E - Spain, EST - Estonia, F - France, FIN - Finland, GR - Greece, H - Hungary, HR - Croatia, I - Italy, IRL - Ireland, IS - Iceland, L - Luxembourg, LT - Lithuania, LV - Latvia, M - Malta, N - Norway, NL - Netherlands, P - Portugal, PL - Poland, RO - Romania, S - Sweden, SK - Slovakia, SLO - Slovenia, CH - Switzerland."
+    mistakes: "Please double-check the VIN, license plate number and insurance period before sending. It will not be possible to make corrections later!"
+    refund: "Refunds are not processed."
 
 coverage:
-  text: "Green Card coverage territories are shown on the map. Check the country code on your policy before travel."
+  text: |
+    Green Card coverage map. 
+    Before your trip, check the country code in your policy. 
+    A - Austria, B - Belgium, BG - Bulgaria, CY - Cyprus, CZ - Czech Republic, D - Germany, DK - Denmark, E - Spain, EST - Estonia, F - France, FIN - Finland, GR - Greece, H - Hungary, HR - Croatia, I - Italy, IRL - Ireland, IS - Iceland, L - Luxembourg, LT - Lithuania, LV - Latvia, M - Malta, N - Norway, NL - Netherlands, P - Portugal, PL - Poland, RO - Romania, S - Sweden, SK - Slovakia, SLO - Slovenia, CH - Switzerland.
