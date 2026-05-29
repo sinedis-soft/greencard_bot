@@ -248,7 +248,26 @@ def test_bitrix_client_vehicle_lookup_selects_contact_id_for_privacy_check():
     assert Client("https://example.test/rest").find_deal_by_license_plate("AA123BB") is None
 
     assert calls[0][0] == "crm.deal.list"
+    assert calls[0][1]["order"] == {"ID": "DESC"}
     assert "CONTACT_ID" in calls[0][1]["select"]
+
+
+
+def test_bitrix_client_vehicle_lookup_returns_first_deal_from_descending_id_order():
+    from app.services.bitrix24_client import Bitrix24Client
+
+    calls = []
+
+    class Client(Bitrix24Client):
+        def _post(self, method, payload):
+            calls.append((method, payload))
+            return {"result": [{"ID": "200", "CONTACT_ID": "10"}, {"ID": "100", "CONTACT_ID": "10"}]}
+
+    deal = Client("https://example.test/rest").find_deal_by_license_plate("TEST1234")
+
+    assert deal["ID"] == "200"
+    assert calls[0][1]["order"] == {"ID": "DESC"}
+
 
 
 def test_bitrix_client_prefill_search_prefers_stable_telegram_user_id_before_username():

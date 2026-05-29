@@ -92,6 +92,7 @@ class Bitrix24Client:
         if not plate:
             return None
         payload = {
+            "order": {"ID": "DESC"},
             "filter": {"UF_CRM_1686152485641": plate},
             "select": [
                 "ID",
