@@ -9,6 +9,11 @@ class I18nService:
         self._path = dictionaries_path
         self._cache: dict[str, dict[str, Any]] = {}
 
+    def available_languages(self) -> tuple[str, ...]:
+        return tuple(
+            sorted(path.stem for path in self._path.glob("*.yaml") if path.is_file())
+        )
+
     def get_text(self, lang: str, key: str, fallback_lang: str = "en") -> str:
         data = self._load(lang) or self._load(fallback_lang)
         current: Any = data
