@@ -39,9 +39,12 @@ class Bitrix24Client:
                 for key, nested in value.items():
                     add(f"{prefix}[{key}]", nested)
             elif isinstance(value, list):
+                use_positional_scalars = prefix.endswith("[fileData]") or prefix.endswith("[fileContent]")
                 for index, nested in enumerate(value):
                     if isinstance(nested, (dict, list)):
                         add(f"{prefix}[{index}]", nested)
+                    elif use_positional_scalars:
+                        pairs.append((f"{prefix}[{index}]", nested))
                     else:
                         pairs.append((f"{prefix}[]", nested))
             elif value is not None:

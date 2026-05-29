@@ -1,7 +1,9 @@
 import logging
 import re
+import tempfile
 
 from datetime import datetime, date
+from pathlib import Path
 
 
 from aiogram import F, Router
@@ -26,6 +28,7 @@ from app.bots.client_bot.keyboards.apply import (
 from app.core.config import app_root
 from app.schemas.application import ApplicationCreate
 from app.services.i18n_service import I18nService
+from app.services.bitrix_file_service import BitrixFileService
 from app.services.lead_service import LeadService
 
 router = Router()
@@ -169,6 +172,40 @@ def _vehicle_docs_summary(docs: object) -> str | None:
         names = [str(doc.get("name", "")).strip() for doc in docs if isinstance(doc, dict) and doc.get("name")]
         return ", ".join(names) or None
     return str(docs)
+
+
+def _safe_doc_name(name: object, index: int, doc_type: str) -> str:
+    raw = str(name or "").strip()
+    if not raw or raw == "photo":
+        raw = f"techpass_{index}.jpg" if doc_type == "photo" else f"techpass_{index}.bin"
+    return Path(raw).name or f"techpass_{index}.bin"
+
+
+async def _download_telegram_docs(bot, docs: object, target_dir: Path, vehicle_index: int) -> list[str]:
+    if not isinstance(docs, list):
+        return []
+
+    paths: list[str] = []
+    for index, doc in enumerate(docs, start=1):
+        if not isinstance(doc, dict) or not doc.get("file_id"):
+            continue
+        telegram_file = await bot.get_file(doc["file_id"])
+        filename = _safe_doc_name(doc.get("name"), index, str(doc.get("type", "")))
+        local_path = target_dir / f"vehicle_{vehicle_index}_{index}_{filename}"
+        with local_path.open("wb") as destination:
+            await bot.download_file(telegram_file.file_path, destination=destination)
+        paths.append(str(local_path))
+    return paths
+
+
+async def _attach_telegram_docs_to_deals(bot, bitrix_client, vehicles: list[dict], deal_ids: list[int]) -> None:
+    with tempfile.TemporaryDirectory(prefix="telegram_vehicle_docs_") as tmpdir:
+        tmp_path = Path(tmpdir)
+        bitrix_file = BitrixFileService(bitrix_client)
+        for vehicle_index, (vehicle, deal_id) in enumerate(zip(vehicles, deal_ids, strict=False), start=1):
+            saved_paths = await _download_telegram_docs(bot, vehicle.get("vehicle_docs"), tmp_path, vehicle_index)
+            if saved_paths:
+                bitrix_file.upload_and_attach_files_to_deal(deal_id, saved_paths)
 
 
 def _application_from_state(data: dict, lang: str) -> ApplicationCreate:
@@ -340,7 +377,7 @@ async def prefill_next(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
         await state.set_state(ApplyForm.vehicle_type)
         value = str(data.get("vehicle_type", "")).strip()
         if value:
-            await callback.message.answer(i18n.get_text(lang, "application.ask_vehicle_type_prefilled").format(value=value))
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vehicle_type_prefilled", value, "vehicle_type")
         await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard())
     elif field == "vehicle_type":
         await state.update_data(vehicle_type=str(data.get("vehicle_type", "")).strip())
@@ -373,6 +410,43 @@ async def prefill_next(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
         if value in FUEL_TYPES:
             await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_fuel_type_prefilled", value, "fuel_type")
         await callback.message.answer(i18n.get_text(lang, "application.ask_fuel_type"), reply_markup=fuel_types_keyboard())
+    elif field == "fuel_type":
+        value = str(data.get("fuel_type", "")).strip()
+        await state.update_data(fuel_type=value)
+        if value.lower() == "электро":
+            await state.update_data(engine_capacity=0)
+            await state.set_state(ApplyForm.engine_power)
+            power = str(data.get("engine_power", "")).strip()
+            if power:
+                await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_engine_power_prefilled", power, "engine_power")
+            else:
+                await callback.message.answer(i18n.get_text(lang, "application.ask_engine_power"))
+        else:
+            await state.set_state(ApplyForm.engine_capacity)
+            capacity = str(data.get("engine_capacity", "")).strip()
+            if capacity:
+                await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_engine_capacity_prefilled", capacity, "engine_capacity")
+            else:
+                await callback.message.answer(i18n.get_text(lang, "application.ask_engine_capacity"))
+    elif field == "engine_capacity":
+        await state.update_data(engine_capacity=str(data.get("engine_capacity", "")).strip())
+        await state.set_state(ApplyForm.engine_power)
+        value = str(data.get("engine_power", "")).strip()
+        if value:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_engine_power_prefilled", value, "engine_power")
+        else:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_engine_power"))
+    elif field == "engine_power":
+        await state.update_data(engine_power=str(data.get("engine_power", "")).strip())
+        await state.set_state(ApplyForm.power_unit)
+        value = str(data.get("power_unit", "")).strip()
+        if value in POWER_UNITS:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_power_unit_prefilled", value, "power_unit")
+        await callback.message.answer(i18n.get_text(lang, "application.ask_power_unit"), reply_markup=power_units_keyboard())
+    elif field == "power_unit":
+        await state.update_data(power_unit=str(data.get("power_unit", "")).strip())
+        await state.set_state(ApplyForm.comment)
+        await callback.message.answer(i18n.get_text(lang, "application.ask_comment"), reply_markup=skip_comment_keyboard(i18n.get_text(lang, "application.skip_comment_button")))
 
     await callback.answer()
 
@@ -555,7 +629,7 @@ async def vehicle_country_text(message: Message, state: FSMContext, i18n: I18nSe
     await state.set_state(ApplyForm.vehicle_type)
     type_prefill = str(data.get("vehicle_type", "")).strip()
     if type_prefill:
-        await message.answer(i18n.get_text(lang, "application.ask_vehicle_type_prefilled").format(value=type_prefill))
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_vehicle_type_prefilled", type_prefill, "vehicle_type")
     await message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard())
 
 
@@ -568,7 +642,7 @@ async def vehicle_country(callback: CallbackQuery, state: FSMContext, i18n: I18n
     data = await state.get_data()
     type_prefill = str(data.get("vehicle_type", "")).strip()
     if type_prefill:
-        await callback.message.answer(i18n.get_text(lang, "application.ask_vehicle_type_prefilled").format(value=type_prefill))
+        await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vehicle_type_prefilled", type_prefill, "vehicle_type")
     await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard())
     await callback.answer()
 
@@ -642,7 +716,7 @@ async def license_plate(message: Message, state: FSMContext, i18n: I18nService, 
     data = await state.get_data()
     country_prefill = str(data.get("vehicle_country", "")).strip()
     if country_prefill:
-        await message.answer(i18n.get_text(lang, "application.ask_vehicle_country_prefilled").format(value=country_prefill))
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_vehicle_country_prefilled", country_prefill, "vehicle_country")
     await message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=countries_keyboard())
 
 @router.message(ApplyForm.vin)
@@ -678,6 +752,9 @@ async def manufacture_year(message: Message, state: FSMContext, i18n: I18nServic
         return
     await state.update_data(manufacture_year=int(value))
     await state.set_state(ApplyForm.fuel_type)
+    current = str((await state.get_data()).get("fuel_type", "")).strip()
+    if current in FUEL_TYPES:
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_fuel_type_prefilled", current, "fuel_type")
     await message.answer(i18n.get_text(lang, "application.ask_fuel_type"), reply_markup=fuel_types_keyboard())
 
 
@@ -686,14 +763,23 @@ async def fuel_type(callback: CallbackQuery, state: FSMContext, i18n: I18nServic
     lang = lang_store.get(callback.from_user.id, default_language)
     value = callback.data.split(":", 2)[-1]
     await state.update_data(fuel_type=value)
+    data = await state.get_data()
     if value.lower() == "электро":
         await state.update_data(engine_capacity=0)
         await state.set_state(ApplyForm.engine_power)
         await callback.message.answer(i18n.get_text(lang, "application.skip_engine_capacity_electric"))
-        await callback.message.answer(i18n.get_text(lang, "application.ask_engine_power"))
+        power = str(data.get("engine_power", "")).strip()
+        if power:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_engine_power_prefilled", power, "engine_power")
+        else:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_engine_power"))
     else:
         await state.set_state(ApplyForm.engine_capacity)
-        await callback.message.answer(i18n.get_text(lang, "application.ask_engine_capacity"))
+        capacity = str(data.get("engine_capacity", "")).strip()
+        if capacity:
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_engine_capacity_prefilled", capacity, "engine_capacity")
+        else:
+            await callback.message.answer(i18n.get_text(lang, "application.ask_engine_capacity"))
     await callback.answer()
 
 
@@ -706,7 +792,11 @@ async def engine_capacity(message: Message, state: FSMContext, i18n: I18nService
         return
     await state.update_data(engine_capacity=int(value))
     await state.set_state(ApplyForm.engine_power)
-    await message.answer(i18n.get_text(lang, "application.ask_engine_power"))
+    current = str((await state.get_data()).get("engine_power", "")).strip()
+    if current:
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_engine_power_prefilled", current, "engine_power")
+    else:
+        await message.answer(i18n.get_text(lang, "application.ask_engine_power"))
 
 
 @router.message(ApplyForm.engine_power)
@@ -887,7 +977,8 @@ async def consent_agree(callback: CallbackQuery, state: FSMContext, i18n: I18nSe
     lang = lang_store.get(callback.from_user.id, default_language)
     data = await state.get_data()
     try:
-        _create_bitrix_application(data, lang, callback.bot.bitrix_client, callback.from_user.username, callback.from_user.id)
+        bitrix = _create_bitrix_application(data, lang, callback.bot.bitrix_client, callback.from_user.username, callback.from_user.id)
+        await _attach_telegram_docs_to_deals(callback.bot, callback.bot.bitrix_client, data.get("vehicles", []), bitrix.get("deals", []))
     except Exception as exc:
         logger.exception("telegram_application_bitrix_error user_id=%s error=%s", callback.from_user.id, exc)
         await callback.message.answer(i18n.get_text(lang, "application.bitrix_error"))
