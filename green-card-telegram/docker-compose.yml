@@ -1,5 +1,6 @@
 services:
   postgres:
+    restart: unless-stopped
     image: postgres:16
     environment:
       POSTGRES_DB: green_card
@@ -9,10 +10,12 @@ services:
     volumes: ["pg_data:/var/lib/postgresql/data"]
 
   redis:
+    restart: unless-stopped
     image: redis:7
     ports: ["6379:6379"]
 
   backend:
+    restart: unless-stopped
     build: .
     env_file: .env
     command: sh -c "alembic upgrade head || true; uvicorn app.main:app --host 0.0.0.0 --port 8000"
@@ -20,24 +23,28 @@ services:
     ports: ["8000:8000"]
 
   bitrix_retry_worker:
+    restart: unless-stopped
     build: .
     env_file: .env
     command: rq worker bitrix_sync
     depends_on: [redis, postgres]
 
   sla_worker:
+    restart: unless-stopped
     build: .
     env_file: .env
     command: sh -c "while true; do python -c 'from app.workers.sla_worker import run_sla_checks; print(run_sla_checks())'; sleep 60; done"
     depends_on: [postgres, redis]
 
   client_bot:
+    restart: unless-stopped
     build: .
     env_file: .env
     command: python -m app.bots.client_bot.bot
     depends_on: [redis]
 
   operator_bot:
+    restart: unless-stopped
     build: .
     env_file: .env
     command: python -m app.bots.operator_bot.bot

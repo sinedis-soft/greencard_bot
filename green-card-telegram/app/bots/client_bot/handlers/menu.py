@@ -8,7 +8,7 @@ from app.bots.client_bot.handlers.apply import send_apply
 from app.bots.client_bot.handlers.calculator import start_calculator
 from app.bots.client_bot.handlers.coverage import send_coverage
 from app.bots.client_bot.handlers.faq import show_faq_categories
-from app.bots.operator_bot.keyboards.ticket_actions import reply_instruction
+from app.bots.operator_bot.keyboards.ticket_actions import reply_command, reply_instruction
 from app.services.operator_notifier_service import OperatorNotifierService
 from app.services.operator_ticket_service import OperatorTicketService, TicketPayload
 
@@ -38,7 +38,8 @@ async def _forward_client_message_to_operator(message: Message) -> bool:
         f"ID: {ticket.request_id}\n"
         f"Клиент: {client_name}\n"
         f"Текст: {message.text}\n"
-        f"{reply_instruction(ticket.request_id)}"
+        f"{reply_instruction(ticket.request_id)}",
+        reply_command(ticket.request_id),
     )
     await message.answer(message.bot.i18n.get_text(message.bot.lang_store.get(message.from_user.id, message.bot.default_language), "operator.request_received"))
     return True
@@ -73,7 +74,7 @@ async def menu_click_router(message: Message, state: FSMContext) -> None:
                 comment="Main menu: user requested operator assistance.",
             )
         )
-        OperatorNotifierService().notify_new_ticket(_operator_ticket_text(request_id, client_name, "Главное меню"))
+        OperatorNotifierService().notify_new_ticket(_operator_ticket_text(request_id, client_name, "Главное меню"), reply_command(request_id))
         await message.answer(message.bot.i18n.get_text(message.bot.lang_store.get(message.from_user.id, message.bot.default_language), "operator.operator_connected"))
     else:
         await _forward_client_message_to_operator(message)

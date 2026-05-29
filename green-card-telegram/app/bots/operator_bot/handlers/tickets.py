@@ -2,7 +2,7 @@ from aiogram import F, Router
 from aiogram.types import Message
 
 from app.bots.operator_bot.handlers.start import _operator_ids
-from app.bots.operator_bot.keyboards.ticket_actions import reply_instruction, ticket_actions_keyboard
+from app.bots.operator_bot.keyboards.ticket_actions import reply_command, reply_instruction, ticket_actions_keyboard
 from app.db.models import Application
 from app.db.session import SessionLocal
 from app.services.operator_ticket_service import OperatorTicketService
@@ -32,3 +32,4 @@ async def tickets(message: Message) -> None:
             f"ID: {t.request_id}\nCRM status: {crm_status}\n{sla}\n{reply_instruction(t.request_id)}",
             reply_markup=ticket_actions_keyboard(t.request_id),
         )
+        await message.answer(reply_command(t.request_id))
