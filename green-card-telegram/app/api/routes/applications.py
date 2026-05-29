@@ -73,6 +73,8 @@ async def create_application(application_json: str = Form(...), vehicle_docs: li
     with SessionLocal() as db:
         vehicles = list(db.query(Vehicle).filter(Vehicle.application_id == local_app.id).order_by(Vehicle.id.asc()))
         target_vehicle = vehicles[0] if vehicles else None
+        saved_docs: list[UploadedDocument] = []
+        saved_paths: list[str] = []
         for f in vehicle_docs:
             data = await f.read()
             try:
@@ -87,20 +89,25 @@ async def create_application(application_json: str = Form(...), vehicle_docs: li
             doc = UploadedDocument(request_id=request_id, vehicle_id=target_vehicle.id, original_filename=f.filename, mime_type=f.content_type or "", size_bytes=len(data), storage_path=str(saved), bitrix_file_id=None, status="new")
             db.add(doc)
             db.flush()
+            saved_docs.append(doc)
+            saved_paths.append(str(saved))
+
+        if saved_docs and target_vehicle:
             try:
                 deal_id = target_vehicle.bitrix_deal_id or (bitrix.get("deals") or [None])[0]
-                if deal_id:
-                    file_id = bitrix_file.upload_and_attach_to_deal(deal_id, str(saved))
+                if not deal_id:
+                    raise RuntimeError("deal_id missing")
+                file_ids = bitrix_file.upload_and_attach_files_to_deal(deal_id, saved_paths)
+                for doc, file_id in zip(saved_docs, file_ids, strict=False):
                     doc.bitrix_file_id = file_id
                     doc.status = "bitrix_created"
-                    logger.info("bitrix_file_uploaded request_id=%s deal_id=%s", request_id, deal_id)
-                else:
-                    raise RuntimeError("deal_id missing")
+                logger.info("bitrix_files_uploaded request_id=%s deal_id=%s count=%s", request_id, deal_id, len(saved_paths))
             except Exception as exc:
                 logger.exception("bitrix_file_error request_id=%s error=%s", request_id, exc)
-                doc.status = "bitrix_pending"
-                jid = sync.create_job(request_id, "upload_file", {"deal_id": target_vehicle.bitrix_deal_id, "local_path": str(saved)})
-                enqueue_bitrix_job(jid)
+                for doc, saved_path in zip(saved_docs, saved_paths, strict=False):
+                    doc.status = "bitrix_pending"
+                    jid = sync.create_job(request_id, "upload_file", {"deal_id": target_vehicle.bitrix_deal_id, "local_path": saved_path})
+                    enqueue_bitrix_job(jid)
         db.commit()
 
     analytics.track("application_submitted", request_id=request_id, telegram_user_id=tg.telegram_user_id, payload={"deals": bitrix.get("deals", [])})

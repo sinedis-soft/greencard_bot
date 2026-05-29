@@ -226,8 +226,9 @@ async def apply_command(message: Message, state: FSMContext, i18n: I18nService, 
 
     contact = None
     username = (message.from_user.username or "").strip()
-    if username and hasattr(message.bot, "bitrix_client"):
-        contact = message.bot.bitrix_client.find_contact_by_telegram_username(username)
+    user_id = message.from_user.id
+    if hasattr(message.bot, "bitrix_client"):
+        contact = message.bot.bitrix_client.find_contact_by_telegram_identity(username=username, user_id=user_id)
 
     if contact:
         first_name = str(contact.get("NAME", "")).strip()
