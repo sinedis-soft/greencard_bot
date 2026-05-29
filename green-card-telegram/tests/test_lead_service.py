@@ -287,3 +287,45 @@ def test_bitrix_client_prefill_search_prefers_stable_telegram_user_id_before_use
     assert contact["ID"] == "77"
     assert calls[0][1]["filter"] == {TELEGRAM_USER_ID_FIELD: "12345"}
     assert len(calls) == 1
+
+
+def test_lead_service_normalizes_telegram_vehicle_enums_to_bitrix_ids():
+    bitrix = FakeBitrixClient()
+    service = LeadService(bitrix, MAPPING_FILE)
+    payload = application_payload(
+        vehicles=[
+            {
+                "vehicle_country_registration": "Грузия",
+                "vehicle_type": "Легковой",
+                "insurance_period_days": 30,
+                "insurance_start_date": "2026-07-01",
+                "license_plate": "AA123BB",
+                "vin": "WVWZZZ1JZXW000001",
+                "brand_model": "VW",
+                "manufacture_year": 2020,
+                "engine_type": "Бензин",
+                "engine_capacity_cc": 1600,
+                "engine_power": 110,
+                "power_unit": "Лошадиные силы",
+            }
+        ]
+    )
+
+    service.create_application_leads(payload)
+
+    assert bitrix.deals[0]["UF_CRM_1686152306664"] == "523"
+    assert bitrix.deals[0]["UF_CRM_1686152567597"] == "127"
+    assert bitrix.deals[0]["UF_CRM_1686152745455"] == "133"
+    assert bitrix.deals[0]["UF_CRM_1686152902186"] == "147"
+
+
+def test_lead_service_does_not_send_text_document_metadata_to_bitrix_file_field():
+    bitrix = FakeBitrixClient()
+    service = LeadService(bitrix, MAPPING_FILE)
+
+    vehicle = application_payload().vehicles[0].model_dump()
+    vehicle["vehicle_docs"] = "techpass.pdf"
+
+    service.create_application_leads(application_payload(vehicles=[vehicle]))
+
+    assert "UF_CRM_1686154280439" not in bitrix.deals[0]

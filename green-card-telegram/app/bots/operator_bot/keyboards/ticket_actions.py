@@ -3,7 +3,11 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
 def reply_instruction(request_id: str) -> str:
-    return f"Ответ клиенту: ответьте текстом на это сообщение или отправьте /reply {request_id} ваш текст"
+    return "Ответ клиенту: отправьте ваш текст после"
+
+
+def reply_command(request_id: str) -> str:
+    return f"/reply {request_id}"
 
 
 def ticket_actions_keyboard(request_id: str) -> InlineKeyboardMarkup:

@@ -88,7 +88,9 @@ application:
   ask_manufacture_year: "Год выпуска ТС *"
   ask_fuel_type: "Тип топлива *"
   ask_engine_capacity: "Объем двигателя, см. куб. *"
+  ask_engine_capacity_prefilled: "Объем двигателя, см. куб. * (Использовать: {value})"
   ask_engine_power: "Мощность двигателя *"
+  ask_engine_power_prefilled: "Мощность двигателя * (Использовать: {value})"
   skip_engine_capacity_electric: "Для типа топлива Электро объем двигателя не требуется."
   ask_power_unit: "Единица измерения мощности *"
 
