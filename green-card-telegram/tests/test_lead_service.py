@@ -252,6 +252,7 @@ def test_bitrix_client_vehicle_lookup_selects_contact_id_for_privacy_check():
     assert "CONTACT_ID" in calls[0][1]["select"]
 
 
+
 def test_bitrix_client_vehicle_lookup_returns_first_deal_from_descending_id_order():
     from app.services.bitrix24_client import Bitrix24Client
 
@@ -266,6 +267,7 @@ def test_bitrix_client_vehicle_lookup_returns_first_deal_from_descending_id_orde
 
     assert deal["ID"] == "200"
     assert calls[0][1]["order"] == {"ID": "DESC"}
+
 
 
 def test_bitrix_client_prefill_search_prefers_stable_telegram_user_id_before_username():
