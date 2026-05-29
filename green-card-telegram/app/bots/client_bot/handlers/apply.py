@@ -1,3 +1,4 @@
+import logging
 import re
 
 from datetime import datetime, date
@@ -22,9 +23,13 @@ from app.bots.client_bot.keyboards.apply import (
     techpass_changed_keyboard,
     vehicle_types_keyboard,
 )
+from app.core.config import app_root
+from app.schemas.application import ApplicationCreate
 from app.services.i18n_service import I18nService
+from app.services.lead_service import LeadService
 
 router = Router()
+logger = logging.getLogger(__name__)
 
 PHONE_RE = re.compile(r"^\+[1-9]\d{7,14}$")
 EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
@@ -80,6 +85,12 @@ def _map_bitrix_enum(value: object, mapping: dict[str, str]) -> str:
     raw = str(value).strip()
     return mapping.get(raw, raw)
 
+
+
+def _bitrix_ids_match(left: object, right: object) -> bool:
+    if left is None or right is None:
+        return False
+    return str(left).strip() == str(right).strip()
 
 
 class ApplyForm(StatesGroup):
@@ -151,6 +162,59 @@ def _to_ddmmyyyy(d: date) -> str:
     return d.strftime("%d.%m.%Y")
 
 
+def _vehicle_docs_summary(docs: object) -> str | None:
+    if not docs:
+        return None
+    if isinstance(docs, list):
+        names = [str(doc.get("name", "")).strip() for doc in docs if isinstance(doc, dict) and doc.get("name")]
+        return ", ".join(names) or None
+    return str(docs)
+
+
+def _application_from_state(data: dict, lang: str) -> ApplicationCreate:
+    vehicles = []
+    for vehicle in data.get("vehicles", []):
+        vehicles.append(
+            {
+                "vehicle_country_registration": str(vehicle.get("vehicle_country", "")).strip(),
+                "vehicle_type": str(vehicle.get("vehicle_type", "")).strip(),
+                "insurance_period_days": int(vehicle.get("insurance_period") or 0),
+                "insurance_start_date": _parse_common_date(str(vehicle.get("insurance_start_date", ""))) or date.today(),
+                "license_plate": str(vehicle.get("license_plate", "")).strip(),
+                "vin": str(vehicle.get("vin", "")).strip() or None,
+                "brand_model": str(vehicle.get("brand_model", "")).strip(),
+                "manufacture_year": int(vehicle.get("manufacture_year") or 0),
+                "engine_type": str(vehicle.get("fuel_type", "")).strip(),
+                "engine_capacity_cc": int(vehicle.get("engine_capacity") or 0),
+                "engine_power": float(vehicle.get("engine_power") or 0),
+                "power_unit": str(vehicle.get("power_unit", "")).strip(),
+                "vehicle_docs": _vehicle_docs_summary(vehicle.get("vehicle_docs")),
+                "reuse_existing_vehicle_docs": bool(vehicle.get("reuse_existing_vehicle_docs")),
+            }
+        )
+
+    return ApplicationCreate(
+        first_name=str(data.get("first_name", "")).strip(),
+        last_name=str(data.get("last_name", "")).strip(),
+        phone=str(data.get("phone", "")).strip(),
+        email=str(data.get("email", "")).strip(),
+        preferred_language=lang,
+        policyholder_type="individual",
+        birth_date=_parse_common_date(str(data.get("birth_date", ""))) or date.today(),
+        registration_address=str(data.get("registration_address", "")).strip(),
+        passport_series_number=str(data.get("passport", "")).strip(),
+        vehicles=vehicles,
+        terms_accepted=True,
+        privacy_accepted=True,
+        telegram_init_data="telegram_bot_apply_flow",
+    )
+
+
+def _create_bitrix_application(data: dict, lang: str, bitrix_client, telegram_username: str | None, telegram_user_id: int | None) -> dict:
+    payload = _application_from_state(data, lang)
+    return LeadService(bitrix_client, app_root() / "config" / "bitrix_mapping.yaml").create_application_leads(payload, telegram_username, telegram_user_id)
+
+
 
 @router.message(F.text == "/apply")
 async def apply_command(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
@@ -182,6 +246,7 @@ async def apply_command(message: Message, state: FSMContext, i18n: I18nService, 
             birth_date=birth_date,
             passport=passport,
             registration_address=address,
+            bitrix_contact_id=contact.get("ID"),
         )
         await message.answer(i18n.get_text(lang, "application.prefilled_from_bitrix_editable"))
 
@@ -531,10 +596,30 @@ async def license_plate(message: Message, state: FSMContext, i18n: I18nService, 
         await message.answer(i18n.get_text(lang, "application.validation_license_plate_strict"))
         return
 
-    await state.update_data(license_plate=raw)
+    await state.update_data(
+        license_plate=raw,
+        vehicle_country="",
+        brand_model="",
+        manufacture_year="",
+        vin="",
+        vehicle_type="",
+        fuel_type="",
+        engine_capacity="",
+        engine_power="",
+        power_unit="",
+        vehicle_docs_prefilled=False,
+        reuse_existing_vehicle_docs=False,
+        vehicle_docs=[],
+    )
+    data = await state.get_data()
+    bitrix_contact_id = data.get("bitrix_contact_id")
     deal = None
     if hasattr(message.bot, "bitrix_client"):
-        deal = message.bot.bitrix_client.find_deal_by_license_plate(raw)
+        found_deal = message.bot.bitrix_client.find_deal_by_license_plate(raw)
+        if found_deal and _bitrix_ids_match(found_deal.get("CONTACT_ID"), bitrix_contact_id):
+            deal = found_deal
+        elif found_deal:
+            await message.answer(i18n.get_text(lang, "application.vehicle_not_found_manual"))
 
     if deal:
         await state.update_data(
@@ -799,6 +884,15 @@ async def vehicle_finish(callback: CallbackQuery, state: FSMContext, i18n: I18nS
 @router.callback_query(F.data == "apply:consent:agree", ApplyForm.consent)
 async def consent_agree(callback: CallbackQuery, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     lang = lang_store.get(callback.from_user.id, default_language)
+    data = await state.get_data()
+    try:
+        _create_bitrix_application(data, lang, callback.bot.bitrix_client, callback.from_user.username, callback.from_user.id)
+    except Exception as exc:
+        logger.exception("telegram_application_bitrix_error user_id=%s error=%s", callback.from_user.id, exc)
+        await callback.message.answer(i18n.get_text(lang, "application.bitrix_error"))
+        await callback.answer()
+        return
+
     await state.clear()
     await callback.message.answer(i18n.get_text(lang, "application.submitted"))
     await callback.answer()

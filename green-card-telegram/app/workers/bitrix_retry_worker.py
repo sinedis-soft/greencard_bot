@@ -1,12 +1,15 @@
 import json
 
 from rq import Queue, Retry
-from rq.job import Job
 from redis import Redis
 
+from app.core.config import app_root
+from app.schemas.application import ApplicationCreate
+from app.services.application_service import ApplicationService
 from app.services.bitrix24_client import Bitrix24Client
 from app.services.bitrix_file_service import BitrixFileService
 from app.services.bitrix_sync_service import BitrixSyncService
+from app.services.lead_service import LeadService
 
 redis_conn = Redis.from_url(__import__('os').getenv('REDIS_URL', 'redis://localhost:6379/0'))
 queue = Queue('bitrix_sync', connection=redis_conn)
@@ -24,7 +27,20 @@ def process_bitrix_job(job_id: int):
         payload = json.loads(job.payload_json)
         try:
             client = Bitrix24Client(__import__('os').getenv('BITRIX24_WEBHOOK_URL', 'https://example.bitrix24.com/rest'))
-            if job.job_type == 'create_contact':
+            if job.job_type == 'create_application_leads':
+                application_payload = payload.get('application', payload)
+                bitrix = LeadService(client, app_root() / 'config' / 'bitrix_mapping.yaml').create_application_leads(
+                    ApplicationCreate(**application_payload),
+                    payload.get('telegram_username'),
+                    payload.get('telegram_user_id'),
+                )
+                ApplicationService().mark_bitrix_created(
+                    job.request_id,
+                    bitrix.get('contact_id'),
+                    bitrix.get('company_id'),
+                    bitrix.get('deals', []),
+                )
+            elif job.job_type == 'create_contact':
                 client.create_or_update_contact(payload)
             elif job.job_type == 'create_company':
                 client.create_or_update_company(payload)

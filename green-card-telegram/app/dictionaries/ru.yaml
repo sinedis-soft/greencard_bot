@@ -82,6 +82,7 @@ application:
   ask_license_plate_after_start: "Госномер *"
   validation_license_plate_strict: "Госномер: только латинские буквы и цифры, без пробелов/тире, максимум 8 символов."
   prefilled_vehicle_from_bitrix_editable: "По госномеру нашли данные авто в нашей базе. Значения подставлены — проверьте и при необходимости исправьте."
+  vehicle_not_found_manual: "Авто по базе не найдено. Пожалуйста, внесите данные по авто вручную."
   ask_vin: "VIN номер *"
   ask_brand_model: "Марка и модель ТС *"
   ask_manufacture_year: "Год выпуска ТС *"

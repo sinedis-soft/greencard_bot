@@ -35,6 +35,7 @@ application:
   mini_app_soon: "Mini App form will be connected in the next stage."
   open_form_button: "Open application form"
   temporarily_unavailable: "Application form is temporarily unavailable."
+  vehicle_not_found_manual: "Vehicle was not found in the database. Please enter vehicle details manually."
 
 operator:
   request_received: "Request received"

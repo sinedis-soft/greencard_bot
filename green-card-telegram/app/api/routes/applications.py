@@ -4,6 +4,7 @@ from pathlib import Path
 
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
+from app.core.config import get_settings
 from app.core.security import ensure_consents
 from app.db.models import UploadedDocument, Vehicle
 from app.db.session import SessionLocal
@@ -27,7 +28,7 @@ logger = logging.getLogger(__name__)
 async def create_application(application_json: str = Form(...), vehicle_docs: list[UploadFile] = File(default=[])) -> dict:
     payload = ApplicationCreate(**json.loads(application_json))
     analytics = AnalyticsService()
-    analytics.track("application_submit_attempt", payload=payload.model_dump())
+    analytics.track("application_submit_attempt", payload=payload.model_dump(mode="json"))
     analytics.track("miniapp_opened", telegram_user_id=None, payload={"source":"miniapp"})
 
     ensure_consents(payload.terms_accepted, payload.privacy_accepted)
@@ -53,18 +54,18 @@ async def create_application(application_json: str = Form(...), vehicle_docs: li
     app_dir = Path(__file__).resolve().parents[2]
     CalculatorService(app_dir / "config" / "tariffs.yaml").estimate(payload.vehicles[0].vehicle_type, payload.vehicles[0].insurance_period_days)
 
-    bitrix_client = Bitrix24Client("https://example.bitrix24.com/rest")
+    bitrix_client = Bitrix24Client(get_settings().bitrix24_webhook_url)
     lead_service = LeadService(bitrix_client, app_dir / "config" / "bitrix_mapping.yaml")
     bitrix = {"deals": []}
     sync = BitrixSyncService()
     try:
         logger.info("bitrix_create_contact_company_deal request_id=%s", request_id)
-        bitrix = lead_service.create_application_leads(payload)
+        bitrix = lead_service.create_application_leads(payload, tg.username, tg.telegram_user_id)
         app_service.mark_bitrix_created(request_id, bitrix.get("contact_id"), bitrix.get("company_id"), bitrix.get("deals", []))
     except Exception as exc:
         logger.exception("bitrix_error request_id=%s error=%s", request_id, exc)
         app_service.mark_bitrix_pending(request_id)
-        jid = sync.create_job(request_id, "create_deal", payload.model_dump())
+        jid = sync.create_job(request_id, "create_application_leads", {"application": payload.model_dump(mode="json"), "telegram_username": tg.username, "telegram_user_id": tg.telegram_user_id})
         enqueue_bitrix_job(jid)
 
     storage = FileStorageService()
