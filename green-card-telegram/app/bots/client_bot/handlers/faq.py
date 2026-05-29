@@ -2,7 +2,7 @@ from aiogram import F, Router
 from aiogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, Message
 from uuid import uuid4
 
-from app.bots.operator_bot.keyboards.ticket_actions import reply_instruction
+from app.bots.operator_bot.keyboards.ticket_actions import reply_command, reply_instruction
 from app.services.i18n_service import I18nService
 from app.services.operator_notifier_service import OperatorNotifierService
 from app.services.operator_ticket_service import OperatorTicketService, TicketPayload
@@ -69,7 +69,8 @@ async def faq_feedback_down(callback: CallbackQuery, i18n: I18nService, lang_sto
         f"ID: {request_id}\n"
         f"Клиент: {client_name}\n"
         "Источник: FAQ (dislike)\n"
-        f"{reply_instruction(request_id)}"
+        f"{reply_instruction(request_id)}",
+        reply_command(request_id),
     )
     await callback.message.answer(i18n.get_text(lang, "operator.operator_connected"))
     await callback.answer()

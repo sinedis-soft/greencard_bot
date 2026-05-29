@@ -2,7 +2,7 @@ from aiogram import F, Router
 from aiogram.types import CallbackQuery, Message
 
 from app.bots.operator_bot.handlers.start import _operator_ids
-from app.bots.operator_bot.keyboards.ticket_actions import reply_instruction
+from app.bots.operator_bot.keyboards.ticket_actions import reply_command, reply_instruction
 from app.services.client_bot_notifier import notify_client_operator_connected
 from app.services.operator_ticket_service import OperatorTicketService
 
@@ -26,6 +26,7 @@ async def take_callback(callback: CallbackQuery) -> None:
     await callback.message.answer(
         f"{callback.bot['i18n'].get_text('en', 'operator.taken')}\n{reply_instruction(request_id)}"
     )
+    await callback.message.answer(reply_command(request_id))
     await callback.answer()
 
 
@@ -36,6 +37,7 @@ async def reply_help_callback(callback: CallbackQuery) -> None:
         return
     request_id = callback.data.split(":", 1)[1]
     await callback.message.answer(reply_instruction(request_id))
+    await callback.message.answer(reply_command(request_id))
     await callback.answer()
 
 
@@ -63,6 +65,7 @@ async def take_cmd(message: Message) -> None:
         svc.log_action(request_id, message.from_user.id, "take")
         notify_client_operator_connected(request_id)
         await message.answer(f"{message.bot['i18n'].get_text('en', 'operator.taken')}\n{reply_instruction(request_id)}")
+        await message.answer(reply_command(request_id))
 
 
 @router.message(F.text.startswith("/close "))
