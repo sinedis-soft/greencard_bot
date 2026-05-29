@@ -130,7 +130,7 @@ def test_lead_service_adds_telegram_fields_to_contact_payload():
     assert bitrix.contacts[0][TELEGRAM_USER_ID_FIELD] == 12345
 
 
-def test_bitrix_client_searches_existing_contact_by_email_before_create():
+def test_bitrix_client_searches_existing_contact_by_telegram_identity_before_email():
     from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
 
     calls = []
@@ -138,13 +138,14 @@ def test_bitrix_client_searches_existing_contact_by_email_before_create():
     class Client(Bitrix24Client):
         def _post(self, method, payload):
             calls.append((method, payload))
-            if method == "crm.contact.list" and payload["filter"].get("EMAIL") == "ivan@example.com":
+            if method == "crm.contact.list" and payload["filter"].get(TELEGRAM_USER_ID_FIELD) == 12345:
                 return {
                     "result": [
                         {
                             "ID": "77",
                             "EMAIL": [{"VALUE": "ivan@example.com"}],
                             "PHONE": [{"VALUE": "+995555000111"}],
+                            TELEGRAM_USER_ID_FIELD: 12345,
                         }
                     ]
                 }
@@ -163,7 +164,7 @@ def test_bitrix_client_searches_existing_contact_by_email_before_create():
     )
 
     assert contact_id == 77
-    assert calls[0] == ("crm.contact.list", {"filter": {"EMAIL": "ivan@example.com"}, "select": ["ID", "PHONE", "EMAIL", TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD]})
+    assert calls[0] == ("crm.contact.list", {"filter": {TELEGRAM_USER_ID_FIELD: 12345}, "select": ["ID", "PHONE", "EMAIL", TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD]})
     assert calls[1][0] == "crm.contact.update"
     assert "EMAIL" not in calls[1][1]["fields"]
     assert "PHONE" not in calls[1][1]["fields"]
@@ -194,8 +195,9 @@ def test_bitrix_client_creates_contact_only_after_email_miss():
     )
 
     assert contact_id == 88
-    assert [method for method, _ in calls] == ["crm.contact.list", "crm.contact.add"]
-    assert calls[0][1]["filter"] == {"EMAIL": "ivan@example.com"}
+    assert [method for method, _ in calls] == ["crm.contact.list", "crm.contact.list", "crm.contact.add"]
+    assert calls[0][1]["filter"] == {TELEGRAM_USERNAME_FIELD: "john"}
+    assert calls[1][1]["filter"] == {"EMAIL": "ivan@example.com"}
 
 
 def test_bitrix_client_prefill_search_uses_telegram_username():
@@ -246,4 +248,40 @@ def test_bitrix_client_vehicle_lookup_selects_contact_id_for_privacy_check():
     assert Client("https://example.test/rest").find_deal_by_license_plate("AA123BB") is None
 
     assert calls[0][0] == "crm.deal.list"
+    assert calls[0][1]["order"] == {"ID": "DESC"}
     assert "CONTACT_ID" in calls[0][1]["select"]
+
+
+def test_bitrix_client_vehicle_lookup_returns_first_deal_from_descending_id_order():
+    from app.services.bitrix24_client import Bitrix24Client
+
+    calls = []
+
+    class Client(Bitrix24Client):
+        def _post(self, method, payload):
+            calls.append((method, payload))
+            return {"result": [{"ID": "200", "CONTACT_ID": "10"}, {"ID": "100", "CONTACT_ID": "10"}]}
+
+    deal = Client("https://example.test/rest").find_deal_by_license_plate("TEST1234")
+
+    assert deal["ID"] == "200"
+    assert calls[0][1]["order"] == {"ID": "DESC"}
+
+
+def test_bitrix_client_prefill_search_prefers_stable_telegram_user_id_before_username():
+    from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
+
+    calls = []
+
+    class Client(Bitrix24Client):
+        def _post(self, method, payload):
+            calls.append((method, payload))
+            if payload["filter"] == {TELEGRAM_USER_ID_FIELD: "12345"}:
+                return {"result": [{"ID": "77", TELEGRAM_USER_ID_FIELD: "12345"}]}
+            return {"result": [{"ID": "88", TELEGRAM_USERNAME_FIELD: "john"}]}
+
+    contact = Client("https://example.test/rest").find_contact_by_telegram_identity(username="john", user_id=12345)
+
+    assert contact["ID"] == "77"
+    assert calls[0][1]["filter"] == {TELEGRAM_USER_ID_FIELD: "12345"}
+    assert len(calls) == 1
