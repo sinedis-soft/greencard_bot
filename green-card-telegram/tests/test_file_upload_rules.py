@@ -75,3 +75,24 @@ def test_bitrix_file_service_updates_multiple_deal_files_as_filedata(tmp_path: P
             },
         )
     ]
+
+
+def test_bitrix_client_flattens_crm_filedata_with_positional_indexes():
+    from app.services.bitrix24_client import Bitrix24Client
+    from app.services.bitrix_file_service import BITRIX_DEAL_VEHICLE_DOCS_FIELD
+
+    payload = {
+        "fields": {
+            BITRIX_DEAL_VEHICLE_DOCS_FIELD: [
+                {"fileData": ["front.pdf", "ZnJvbnQ="]},
+                {"fileData": ["back.pdf", "YmFjaw=="]},
+            ]
+        }
+    }
+
+    assert Bitrix24Client("https://example.test/rest")._flatten_payload(payload) == [
+        (f"fields[{BITRIX_DEAL_VEHICLE_DOCS_FIELD}][0][fileData][0]", "front.pdf"),
+        (f"fields[{BITRIX_DEAL_VEHICLE_DOCS_FIELD}][0][fileData][1]", "ZnJvbnQ="),
+        (f"fields[{BITRIX_DEAL_VEHICLE_DOCS_FIELD}][1][fileData][0]", "back.pdf"),
+        (f"fields[{BITRIX_DEAL_VEHICLE_DOCS_FIELD}][1][fileData][1]", "YmFjaw=="),
+    ]
