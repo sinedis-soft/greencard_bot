@@ -87,6 +87,14 @@ def prefill_next_keyboard(button_text: str, field_key: str) -> InlineKeyboardMar
     return builder.as_markup()
 
 
+def data_actual_keyboard(actual_text: str, edit_text: str, prefix: str) -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    builder.button(text=actual_text, callback_data=f"apply:{prefix}:actual")
+    builder.button(text=edit_text, callback_data=f"apply:{prefix}:edit")
+    builder.adjust(1)
+    return builder.as_markup()
+
+
 def skip_comment_keyboard(button_text: str) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.button(text=button_text, callback_data="apply:comment:skip")

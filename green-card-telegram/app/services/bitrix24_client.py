@@ -57,6 +57,12 @@ class Bitrix24Client:
     def find_contact_by_telegram_username(self, username: str) -> dict[str, Any] | None:
         return self.find_contact_by_telegram_identity(username=username)
 
+    def find_contact_by_email(self, email: str) -> dict[str, Any] | None:
+        email = (email or "").strip()
+        if not email:
+            return None
+        return self._find_first("crm.contact.list", "EMAIL", email, self._prefill_contact_select_fields())
+
     def find_contact_by_telegram_identity(self, username: str | None = None, user_id: int | str | None = None) -> dict[str, Any] | None:
         username = (username or "").strip()
         user_id = str(user_id or "").strip()
@@ -72,24 +78,27 @@ class Bitrix24Client:
         for crm_filter in filters:
             payload = {
                 "filter": crm_filter,
-                "select": [
-                    "ID",
-                    "LAST_NAME",
-                    "NAME",
-                    "BIRTHDATE",
-                    "ADDRESS",
-                    "PHONE",
-                    "EMAIL",
-                    "UF_CRM_CONTACT_1686145698592",
-                    TELEGRAM_USERNAME_FIELD,
-                    TELEGRAM_USER_ID_FIELD,
-                ],
+                "select": self._prefill_contact_select_fields(),
             }
             res = self._post("crm.contact.list", payload)
             items = res.get("result") or []
             if items:
                 return items[0]
         return None
+
+    def _prefill_contact_select_fields(self) -> list[str]:
+        return [
+            "ID",
+            "LAST_NAME",
+            "NAME",
+            "BIRTHDATE",
+            "ADDRESS",
+            "PHONE",
+            "EMAIL",
+            "UF_CRM_CONTACT_1686145698592",
+            TELEGRAM_USERNAME_FIELD,
+            TELEGRAM_USER_ID_FIELD,
+        ]
 
     def find_deal_by_license_plate(self, plate: str) -> dict[str, Any] | None:
         if not plate:

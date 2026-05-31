@@ -43,6 +43,32 @@ application:
   step_2: "2. Данные о страховке и транспортном средстве"
   prefilled_from_bitrix: "Нашли ваш профиль в нашей базе по имени пользователя Telegram. Контакты и данные страхователя подставлены автоматически."
   prefilled_from_bitrix_editable: "Нашли ваш профиль в нашей базе по username Telegram. Данные подставлены — проверьте и при необходимости исправьте. Если всё верно, можно отправлять пустое сообщение на шаге."
+  ask_email_lookup: |
+    Не нашли профиль по username Telegram.
+    Пожалуйста, введите e-mail для поиска клиента.
+  contact_not_found_manual: "Клиент по e-mail не найден. Заполните персональные данные вручную."
+  ask_passport_verify: "Клиент найден по e-mail. Введите серию и номер паспорта без пробелов для подтверждения личности."
+  passport_verify_failed_manual: "Паспорт не совпал с данными в базе. Для безопасности заполните персональные данные вручную."
+  personal_data_summary: |
+    Проверьте персональные данные:
+    Фамилия и имя: {last_name} {first_name}
+    Дата рождения: {birth_date}
+    Номер паспорта: {passport}
+    Адрес проживания: {registration_address}
+    E-mail: {email}
+    Телефон: {phone}
+
+    Данные актуальные или необходимо внести изменения?
+  vehicle_data_summary: |
+    {vehicle_type} с государственным номером регистрации: {license_plate}
+    ТС зарегистрирован в стране: {vehicle_country}
+    Год выпуска: {manufacture_year}
+    VIN: {vin}
+    {fuel_type}, объем двигателя {engine_capacity} см.куб., мощность {engine_power}, {power_unit}
+
+    Данные актуальные или необходимо внести изменения?
+  data_actual: "Данные актуальные"
+  data_edit: "Необходимо внести изменения"
   ask_first_name_prefilled: "Имя * (Использовать: {value})"
 
   prefill_next_button: "ДА, СЛЕДУЮЩИЙ ВОПРОС"
