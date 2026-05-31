@@ -43,6 +43,32 @@ application:
   step_2: "2. Dane ubezpieczenia i pojazdu"
   prefilled_from_bitrix: "Znaleźliśmy Twój profil w naszej bazie na podstawie nazwy użytkownika Telegram. Dane kontaktowe i dane ubezpieczającego zostały uzupełnione automatycznie."
   prefilled_from_bitrix_editable: "Znaleźliśmy Twój profil w naszej bazie na podstawie nazwy użytkownika Telegram. Dane zostały uzupełnione — sprawdź je i w razie potrzeby popraw. Jeśli wszystko się zgadza, możesz wysłać pustą wiadomość na etapie."
+  ask_email_lookup: |
+    Nie znaleźliśmy profilu po nazwie użytkownika Telegram.
+    Wpisz e-mail, aby wyszukać klienta.
+  contact_not_found_manual: "Nie znaleziono klienta po e-mailu. Wprowadź dane osobowe ręcznie."
+  ask_passport_verify: "Klient został znaleziony po e-mailu. Wpisz serię i numer paszportu bez spacji, aby potwierdzić tożsamość."
+  passport_verify_failed_manual: "Paszport nie zgadza się z danymi w bazie. Ze względów bezpieczeństwa wprowadź dane osobowe ręcznie."
+  personal_data_summary: |
+    Sprawdź dane osobowe:
+    Nazwisko i imię: {last_name} {first_name}
+    Data urodzenia: {birth_date}
+    Numer paszportu: {passport}
+    Adres zamieszkania: {registration_address}
+    E-mail: {email}
+    Telefon: {phone}
+
+    Czy dane są aktualne, czy trzeba wprowadzić zmiany?
+  vehicle_data_summary: |
+    {vehicle_type} z numerem rejestracyjnym: {license_plate}
+    Pojazd zarejestrowany w kraju: {vehicle_country}
+    Rok produkcji: {manufacture_year}
+    VIN: {vin}
+    {fuel_type}, pojemność silnika {engine_capacity} cm³, moc {engine_power}, {power_unit}
+
+    Czy dane są aktualne, czy trzeba wprowadzić zmiany?
+  data_actual: "Dane są aktualne"
+  data_edit: "Trzeba wprowadzić zmiany"
   ask_first_name_prefilled: "Imię * (Użyć: {value})"
 
   prefill_next_button: "TAK, NASTĘPNE PYTANIE"
