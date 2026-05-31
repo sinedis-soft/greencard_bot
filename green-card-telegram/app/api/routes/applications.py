@@ -60,12 +60,12 @@ async def create_application(application_json: str = Form(...), vehicle_docs: li
     sync = BitrixSyncService()
     try:
         logger.info("bitrix_create_contact_company_deal request_id=%s", request_id)
-        bitrix = lead_service.create_application_leads(payload, tg.username, tg.telegram_user_id)
+        bitrix = lead_service.create_application_leads(payload, tg.username, tg.telegram_user_id, tg.telegram_chat_id)
         app_service.mark_bitrix_created(request_id, bitrix.get("contact_id"), bitrix.get("company_id"), bitrix.get("deals", []))
     except Exception as exc:
         logger.exception("bitrix_error request_id=%s error=%s", request_id, exc)
         app_service.mark_bitrix_pending(request_id)
-        jid = sync.create_job(request_id, "create_application_leads", {"application": payload.model_dump(mode="json"), "telegram_username": tg.username, "telegram_user_id": tg.telegram_user_id})
+        jid = sync.create_job(request_id, "create_application_leads", {"application": payload.model_dump(mode="json"), "telegram_username": tg.username, "telegram_user_id": tg.telegram_user_id, "telegram_chat_id": tg.telegram_chat_id})
         enqueue_bitrix_job(jid)
 
     storage = FileStorageService()
