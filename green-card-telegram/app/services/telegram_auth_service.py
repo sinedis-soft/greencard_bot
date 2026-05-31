@@ -10,6 +10,7 @@ class TelegramUserContext:
     telegram_user_id: int | None
     username: str | None
     language_code: str | None
+    telegram_chat_id: int | None = None
 
 
 class TelegramAuthError(ValueError):
@@ -38,8 +39,11 @@ class TelegramAuthService:
 
         user_raw = data.get("user")
         user = json.loads(user_raw) if user_raw else {}
+        chat_raw = data.get("chat")
+        chat = json.loads(chat_raw) if chat_raw else {}
         return TelegramUserContext(
             telegram_user_id=user.get("id"),
             username=user.get("username"),
             language_code=user.get("language_code"),
+            telegram_chat_id=chat.get("id") or user.get("id"),
         )
