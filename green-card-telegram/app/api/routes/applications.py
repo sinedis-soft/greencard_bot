@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 async def create_application(application_json: str = Form(...), vehicle_docs: list[UploadFile] = File(default=[])) -> dict:
     payload = ApplicationCreate(**json.loads(application_json))
     analytics = AnalyticsService()
-    analytics.track("application_submit_attempt", payload=payload.model_dump(mode="json"))
+    analytics.track("application_submit_attempt", payload={"vehicle_count": len(payload.vehicles), "preferred_language": payload.preferred_language})
     analytics.track("miniapp_opened", telegram_user_id=None, payload={"source":"miniapp"})
 
     ensure_consents(payload.terms_accepted, payload.privacy_accepted)
@@ -111,4 +111,6 @@ async def create_application(application_json: str = Form(...), vehicle_docs: li
         db.commit()
 
     analytics.track("application_submitted", request_id=request_id, telegram_user_id=tg.telegram_user_id, payload={"deals": bitrix.get("deals", [])})
+    if bitrix.get("deals"):
+        app_service.purge_sensitive_data_after_success(request_id)
     return {"success": True, "request_id": request_id, "deals": bitrix.get("deals", [])}

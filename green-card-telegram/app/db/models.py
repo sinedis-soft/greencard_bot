@@ -24,6 +24,7 @@ class Application(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     bitrix_contact_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
     bitrix_company_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    bitrix_deal_ids_json: Mapped[str] = mapped_column(Text, default="[]")
     policyholder: Mapped["Policyholder"] = relationship(back_populates="application", uselist=False)
     vehicles: Mapped[list["Vehicle"]] = relationship(back_populates="application")
 

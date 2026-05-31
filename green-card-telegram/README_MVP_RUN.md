@@ -85,6 +85,23 @@ curl -X POST "https://your-backend.example.com/api/bitrix/send-message" \
 
 ---
 
+
+
+### Очистка локальных персональных данных
+
+После успешного создания сделок в Bitrix backend сразу очищает локальные данные заявки и оставляет только минимальную строку `applications`: `request_id`, `telegram_user_id`, `bitrix_deal_ids_json`, `status`, `created_at`, `updated_at`, `source_channel`.
+
+Для отложенной очистки файлов и операционных данных запускайте retention worker по расписанию (например, cron раз в день):
+
+```bash
+python -c "from app.workers.data_retention_worker import run_data_retention; print(run_data_retention())"
+```
+
+Он удаляет локальные файлы из `storage/applications/<request_id>/...` через 72 часа после успешной передачи в Bitrix, а через 90 дней очищает старые операторские/аналитические/технические данные.
+
+---
+
+
 ## 3) Локальный запуск проекта (на вашем сервере/ПК)
 
 Из корня проекта:
