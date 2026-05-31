@@ -1,15 +1,24 @@
+import locale as pylocale
 import logging
 import re
 import tempfile
 
-from datetime import datetime, date
+from datetime import datetime, date, time, timedelta
 from pathlib import Path
 
 
 from aiogram import F, Router
+from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import CallbackQuery, Message
+from aiogram_calendar import (
+    DialogCalendar,
+    DialogCalendarCallback,
+    SimpleCalendar,
+    SimpleCalendarCallback,
+    get_user_locale,
+)
 
 
 from app.bots.client_bot.keyboards.apply import (
@@ -82,6 +91,22 @@ BITRIX_FUEL_MAP = {
 }
 FUEL_TYPES = {"Бензин", "Дизель", "Газ / бензин", "Электро", "Гибрид"}
 POWER_UNITS = {"Лошадиные силы", "Киловат"}
+CALENDAR_LOCALES = {
+    "be": "be_BY",
+    "by": "be_BY",
+    "en": "en_US",
+    "fa": "fa_IR",
+    "hy": "hy_AM",
+    "ka": "ka_GE",
+    "kk": "kk_KZ",
+    "mn": "mn_MN",
+    "ro": "ro_RO",
+    "ru": "ru_RU",
+    "tr": "tr_TR",
+    "uk": "uk_UA",
+    "uz": "uz_UZ",
+}
+INSURANCE_START_MAX_DAYS = 366 * 5
 
 
 def _map_bitrix_enum(value: object, mapping: dict[str, str]) -> str:
@@ -234,6 +259,121 @@ def _to_ddmmyyyy(d: date) -> str:
     return d.strftime("%d.%m.%Y")
 
 
+def _max_birth_date(today: date | None = None) -> date:
+    today = today or date.today()
+    try:
+        return today.replace(year=today.year - 18)
+    except ValueError:
+        return today.replace(year=today.year - 18, day=28)
+
+
+def _datetime_start(value: date) -> datetime:
+    return datetime.combine(value, time.min)
+
+
+def _localized_calendar_text(i18n: I18nService, lang: str, key: str, default: str) -> str:
+    text = i18n.get_text(lang, key)
+    return default if text == key else text
+
+
+async def _calendar_locale(from_user, lang: str) -> str | None:
+    try:
+        return await get_user_locale(from_user)
+    except (AttributeError, KeyError):
+        return CALENDAR_LOCALES.get(lang)
+
+
+def _dialog_calendar(locale: str | None, i18n: I18nService, lang: str) -> DialogCalendar:
+    kwargs = {
+        "cancel_btn": _localized_calendar_text(i18n, lang, "application.calendar.cancel", "Cancel"),
+        "show_alerts": True,
+    }
+    try:
+        return DialogCalendar(locale=locale, **kwargs)
+    except (KeyError, ValueError, pylocale.Error):
+        return DialogCalendar(**kwargs)
+
+
+def _simple_calendar(locale: str | None, i18n: I18nService, lang: str) -> SimpleCalendar:
+    kwargs = {
+        "cancel_btn": _localized_calendar_text(i18n, lang, "application.calendar.cancel", "Cancel"),
+        "today_btn": _localized_calendar_text(i18n, lang, "application.calendar.today", "Today"),
+        "show_alerts": True,
+    }
+    try:
+        return SimpleCalendar(locale=locale, **kwargs)
+    except (KeyError, ValueError, pylocale.Error):
+        return SimpleCalendar(**kwargs)
+
+
+def _configure_birth_calendar(calendar: DialogCalendar) -> DialogCalendar:
+    calendar.set_dates_range(_datetime_start(date(1900, 1, 1)), _datetime_start(_max_birth_date()))
+    return calendar
+
+
+def _configure_insurance_calendar(calendar: SimpleCalendar) -> SimpleCalendar:
+    today = date.today()
+    calendar.set_dates_range(
+        _datetime_start(today),
+        _datetime_start(today + timedelta(days=INSURANCE_START_MAX_DAYS)),
+    )
+    return calendar
+
+
+async def _birth_calendar_markup(from_user, i18n: I18nService, lang: str):
+    calendar = _configure_birth_calendar(
+        _dialog_calendar(await _calendar_locale(from_user, lang), i18n, lang)
+    )
+    max_date = _max_birth_date()
+    return await calendar.start_calendar(year=max_date.year)
+
+
+async def _insurance_calendar_markup(from_user, i18n: I18nService, lang: str):
+    calendar = _configure_insurance_calendar(
+        _simple_calendar(await _calendar_locale(from_user, lang), i18n, lang)
+    )
+    today = date.today()
+    return await calendar.start_calendar(year=today.year, month=today.month)
+
+
+def _is_adult(value: date) -> bool:
+    today = date.today()
+    age = today.year - value.year - ((today.month, today.day) < (value.month, value.day))
+    return age >= 18
+
+
+async def _save_birth_date_and_ask_passport(
+    message: Message, state: FSMContext, i18n: I18nService, lang: str, value: date
+) -> bool:
+    if not _is_adult(value):
+        await message.answer(i18n.get_text(lang, "application.validation_age_18"))
+        return False
+    data = await state.get_data()
+    await state.update_data(birth_date=_to_ddmmyyyy(value))
+    await state.set_state(ApplyForm.passport)
+    passport_prefill = str(data.get("passport", "")).strip()
+    if passport_prefill:
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_passport_prefilled", passport_prefill, "passport")
+    else:
+        await message.answer(i18n.get_text(lang, "application.ask_passport"))
+    return True
+
+
+async def _save_insurance_start_date_and_ask_period(
+    message: Message, state: FSMContext, i18n: I18nService, lang: str, value: date
+) -> bool:
+    if value < date.today():
+        await message.answer(i18n.get_text(lang, "application.validation_insurance_start_not_past"))
+        return False
+    await state.update_data(insurance_start_date=_to_ddmmyyyy(value))
+    await state.set_state(ApplyForm.insurance_period)
+    await message.answer(
+        i18n.get_text(lang, "application.ask_insurance_period"),
+        reply_markup=periods_keyboard(i18n, lang),
+    )
+    return True
+
+
 def _vehicle_docs_summary(docs: object) -> str | None:
     if not docs:
         return None
@@ -367,7 +507,9 @@ async def send_apply(message: Message, state: FSMContext) -> None:
     await apply_command(message, state, message.bot.i18n, message.bot.lang_store, message.bot.default_language)
 
 
-@router.message(F.text.regexp(r"^(?:/|🧮|❓|🌍|📝|👨‍💼|🌐)"))
+
+@router.message(StateFilter(ApplyForm), F.text.regexp(r"^(?:/|🧮|❓|🌍|📝|👨‍💼|🌐)"))
+
 async def menu_shortcut_during_apply(message: Message, state: FSMContext) -> None:
     lang = message.bot.lang_store.get(message.from_user.id, message.bot.default_language)
     action = menu_action_for_text(
@@ -416,9 +558,33 @@ async def _ask_techpass_or_docs(message: Message, state: FSMContext, i18n: I18nS
         await message.answer(i18n.get_text(lang, "application.ask_vehicle_docs"))
 
 
-async def _ask_insurance_start_date(message: Message, state: FSMContext, i18n: I18nService, lang: str) -> None:
+async def _ask_birth_date(
+    message: Message,
+    state: FSMContext,
+    i18n: I18nService,
+    lang: str,
+    prefill: str = "",
+    calendar_user=None,
+) -> None:
+    await state.set_state(ApplyForm.birth_date)
+    if prefill:
+        await _send_prefilled_prompt(
+            message, i18n, lang, "application.ask_birth_date_prefilled", prefill, "birth_date"
+        )
+    await message.answer(
+        i18n.get_text(lang, "application.ask_birth_date"),
+        reply_markup=await _birth_calendar_markup(calendar_user or message.from_user, i18n, lang),
+    )
+
+
+async def _ask_insurance_start_date(
+    message: Message, state: FSMContext, i18n: I18nService, lang: str, calendar_user=None
+) -> None:
     await state.set_state(ApplyForm.insurance_start_date)
-    await message.answer(i18n.get_text(lang, "application.ask_insurance_start_date"))
+    await message.answer(
+        i18n.get_text(lang, "application.ask_insurance_start_date"),
+        reply_markup=await _insurance_calendar_markup(calendar_user or message.from_user, i18n, lang),
+    )
 
 
 async def _finish_vehicle_and_ask_next(message: Message, state: FSMContext, i18n: I18nService, lang: str) -> None:
@@ -549,12 +715,8 @@ async def prefill_next(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
             await callback.message.answer(i18n.get_text(lang, "application.ask_email"))
     elif field == "email":
         await state.update_data(email=str(data.get("email", "")).strip())
-        await state.set_state(ApplyForm.birth_date)
         value = str(data.get("birth_date", "")).strip()
-        if value:
-            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_birth_date_prefilled", value, "birth_date")
-        else:
-            await callback.message.answer(i18n.get_text(lang, "application.ask_birth_date"))
+        await _ask_birth_date(callback.message, state, i18n, lang, value, callback.from_user)
     elif field == "birth_date":
         await state.update_data(birth_date=str(data.get("birth_date", "")).strip())
         await state.set_state(ApplyForm.passport)
@@ -723,12 +885,29 @@ async def email(message: Message, state: FSMContext, i18n: I18nService, lang_sto
         await message.answer(i18n.get_text(lang, "application.validation_email"))
         return
     await state.update_data(email=value)
-    await state.set_state(ApplyForm.birth_date)
     birth_prefill = str(data.get("birth_date", "")).strip()
-    if birth_prefill:
-        await _send_prefilled_prompt(message, i18n, lang, "application.ask_birth_date_prefilled", birth_prefill, "birth_date")
-    else:
-        await message.answer(i18n.get_text(lang, "application.ask_birth_date"))
+    await _ask_birth_date(message, state, i18n, lang, birth_prefill)
+
+
+@router.callback_query(DialogCalendarCallback.filter(), ApplyForm.birth_date)
+async def birth_date_calendar(
+    callback: CallbackQuery,
+    callback_data: DialogCalendarCallback,
+    state: FSMContext,
+    i18n: I18nService,
+    lang_store: dict[int, str],
+    default_language: str,
+) -> None:
+    lang = lang_store.get(callback.from_user.id, default_language)
+    calendar = _configure_birth_calendar(
+        _dialog_calendar(await _calendar_locale(callback.from_user, lang), i18n, lang)
+    )
+    selected, selected_date = await calendar.process_selection(callback, callback_data)
+    if selected:
+        await _save_birth_date_and_ask_passport(
+            callback.message, state, i18n, lang, selected_date.date()
+        )
+        await callback.answer()
 
 
 @router.message(ApplyForm.birth_date)
@@ -742,18 +921,7 @@ async def birth_date(message: Message, state: FSMContext, i18n: I18nService, lan
     if not parsed:
         await message.answer(i18n.get_text(lang, "application.validation_date"))
         return
-    today = date.today()
-    age = today.year - parsed.year - ((today.month, today.day) < (parsed.month, parsed.day))
-    if age < 18:
-        await message.answer(i18n.get_text(lang, "application.validation_age_18"))
-        return
-    await state.update_data(birth_date=_to_ddmmyyyy(parsed))
-    await state.set_state(ApplyForm.passport)
-    passport_prefill = str(data.get("passport", "")).strip()
-    if passport_prefill:
-        await _send_prefilled_prompt(message, i18n, lang, "application.ask_passport_prefilled", passport_prefill, "passport")
-    else:
-        await message.answer(i18n.get_text(lang, "application.ask_passport"))
+    await _save_birth_date_and_ask_passport(message, state, i18n, lang, parsed)
 
 
 @router.message(ApplyForm.passport)
@@ -798,6 +966,27 @@ async def insurance_period(callback: CallbackQuery, state: FSMContext, i18n: I18
     await callback.answer()
 
 
+@router.callback_query(SimpleCalendarCallback.filter(), ApplyForm.insurance_start_date)
+async def insurance_start_date_calendar(
+    callback: CallbackQuery,
+    callback_data: SimpleCalendarCallback,
+    state: FSMContext,
+    i18n: I18nService,
+    lang_store: dict[int, str],
+    default_language: str,
+) -> None:
+    lang = lang_store.get(callback.from_user.id, default_language)
+    calendar = _configure_insurance_calendar(
+        _simple_calendar(await _calendar_locale(callback.from_user, lang), i18n, lang)
+    )
+    selected, selected_date = await calendar.process_selection(callback, callback_data)
+    if selected:
+        await _save_insurance_start_date_and_ask_period(
+            callback.message, state, i18n, lang, selected_date.date()
+        )
+        await callback.answer()
+
+
 @router.message(ApplyForm.insurance_start_date)
 async def insurance_start_date(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     lang = lang_store.get(message.from_user.id, default_language)
@@ -806,12 +995,9 @@ async def insurance_start_date(message: Message, state: FSMContext, i18n: I18nSe
     if not parsed:
         await message.answer(i18n.get_text(lang, "application.validation_date"))
         return
-    if parsed < date.today():
-        await message.answer(i18n.get_text(lang, "application.validation_insurance_start_not_past"))
-        return
-    await state.update_data(insurance_start_date=_to_ddmmyyyy(parsed))
-    await state.set_state(ApplyForm.insurance_period)
-    await message.answer(i18n.get_text(lang, "application.ask_insurance_period"), reply_markup=periods_keyboard(i18n, lang))
+
+    await _save_insurance_start_date_and_ask_period(message, state, i18n, lang, parsed)
+
 
 
 @router.message(ApplyForm.vehicle_country)
@@ -1081,7 +1267,7 @@ async def comment(message: Message, state: FSMContext, i18n: I18nService, lang_s
 async def techpass_unchanged(callback: CallbackQuery, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     lang = lang_store.get(callback.from_user.id, default_language)
     await state.update_data(reuse_existing_vehicle_docs=True, vehicle_docs=[])
-    await _ask_insurance_start_date(callback.message, state, i18n, lang)
+    await _ask_insurance_start_date(callback.message, state, i18n, lang, callback.from_user)
     await callback.answer()
 
 

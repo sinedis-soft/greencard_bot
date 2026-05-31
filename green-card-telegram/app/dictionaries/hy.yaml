@@ -29,6 +29,11 @@ calculator:
     special: "Հատուկ տեխնիկա"
 
 application:
+
+  calendar:
+    cancel: "Չեղարկել"
+    today: "Այսօր"
+
   options:
     period_days: "{days} օր"
     countries:

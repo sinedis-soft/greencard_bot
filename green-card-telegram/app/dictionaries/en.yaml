@@ -29,6 +29,11 @@ calculator:
     special: "Special-purpose vehicle"
 
 application:
+
+  calendar:
+    cancel: "Cancel"
+    today: "Today"
+
   options:
     period_days: "{days} days"
     countries:

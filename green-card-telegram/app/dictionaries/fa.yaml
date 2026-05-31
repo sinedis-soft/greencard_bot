@@ -29,6 +29,11 @@ calculator:
     special: "ماشین‌آلات ویژه"
 
 application:
+
+  calendar:
+    cancel: "لغو"
+    today: "امروز"
+
   options:
     period_days: "{days} روز"
     countries:

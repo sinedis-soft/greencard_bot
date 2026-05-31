@@ -29,6 +29,11 @@ calculator:
     special: "Tehnică specială"
 
 application:
+
+  calendar:
+    cancel: "Anulare"
+    today: "Astăzi"
+
   options:
     period_days: "{days} zile"
     countries:

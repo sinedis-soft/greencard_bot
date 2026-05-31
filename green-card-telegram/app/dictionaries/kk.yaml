@@ -29,6 +29,11 @@ calculator:
     special: "Арнайы техника"
 
 application:
+
+  calendar:
+    cancel: "Болдырмау"
+    today: "Бүгін"
+
   options:
     period_days: "{days} күн"
     countries:
