@@ -1,9 +1,10 @@
+import json
 from datetime import datetime, timedelta
 from uuid import uuid4
 
 from sqlalchemy import and_, or_, select
 
-from app.db.models import Application, Policyholder, UploadedDocument, Vehicle
+from app.db.models import AnalyticsEvent, Application, BitrixSyncJob, Policyholder, UploadedDocument, Vehicle
 from app.db.session import SessionLocal
 from app.schemas.application import ApplicationCreate
 
@@ -104,8 +105,32 @@ class ApplicationService:
             app.status = "bitrix_created"
             app.bitrix_contact_id = contact_id
             app.bitrix_company_id = company_id
+            app.bitrix_deal_ids_json = json.dumps(deal_ids)
             vehicles = list(db.scalars(select(Vehicle).where(Vehicle.application_id == app.id).order_by(Vehicle.id.asc())))
             for idx, deal_id in enumerate(deal_ids):
                 if idx < len(vehicles):
                     vehicles[idx].bitrix_deal_id = deal_id
+            db.commit()
+
+
+    def purge_sensitive_data_after_success(self, request_id: str) -> None:
+        with SessionLocal() as db:
+            app = db.scalar(select(Application).where(Application.request_id == request_id))
+            if not app or app.status != "bitrix_created":
+                return
+
+            db.query(UploadedDocument).filter(UploadedDocument.request_id == request_id).delete(synchronize_session=False)
+            db.query(Policyholder).filter(Policyholder.application_id == app.id).delete(synchronize_session=False)
+            db.query(Vehicle).filter(Vehicle.application_id == app.id).delete(synchronize_session=False)
+            db.query(AnalyticsEvent).filter(AnalyticsEvent.request_id == request_id).delete(synchronize_session=False)
+            db.query(BitrixSyncJob).filter(
+                BitrixSyncJob.request_id == request_id,
+                BitrixSyncJob.job_type == "create_application_leads",
+            ).delete(synchronize_session=False)
+
+            app.telegram_username = None
+            app.telegram_language_code = None
+            app.last_error = None
+            app.bitrix_contact_id = None
+            app.bitrix_company_id = None
             db.commit()

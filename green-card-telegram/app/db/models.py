@@ -24,6 +24,7 @@ class Application(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     bitrix_contact_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
     bitrix_company_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    bitrix_deal_ids_json: Mapped[str] = mapped_column(Text, default="[]")
     policyholder: Mapped["Policyholder"] = relationship(back_populates="application", uselist=False)
     vehicles: Mapped[list["Vehicle"]] = relationship(back_populates="application")
 
@@ -69,6 +70,7 @@ class OperatorTicket(Base):
     __tablename__ = "operator_tickets"
     request_id: Mapped[str] = mapped_column(String(64), primary_key=True)
     telegram_user_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
+    preferred_language: Mapped[str | None] = mapped_column(String(16), nullable=True)
     status: Mapped[str] = mapped_column(String(32), default="new")
     operator_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
     first_response_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
