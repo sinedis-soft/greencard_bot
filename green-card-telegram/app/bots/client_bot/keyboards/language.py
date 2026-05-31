@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-LANGUAGES = ["ru", "en", "pl", "ka", "kk"]
+LANGUAGES = ["be", "ru", "uk", "mn", "en", "ro", "tr", "kk", "uz", "ka", "hy", "fa"]
 
 
 def language_keyboard() -> InlineKeyboardMarkup:

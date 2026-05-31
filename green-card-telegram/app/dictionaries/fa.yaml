@@ -1,0 +1,230 @@
+main_menu:
+  calculator: "🧮 ماشین‌حساب"
+  faq: "❓ FAQ"
+  coverage: "🌍 کجا معتبر است؟"
+  apply: "📝 ثبت درخواست"
+  operator: "👨‍💼 تماس با اپراتور"
+  language: "🌐 زبان"
+
+menu:
+  title: "منوی اصلی"
+
+language:
+  select: "لطفاً زبان را انتخاب کنید"
+  changed: "زبان به‌روزرسانی شد"
+
+calculator:
+  result_title: "هزینه اولیه"
+  disclaimer: "محاسبه اولیه"
+  apply_cta: "📝 ثبت درخواست"
+  select_vehicle_type: "نوع وسیله نقلیه را انتخاب کنید"
+  select_period: "مدت بیمه را انتخاب کنید (روز)"
+  result_template: "هزینه اولیه: {estimated_price} {currency}\n{disclaimer}"
+  vehicle:
+    car: "خودروی سواری"
+    truck: "خودروی باری"
+    bus: "اتوبوس"
+    moto: "موتورسیکلت"
+    trailer: "تریلر"
+    special: "ماشین‌آلات ویژه"
+
+application:
+  submitted: "درخواست ارسال شد. ما بیمه‌نامه را آماده کرده و اطلاعات پرداخت را برای شما ارسال می‌کنیم."
+  validation_error: "خطای بررسی داده‌ها"
+  bitrix_error: "خطای Bitrix"
+  mini_app_soon: "فرم Mini App در مرحله بعد متصل خواهد شد."
+  open_form_button: "باز کردن فرم درخواست"
+  temporarily_unavailable: "فرم درخواست موقتاً در دسترس نیست."
+  form_header: |
+    درخواست صدور بیمه‌نامه
+    اطلاعات را تکمیل کنید. ما بیمه‌نامه را آماده کرده و اطلاعات پرداخت را برای شما ارسال می‌کنیم.
+    ⚠️توجه! با ادامه استفاده از برنامه، شما با پردازش username تلگرام خود موافقت می‌کنید.⚠️
+  step_1: "1. اطلاعات تماس"
+  step_2: "2. اطلاعات بیمه و وسیله نقلیه"
+  prefilled_from_bitrix: "پروفایل شما با نام کاربری Telegram در پایگاه داده ما پیدا شد. اطلاعات تماس و اطلاعات بیمه‌گذار به‌صورت خودکار وارد شده است."
+  prefilled_from_bitrix_editable: "پروفایل شما با username تلگرام در پایگاه داده ما پیدا شد. اطلاعات وارد شده است — بررسی کنید و در صورت نیاز اصلاح کنید. اگر همه چیز درست است، می‌توانید در این مرحله پیام خالی ارسال کنید."
+  ask_email_lookup: |
+    پروفایل با username تلگرام پیدا نشد.
+    لطفاً برای جستجوی مشتری، e-mail را وارد کنید.
+  contact_not_found_manual: "مشتری با e-mail پیدا نشد. اطلاعات شخصی را به‌صورت دستی وارد کنید."
+  ask_passport_verify: "مشتری با e-mail پیدا شد. برای تأیید هویت، سری و شماره گذرنامه را بدون فاصله وارد کنید."
+  passport_verify_failed_manual: "گذرنامه با اطلاعات موجود در پایگاه داده مطابقت ندارد. برای امنیت، اطلاعات شخصی را به‌صورت دستی وارد کنید."
+  personal_data_summary: |
+    اطلاعات شخصی را بررسی کنید:
+    نام خانوادگی و نام: {last_name} {first_name}
+    تاریخ تولد: {birth_date}
+    شماره گذرنامه: {passport}
+    آدرس محل سکونت: {registration_address}
+    E-mail: {email}
+    تلفن: {phone}
+
+    آیا اطلاعات به‌روز است یا باید تغییراتی وارد شود؟
+  vehicle_data_summary: |
+    {vehicle_type} با شماره ثبت دولتی: {license_plate}
+    وسیله نقلیه در کشور زیر ثبت شده است: {vehicle_country}
+    سال تولید: {manufacture_year}
+    VIN: {vin}
+    {fuel_type}، حجم موتور {engine_capacity} سانتی‌متر مکعب، قدرت {engine_power}، {power_unit}
+
+    آیا اطلاعات به‌روز است یا باید تغییراتی وارد شود؟
+  data_actual: "اطلاعات به‌روز است"
+  data_edit: "نیاز به اعمال تغییرات است"
+  ask_first_name_prefilled: "نام * (استفاده شود: {value})"
+
+  prefill_next_button: "بله، سؤال بعدی"
+
+  ask_last_name_prefilled: "نام خانوادگی * (استفاده شود: {value})"
+  ask_phone_prefilled: "تلفن (با کد کشور) * (استفاده شود: {value})"
+  ask_email_prefilled: "E-mail * (استفاده شود: {value})"
+  ask_first_name: "نام *"
+  ask_last_name: "نام خانوادگی *"
+  ask_phone: |
+    تلفن (با کد کشور)
+    مثال: +48123456789
+  ask_email: |
+    E-mail
+    مثال: exempl@mail.pl"
+  ask_birth_date: |
+    تاریخ تولد
+    قالب: روز.ماه.سال
+  ask_birth_date_prefilled: "تاریخ تولد * (استفاده شود: {value})"
+  ask_passport: "سری و شماره گذرنامه بدون فاصله *"
+  ask_passport_prefilled: "سری و شماره گذرنامه بدون فاصله * (استفاده شود: {value})"
+  ask_registration_address: "آدرس ثبت‌نام *"
+  ask_registration_address_prefilled: "آدرس ثبت‌نام * (استفاده شود: {value})"
+  ask_insurance_period: "مدت بیمه (انتخاب کنید) *"
+  ask_insurance_start_date: |
+    تاریخ شروع اعتبار بیمه
+    قالب: روز.ماه.سال
+  ask_vehicle_country: "کشور ثبت خودرو *"
+  validation_vehicle_country: "کشور ثبت خودرو را مشخص کنید."
+  ask_vehicle_country_prefilled: "کشور ثبت خودرو * (فعلی: {value})"
+
+  choose_from_buttons: "مقدار را با دکمه زیر انتخاب کنید."
+
+  ask_vehicle_type: "نوع وسیله نقلیه *"
+  ask_vehicle_type_prefilled: "نوع وسیله نقلیه * (فعلی: {value})"
+  ask_license_plate: "شماره پلاک *"
+  ask_license_plate_after_start: "شماره پلاک *"
+  validation_license_plate_strict: "شماره پلاک: فقط حروف لاتین و اعداد، بدون فاصله/خط تیره، حداکثر 8 کاراکتر."
+  prefilled_vehicle_from_bitrix_editable: "با شماره پلاک، اطلاعات خودرو در پایگاه داده ما پیدا شد. مقادیر وارد شده‌اند — بررسی کنید و در صورت نیاز اصلاح کنید."
+  vehicle_not_found_manual: "خودرو در پایگاه داده پیدا نشد. لطفاً اطلاعات خودرو را به‌صورت دستی وارد کنید."
+  ask_vin: "شماره VIN *"
+  ask_brand_model: "برند و مدل وسیله نقلیه *"
+  ask_manufacture_year: "سال تولید وسیله نقلیه *"
+  ask_fuel_type: "نوع سوخت *"
+  ask_engine_capacity: "حجم موتور، سانتی‌متر مکعب *"
+  ask_engine_capacity_prefilled: "حجم موتور، سانتی‌متر مکعب * (استفاده شود: {value})"
+  ask_engine_power: "قدرت موتور *"
+  ask_engine_power_prefilled: "قدرت موتور * (استفاده شود: {value})"
+  skip_engine_capacity_electric: "برای نوع سوخت برقی، حجم موتور لازم نیست."
+  ask_power_unit: "واحد اندازه‌گیری قدرت *"
+
+  ask_power_unit_prefilled: "واحد اندازه‌گیری قدرت * (فعلی: {value})"
+  ask_comment: "نظر (اختیاری)"
+  skip_comment_button: "رد کردن"
+
+  ask_vehicle_docs: |
+    سند ثبت وسیله نقلیه (عکس یا PDF)
+    می‌توانید چند فایل پیوست کنید.
+  ask_techpass_changed: "در پایگاه داده قبلاً عکس سند ثبت وسیله نقلیه وجود دارد. آیا سند ثبت تغییر کرده است؟"
+  techpass_changed_yes: "بله، تغییر کرده است"
+  techpass_changed_no: "خیر، تغییر نکرده است"
+  ask_vehicle_finalize: "یک خودرو دیگر اضافه شود یا ثبت درخواست تکمیل شود؟"
+  add_vehicle: "افزودن خودرو دیگر"
+  finish_application: "تکمیل ثبت درخواست"
+  ask_consent: |
+    سیاست پردازش داده‌های شخصی SINEDIS
+    SINEDIS Sp. z o.o. داده‌های شخصی را مطابق با مقررات اتحادیه اروپا 2016/679 (GDPR / RODO) و قوانین لهستان پردازش می‌کند.
+    داده‌ها برای موارد زیر استفاده می‌شوند:
+    • محاسبه پیشنهادهای بیمه‌ای;
+    • صدور و پشتیبانی قراردادهای بیمه;
+    • ارتباط با مشتری;
+    • اجرای الزامات قانونی;
+    • ارتباطات بازاریابی در صورت وجود رضایت کاربر.
+    ممکن است داده‌های زیر پردازش شوند:
+    نام، تلفن، e-mail، آدرس، اطلاعات وسیله نقلیه، اطلاعات بیمه‌ای، داده‌های پرداخت و داده‌های فنی.
+    داده‌ها ممکن است به شرکت‌های بیمه، پیمانکاران IT و سایر شرکای لازم برای ارائه خدمات منتقل شوند.
+    کاربر حق دارد:
+    • به داده‌ها دسترسی داشته باشد;
+    • داده‌ها را اصلاح یا حذف کند;
+    • پردازش را محدود کند;
+    • رضایت خود را پس بگیرد;
+    • به PUODO شکایت ارائه کند.
+    کنترل‌کننده داده‌ها می‌تواند شرکت بیمه صادرکننده بیمه‌نامه یا SINEDIS Sp. z o.o. باشد.
+    اطلاعات تماس:
+    SINEDIS Sp. z o.o.
+    ul. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    info@sinedis.pl
+    odo@sinedis.pl - بازرس حفاظت از داده‌ها
+    نسخه کامل سیاست:
+    https://greencard.agency
+    ________________________
+    آیا با پردازش و انتقال داده‌های شخصی موافق هستید؟"
+  consent_agree: "✅ موافقت و ارسال"
+  consent_decline: "❌ رد کردن"
+  declined: "شما از انتقال داده‌ها خودداری کردید. درخواست لغو شد."
+  validation_name: "حداقل 2 کاراکتر وارد کنید."
+  validation_phone: "شماره تلفن نادرست است. از قالب +48123456789 استفاده کنید."
+  validation_email: "E-mail نادرست است."
+
+  validation_date: "تاریخ نادرست است. قالب‌های مجاز: 16/06/1985، 16.06.1985، 16.06.85، 16-06-1985، 1985-06-16. قالب ماه/روز/سال ممنوع است."
+
+  validation_age_18: "بیمه‌گذار باید حداقل 18 سال کامل داشته باشد."
+  validation_insurance_start_not_past: "تاریخ شروع بیمه نمی‌تواند در گذشته باشد."
+  ask_vin_prefilled: "شماره VIN * (استفاده شود: {value})"
+  ask_brand_model_prefilled: "برند و مدل وسیله نقلیه * (استفاده شود: {value})"
+  ask_manufacture_year_prefilled: "سال تولید وسیله نقلیه * (استفاده شود: {value})"
+  ask_fuel_type_prefilled: "نوع سوخت * (فعلی: {value})"
+
+  validation_passport: "سری و شماره گذرنامه نادرست است (بدون فاصله)."
+  validation_address: "آدرس کامل ثبت‌نام را مشخص کنید."
+  validation_license_plate: "شماره پلاک نادرست است."
+  validation_vin: "VIN باید شامل 17 کاراکتر باشد."
+  validation_brand_model: "برند و مدل را مشخص کنید."
+  validation_year: "سال تولید صحیح را مشخص کنید."
+  validation_positive_integer: "یک عدد صحیح مثبت وارد کنید."
+  validation_positive_number: "یک عدد مثبت وارد کنید."
+  validation_docs: "عکس یا PDF/سند ثبت وسیله نقلیه را ارسال کنید."
+
+
+operator:
+  request_received: "درخواست دریافت شد"
+  operator_connected: "اپراتور متصل شد"
+  access_denied: "دسترسی ممنوع است"
+  no_tickets: "هیچ درخواستی وجود ندارد"
+  taken: "درخواست پذیرفته شد"
+  closed: "درخواست بسته شد"
+  reply_sent: "پاسخ ارسال شد"
+
+faq:
+  title: "دسته FAQ را انتخاب کنید"
+  categories:
+    documents: "مدارک برای صدور"
+    payment: "پرداخت"
+    coverage: "پوشش"
+    mistakes: "نکات مهم"
+    refund: "بازپرداخت"
+  answers:
+    documents: |
+      برای صدور بیمه‌نامه، اطلاعات زیر لازم است: اطلاعات گذرنامه، اطلاعات وسیله نقلیه و تاریخ‌های اعتبار بیمه
+      بنابراین باید آماده کنید:
+      - گذرنامه
+      - گواهی ثبت وسیله نقلیه
+      - اطلاعات فنی خودرو
+      - شماره تلفن
+      - e-Mail
+    payment: |
+      روش‌های موجود:
+      - پرداخت از طریق انتقال به کارت لهستانی, 
+      - پرداخت با BLIK به شماره تلفن, 
+      - پرداخت از طریق انتقال به حساب بانکی لهستان"
+    coverage: "منطقه پوشش: A - اتریش، B - بلژیک، BG - بلغارستان، CY - قبرس، CZ - جمهوری چک، D - آلمان، DK - دانمارک، E - اسپانیا، EST - استونی، F - فرانسه، FIN - فنلاند، GR - یونان، H - مجارستان، HR - کرواسی، I - ایتالیا، IRL - ایرلند، IS - ایسلند، L - لوکزامبورگ، LT - لیتوانی، LV - لتونی، M - مالت، N - نروژ، NL - هلند، P - پرتغال، PL - لهستان، RO - رومانی، S - سوئد، SK - اسلواکی، SLO - اسلوونی، CH - سوئیس."
+    mistakes: "لطفاً قبل از ارسال، VIN، شماره پلاک و مدت بیمه را دوباره بررسی کنید. بعداً امکان اصلاح وجود نخواهد داشت!"
+    refund: "بازپرداخت وجه انجام نمی‌شود."
+
+coverage:
+  text: |
+    نقشه پوشش Green Card. 
+    پیش از سفر، کد کشور را در بیمه‌نامه خود بررسی کنید. 
+    A - اتریش، B - بلژیک، BG - بلغارستان، CY - قبرس، CZ - جمهوری چک، D - آلمان، DK - دانمارک، E - اسپانیا، EST - استونی، F - فرانسه، FIN - فنلاند، GR - یونان، H - مجارستان، HR - کرواسی، I - ایتالیا، IRL - ایرلند، IS - ایسلند، L - لوکزامبورگ، LT - لیتوانی، LV - لتونی، M - مالت، N - نروژ، NL - هلند، P - پرتغال، PL - لهستان، RO - رومانی، S - سوئد، SK - اسلواکی، SLO - اسلوونی، CH - سوئیس.
