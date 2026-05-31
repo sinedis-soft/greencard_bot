@@ -29,9 +29,11 @@ calculator:
     special: "სპეცტექნიკა"
 
 application:
+
   calendar:
     cancel: "გაუქმება"
     today: "დღეს"
+
   options:
     period_days: "{days} დღე"
     countries:

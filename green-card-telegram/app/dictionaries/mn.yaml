@@ -29,9 +29,11 @@ calculator:
     special: "Тусгай техник"
 
 application:
+
   calendar:
     cancel: "Цуцлах"
     today: "Өнөөдөр"
+
   options:
     period_days: "{days} өдөр"
     countries:

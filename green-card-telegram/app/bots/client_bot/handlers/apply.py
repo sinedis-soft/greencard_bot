@@ -507,7 +507,9 @@ async def send_apply(message: Message, state: FSMContext) -> None:
     await apply_command(message, state, message.bot.i18n, message.bot.lang_store, message.bot.default_language)
 
 
+
 @router.message(StateFilter(ApplyForm), F.text.regexp(r"^(?:/|🧮|❓|🌍|📝|👨‍💼|🌐)"))
+
 async def menu_shortcut_during_apply(message: Message, state: FSMContext) -> None:
     lang = message.bot.lang_store.get(message.from_user.id, message.bot.default_language)
     action = menu_action_for_text(
@@ -993,7 +995,9 @@ async def insurance_start_date(message: Message, state: FSMContext, i18n: I18nSe
     if not parsed:
         await message.answer(i18n.get_text(lang, "application.validation_date"))
         return
+
     await _save_insurance_start_date_and_ask_period(message, state, i18n, lang, parsed)
+
 
 
 @router.message(ApplyForm.vehicle_country)

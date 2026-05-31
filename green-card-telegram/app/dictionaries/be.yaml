@@ -29,9 +29,11 @@ calculator:
     special: "Спецтэхніка"
 
 application:
+
   calendar:
     cancel: "Скасаваць"
     today: "Сёння"
+
   options:
     period_days: "{days} дзён"
     countries:

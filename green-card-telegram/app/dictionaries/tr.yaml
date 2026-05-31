@@ -32,6 +32,7 @@ application:
   calendar:
     cancel: "İptal"
     today: "Bugün"
+
   options:
     period_days: "{days} gün"
     countries:
