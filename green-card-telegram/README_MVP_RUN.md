@@ -50,6 +50,7 @@ BITRIX24_WEBHOOK_URL=https://yourcompany.bitrix24.com/rest/1/your_webhook/
 DATABASE_URL=postgresql+psycopg://postgres:postgres@postgres:5432/green_card
 REDIS_URL=redis://redis:6379/0
 ADMIN_API_TOKEN=super-secret-admin-token
+BITRIX_MESSAGE_API_TOKEN=super-secret-bitrix-token
 DEFAULT_LANGUAGE=ru
 ```
 
@@ -62,9 +63,40 @@ DEFAULT_LANGUAGE=ru
 - `DATABASE_URL` — строка подключения к PostgreSQL (в docker-compose уже подготовлена).
 - `REDIS_URL` — Redis для очередей/воркеров.
 - `ADMIN_API_TOKEN` — токен доступа к admin endpoint.
+- `BITRIX_MESSAGE_API_TOKEN` — токен, которым Bitrix должен подписывать запросы на отправку сообщений клиентам в Telegram.
 - `DEFAULT_LANGUAGE` — язык по умолчанию.
 
 > Важно: `.env` не коммитим в git.
+
+---
+
+### Отправка сообщения клиенту из Bitrix в Telegram
+
+После создания сделки Telegram chat ID клиента сохраняется в поле Bitrix `UF_CRM_1780237379152`. Чтобы отправить клиенту сообщение из Bitrix, вызовите endpoint backend:
+
+```bash
+curl -X POST "https://your-backend.example.com/api/bitrix/send-message" \
+  -H "Content-Type: application/json" \
+  -H "X-Bitrix-Token: super-secret-bitrix-token" \
+  -d '{"UF_CRM_1780237379152":"12345","message":"Стоимость полиса: 10 USD"}'
+```
+
+Можно также передать поля `chat_id` и `text` вместо `UF_CRM_1780237379152` и `message`. Backend отправит сообщение через клиентский Telegram bot (`BOT_TOKEN`).
+
+---
+
+
+### Очистка локальных персональных данных
+
+После успешного создания сделок в Bitrix backend сразу очищает локальные данные заявки и оставляет только минимальную строку `applications`: `request_id`, `telegram_user_id`, `bitrix_deal_ids_json`, `status`, `created_at`, `updated_at`, `source_channel`.
+
+Для отложенной очистки файлов и операционных данных запускайте retention worker по расписанию (например, cron раз в день):
+
+```bash
+python -c "from app.workers.data_retention_worker import run_data_retention; print(run_data_retention())"
+```
+
+Он удаляет локальные файлы из `storage/applications/<request_id>/...` через 72 часа после успешной передачи в Bitrix, а через 90 дней очищает старые операторские/аналитические/технические данные.
 
 ---
 
