@@ -69,36 +69,6 @@ application:
     მონაცემები აქტუალურია თუ საჭიროა ცვლილებების შეტანა?
   data_actual: "მონაცემები აქტუალურია"
   data_edit: "საჭიროა ცვლილებების შეტანა"
-  options:
-    countries:
-      belarus: "ბელარუსი"
-      russia: "რუსეთი"
-      kazakhstan: "ყაზახეთი"
-      uzbekistan: "უზბეკეთი"
-      turkey: "თურქეთი"
-      usa: "აშშ"
-      united_kingdom: "დიდი ბრიტანეთი"
-      azerbaijan: "აზერბაიჯანი"
-      georgia: "საქართველო"
-      moldova: "მოლდოვა"
-      ukraine: "უკრაინა"
-      armenia: "სომხეთი"
-      other_country: "სხვა ქვეყანა"
-    vehicle_types:
-      car: "მსუბუქი ავტომობილი"
-      truck: "სატვირთო"
-      moto: "მოტოციკლი"
-      bus: "ავტობუსი"
-      trailer: "მისაბმელი"
-    fuel_types:
-      petrol: "ბენზინი"
-      diesel: "დიზელი"
-      gas: "გაზი / ბენზინი"
-      electric: "ელექტრო"
-      hybrid: "ჰიბრიდი"
-    power_units:
-      hp: "ცხენის ძალა"
-      kw: "კილოვატი"
   ask_first_name_prefilled: "სახელი * (გამოყენება: {value})"
 
   prefill_next_button: "დიახ, შემდეგი კითხვა"

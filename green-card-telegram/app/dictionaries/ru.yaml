@@ -69,36 +69,6 @@ application:
     Данные актуальные или необходимо внести изменения?
   data_actual: "Данные актуальные"
   data_edit: "Необходимо внести изменения"
-  options:
-    countries:
-      belarus: "Беларусь"
-      russia: "Россия"
-      kazakhstan: "Казахстан"
-      uzbekistan: "Узбекистан"
-      turkey: "Турция"
-      usa: "США"
-      united_kingdom: "Великобритания"
-      azerbaijan: "Азербайджан"
-      georgia: "Грузия"
-      moldova: "Молдова"
-      ukraine: "Украина"
-      armenia: "Армения"
-      other_country: "Другая страна"
-    vehicle_types:
-      car: "Легковой"
-      truck: "Грузовой"
-      moto: "Мотоцикл"
-      bus: "Автобус"
-      trailer: "Прицеп"
-    fuel_types:
-      petrol: "Бензин"
-      diesel: "Дизель"
-      gas: "Газ / бензин"
-      electric: "Электро"
-      hybrid: "Гибрид"
-    power_units:
-      hp: "Лошадиные силы"
-      kw: "Киловат"
   ask_first_name_prefilled: "Имя * (Использовать: {value})"
 
   prefill_next_button: "ДА, СЛЕДУЮЩИЙ ВОПРОС"

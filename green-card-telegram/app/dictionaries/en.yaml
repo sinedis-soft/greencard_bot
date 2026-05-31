@@ -69,36 +69,6 @@ application:
     Is the data up to date or do you need to make changes?
   data_actual: "Data is up to date"
   data_edit: "Need to make changes"
-  options:
-    countries:
-      belarus: "Belarus"
-      russia: "Russia"
-      kazakhstan: "Kazakhstan"
-      uzbekistan: "Uzbekistan"
-      turkey: "Turkey"
-      usa: "USA"
-      united_kingdom: "United Kingdom"
-      azerbaijan: "Azerbaijan"
-      georgia: "Georgia"
-      moldova: "Moldova"
-      ukraine: "Ukraine"
-      armenia: "Armenia"
-      other_country: "Other country"
-    vehicle_types:
-      car: "Passenger car"
-      truck: "Truck"
-      moto: "Motorcycle"
-      bus: "Bus"
-      trailer: "Trailer"
-    fuel_types:
-      petrol: "Petrol"
-      diesel: "Diesel"
-      gas: "Gas / petrol"
-      electric: "Electric"
-      hybrid: "Hybrid"
-    power_units:
-      hp: "Horsepower"
-      kw: "Kilowatt"
   ask_first_name_prefilled: "First name * (Use: {value})"
 
   prefill_next_button: "YES, NEXT QUESTION"

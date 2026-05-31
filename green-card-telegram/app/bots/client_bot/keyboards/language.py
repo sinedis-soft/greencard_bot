@@ -1,18 +1,12 @@
 from aiogram.types import InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-LANGUAGES = [
-    ("ru", "Русская"),
-    ("en", "English"),
-    ("pl", "Polski"),
-    ("ka", "ქართული"),
-    ("kk", "Қазақша"),
-]
+LANGUAGES = ["be", "ru", "uk", "mn", "en", "ro", "tr", "kk", "uz", "ka", "hy", "fa"]
 
 
 def language_keyboard() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
-    for code, label in LANGUAGES:
-        builder.button(text=label, callback_data=f"lang:{code}")
-    builder.adjust(2)
+    for lang in LANGUAGES:
+        builder.button(text=lang.upper(), callback_data=f"lang:{lang}")
+    builder.adjust(3, 2)
     return builder.as_markup()

@@ -41,94 +41,46 @@ PASSPORT_RE = re.compile(r"^[A-Za-zА-Яа-я0-9]{6,20}$")
 PLATE_RE = re.compile(r"^[A-Z0-9]{1,8}$")
 
 BITRIX_COUNTRY_MAP = {
-    "529": "armenia",
-    "Армения": "armenia",
-    "531": "azerbaijan",
-    "Азербайджан": "azerbaijan",
-    "123": "belarus",
-    "Беларусь": "belarus",
-    "523": "georgia",
-    "Грузия": "georgia",
-    "385": "kazakhstan",
-    "Казахстан": "kazakhstan",
-    "125": "russia",
-    "Россия": "russia",
-    "2253": "turkey",
-    "Турция": "turkey",
-    "519": "ukraine",
-    "Украина": "ukraine",
-    "525": "uzbekistan",
-    "Узбекистан": "uzbekistan",
-    "521": "moldova",
-    "Молдова": "moldova",
-    "411": "other country",
-    "США": "usa",
-    "Великобритания": "united kingdom",
-    "USA": "usa",
-    "United Kingdom": "united kingdom",
-    "other country (Другая страна)": "other country",
+    "529": "Армения",
+    "531": "Азербайджан",
+    "123": "Беларусь",
+    "523": "Грузия",
+    "385": "Казахстан",
+    "125": "Россия",
+    "2253": "Турция",
+    "519": "Украина",
+    "525": "Узбекистан",
+    "521": "Молдова",
+    "411": "Другая страна",
+    "США": "Другая страна",
+    "Великобритания": "Другая страна",
+    "USA": "Другая страна",
+    "United Kingdom": "Другая страна",
+    "other country (Другая страна)": "Другая страна",
 }
 BITRIX_VTYPE_MAP = {
-    "127": "car",
-    "Легковой": "car",
-    "453": "truck",
-    "Грузовой": "truck",
-    "217": "moto",
-    "Мотоцикл": "moto",
-    "131": "bus",
-    "Автобус": "bus",
-    "129": "trailer",
-    "Прицеп": "trailer",
+    "127": "Легковой",
+    "453": "Грузовой",
+    "217": "Мотоцикл",
+    "131": "Автобус",
+    "129": "Прицеп",
 }
-BITRIX_POWER_UNIT_MAP = {"145": "kw", "Киловат": "kw", "147": "hp", "Лошадиные силы": "hp"}
+BITRIX_POWER_UNIT_MAP = {"145": "Киловат", "147": "Лошадиные силы"}
 BITRIX_FUEL_MAP = {
-    "133": "petrol",
-    "Бензин": "petrol",
-    "135": "diesel",
-    "Дизель": "diesel",
-    "137": "gas",
-    "Газ / бензин": "gas",
-    "139": "electric",
-    "Электро": "electric",
-    "141": "hybrid",
-    "Гибрид": "hybrid",
-    "petrol": "petrol",
-    "diesel": "diesel",
-    "gas": "gas",
-    "gasoline": "gas",
-    "electric": "electric",
-    "hybrid": "hybrid",
+    "133": "Бензин",
+    "135": "Дизель",
+    "137": "Газ / бензин",
+    "139": "Электро",
+    "141": "Гибрид",
+    "petrol": "Бензин",
+    "diesel": "Дизель",
+    "gas": "Газ / бензин",
+    "gasoline": "Газ / бензин",
+    "electric": "Электро",
+    "hybrid": "Гибрид",
 }
-FUEL_TYPES = {"petrol", "diesel", "gas", "electric", "hybrid", "Бензин", "Дизель", "Газ / бензин", "Электро", "Гибрид"}
-POWER_UNITS = {"hp", "kw", "Лошадиные силы", "Киловат"}
-
-OPTION_LABEL_KEYS = {
-    "belarus": "application.options.countries.belarus",
-    "russia": "application.options.countries.russia",
-    "kazakhstan": "application.options.countries.kazakhstan",
-    "uzbekistan": "application.options.countries.uzbekistan",
-    "turkey": "application.options.countries.turkey",
-    "usa": "application.options.countries.usa",
-    "united kingdom": "application.options.countries.united_kingdom",
-    "azerbaijan": "application.options.countries.azerbaijan",
-    "georgia": "application.options.countries.georgia",
-    "moldova": "application.options.countries.moldova",
-    "ukraine": "application.options.countries.ukraine",
-    "armenia": "application.options.countries.armenia",
-    "other country": "application.options.countries.other_country",
-    "car": "application.options.vehicle_types.car",
-    "truck": "application.options.vehicle_types.truck",
-    "moto": "application.options.vehicle_types.moto",
-    "bus": "application.options.vehicle_types.bus",
-    "trailer": "application.options.vehicle_types.trailer",
-    "petrol": "application.options.fuel_types.petrol",
-    "diesel": "application.options.fuel_types.diesel",
-    "gas": "application.options.fuel_types.gas",
-    "electric": "application.options.fuel_types.electric",
-    "hybrid": "application.options.fuel_types.hybrid",
-    "hp": "application.options.power_units.hp",
-    "kw": "application.options.power_units.kw",
-}
+FUEL_TYPES = {"Бензин", "Дизель", "Газ / бензин", "Электро", "Гибрид"}
+POWER_UNITS = {"Лошадиные силы", "Киловат"}
 
 
 def _map_bitrix_enum(value: object, mapping: dict[str, str]) -> str:
@@ -136,15 +88,6 @@ def _map_bitrix_enum(value: object, mapping: dict[str, str]) -> str:
         return ""
     raw = str(value).strip()
     return mapping.get(raw, raw)
-
-
-def _localized_option(i18n: I18nService, lang: str, value: object) -> str:
-    raw = str(value or "").strip()
-    key = OPTION_LABEL_KEYS.get(raw)
-    if not key:
-        return raw or "—"
-    label = i18n.get_text(lang, key)
-    return label if label != key else raw
 
 
 
@@ -185,15 +128,15 @@ def _personal_data_message(i18n: I18nService, lang: str, data: dict) -> str:
 
 def _vehicle_data_message(i18n: I18nService, lang: str, data: dict) -> str:
     return i18n.get_text(lang, "application.vehicle_data_summary").format(
-        vehicle_type=_localized_option(i18n, lang, data.get("vehicle_type")),
+        vehicle_type=str(data.get("vehicle_type", "")).strip() or "—",
         license_plate=str(data.get("license_plate", "")).strip() or "—",
-        vehicle_country=_localized_option(i18n, lang, data.get("vehicle_country")),
+        vehicle_country=str(data.get("vehicle_country", "")).strip() or "—",
         manufacture_year=str(data.get("manufacture_year", "")).strip() or "—",
         vin=str(data.get("vin", "")).strip() or "—",
-        fuel_type=_localized_option(i18n, lang, data.get("fuel_type")),
+        fuel_type=str(data.get("fuel_type", "")).strip() or "—",
         engine_capacity=str(data.get("engine_capacity", "")).strip() or "—",
         engine_power=str(data.get("engine_power", "")).strip() or "—",
-        power_unit=_localized_option(i18n, lang, data.get("power_unit")),
+        power_unit=str(data.get("power_unit", "")).strip() or "—",
     )
 
 
@@ -552,8 +495,8 @@ async def vehicle_data_edit(callback: CallbackQuery, state: FSMContext, i18n: I1
     data = await state.get_data()
     country_prefill = str(data.get("vehicle_country", "")).strip()
     if country_prefill:
-        await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vehicle_country_prefilled", _localized_option(i18n, lang, country_prefill), "vehicle_country")
-    await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=countries_keyboard(i18n, lang))
+        await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vehicle_country_prefilled", country_prefill, "vehicle_country")
+    await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=countries_keyboard())
     await callback.answer()
 
 
@@ -619,8 +562,8 @@ async def prefill_next(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
         await state.set_state(ApplyForm.vehicle_type)
         value = str(data.get("vehicle_type", "")).strip()
         if value:
-            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vehicle_type_prefilled", _localized_option(i18n, lang, value), "vehicle_type")
-        await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard(i18n, lang))
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vehicle_type_prefilled", value, "vehicle_type")
+        await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard())
     elif field == "vehicle_type":
         await state.update_data(vehicle_type=str(data.get("vehicle_type", "")).strip())
         await state.set_state(ApplyForm.vin)
@@ -650,12 +593,12 @@ async def prefill_next(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
         await state.set_state(ApplyForm.fuel_type)
         value = str(data.get("fuel_type", "")).strip()
         if value in FUEL_TYPES:
-            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_fuel_type_prefilled", _localized_option(i18n, lang, value), "fuel_type")
-        await callback.message.answer(i18n.get_text(lang, "application.ask_fuel_type"), reply_markup=fuel_types_keyboard(i18n, lang))
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_fuel_type_prefilled", value, "fuel_type")
+        await callback.message.answer(i18n.get_text(lang, "application.ask_fuel_type"), reply_markup=fuel_types_keyboard())
     elif field == "fuel_type":
         value = str(data.get("fuel_type", "")).strip()
         await state.update_data(fuel_type=value)
-        if value.lower() in {"электро", "electric"}:
+        if value.lower() == "электро":
             await state.update_data(engine_capacity=0)
             await state.set_state(ApplyForm.engine_power)
             power = str(data.get("engine_power", "")).strip()
@@ -683,8 +626,8 @@ async def prefill_next(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
         await state.set_state(ApplyForm.power_unit)
         value = str(data.get("power_unit", "")).strip()
         if value in POWER_UNITS:
-            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_power_unit_prefilled", _localized_option(i18n, lang, value), "power_unit")
-        await callback.message.answer(i18n.get_text(lang, "application.ask_power_unit"), reply_markup=power_units_keyboard(i18n, lang))
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_power_unit_prefilled", value, "power_unit")
+        await callback.message.answer(i18n.get_text(lang, "application.ask_power_unit"), reply_markup=power_units_keyboard())
     elif field == "power_unit":
         await state.update_data(power_unit=str(data.get("power_unit", "")).strip())
         await state.set_state(ApplyForm.comment)
@@ -868,8 +811,8 @@ async def vehicle_country_text(message: Message, state: FSMContext, i18n: I18nSe
     await state.set_state(ApplyForm.vehicle_type)
     type_prefill = str(data.get("vehicle_type", "")).strip()
     if type_prefill:
-        await _send_prefilled_prompt(message, i18n, lang, "application.ask_vehicle_type_prefilled", _localized_option(i18n, lang, type_prefill), "vehicle_type")
-    await message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard(i18n, lang))
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_vehicle_type_prefilled", type_prefill, "vehicle_type")
+    await message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard())
 
 
 @router.callback_query(F.data.startswith("apply:country:"), ApplyForm.vehicle_country)
@@ -881,8 +824,8 @@ async def vehicle_country(callback: CallbackQuery, state: FSMContext, i18n: I18n
     data = await state.get_data()
     type_prefill = str(data.get("vehicle_type", "")).strip()
     if type_prefill:
-        await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vehicle_type_prefilled", _localized_option(i18n, lang, type_prefill), "vehicle_type")
-    await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard(i18n, lang))
+        await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vehicle_type_prefilled", type_prefill, "vehicle_type")
+    await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard())
     await callback.answer()
 
 
@@ -964,7 +907,7 @@ async def license_plate(message: Message, state: FSMContext, i18n: I18nService, 
 
     await message.answer(i18n.get_text(lang, "application.vehicle_not_found_manual"))
     await state.set_state(ApplyForm.vehicle_country)
-    await message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=countries_keyboard(i18n, lang))
+    await message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=countries_keyboard())
 
 
 @router.message(ApplyForm.vin)
@@ -1002,8 +945,8 @@ async def manufacture_year(message: Message, state: FSMContext, i18n: I18nServic
     await state.set_state(ApplyForm.fuel_type)
     current = str((await state.get_data()).get("fuel_type", "")).strip()
     if current in FUEL_TYPES:
-        await _send_prefilled_prompt(message, i18n, lang, "application.ask_fuel_type_prefilled", _localized_option(i18n, lang, current), "fuel_type")
-    await message.answer(i18n.get_text(lang, "application.ask_fuel_type"), reply_markup=fuel_types_keyboard(i18n, lang))
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_fuel_type_prefilled", current, "fuel_type")
+    await message.answer(i18n.get_text(lang, "application.ask_fuel_type"), reply_markup=fuel_types_keyboard())
 
 
 @router.callback_query(F.data.startswith("apply:fuel:"), ApplyForm.fuel_type)
@@ -1012,7 +955,7 @@ async def fuel_type(callback: CallbackQuery, state: FSMContext, i18n: I18nServic
     value = callback.data.split(":", 2)[-1]
     await state.update_data(fuel_type=value)
     data = await state.get_data()
-    if value.lower() in {"электро", "electric"}:
+    if value.lower() == "электро":
         await state.update_data(engine_capacity=0)
         await state.set_state(ApplyForm.engine_power)
         await callback.message.answer(i18n.get_text(lang, "application.skip_engine_capacity_electric"))
@@ -1062,8 +1005,8 @@ async def engine_power(message: Message, state: FSMContext, i18n: I18nService, l
     await state.set_state(ApplyForm.power_unit)
     current = str((await state.get_data()).get("power_unit", "")).strip()
     if current in POWER_UNITS:
-        await message.answer(i18n.get_text(lang, "application.ask_power_unit_prefilled").format(value=_localized_option(i18n, lang, current)))
-    await message.answer(i18n.get_text(lang, "application.ask_power_unit"), reply_markup=power_units_keyboard(i18n, lang))
+        await message.answer(i18n.get_text(lang, "application.ask_power_unit_prefilled").format(value=current))
+    await message.answer(i18n.get_text(lang, "application.ask_power_unit"), reply_markup=power_units_keyboard())
 
 
 @router.callback_query(F.data.startswith("apply:power:"), ApplyForm.power_unit)

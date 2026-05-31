@@ -69,36 +69,6 @@ application:
     Деректер өзекті ме, әлде өзгерістер енгізу керек пе?
   data_actual: "Деректер өзекті"
   data_edit: "Өзгерістер енгізу керек"
-  options:
-    countries:
-      belarus: "Беларусь"
-      russia: "Ресей"
-      kazakhstan: "Қазақстан"
-      uzbekistan: "Өзбекстан"
-      turkey: "Түркия"
-      usa: "АҚШ"
-      united_kingdom: "Ұлыбритания"
-      azerbaijan: "Әзербайжан"
-      georgia: "Грузия"
-      moldova: "Молдова"
-      ukraine: "Украина"
-      armenia: "Армения"
-      other_country: "Басқа ел"
-    vehicle_types:
-      car: "Жеңіл автокөлік"
-      truck: "Жүк көлігі"
-      moto: "Мотоцикл"
-      bus: "Автобус"
-      trailer: "Тіркеме"
-    fuel_types:
-      petrol: "Бензин"
-      diesel: "Дизель"
-      gas: "Газ / бензин"
-      electric: "Электр"
-      hybrid: "Гибрид"
-    power_units:
-      hp: "Ат күші"
-      kw: "Киловатт"
   ask_first_name_prefilled: "Аты * (Қолдану: {value})"
 
   prefill_next_button: "ИӘ, КЕЛЕСІ СҰРАҚ"
