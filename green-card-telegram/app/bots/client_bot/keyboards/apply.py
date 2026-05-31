@@ -6,70 +6,85 @@ from app.services.i18n_service import I18nService
 
 INSURANCE_PERIODS = [30, 60, 90, 120, 180, 364]
 COUNTRIES = [
-    ("belarus", "application.options.countries.belarus"),
-    ("russia", "application.options.countries.russia"),
-    ("kazakhstan", "application.options.countries.kazakhstan"),
-    ("uzbekistan", "application.options.countries.uzbekistan"),
-    ("turkey", "application.options.countries.turkey"),
-    ("usa", "application.options.countries.usa"),
-    ("united kingdom", "application.options.countries.united_kingdom"),
-    ("azerbaijan", "application.options.countries.azerbaijan"),
-    ("georgia", "application.options.countries.georgia"),
-    ("moldova", "application.options.countries.moldova"),
-    ("ukraine", "application.options.countries.ukraine"),
-    ("armenia", "application.options.countries.armenia"),
-    ("other country", "application.options.countries.other_country"),
+    ("Беларусь", "belarus"),
+    ("Россия", "russia"),
+    ("Казахстан", "kazakhstan"),
+    ("Узбекистан", "uzbekistan"),
+    ("Турция", "turkey"),
+    ("США", "usa"),
+    ("Великобритания", "united_kingdom"),
+    ("Азербайджан", "azerbaijan"),
+    ("Грузия", "georgia"),
+    ("Молдова", "moldova"),
+    ("Украина", "ukraine"),
+    ("Армения", "armenia"),
+    ("Другая страна", "other"),
 ]
 VEHICLE_TYPES = [
-    ("car", "application.options.vehicle_types.car"),
-    ("truck", "application.options.vehicle_types.truck"),
-    ("moto", "application.options.vehicle_types.moto"),
-    ("bus", "application.options.vehicle_types.bus"),
-    ("trailer", "application.options.vehicle_types.trailer"),
+    ("Легковой", "car"),
+    ("Грузовой", "truck"),
+    ("Мотоцикл", "moto"),
+    ("Автобус", "bus"),
+    ("Прицеп", "trailer"),
 ]
 FUEL_TYPES = [
-    ("petrol", "application.options.fuel_types.petrol"),
-    ("diesel", "application.options.fuel_types.diesel"),
-    ("gas", "application.options.fuel_types.gas"),
-    ("electric", "application.options.fuel_types.electric"),
-    ("hybrid", "application.options.fuel_types.hybrid"),
+    ("Бензин", "petrol"),
+    ("Дизель", "diesel"),
+    ("Газ / бензин", "gas_petrol"),
+    ("Электро", "electric"),
+    ("Гибрид", "hybrid"),
 ]
-POWER_UNITS = [
-    ("hp", "application.options.power_units.hp"),
-    ("kw", "application.options.power_units.kw"),
-]
+POWER_UNITS = [("Лошадиные силы", "hp"), ("Киловат", "kw")]
 
 
-def _options_keyboard(options: list[tuple[str, str]], prefix: str, i18n: I18nService, lang: str, row_size: int = 2) -> InlineKeyboardMarkup:
+def _option_text(i18n: I18nService, lang: str, key: str, default_text: str) -> str:
+    text = i18n.get_text(lang, key)
+    return default_text if text == key else text
+
+
+def _options_keyboard(
+    i18n: I18nService,
+    lang: str,
+    options: list[tuple[str, str]],
+    prefix: str,
+    translation_prefix: str,
+    row_size: int = 2,
+) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
-    for value, text_key in options:
-        builder.button(text=i18n.get_text(lang, text_key), callback_data=f"{prefix}:{value}")
+    for value, key in options:
+        builder.button(
+            text=_option_text(i18n, lang, f"{translation_prefix}.{key}", value),
+            callback_data=f"{prefix}:{value}",
+        )
     builder.adjust(*([row_size] * ((len(options) + row_size - 1) // row_size)))
     return builder.as_markup()
 
 
-def periods_keyboard() -> InlineKeyboardMarkup:
+def periods_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     for days in INSURANCE_PERIODS:
-        builder.button(text=f"{days} дней", callback_data=f"apply:period:{days}")
+        builder.button(
+            text=i18n.get_text(lang, "application.options.period_days").format(days=days),
+            callback_data=f"apply:period:{days}",
+        )
     builder.adjust(3)
     return builder.as_markup()
 
 
 def countries_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
-    return _options_keyboard(COUNTRIES, "apply:country", i18n, lang)
+    return _options_keyboard(i18n, lang, COUNTRIES, "apply:country", "application.options.countries")
 
 
 def vehicle_types_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
-    return _options_keyboard(VEHICLE_TYPES, "apply:vtype", i18n, lang)
+    return _options_keyboard(i18n, lang, VEHICLE_TYPES, "apply:vtype", "application.options.vehicle_types")
 
 
 def fuel_types_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
-    return _options_keyboard(FUEL_TYPES, "apply:fuel", i18n, lang)
+    return _options_keyboard(i18n, lang, FUEL_TYPES, "apply:fuel", "application.options.fuel_types")
 
 
 def power_units_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
-    return _options_keyboard(POWER_UNITS, "apply:power", i18n, lang)
+    return _options_keyboard(i18n, lang, POWER_UNITS, "apply:power", "application.options.power_units")
 
 
 def finalize_vehicle_keyboard(add_text: str, finish_text: str) -> InlineKeyboardMarkup:
