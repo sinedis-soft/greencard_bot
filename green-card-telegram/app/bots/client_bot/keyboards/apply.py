@@ -1,58 +1,90 @@
 from aiogram.types import InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+from app.services.i18n_service import I18nService
+
 
 INSURANCE_PERIODS = [30, 60, 90, 120, 180, 364]
 COUNTRIES = [
-    "Беларусь",
-    "Россия",
-    "Казахстан",
-    "Узбекистан",
-    "Турция",
-    "США",
-    "Великобритания",
-    "Азербайджан",
-    "Грузия",
-    "Молдова",
-    "Украина",
-    "Армения",
-    "Другая страна",
+    ("Беларусь", "belarus"),
+    ("Россия", "russia"),
+    ("Казахстан", "kazakhstan"),
+    ("Узбекистан", "uzbekistan"),
+    ("Турция", "turkey"),
+    ("США", "usa"),
+    ("Великобритания", "united_kingdom"),
+    ("Азербайджан", "azerbaijan"),
+    ("Грузия", "georgia"),
+    ("Молдова", "moldova"),
+    ("Украина", "ukraine"),
+    ("Армения", "armenia"),
+    ("Другая страна", "other"),
 ]
-VEHICLE_TYPES = ["Легковой", "Грузовой", "Мотоцикл", "Автобус", "Прицеп"]
-FUEL_TYPES = ["Бензин", "Дизель", "Газ / бензин", "Электро", "Гибрид"]
-POWER_UNITS = ["Лошадиные силы", "Киловат"]
+VEHICLE_TYPES = [
+    ("Легковой", "car"),
+    ("Грузовой", "truck"),
+    ("Мотоцикл", "moto"),
+    ("Автобус", "bus"),
+    ("Прицеп", "trailer"),
+]
+FUEL_TYPES = [
+    ("Бензин", "petrol"),
+    ("Дизель", "diesel"),
+    ("Газ / бензин", "gas_petrol"),
+    ("Электро", "electric"),
+    ("Гибрид", "hybrid"),
+]
+POWER_UNITS = [("Лошадиные силы", "hp"), ("Киловат", "kw")]
 
 
-def _options_keyboard(options: list[str], prefix: str, row_size: int = 2) -> InlineKeyboardMarkup:
+def _option_text(i18n: I18nService, lang: str, key: str, default_text: str) -> str:
+    text = i18n.get_text(lang, key)
+    return default_text if text == key else text
+
+
+def _options_keyboard(
+    i18n: I18nService,
+    lang: str,
+    options: list[tuple[str, str]],
+    prefix: str,
+    translation_prefix: str,
+    row_size: int = 2,
+) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
-    for item in options:
-        builder.button(text=item, callback_data=f"{prefix}:{item}")
+    for value, key in options:
+        builder.button(
+            text=_option_text(i18n, lang, f"{translation_prefix}.{key}", value),
+            callback_data=f"{prefix}:{value}",
+        )
     builder.adjust(*([row_size] * ((len(options) + row_size - 1) // row_size)))
     return builder.as_markup()
 
 
-def periods_keyboard() -> InlineKeyboardMarkup:
+def periods_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     for days in INSURANCE_PERIODS:
-        builder.button(text=f"{days} дней", callback_data=f"apply:period:{days}")
+        builder.button(
+            text=i18n.get_text(lang, "application.options.period_days").format(days=days),
+            callback_data=f"apply:period:{days}",
+        )
     builder.adjust(3)
     return builder.as_markup()
 
 
-def countries_keyboard() -> InlineKeyboardMarkup:
-    return _options_keyboard(COUNTRIES, "apply:country")
+def countries_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
+    return _options_keyboard(i18n, lang, COUNTRIES, "apply:country", "application.options.countries")
 
 
-def vehicle_types_keyboard() -> InlineKeyboardMarkup:
-    return _options_keyboard(VEHICLE_TYPES, "apply:vtype")
+def vehicle_types_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
+    return _options_keyboard(i18n, lang, VEHICLE_TYPES, "apply:vtype", "application.options.vehicle_types")
 
 
-def fuel_types_keyboard() -> InlineKeyboardMarkup:
-    return _options_keyboard(FUEL_TYPES, "apply:fuel")
+def fuel_types_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
+    return _options_keyboard(i18n, lang, FUEL_TYPES, "apply:fuel", "application.options.fuel_types")
 
 
-def power_units_keyboard() -> InlineKeyboardMarkup:
-    return _options_keyboard(POWER_UNITS, "apply:power")
+def power_units_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
+    return _options_keyboard(i18n, lang, POWER_UNITS, "apply:power", "application.options.power_units")
 
 
 def finalize_vehicle_keyboard(add_text: str, finish_text: str) -> InlineKeyboardMarkup:
