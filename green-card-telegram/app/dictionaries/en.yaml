@@ -43,6 +43,62 @@ application:
   step_2: "2. Insurance and vehicle details"
   prefilled_from_bitrix: "We found your profile in our database by your Telegram username. Contact details and policyholder data have been filled in automatically."
   prefilled_from_bitrix_editable: "We found your profile in our database by your Telegram username. The data has been filled in — check it and correct it if necessary. If everything is correct, you may send an empty message at this step."
+  ask_email_lookup: |
+    We could not find your profile by Telegram username.
+    Please enter your e-mail to search for the client.
+  contact_not_found_manual: "Client was not found by e-mail. Please enter personal data manually."
+  ask_passport_verify: "Client found by e-mail. Enter passport series and number without spaces to confirm your identity."
+  passport_verify_failed_manual: "Passport does not match the data in our database. For security, please enter personal data manually."
+  personal_data_summary: |
+    Please check your personal data:
+    Last and first name: {last_name} {first_name}
+    Date of birth: {birth_date}
+    Passport number: {passport}
+    Residential address: {registration_address}
+    E-mail: {email}
+    Phone: {phone}
+
+    Is the data up to date or do you need to make changes?
+  vehicle_data_summary: |
+    {vehicle_type} with registration plate: {license_plate}
+    Vehicle registered in: {vehicle_country}
+    Year of manufacture: {manufacture_year}
+    VIN: {vin}
+    {fuel_type}, engine capacity {engine_capacity} cc, power {engine_power}, {power_unit}
+
+    Is the data up to date or do you need to make changes?
+  data_actual: "Data is up to date"
+  data_edit: "Need to make changes"
+  options:
+    countries:
+      belarus: "Belarus"
+      russia: "Russia"
+      kazakhstan: "Kazakhstan"
+      uzbekistan: "Uzbekistan"
+      turkey: "Turkey"
+      usa: "USA"
+      united_kingdom: "United Kingdom"
+      azerbaijan: "Azerbaijan"
+      georgia: "Georgia"
+      moldova: "Moldova"
+      ukraine: "Ukraine"
+      armenia: "Armenia"
+      other_country: "Other country"
+    vehicle_types:
+      car: "Passenger car"
+      truck: "Truck"
+      moto: "Motorcycle"
+      bus: "Bus"
+      trailer: "Trailer"
+    fuel_types:
+      petrol: "Petrol"
+      diesel: "Diesel"
+      gas: "Gas / petrol"
+      electric: "Electric"
+      hybrid: "Hybrid"
+    power_units:
+      hp: "Horsepower"
+      kw: "Kilowatt"
   ask_first_name_prefilled: "First name * (Use: {value})"
 
   prefill_next_button: "YES, NEXT QUESTION"

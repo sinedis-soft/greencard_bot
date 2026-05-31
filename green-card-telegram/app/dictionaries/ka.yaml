@@ -43,6 +43,62 @@ application:
   step_2: "2. დაზღვევისა და სატრანსპორტო საშუალების მონაცემები"
   prefilled_from_bitrix: "თქვენი პროფილი ჩვენს ბაზაში Telegram-ის მომხმარებლის სახელით მოიძებნა. საკონტაქტო მონაცემები და დამზღვევის მონაცემები ავტომატურად ჩაიწერა."
   prefilled_from_bitrix_editable: "თქვენი პროფილი ჩვენს ბაზაში Telegram username-ით მოიძებნა. მონაცემები ჩასმულია — შეამოწმეთ და საჭიროების შემთხვევაში შეცვალეთ. თუ ყველაფერი სწორია, ამ ეტაპზე შეგიძლიათ ცარიელი შეტყობინება გაგზავნოთ."
+  ask_email_lookup: |
+    Telegram username-ით პროფილი ვერ მოიძებნა.
+    გთხოვთ, შეიყვანოთ e-mail კლიენტის მოსაძებნად.
+  contact_not_found_manual: "კლიენტი e-mail-ით ვერ მოიძებნა. გთხოვთ, პერსონალური მონაცემები ხელით შეიყვანოთ."
+  ask_passport_verify: "კლიენტი e-mail-ით მოიძებნა. იდენტობის დასადასტურებლად შეიყვანეთ პასპორტის სერია და ნომერი გამოტოვებების გარეშე."
+  passport_verify_failed_manual: "პასპორტი ბაზაში არსებულ მონაცემებს არ ემთხვევა. უსაფრთხოებისთვის შეიყვანეთ პერსონალური მონაცემები ხელით."
+  personal_data_summary: |
+    შეამოწმეთ პერსონალური მონაცემები:
+    გვარი და სახელი: {last_name} {first_name}
+    დაბადების თარიღი: {birth_date}
+    პასპორტის ნომერი: {passport}
+    საცხოვრებელი მისამართი: {registration_address}
+    E-mail: {email}
+    ტელეფონი: {phone}
+
+    მონაცემები აქტუალურია თუ საჭიროა ცვლილებების შეტანა?
+  vehicle_data_summary: |
+    {vehicle_type} სახელმწიფო რეგისტრაციის ნომრით: {license_plate}
+    სატრანსპორტო საშუალება რეგისტრირებულია ქვეყანაში: {vehicle_country}
+    გამოშვების წელი: {manufacture_year}
+    VIN: {vin}
+    {fuel_type}, ძრავის მოცულობა {engine_capacity} სმ³, სიმძლავრე {engine_power}, {power_unit}
+
+    მონაცემები აქტუალურია თუ საჭიროა ცვლილებების შეტანა?
+  data_actual: "მონაცემები აქტუალურია"
+  data_edit: "საჭიროა ცვლილებების შეტანა"
+  options:
+    countries:
+      belarus: "ბელარუსი"
+      russia: "რუსეთი"
+      kazakhstan: "ყაზახეთი"
+      uzbekistan: "უზბეკეთი"
+      turkey: "თურქეთი"
+      usa: "აშშ"
+      united_kingdom: "დიდი ბრიტანეთი"
+      azerbaijan: "აზერბაიჯანი"
+      georgia: "საქართველო"
+      moldova: "მოლდოვა"
+      ukraine: "უკრაინა"
+      armenia: "სომხეთი"
+      other_country: "სხვა ქვეყანა"
+    vehicle_types:
+      car: "მსუბუქი ავტომობილი"
+      truck: "სატვირთო"
+      moto: "მოტოციკლი"
+      bus: "ავტობუსი"
+      trailer: "მისაბმელი"
+    fuel_types:
+      petrol: "ბენზინი"
+      diesel: "დიზელი"
+      gas: "გაზი / ბენზინი"
+      electric: "ელექტრო"
+      hybrid: "ჰიბრიდი"
+    power_units:
+      hp: "ცხენის ძალა"
+      kw: "კილოვატი"
   ask_first_name_prefilled: "სახელი * (გამოყენება: {value})"
 
   prefill_next_button: "დიახ, შემდეგი კითხვა"

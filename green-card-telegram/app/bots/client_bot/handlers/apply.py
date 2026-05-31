@@ -15,6 +15,7 @@ from aiogram.types import CallbackQuery, Message
 from app.bots.client_bot.keyboards.apply import (
     consent_keyboard,
     countries_keyboard,
+    data_actual_keyboard,
     fuel_types_keyboard,
     finalize_vehicle_keyboard,
     periods_keyboard,
@@ -40,46 +41,94 @@ PASSPORT_RE = re.compile(r"^[A-Za-zА-Яа-я0-9]{6,20}$")
 PLATE_RE = re.compile(r"^[A-Z0-9]{1,8}$")
 
 BITRIX_COUNTRY_MAP = {
-    "529": "Армения",
-    "531": "Азербайджан",
-    "123": "Беларусь",
-    "523": "Грузия",
-    "385": "Казахстан",
-    "125": "Россия",
-    "2253": "Турция",
-    "519": "Украина",
-    "525": "Узбекистан",
-    "521": "Молдова",
-    "411": "Другая страна",
-    "США": "Другая страна",
-    "Великобритания": "Другая страна",
-    "USA": "Другая страна",
-    "United Kingdom": "Другая страна",
-    "other country (Другая страна)": "Другая страна",
+    "529": "armenia",
+    "Армения": "armenia",
+    "531": "azerbaijan",
+    "Азербайджан": "azerbaijan",
+    "123": "belarus",
+    "Беларусь": "belarus",
+    "523": "georgia",
+    "Грузия": "georgia",
+    "385": "kazakhstan",
+    "Казахстан": "kazakhstan",
+    "125": "russia",
+    "Россия": "russia",
+    "2253": "turkey",
+    "Турция": "turkey",
+    "519": "ukraine",
+    "Украина": "ukraine",
+    "525": "uzbekistan",
+    "Узбекистан": "uzbekistan",
+    "521": "moldova",
+    "Молдова": "moldova",
+    "411": "other country",
+    "США": "usa",
+    "Великобритания": "united kingdom",
+    "USA": "usa",
+    "United Kingdom": "united kingdom",
+    "other country (Другая страна)": "other country",
 }
 BITRIX_VTYPE_MAP = {
-    "127": "Легковой",
-    "453": "Грузовой",
-    "217": "Мотоцикл",
-    "131": "Автобус",
-    "129": "Прицеп",
+    "127": "car",
+    "Легковой": "car",
+    "453": "truck",
+    "Грузовой": "truck",
+    "217": "moto",
+    "Мотоцикл": "moto",
+    "131": "bus",
+    "Автобус": "bus",
+    "129": "trailer",
+    "Прицеп": "trailer",
 }
-BITRIX_POWER_UNIT_MAP = {"145": "Киловат", "147": "Лошадиные силы"}
+BITRIX_POWER_UNIT_MAP = {"145": "kw", "Киловат": "kw", "147": "hp", "Лошадиные силы": "hp"}
 BITRIX_FUEL_MAP = {
-    "133": "Бензин",
-    "135": "Дизель",
-    "137": "Газ / бензин",
-    "139": "Электро",
-    "141": "Гибрид",
-    "petrol": "Бензин",
-    "diesel": "Дизель",
-    "gas": "Газ / бензин",
-    "gasoline": "Газ / бензин",
-    "electric": "Электро",
-    "hybrid": "Гибрид",
+    "133": "petrol",
+    "Бензин": "petrol",
+    "135": "diesel",
+    "Дизель": "diesel",
+    "137": "gas",
+    "Газ / бензин": "gas",
+    "139": "electric",
+    "Электро": "electric",
+    "141": "hybrid",
+    "Гибрид": "hybrid",
+    "petrol": "petrol",
+    "diesel": "diesel",
+    "gas": "gas",
+    "gasoline": "gas",
+    "electric": "electric",
+    "hybrid": "hybrid",
 }
-FUEL_TYPES = {"Бензин", "Дизель", "Газ / бензин", "Электро", "Гибрид"}
-POWER_UNITS = {"Лошадиные силы", "Киловат"}
+FUEL_TYPES = {"petrol", "diesel", "gas", "electric", "hybrid", "Бензин", "Дизель", "Газ / бензин", "Электро", "Гибрид"}
+POWER_UNITS = {"hp", "kw", "Лошадиные силы", "Киловат"}
+
+OPTION_LABEL_KEYS = {
+    "belarus": "application.options.countries.belarus",
+    "russia": "application.options.countries.russia",
+    "kazakhstan": "application.options.countries.kazakhstan",
+    "uzbekistan": "application.options.countries.uzbekistan",
+    "turkey": "application.options.countries.turkey",
+    "usa": "application.options.countries.usa",
+    "united kingdom": "application.options.countries.united_kingdom",
+    "azerbaijan": "application.options.countries.azerbaijan",
+    "georgia": "application.options.countries.georgia",
+    "moldova": "application.options.countries.moldova",
+    "ukraine": "application.options.countries.ukraine",
+    "armenia": "application.options.countries.armenia",
+    "other country": "application.options.countries.other_country",
+    "car": "application.options.vehicle_types.car",
+    "truck": "application.options.vehicle_types.truck",
+    "moto": "application.options.vehicle_types.moto",
+    "bus": "application.options.vehicle_types.bus",
+    "trailer": "application.options.vehicle_types.trailer",
+    "petrol": "application.options.fuel_types.petrol",
+    "diesel": "application.options.fuel_types.diesel",
+    "gas": "application.options.fuel_types.gas",
+    "electric": "application.options.fuel_types.electric",
+    "hybrid": "application.options.fuel_types.hybrid",
+    "hp": "application.options.power_units.hp",
+    "kw": "application.options.power_units.kw",
+}
 
 
 def _map_bitrix_enum(value: object, mapping: dict[str, str]) -> str:
@@ -89,6 +138,15 @@ def _map_bitrix_enum(value: object, mapping: dict[str, str]) -> str:
     return mapping.get(raw, raw)
 
 
+def _localized_option(i18n: I18nService, lang: str, value: object) -> str:
+    raw = str(value or "").strip()
+    key = OPTION_LABEL_KEYS.get(raw)
+    if not key:
+        return raw or "—"
+    label = i18n.get_text(lang, key)
+    return label if label != key else raw
+
+
 
 def _bitrix_ids_match(left: object, right: object) -> bool:
     if left is None or right is None:
@@ -96,7 +154,74 @@ def _bitrix_ids_match(left: object, right: object) -> bool:
     return str(left).strip() == str(right).strip()
 
 
+def _normalize_passport(value: object) -> str:
+    return str(value or "").replace(" ", "").strip().upper()
+
+
+def _contact_state_data(contact: dict) -> dict:
+    return {
+        "first_name": str(contact.get("NAME", "")).strip(),
+        "last_name": str(contact.get("LAST_NAME", "")).strip(),
+        "birth_date": _birthdate_to_ddmmyyyy(str(contact.get("BIRTHDATE", "")).strip()),
+        "registration_address": str(contact.get("ADDRESS", "")).strip(),
+        "phone": _extract_multifield(contact.get("PHONE")),
+        "email": _extract_multifield(contact.get("EMAIL")),
+        "passport": _normalize_passport(contact.get("UF_CRM_CONTACT_1686145698592", "")),
+        "bitrix_contact_id": contact.get("ID"),
+    }
+
+
+def _personal_data_message(i18n: I18nService, lang: str, data: dict) -> str:
+    return i18n.get_text(lang, "application.personal_data_summary").format(
+        last_name=str(data.get("last_name", "")).strip() or "—",
+        first_name=str(data.get("first_name", "")).strip() or "—",
+        birth_date=str(data.get("birth_date", "")).strip() or "—",
+        passport=str(data.get("passport", "")).strip() or "—",
+        registration_address=str(data.get("registration_address", "")).strip() or "—",
+        email=str(data.get("email", "")).strip() or "—",
+        phone=str(data.get("phone", "")).strip() or "—",
+    )
+
+
+def _vehicle_data_message(i18n: I18nService, lang: str, data: dict) -> str:
+    return i18n.get_text(lang, "application.vehicle_data_summary").format(
+        vehicle_type=_localized_option(i18n, lang, data.get("vehicle_type")),
+        license_plate=str(data.get("license_plate", "")).strip() or "—",
+        vehicle_country=_localized_option(i18n, lang, data.get("vehicle_country")),
+        manufacture_year=str(data.get("manufacture_year", "")).strip() or "—",
+        vin=str(data.get("vin", "")).strip() or "—",
+        fuel_type=_localized_option(i18n, lang, data.get("fuel_type")),
+        engine_capacity=str(data.get("engine_capacity", "")).strip() or "—",
+        engine_power=str(data.get("engine_power", "")).strip() or "—",
+        power_unit=_localized_option(i18n, lang, data.get("power_unit")),
+    )
+
+
+def _current_vehicle(data: dict) -> dict:
+    return {
+        "insurance_period": data.get("insurance_period"),
+        "insurance_start_date": data.get("insurance_start_date"),
+        "vehicle_country": data.get("vehicle_country"),
+        "vehicle_type": data.get("vehicle_type"),
+        "license_plate": data.get("license_plate"),
+        "vin": data.get("vin"),
+        "brand_model": data.get("brand_model"),
+        "manufacture_year": data.get("manufacture_year"),
+        "fuel_type": data.get("fuel_type"),
+        "engine_capacity": data.get("engine_capacity"),
+        "engine_power": data.get("engine_power"),
+        "power_unit": data.get("power_unit"),
+        "comment": data.get("comment"),
+        "vehicle_docs": data.get("vehicle_docs", []),
+        "reuse_existing_vehicle_docs": bool(data.get("reuse_existing_vehicle_docs")),
+    }
+
+
 class ApplyForm(StatesGroup):
+    email_lookup = State()
+    passport_verify = State()
+    personal_data_confirm = State()
+    vehicle_data_confirm = State()
     first_name = State()
     last_name = State()
     phone = State()
@@ -263,39 +388,26 @@ async def apply_command(message: Message, state: FSMContext, i18n: I18nService, 
 
     contact = None
     username = (message.from_user.username or "").strip()
-    user_id = message.from_user.id
-    if hasattr(message.bot, "bitrix_client"):
-        contact = message.bot.bitrix_client.find_contact_by_telegram_identity(username=username, user_id=user_id)
+    if username and hasattr(message.bot, "bitrix_client"):
+        contact = message.bot.bitrix_client.find_contact_by_telegram_username(username)
 
     if contact:
-        first_name = str(contact.get("NAME", "")).strip()
-        last_name = str(contact.get("LAST_NAME", "")).strip()
-        birth_date = _birthdate_to_ddmmyyyy(str(contact.get("BIRTHDATE", "")).strip())
-        address = str(contact.get("ADDRESS", "")).strip()
-        phone = _extract_multifield(contact.get("PHONE"))
-        email = _extract_multifield(contact.get("EMAIL"))
-        passport = str(contact.get("UF_CRM_CONTACT_1686145698592", "")).replace(" ", "")
-
-        await state.update_data(
-            first_name=first_name,
-            last_name=last_name,
-            phone=phone,
-            email=email,
-            birth_date=birth_date,
-            passport=passport,
-            registration_address=address,
-            bitrix_contact_id=contact.get("ID"),
+        await state.update_data(**_contact_state_data(contact))
+        await state.set_state(ApplyForm.personal_data_confirm)
+        data = await state.get_data()
+        await message.answer(
+            _personal_data_message(i18n, lang, data),
+            reply_markup=data_actual_keyboard(
+                i18n.get_text(lang, "application.data_actual"),
+                i18n.get_text(lang, "application.data_edit"),
+                "personal",
+            ),
         )
-        await message.answer(i18n.get_text(lang, "application.prefilled_from_bitrix_editable"))
+        return
 
-    await state.set_state(ApplyForm.first_name)
-    await message.answer(i18n.get_text(lang, "application.step_1"))
-    data = await state.get_data()
-    first_name_prefill = str(data.get("first_name", "")).strip()
-    if first_name_prefill:
-        await _send_prefilled_prompt(message, i18n, lang, "application.ask_first_name_prefilled", first_name_prefill, "first_name")
-    else:
-        await message.answer(i18n.get_text(lang, "application.ask_first_name"))
+    await state.set_state(ApplyForm.email_lookup)
+    await message.answer(i18n.get_text(lang, "application.ask_email_lookup"))
+
 
 
 
@@ -311,6 +423,138 @@ async def send_apply(message: Message, state: FSMContext) -> None:
     await apply_command(message, state, message.bot.i18n, message.bot.lang_store, message.bot.default_language)
 
 
+async def _ask_first_name_for_edit(message: Message, state: FSMContext, i18n: I18nService, lang: str) -> None:
+    await state.set_state(ApplyForm.first_name)
+    await message.answer(i18n.get_text(lang, "application.step_1"))
+    data = await state.get_data()
+    first_name_prefill = str(data.get("first_name", "")).strip()
+    if first_name_prefill:
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_first_name_prefilled", first_name_prefill, "first_name")
+    else:
+        await message.answer(i18n.get_text(lang, "application.ask_first_name"))
+
+
+async def _ask_license_plate(message: Message, state: FSMContext, i18n: I18nService, lang: str) -> None:
+    await state.set_state(ApplyForm.license_plate)
+    await message.answer(i18n.get_text(lang, "application.step_2"))
+    await message.answer(i18n.get_text(lang, "application.ask_license_plate"))
+
+
+async def _ask_techpass_or_docs(message: Message, state: FSMContext, i18n: I18nService, lang: str) -> None:
+    data = await state.get_data()
+    if data.get("vehicle_docs_prefilled"):
+        await state.set_state(ApplyForm.techpass_changed)
+        await message.answer(
+            i18n.get_text(lang, "application.ask_techpass_changed"),
+            reply_markup=techpass_changed_keyboard(
+                i18n.get_text(lang, "application.techpass_changed_yes"),
+                i18n.get_text(lang, "application.techpass_changed_no"),
+            ),
+        )
+    else:
+        await state.set_state(ApplyForm.vehicle_docs)
+        await message.answer(i18n.get_text(lang, "application.ask_vehicle_docs"))
+
+
+async def _ask_insurance_start_date(message: Message, state: FSMContext, i18n: I18nService, lang: str) -> None:
+    await state.set_state(ApplyForm.insurance_start_date)
+    await message.answer(i18n.get_text(lang, "application.ask_insurance_start_date"))
+
+
+async def _finish_vehicle_and_ask_next(message: Message, state: FSMContext, i18n: I18nService, lang: str) -> None:
+    data = await state.get_data()
+    vehicles = data.get("vehicles", [])
+    vehicles.append(_current_vehicle(data))
+    await state.update_data(vehicles=vehicles)
+    await state.set_state(ApplyForm.vehicle_finalize)
+    await message.answer(
+        i18n.get_text(lang, "application.ask_vehicle_finalize"),
+        reply_markup=finalize_vehicle_keyboard(i18n.get_text(lang, "application.add_vehicle"), i18n.get_text(lang, "application.finish_application")),
+    )
+
+
+@router.message(ApplyForm.email_lookup)
+async def email_lookup(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+    lang = lang_store.get(message.from_user.id, default_language)
+    value = (message.text or "").strip()
+    if not EMAIL_RE.match(value):
+        await message.answer(i18n.get_text(lang, "application.validation_email"))
+        return
+
+    await state.update_data(email=value)
+    contact = None
+    if hasattr(message.bot, "bitrix_client"):
+        contact = message.bot.bitrix_client.find_contact_by_email(value)
+
+    if not contact:
+        await message.answer(i18n.get_text(lang, "application.contact_not_found_manual"))
+        await _ask_first_name_for_edit(message, state, i18n, lang)
+        return
+
+    await state.update_data(pending_contact=_contact_state_data(contact))
+    await state.set_state(ApplyForm.passport_verify)
+    await message.answer(i18n.get_text(lang, "application.ask_passport_verify"))
+
+
+@router.message(ApplyForm.passport_verify)
+async def passport_verify(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+    lang = lang_store.get(message.from_user.id, default_language)
+    value = _normalize_passport(message.text)
+    data = await state.get_data()
+    pending_contact = data.get("pending_contact") or {}
+    if not PASSPORT_RE.match(value):
+        await message.answer(i18n.get_text(lang, "application.validation_passport"))
+        return
+    if value != _normalize_passport(pending_contact.get("passport")):
+        await message.answer(i18n.get_text(lang, "application.passport_verify_failed_manual"))
+        await state.update_data(pending_contact=None, passport=value)
+        await _ask_first_name_for_edit(message, state, i18n, lang)
+        return
+
+    await state.update_data(**pending_contact, pending_contact=None)
+    await state.set_state(ApplyForm.personal_data_confirm)
+    data = await state.get_data()
+    await message.answer(
+        _personal_data_message(i18n, lang, data),
+        reply_markup=data_actual_keyboard(
+            i18n.get_text(lang, "application.data_actual"),
+            i18n.get_text(lang, "application.data_edit"),
+            "personal",
+        ),
+    )
+
+
+@router.callback_query(F.data == "apply:personal:actual", ApplyForm.personal_data_confirm)
+async def personal_data_actual(callback: CallbackQuery, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+    lang = lang_store.get(callback.from_user.id, default_language)
+    await _ask_license_plate(callback.message, state, i18n, lang)
+    await callback.answer()
+
+
+@router.callback_query(F.data == "apply:personal:edit", ApplyForm.personal_data_confirm)
+async def personal_data_edit(callback: CallbackQuery, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+    lang = lang_store.get(callback.from_user.id, default_language)
+    await _ask_first_name_for_edit(callback.message, state, i18n, lang)
+    await callback.answer()
+
+
+@router.callback_query(F.data == "apply:vehicle:actual", ApplyForm.vehicle_data_confirm)
+async def vehicle_data_actual(callback: CallbackQuery, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+    lang = lang_store.get(callback.from_user.id, default_language)
+    await _ask_techpass_or_docs(callback.message, state, i18n, lang)
+    await callback.answer()
+
+
+@router.callback_query(F.data == "apply:vehicle:edit", ApplyForm.vehicle_data_confirm)
+async def vehicle_data_edit(callback: CallbackQuery, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+    lang = lang_store.get(callback.from_user.id, default_language)
+    await state.set_state(ApplyForm.vehicle_country)
+    data = await state.get_data()
+    country_prefill = str(data.get("vehicle_country", "")).strip()
+    if country_prefill:
+        await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vehicle_country_prefilled", _localized_option(i18n, lang, country_prefill), "vehicle_country")
+    await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=countries_keyboard(i18n, lang))
+    await callback.answer()
 
 
 @router.callback_query(F.data.startswith("apply:prefill-next:"))
@@ -369,16 +613,14 @@ async def prefill_next(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
             await callback.message.answer(i18n.get_text(lang, "application.ask_registration_address"))
     elif field == "registration_address":
         await state.update_data(registration_address=str(data.get("registration_address", "")).strip())
-        await state.set_state(ApplyForm.insurance_period)
-        await callback.message.answer(i18n.get_text(lang, "application.step_2"))
-        await callback.message.answer(i18n.get_text(lang, "application.ask_insurance_period"), reply_markup=periods_keyboard())
+        await _ask_license_plate(callback.message, state, i18n, lang)
     elif field == "vehicle_country":
         await state.update_data(vehicle_country=str(data.get("vehicle_country", "")).strip())
         await state.set_state(ApplyForm.vehicle_type)
         value = str(data.get("vehicle_type", "")).strip()
         if value:
-            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vehicle_type_prefilled", value, "vehicle_type")
-        await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard())
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vehicle_type_prefilled", _localized_option(i18n, lang, value), "vehicle_type")
+        await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard(i18n, lang))
     elif field == "vehicle_type":
         await state.update_data(vehicle_type=str(data.get("vehicle_type", "")).strip())
         await state.set_state(ApplyForm.vin)
@@ -408,12 +650,12 @@ async def prefill_next(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
         await state.set_state(ApplyForm.fuel_type)
         value = str(data.get("fuel_type", "")).strip()
         if value in FUEL_TYPES:
-            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_fuel_type_prefilled", value, "fuel_type")
-        await callback.message.answer(i18n.get_text(lang, "application.ask_fuel_type"), reply_markup=fuel_types_keyboard())
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_fuel_type_prefilled", _localized_option(i18n, lang, value), "fuel_type")
+        await callback.message.answer(i18n.get_text(lang, "application.ask_fuel_type"), reply_markup=fuel_types_keyboard(i18n, lang))
     elif field == "fuel_type":
         value = str(data.get("fuel_type", "")).strip()
         await state.update_data(fuel_type=value)
-        if value.lower() == "электро":
+        if value.lower() in {"электро", "electric"}:
             await state.update_data(engine_capacity=0)
             await state.set_state(ApplyForm.engine_power)
             power = str(data.get("engine_power", "")).strip()
@@ -441,8 +683,8 @@ async def prefill_next(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
         await state.set_state(ApplyForm.power_unit)
         value = str(data.get("power_unit", "")).strip()
         if value in POWER_UNITS:
-            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_power_unit_prefilled", value, "power_unit")
-        await callback.message.answer(i18n.get_text(lang, "application.ask_power_unit"), reply_markup=power_units_keyboard())
+            await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_power_unit_prefilled", _localized_option(i18n, lang, value), "power_unit")
+        await callback.message.answer(i18n.get_text(lang, "application.ask_power_unit"), reply_markup=power_units_keyboard(i18n, lang))
     elif field == "power_unit":
         await state.update_data(power_unit=str(data.get("power_unit", "")).strip())
         await state.set_state(ApplyForm.comment)
@@ -584,9 +826,7 @@ async def registration_address(message: Message, state: FSMContext, i18n: I18nSe
         await message.answer(i18n.get_text(lang, "application.validation_address"))
         return
     await state.update_data(registration_address=value)
-    await state.set_state(ApplyForm.insurance_period)
-    await message.answer(i18n.get_text(lang, "application.step_2"))
-    await message.answer(i18n.get_text(lang, "application.ask_insurance_period"), reply_markup=periods_keyboard())
+    await _ask_license_plate(message, state, i18n, lang)
 
 
 @router.callback_query(F.data.startswith("apply:period:"), ApplyForm.insurance_period)
@@ -594,8 +834,7 @@ async def insurance_period(callback: CallbackQuery, state: FSMContext, i18n: I18
     lang = lang_store.get(callback.from_user.id, default_language)
     days = int(callback.data.split(":")[-1])
     await state.update_data(insurance_period=days)
-    await state.set_state(ApplyForm.insurance_start_date)
-    await callback.message.answer(i18n.get_text(lang, "application.ask_insurance_start_date"))
+    await _finish_vehicle_and_ask_next(callback.message, state, i18n, lang)
     await callback.answer()
 
 
@@ -611,8 +850,8 @@ async def insurance_start_date(message: Message, state: FSMContext, i18n: I18nSe
         await message.answer(i18n.get_text(lang, "application.validation_insurance_start_not_past"))
         return
     await state.update_data(insurance_start_date=_to_ddmmyyyy(parsed))
-    await state.set_state(ApplyForm.license_plate)
-    await message.answer(i18n.get_text(lang, "application.ask_license_plate_after_start"))
+    await state.set_state(ApplyForm.insurance_period)
+    await message.answer(i18n.get_text(lang, "application.ask_insurance_period"), reply_markup=periods_keyboard())
 
 
 @router.message(ApplyForm.vehicle_country)
@@ -629,8 +868,8 @@ async def vehicle_country_text(message: Message, state: FSMContext, i18n: I18nSe
     await state.set_state(ApplyForm.vehicle_type)
     type_prefill = str(data.get("vehicle_type", "")).strip()
     if type_prefill:
-        await _send_prefilled_prompt(message, i18n, lang, "application.ask_vehicle_type_prefilled", type_prefill, "vehicle_type")
-    await message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard())
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_vehicle_type_prefilled", _localized_option(i18n, lang, type_prefill), "vehicle_type")
+    await message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard(i18n, lang))
 
 
 @router.callback_query(F.data.startswith("apply:country:"), ApplyForm.vehicle_country)
@@ -642,8 +881,8 @@ async def vehicle_country(callback: CallbackQuery, state: FSMContext, i18n: I18n
     data = await state.get_data()
     type_prefill = str(data.get("vehicle_type", "")).strip()
     if type_prefill:
-        await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vehicle_type_prefilled", type_prefill, "vehicle_type")
-    await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard())
+        await _send_prefilled_prompt(callback.message, i18n, lang, "application.ask_vehicle_type_prefilled", _localized_option(i18n, lang, type_prefill), "vehicle_type")
+    await callback.message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=vehicle_types_keyboard(i18n, lang))
     await callback.answer()
 
 
@@ -682,9 +921,12 @@ async def license_plate(message: Message, state: FSMContext, i18n: I18nService, 
         engine_capacity="",
         engine_power="",
         power_unit="",
+        comment="",
         vehicle_docs_prefilled=False,
         reuse_existing_vehicle_docs=False,
         vehicle_docs=[],
+        insurance_period=None,
+        insurance_start_date=None,
     )
     data = await state.get_data()
     bitrix_contact_id = data.get("bitrix_contact_id")
@@ -693,8 +935,6 @@ async def license_plate(message: Message, state: FSMContext, i18n: I18nService, 
         found_deal = message.bot.bitrix_client.find_deal_by_license_plate(raw)
         if found_deal and _bitrix_ids_match(found_deal.get("CONTACT_ID"), bitrix_contact_id):
             deal = found_deal
-        elif found_deal:
-            await message.answer(i18n.get_text(lang, "application.vehicle_not_found_manual"))
 
     if deal:
         await state.update_data(
@@ -710,14 +950,22 @@ async def license_plate(message: Message, state: FSMContext, i18n: I18nService, 
             vehicle_docs_prefilled=bool(deal.get("UF_CRM_1686154280439")),
             reuse_existing_vehicle_docs=False,
         )
-        await message.answer(i18n.get_text(lang, "application.prefilled_vehicle_from_bitrix_editable"))
+        await state.set_state(ApplyForm.vehicle_data_confirm)
+        data = await state.get_data()
+        await message.answer(
+            _vehicle_data_message(i18n, lang, data),
+            reply_markup=data_actual_keyboard(
+                i18n.get_text(lang, "application.data_actual"),
+                i18n.get_text(lang, "application.data_edit"),
+                "vehicle",
+            ),
+        )
+        return
 
+    await message.answer(i18n.get_text(lang, "application.vehicle_not_found_manual"))
     await state.set_state(ApplyForm.vehicle_country)
-    data = await state.get_data()
-    country_prefill = str(data.get("vehicle_country", "")).strip()
-    if country_prefill:
-        await _send_prefilled_prompt(message, i18n, lang, "application.ask_vehicle_country_prefilled", country_prefill, "vehicle_country")
-    await message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=countries_keyboard())
+    await message.answer(i18n.get_text(lang, "application.choose_from_buttons"), reply_markup=countries_keyboard(i18n, lang))
+
 
 @router.message(ApplyForm.vin)
 async def vin(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
@@ -754,8 +1002,8 @@ async def manufacture_year(message: Message, state: FSMContext, i18n: I18nServic
     await state.set_state(ApplyForm.fuel_type)
     current = str((await state.get_data()).get("fuel_type", "")).strip()
     if current in FUEL_TYPES:
-        await _send_prefilled_prompt(message, i18n, lang, "application.ask_fuel_type_prefilled", current, "fuel_type")
-    await message.answer(i18n.get_text(lang, "application.ask_fuel_type"), reply_markup=fuel_types_keyboard())
+        await _send_prefilled_prompt(message, i18n, lang, "application.ask_fuel_type_prefilled", _localized_option(i18n, lang, current), "fuel_type")
+    await message.answer(i18n.get_text(lang, "application.ask_fuel_type"), reply_markup=fuel_types_keyboard(i18n, lang))
 
 
 @router.callback_query(F.data.startswith("apply:fuel:"), ApplyForm.fuel_type)
@@ -764,7 +1012,7 @@ async def fuel_type(callback: CallbackQuery, state: FSMContext, i18n: I18nServic
     value = callback.data.split(":", 2)[-1]
     await state.update_data(fuel_type=value)
     data = await state.get_data()
-    if value.lower() == "электро":
+    if value.lower() in {"электро", "electric"}:
         await state.update_data(engine_capacity=0)
         await state.set_state(ApplyForm.engine_power)
         await callback.message.answer(i18n.get_text(lang, "application.skip_engine_capacity_electric"))
@@ -814,8 +1062,8 @@ async def engine_power(message: Message, state: FSMContext, i18n: I18nService, l
     await state.set_state(ApplyForm.power_unit)
     current = str((await state.get_data()).get("power_unit", "")).strip()
     if current in POWER_UNITS:
-        await message.answer(i18n.get_text(lang, "application.ask_power_unit_prefilled").format(value=current))
-    await message.answer(i18n.get_text(lang, "application.ask_power_unit"), reply_markup=power_units_keyboard())
+        await message.answer(i18n.get_text(lang, "application.ask_power_unit_prefilled").format(value=_localized_option(i18n, lang, current)))
+    await message.answer(i18n.get_text(lang, "application.ask_power_unit"), reply_markup=power_units_keyboard(i18n, lang))
 
 
 @router.callback_query(F.data.startswith("apply:power:"), ApplyForm.power_unit)
@@ -873,32 +1121,7 @@ async def comment(message: Message, state: FSMContext, i18n: I18nService, lang_s
 async def techpass_unchanged(callback: CallbackQuery, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     lang = lang_store.get(callback.from_user.id, default_language)
     await state.update_data(reuse_existing_vehicle_docs=True, vehicle_docs=[])
-    data = await state.get_data()
-    vehicle = {
-        "insurance_period": data.get("insurance_period"),
-        "insurance_start_date": data.get("insurance_start_date"),
-        "vehicle_country": data.get("vehicle_country"),
-        "vehicle_type": data.get("vehicle_type"),
-        "license_plate": data.get("license_plate"),
-        "vin": data.get("vin"),
-        "brand_model": data.get("brand_model"),
-        "manufacture_year": data.get("manufacture_year"),
-        "fuel_type": data.get("fuel_type"),
-        "engine_capacity": data.get("engine_capacity"),
-        "engine_power": data.get("engine_power"),
-        "power_unit": data.get("power_unit"),
-        "comment": data.get("comment"),
-        "vehicle_docs": [],
-        "reuse_existing_vehicle_docs": True,
-    }
-    vehicles = data.get("vehicles", [])
-    vehicles.append(vehicle)
-    await state.update_data(vehicles=vehicles)
-    await state.set_state(ApplyForm.vehicle_finalize)
-    await callback.message.answer(
-        i18n.get_text(lang, "application.ask_vehicle_finalize"),
-        reply_markup=finalize_vehicle_keyboard(i18n.get_text(lang, "application.add_vehicle"), i18n.get_text(lang, "application.finish_application")),
-    )
+    await _ask_insurance_start_date(callback.message, state, i18n, lang)
     await callback.answer()
 
 
@@ -918,33 +1141,8 @@ async def vehicle_docs(message: Message, state: FSMContext, i18n: I18nService, l
         docs.append({"type": "document", "file_id": message.document.file_id, "name": message.document.file_name})
     elif message.photo:
         docs.append({"type": "photo", "file_id": message.photo[-1].file_id, "name": "photo"})
-    await state.update_data(vehicle_docs=docs)
-    data = await state.get_data()
-    vehicle = {
-        "insurance_period": data.get("insurance_period"),
-        "insurance_start_date": data.get("insurance_start_date"),
-        "vehicle_country": data.get("vehicle_country"),
-        "vehicle_type": data.get("vehicle_type"),
-        "license_plate": data.get("license_plate"),
-        "vin": data.get("vin"),
-        "brand_model": data.get("brand_model"),
-        "manufacture_year": data.get("manufacture_year"),
-        "fuel_type": data.get("fuel_type"),
-        "engine_capacity": data.get("engine_capacity"),
-        "engine_power": data.get("engine_power"),
-        "power_unit": data.get("power_unit"),
-        "comment": data.get("comment"),
-        "vehicle_docs": docs,
-        "reuse_existing_vehicle_docs": False,
-    }
-    vehicles = data.get("vehicles", [])
-    vehicles.append(vehicle)
-    await state.update_data(vehicles=vehicles)
-    await state.set_state(ApplyForm.vehicle_finalize)
-    await message.answer(
-        i18n.get_text(lang, "application.ask_vehicle_finalize"),
-        reply_markup=finalize_vehicle_keyboard(i18n.get_text(lang, "application.add_vehicle"), i18n.get_text(lang, "application.finish_application")),
-    )
+    await state.update_data(vehicle_docs=docs, reuse_existing_vehicle_docs=False)
+    await _ask_insurance_start_date(message, state, i18n, lang)
 
 
 @router.message(ApplyForm.vehicle_docs)
@@ -958,8 +1156,7 @@ async def vehicle_docs_invalid(message: Message, i18n: I18nService, lang_store: 
 @router.callback_query(F.data == "apply:vehicle:add", ApplyForm.vehicle_finalize)
 async def vehicle_add(callback: CallbackQuery, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     lang = lang_store.get(callback.from_user.id, default_language)
-    await state.set_state(ApplyForm.insurance_period)
-    await callback.message.answer(i18n.get_text(lang, "application.ask_insurance_period"), reply_markup=periods_keyboard())
+    await _ask_license_plate(callback.message, state, i18n, lang)
     await callback.answer()
 
 

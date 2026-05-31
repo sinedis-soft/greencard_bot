@@ -43,6 +43,62 @@ application:
   step_2: "2. Сақтандыру және көлік құралы туралы деректер"
   prefilled_from_bitrix: "Telegram пайдаланушы аты бойынша профиліңіз біздің базадан табылды. Байланыс және сақтанушы деректері автоматты түрде толтырылды."
   prefilled_from_bitrix_editable: "Telegram username бойынша профиліңіз біздің базадан табылды. Деректер толтырылды — тексеріп, қажет болса түзетіңіз. Егер бәрі дұрыс болса, осы қадамда бос хабарлама жіберуге болады."
+  ask_email_lookup: |
+    Telegram username бойынша профиль табылмады.
+    Клиентті іздеу үшін e-mail енгізіңіз.
+  contact_not_found_manual: "Клиент e-mail бойынша табылмады. Жеке деректерді қолмен енгізіңіз."
+  ask_passport_verify: "Клиент e-mail бойынша табылды. Жеке тұлғаны растау үшін паспорт сериясы мен нөмірін бос орынсыз енгізіңіз."
+  passport_verify_failed_manual: "Паспорт базадағы деректермен сәйкес келмейді. Қауіпсіздік үшін жеке деректерді қолмен енгізіңіз."
+  personal_data_summary: |
+    Жеке деректерді тексеріңіз:
+    Тегі және аты: {last_name} {first_name}
+    Туған күні: {birth_date}
+    Паспорт нөмірі: {passport}
+    Тұрғылықты мекенжайы: {registration_address}
+    E-mail: {email}
+    Телефон: {phone}
+
+    Деректер өзекті ме, әлде өзгерістер енгізу керек пе?
+  vehicle_data_summary: |
+    {vehicle_type}, мемлекеттік тіркеу нөмірі: {license_plate}
+    Көлік тіркелген ел: {vehicle_country}
+    Шығарылған жылы: {manufacture_year}
+    VIN: {vin}
+    {fuel_type}, қозғалтқыш көлемі {engine_capacity} см³, қуаты {engine_power}, {power_unit}
+
+    Деректер өзекті ме, әлде өзгерістер енгізу керек пе?
+  data_actual: "Деректер өзекті"
+  data_edit: "Өзгерістер енгізу керек"
+  options:
+    countries:
+      belarus: "Беларусь"
+      russia: "Ресей"
+      kazakhstan: "Қазақстан"
+      uzbekistan: "Өзбекстан"
+      turkey: "Түркия"
+      usa: "АҚШ"
+      united_kingdom: "Ұлыбритания"
+      azerbaijan: "Әзербайжан"
+      georgia: "Грузия"
+      moldova: "Молдова"
+      ukraine: "Украина"
+      armenia: "Армения"
+      other_country: "Басқа ел"
+    vehicle_types:
+      car: "Жеңіл автокөлік"
+      truck: "Жүк көлігі"
+      moto: "Мотоцикл"
+      bus: "Автобус"
+      trailer: "Тіркеме"
+    fuel_types:
+      petrol: "Бензин"
+      diesel: "Дизель"
+      gas: "Газ / бензин"
+      electric: "Электр"
+      hybrid: "Гибрид"
+    power_units:
+      hp: "Ат күші"
+      kw: "Киловатт"
   ask_first_name_prefilled: "Аты * (Қолдану: {value})"
 
   prefill_next_button: "ИӘ, КЕЛЕСІ СҰРАҚ"

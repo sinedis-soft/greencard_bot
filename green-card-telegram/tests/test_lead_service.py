@@ -329,3 +329,38 @@ def test_lead_service_does_not_send_text_document_metadata_to_bitrix_file_field(
     service.create_application_leads(application_payload(vehicles=[vehicle]))
 
     assert "UF_CRM_1686154280439" not in bitrix.deals[0]
+
+
+def test_bitrix_client_prefill_search_uses_email_when_username_is_missing():
+    from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
+
+    calls = []
+
+    class Client(Bitrix24Client):
+        def _post(self, method, payload):
+            calls.append((method, payload))
+            return {"result": [{"ID": "99", "EMAIL": [{"VALUE": "ivan@example.com"}]}]}
+
+    contact = Client("https://example.test/rest").find_contact_by_email("ivan@example.com")
+
+    assert contact["ID"] == "99"
+    assert calls == [
+        (
+            "crm.contact.list",
+            {
+                "filter": {"EMAIL": "ivan@example.com"},
+                "select": [
+                    "ID",
+                    "LAST_NAME",
+                    "NAME",
+                    "BIRTHDATE",
+                    "ADDRESS",
+                    "PHONE",
+                    "EMAIL",
+                    "UF_CRM_CONTACT_1686145698592",
+                    TELEGRAM_USERNAME_FIELD,
+                    TELEGRAM_USER_ID_FIELD,
+                ],
+            },
+        )
+    ]
