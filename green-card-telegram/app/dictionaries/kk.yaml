@@ -29,6 +29,37 @@ calculator:
     special: "Арнайы техника"
 
 application:
+  options:
+    period_days: "{days} күн"
+    countries:
+      belarus: "Беларусь"
+      russia: "Ресей"
+      kazakhstan: "Қазақстан"
+      uzbekistan: "Өзбекстан"
+      turkey: "Түркия"
+      usa: "АҚШ"
+      united_kingdom: "Ұлыбритания"
+      azerbaijan: "Әзербайжан"
+      georgia: "Грузия"
+      moldova: "Молдова"
+      ukraine: "Украина"
+      armenia: "Армения"
+      other: "Басқа ел"
+    vehicle_types:
+      car: "Жеңіл көлік"
+      truck: "Жүк көлігі"
+      moto: "Мотоцикл"
+      bus: "Автобус"
+      trailer: "Тіркеме"
+    fuel_types:
+      petrol: "Бензин"
+      diesel: "Дизель"
+      gas_petrol: "Газ / бензин"
+      electric: "Электр"
+      hybrid: "Гибрид"
+    power_units:
+      hp: "Ат күші"
+      kw: "Киловатт"
   submitted: "Өтінім жіберілді. Біз полисті дайындап, төлем деректерін жібереміз."
   validation_error: "Деректерді тексеру қатесі"
   bitrix_error: "Bitrix қатесі"

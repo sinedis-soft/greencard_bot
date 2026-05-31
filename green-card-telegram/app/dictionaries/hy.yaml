@@ -29,6 +29,37 @@ calculator:
     special: "Հատուկ տեխնիկա"
 
 application:
+  options:
+    period_days: "{days} օր"
+    countries:
+      belarus: "Բելառուս"
+      russia: "Ռուսաստան"
+      kazakhstan: "Ղազախստան"
+      uzbekistan: "Ուզբեկստան"
+      turkey: "Թուրքիա"
+      usa: "ԱՄՆ"
+      united_kingdom: "Մեծ Բրիտանիա"
+      azerbaijan: "Ադրբեջան"
+      georgia: "Վրաստան"
+      moldova: "Մոլդովա"
+      ukraine: "Ուկրաինա"
+      armenia: "Հայաստան"
+      other: "Այլ երկիր"
+    vehicle_types:
+      car: "Թեթև ավտոմեքենա"
+      truck: "Բեռնատար"
+      moto: "Մոտոցիկլ"
+      bus: "Ավտոբուս"
+      trailer: "Կցորդ"
+    fuel_types:
+      petrol: "Բենզին"
+      diesel: "Դիզել"
+      gas_petrol: "Գազ / բենզին"
+      electric: "Էլեկտրական"
+      hybrid: "Հիբրիդ"
+    power_units:
+      hp: "Ձիաուժ"
+      kw: "Կիլովատ"
   submitted: "Հայտն ուղարկվել է։ Մենք կպատրաստենք պոլիսը և կուղարկենք վճարման ռեկվիզիտները։"
   validation_error: "Տվյալների ստուգման սխալ"
   bitrix_error: "Bitrix-ի սխալ"

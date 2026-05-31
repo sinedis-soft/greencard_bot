@@ -29,6 +29,37 @@ calculator:
     special: "Special-purpose vehicle"
 
 application:
+  options:
+    period_days: "{days} days"
+    countries:
+      belarus: "Belarus"
+      russia: "Russia"
+      kazakhstan: "Kazakhstan"
+      uzbekistan: "Uzbekistan"
+      turkey: "Turkey"
+      usa: "USA"
+      united_kingdom: "United Kingdom"
+      azerbaijan: "Azerbaijan"
+      georgia: "Georgia"
+      moldova: "Moldova"
+      ukraine: "Ukraine"
+      armenia: "Armenia"
+      other: "Other country"
+    vehicle_types:
+      car: "Passenger car"
+      truck: "Truck"
+      moto: "Motorcycle"
+      bus: "Bus"
+      trailer: "Trailer"
+    fuel_types:
+      petrol: "Petrol"
+      diesel: "Diesel"
+      gas_petrol: "Gas / petrol"
+      electric: "Electric"
+      hybrid: "Hybrid"
+    power_units:
+      hp: "Horsepower"
+      kw: "Kilowatt"
   submitted: "The application has been sent. We will prepare the policy and send you the payment details."
   validation_error: "Data validation error"
   bitrix_error: "Bitrix error"

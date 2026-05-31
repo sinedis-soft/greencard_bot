@@ -29,6 +29,37 @@ calculator:
     special: "სპეცტექნიკა"
 
 application:
+  options:
+    period_days: "{days} დღე"
+    countries:
+      belarus: "ბელარუსი"
+      russia: "რუსეთი"
+      kazakhstan: "ყაზახეთი"
+      uzbekistan: "უზბეკეთი"
+      turkey: "თურქეთი"
+      usa: "აშშ"
+      united_kingdom: "დიდი ბრიტანეთი"
+      azerbaijan: "აზერბაიჯანი"
+      georgia: "საქართველო"
+      moldova: "მოლდოვა"
+      ukraine: "უკრაინა"
+      armenia: "სომხეთი"
+      other: "სხვა ქვეყანა"
+    vehicle_types:
+      car: "მსუბუქი"
+      truck: "სატვირთო"
+      moto: "მოტოციკლი"
+      bus: "ავტობუსი"
+      trailer: "მისაბმელი"
+    fuel_types:
+      petrol: "ბენზინი"
+      diesel: "დიზელი"
+      gas_petrol: "გაზი / ბენზინი"
+      electric: "ელექტრო"
+      hybrid: "ჰიბრიდი"
+    power_units:
+      hp: "ცხენის ძალა"
+      kw: "კილოვატი"
   submitted: "განაცხადი გაგზავნილია. ჩვენ მოვამზადებთ პოლისს და გამოგიგზავნით გადახდის რეკვიზიტებს."
   validation_error: "მონაცემების შემოწმების შეცდომა"
   bitrix_error: "Bitrix-ის შეცდომა"
