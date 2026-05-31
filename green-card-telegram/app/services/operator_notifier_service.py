@@ -29,11 +29,12 @@ class ClientNotifierService:
     def __init__(self) -> None:
         self.client_token = os.getenv("BOT_TOKEN", "")
 
-    def send_to_client(self, telegram_user_id: int, text: str) -> None:
+    def send_to_client(self, telegram_user_id: int, text: str) -> bool:
         if not self.client_token:
-            return
+            return False
         requests.post(
             f"https://api.telegram.org/bot{self.client_token}/sendMessage",
             json={"chat_id": telegram_user_id, "text": text},
             timeout=5,
         )
+        return True

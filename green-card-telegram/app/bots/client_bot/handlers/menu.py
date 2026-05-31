@@ -14,17 +14,19 @@ from app.bots.operator_bot.keyboards.ticket_actions import (
     reply_command,
     reply_instruction,
 )
+from app.services.operator_message_formatter import operator_language_line
 from app.services.operator_notifier_service import OperatorNotifierService
 from app.services.operator_ticket_service import OperatorTicketService, TicketPayload
 
 router = Router()
 
 
-def _operator_ticket_text(request_id: str, client_name: str, source: str) -> str:
+def _operator_ticket_text(request_id: str, client_name: str, source: str, preferred_language: str) -> str:
     return (
         "🆘 Новый запрос оператора\n"
         f"ID: {request_id}\n"
         f"Клиент: {client_name}\n"
+        f"{operator_language_line(preferred_language)}\n"
         f"Источник: {source}\n"
         f"{reply_instruction(request_id)}"
     )
@@ -42,6 +44,7 @@ async def _forward_client_message_to_operator(message: Message) -> bool:
         "💬 Сообщение клиента\n"
         f"ID: {ticket.request_id}\n"
         f"Клиент: {client_name}\n"
+        f"{operator_language_line(ticket.preferred_language)}\n"
         f"Текст: {message.text}\n"
         f"{reply_instruction(ticket.request_id)}",
         reply_command(ticket.request_id),
@@ -98,7 +101,7 @@ async def menu_click_router(message: Message, state: FSMContext) -> None:
             )
         )
         OperatorNotifierService().notify_new_ticket(
-            _operator_ticket_text(request_id, client_name, "Главное меню"),
+            _operator_ticket_text(request_id, client_name, "Главное меню", lang),
             reply_command(request_id),
         )
         await message.answer(
