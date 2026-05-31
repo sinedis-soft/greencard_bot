@@ -130,6 +130,29 @@ def test_lead_service_adds_telegram_fields_to_contact_payload():
     assert bitrix.contacts[0][TELEGRAM_USER_ID_FIELD] == 12345
 
 
+def test_lead_service_adds_telegram_chat_id_to_each_deal_payload():
+    from app.services.bitrix24_client import TELEGRAM_CHAT_ID_FIELD
+
+    bitrix = FakeBitrixClient()
+    service = LeadService(bitrix, MAPPING_FILE)
+
+    service.create_application_leads(application_payload(), "john", 12345, 67890)
+
+    assert bitrix.deals[0][TELEGRAM_CHAT_ID_FIELD] == 67890
+    assert bitrix.deals[1][TELEGRAM_CHAT_ID_FIELD] == 67890
+
+
+def test_lead_service_uses_telegram_user_id_as_chat_id_fallback():
+    from app.services.bitrix24_client import TELEGRAM_CHAT_ID_FIELD
+
+    bitrix = FakeBitrixClient()
+    service = LeadService(bitrix, MAPPING_FILE)
+
+    service.create_application_leads(application_payload(), "john", 12345)
+
+    assert bitrix.deals[0][TELEGRAM_CHAT_ID_FIELD] == 12345
+
+
 def test_bitrix_client_searches_existing_contact_by_telegram_identity_before_email():
     from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
 
