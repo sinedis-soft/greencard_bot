@@ -462,11 +462,12 @@ def _create_bitrix_application(
     bitrix_client,
     telegram_username: str | None,
     telegram_user_id: int | None,
-    telegram_chat_id: int | None,
+
 ) -> dict:
     payload = _application_from_state(data, lang)
     return LeadService(bitrix_client, app_root() / "config" / "bitrix_mapping.yaml").create_application_leads(
-        payload, telegram_username, telegram_user_id, telegram_chat_id
+        payload, telegram_username, telegram_user_id
+
     )
 
 
@@ -1335,7 +1336,7 @@ async def consent_agree(callback: CallbackQuery, state: FSMContext, i18n: I18nSe
             callback.bot.bitrix_client,
             callback.from_user.username,
             callback.from_user.id,
-            callback.message.chat.id if callback.message else callback.from_user.id,
+
         )
         await _attach_telegram_docs_to_deals(callback.bot, callback.bot.bitrix_client, data.get("vehicles", []), bitrix.get("deals", []))
     except Exception as exc:

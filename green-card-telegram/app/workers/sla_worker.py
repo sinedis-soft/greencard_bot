@@ -5,6 +5,7 @@ from sqlalchemy import select
 from app.db.models import OperatorTicket
 from app.db.session import SessionLocal
 from app.services.analytics_service import AnalyticsService
+from app.services.operator_message_formatter import operator_language_line
 from app.services.operator_notifier_service import ClientNotifierService, OperatorNotifierService
 
 
@@ -17,7 +18,7 @@ def run_sla_checks() -> dict:
         for t in overdue:
             t.sla_breach = True
             t.reminder_sent_at = now
-            OperatorNotifierService().notify_new_ticket(f"SLA breached: {t.request_id}")
+            OperatorNotifierService().notify_new_ticket(f"SLA breached: {t.request_id}\n{operator_language_line(t.preferred_language)}")
             AnalyticsService().track("sla_breach", request_id=t.request_id, telegram_user_id=t.telegram_user_id)
             AnalyticsService().track("operator_reminder_sent", request_id=t.request_id, telegram_user_id=t.telegram_user_id)
             changed += 1

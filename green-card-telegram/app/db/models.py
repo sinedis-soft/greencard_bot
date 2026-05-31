@@ -69,6 +69,7 @@ class OperatorTicket(Base):
     __tablename__ = "operator_tickets"
     request_id: Mapped[str] = mapped_column(String(64), primary_key=True)
     telegram_user_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
+    preferred_language: Mapped[str | None] = mapped_column(String(16), nullable=True)
     status: Mapped[str] = mapped_column(String(32), default="new")
     operator_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
     first_response_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)

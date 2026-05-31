@@ -119,7 +119,7 @@ def test_bitrix_client_flattens_nested_fields_for_bitrix_form_encoding():
 
 
 def test_lead_service_adds_telegram_fields_to_contact_payload():
-    from app.services.bitrix24_client import TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
+    from app.services.bitrix24_client import TELEGRAM_CHAT_ID_FIELD, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
 
     bitrix = FakeBitrixClient()
     service = LeadService(bitrix, MAPPING_FILE)
@@ -128,6 +128,8 @@ def test_lead_service_adds_telegram_fields_to_contact_payload():
 
     assert bitrix.contacts[0][TELEGRAM_USERNAME_FIELD] == "john"
     assert bitrix.contacts[0][TELEGRAM_USER_ID_FIELD] == 12345
+    assert bitrix.deals[0][TELEGRAM_CHAT_ID_FIELD] == 12345
+    assert bitrix.deals[1][TELEGRAM_CHAT_ID_FIELD] == 12345
 
 
 def test_lead_service_adds_telegram_chat_id_to_each_deal_payload():
