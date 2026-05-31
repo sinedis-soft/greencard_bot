@@ -29,6 +29,40 @@ calculator:
     special: "Спецтэхніка"
 
 application:
+  calendar:
+    cancel: "Скасаваць"
+    today: "Сёння"
+  options:
+    period_days: "{days} дзён"
+    countries:
+      belarus: "Беларусь"
+      russia: "Расія"
+      kazakhstan: "Казахстан"
+      uzbekistan: "Узбекістан"
+      turkey: "Турцыя"
+      usa: "ЗША"
+      united_kingdom: "Вялікабрытанія"
+      azerbaijan: "Азербайджан"
+      georgia: "Грузія"
+      moldova: "Малдова"
+      ukraine: "Украіна"
+      armenia: "Арменія"
+      other: "Іншая краіна"
+    vehicle_types:
+      car: "Легкавы"
+      truck: "Грузавы"
+      moto: "Матацыкл"
+      bus: "Аўтобус"
+      trailer: "Прычэп"
+    fuel_types:
+      petrol: "Бензін"
+      diesel: "Дызель"
+      gas_petrol: "Газ / бензін"
+      electric: "Электра"
+      hybrid: "Гібрыд"
+    power_units:
+      hp: "Конскія сілы"
+      kw: "Кілават"
   submitted: "Заяўка адпраўлена. Мы падрыхтуем поліс і дашлём рэквізіты для аплаты."
   validation_error: "Памылка праверкі даных"
   bitrix_error: "Памылка Bitrix"

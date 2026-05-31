@@ -29,6 +29,40 @@ calculator:
     special: "Maxsus texnika"
 
 application:
+  calendar:
+    cancel: "Bekor qilish"
+    today: "Bugun"
+  options:
+    period_days: "{days} kun"
+    countries:
+      belarus: "Belarus"
+      russia: "Rossiya"
+      kazakhstan: "Qozog‘iston"
+      uzbekistan: "O‘zbekiston"
+      turkey: "Turkiya"
+      usa: "AQSH"
+      united_kingdom: "Buyuk Britaniya"
+      azerbaijan: "Ozarbayjon"
+      georgia: "Gruziya"
+      moldova: "Moldova"
+      ukraine: "Ukraina"
+      armenia: "Armaniston"
+      other: "Boshqa mamlakat"
+    vehicle_types:
+      car: "Yengil avtomobil"
+      truck: "Yuk avtomobili"
+      moto: "Mototsikl"
+      bus: "Avtobus"
+      trailer: "Tirkama"
+    fuel_types:
+      petrol: "Benzin"
+      diesel: "Dizel"
+      gas_petrol: "Gaz / benzin"
+      electric: "Elektr"
+      hybrid: "Gibrid"
+    power_units:
+      hp: "Ot kuchi"
+      kw: "Kilovatt"
   submitted: "Ariza yuborildi. Biz polisni tayyorlaymiz va to‘lov rekvizitlarini yuboramiz."
   validation_error: "Ma’lumotlarni tekshirish xatosi"
   bitrix_error: "Bitrix xatosi"

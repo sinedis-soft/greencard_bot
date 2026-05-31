@@ -29,6 +29,40 @@ calculator:
     special: "Özel amaçlı araç"
 
 application:
+  calendar:
+    cancel: "İptal"
+    today: "Bugün"
+  options:
+    period_days: "{days} gün"
+    countries:
+      belarus: "Belarus"
+      russia: "Rusya"
+      kazakhstan: "Kazakistan"
+      uzbekistan: "Özbekistan"
+      turkey: "Türkiye"
+      usa: "ABD"
+      united_kingdom: "Birleşik Krallık"
+      azerbaijan: "Azerbaycan"
+      georgia: "Gürcistan"
+      moldova: "Moldova"
+      ukraine: "Ukrayna"
+      armenia: "Ermenistan"
+      other: "Diğer ülke"
+    vehicle_types:
+      car: "Binek araç"
+      truck: "Kamyon"
+      moto: "Motosiklet"
+      bus: "Otobüs"
+      trailer: "Römork"
+    fuel_types:
+      petrol: "Benzin"
+      diesel: "Dizel"
+      gas_petrol: "Gaz / benzin"
+      electric: "Elektrikli"
+      hybrid: "Hibrit"
+    power_units:
+      hp: "Beygir gücü"
+      kw: "Kilovat"
   submitted: "Başvuru gönderildi. Poliçeyi hazırlayacağız ve ödeme bilgilerini göndereceğiz."
   validation_error: "Veri doğrulama hatası"
   bitrix_error: "Bitrix hatası"

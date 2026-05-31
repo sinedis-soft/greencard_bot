@@ -29,6 +29,40 @@ calculator:
     special: "Tehnică specială"
 
 application:
+  calendar:
+    cancel: "Anulare"
+    today: "Astăzi"
+  options:
+    period_days: "{days} zile"
+    countries:
+      belarus: "Belarus"
+      russia: "Rusia"
+      kazakhstan: "Kazahstan"
+      uzbekistan: "Uzbekistan"
+      turkey: "Turcia"
+      usa: "SUA"
+      united_kingdom: "Regatul Unit"
+      azerbaijan: "Azerbaidjan"
+      georgia: "Georgia"
+      moldova: "Moldova"
+      ukraine: "Ucraina"
+      armenia: "Armenia"
+      other: "Altă țară"
+    vehicle_types:
+      car: "Autoturism"
+      truck: "Camion"
+      moto: "Motocicletă"
+      bus: "Autobuz"
+      trailer: "Remorcă"
+    fuel_types:
+      petrol: "Benzină"
+      diesel: "Diesel"
+      gas_petrol: "Gaz / benzină"
+      electric: "Electric"
+      hybrid: "Hibrid"
+    power_units:
+      hp: "Cai putere"
+      kw: "Kilowatt"
   submitted: "Cererea a fost trimisă. Vom pregăti polița și vă vom trimite detaliile pentru plată."
   validation_error: "Eroare de verificare a datelor"
   bitrix_error: "Eroare Bitrix"

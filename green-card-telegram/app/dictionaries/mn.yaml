@@ -29,6 +29,40 @@ calculator:
     special: "Тусгай техник"
 
 application:
+  calendar:
+    cancel: "Цуцлах"
+    today: "Өнөөдөр"
+  options:
+    period_days: "{days} өдөр"
+    countries:
+      belarus: "Беларусь"
+      russia: "Орос"
+      kazakhstan: "Казахстан"
+      uzbekistan: "Узбекистан"
+      turkey: "Турк"
+      usa: "АНУ"
+      united_kingdom: "Их Британи"
+      azerbaijan: "Азербайжан"
+      georgia: "Гүрж"
+      moldova: "Молдав"
+      ukraine: "Украин"
+      armenia: "Армени"
+      other: "Бусад улс"
+    vehicle_types:
+      car: "Суудлын автомашин"
+      truck: "Ачааны машин"
+      moto: "Мотоцикл"
+      bus: "Автобус"
+      trailer: "Чиргүүл"
+    fuel_types:
+      petrol: "Бензин"
+      diesel: "Дизель"
+      gas_petrol: "Хий / бензин"
+      electric: "Цахилгаан"
+      hybrid: "Хосолсон"
+    power_units:
+      hp: "Морины хүч"
+      kw: "Киловатт"
   submitted: "Өргөдөл илгээгдлээ. Бид полисыг бэлтгэж, төлбөрийн мэдээллийг илгээнэ."
   validation_error: "Мэдээлэл шалгах алдаа"
   bitrix_error: "Bitrix алдаа"

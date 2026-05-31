@@ -29,6 +29,40 @@ calculator:
     special: "Спецтехника"
 
 application:
+  calendar:
+    cancel: "Отмена"
+    today: "Сегодня"
+  options:
+    period_days: "{days} дней"
+    countries:
+      belarus: "Беларусь"
+      russia: "Россия"
+      kazakhstan: "Казахстан"
+      uzbekistan: "Узбекистан"
+      turkey: "Турция"
+      usa: "США"
+      united_kingdom: "Великобритания"
+      azerbaijan: "Азербайджан"
+      georgia: "Грузия"
+      moldova: "Молдова"
+      ukraine: "Украина"
+      armenia: "Армения"
+      other: "Другая страна"
+    vehicle_types:
+      car: "Легковой"
+      truck: "Грузовой"
+      moto: "Мотоцикл"
+      bus: "Автобус"
+      trailer: "Прицеп"
+    fuel_types:
+      petrol: "Бензин"
+      diesel: "Дизель"
+      gas_petrol: "Газ / бензин"
+      electric: "Электро"
+      hybrid: "Гибрид"
+    power_units:
+      hp: "Лошадиные силы"
+      kw: "Киловат"
   submitted: "Заявка отправлена. Мы подготовим полис и пришлём реквизиты на оплату."
   validation_error: "Ошибка проверки данных"
   bitrix_error: "Ошибка Bitrix"

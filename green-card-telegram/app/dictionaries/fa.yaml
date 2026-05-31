@@ -29,6 +29,40 @@ calculator:
     special: "ماشین‌آلات ویژه"
 
 application:
+  calendar:
+    cancel: "لغو"
+    today: "امروز"
+  options:
+    period_days: "{days} روز"
+    countries:
+      belarus: "بلاروس"
+      russia: "روسیه"
+      kazakhstan: "قزاقستان"
+      uzbekistan: "ازبکستان"
+      turkey: "ترکیه"
+      usa: "آمریکا"
+      united_kingdom: "بریتانیا"
+      azerbaijan: "آذربایجان"
+      georgia: "گرجستان"
+      moldova: "مولداوی"
+      ukraine: "اوکراین"
+      armenia: "ارمنستان"
+      other: "کشور دیگر"
+    vehicle_types:
+      car: "سواری"
+      truck: "کامیون"
+      moto: "موتورسیکلت"
+      bus: "اتوبوس"
+      trailer: "تریلر"
+    fuel_types:
+      petrol: "بنزین"
+      diesel: "دیزل"
+      gas_petrol: "گاز / بنزین"
+      electric: "برقی"
+      hybrid: "هیبریدی"
+    power_units:
+      hp: "اسب بخار"
+      kw: "کیلووات"
   submitted: "درخواست ارسال شد. ما بیمه‌نامه را آماده کرده و اطلاعات پرداخت را برای شما ارسال می‌کنیم."
   validation_error: "خطای بررسی داده‌ها"
   bitrix_error: "خطای Bitrix"
