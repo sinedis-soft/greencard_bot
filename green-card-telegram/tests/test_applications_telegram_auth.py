@@ -8,12 +8,14 @@ from fastapi.testclient import TestClient
 from app.main import app
 
 
-def build_init_data(bot_token: str, user: dict) -> str:
+def build_init_data(bot_token: str, user: dict, chat: dict | None = None) -> str:
     data = {
         "auth_date": "1710000000",
         "query_id": "AAEAAAE",
         "user": json.dumps(user, separators=(",", ":")),
     }
+    if chat:
+        data["chat"] = json.dumps(chat, separators=(",", ":"))
     data_check_string = "\n".join(f"{k}={v}" for k, v in sorted(data.items()))
     secret = hmac.new(b"WebAppData", bot_token.encode("utf-8"), hashlib.sha256).digest()
     data["hash"] = hmac.new(secret, data_check_string.encode("utf-8"), hashlib.sha256).hexdigest()
