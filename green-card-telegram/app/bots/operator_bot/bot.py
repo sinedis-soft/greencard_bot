@@ -4,7 +4,7 @@ from pathlib import Path
 
 from aiogram import Bot, Dispatcher
 
-from app.bots.operator_bot.handlers import replies, start, status, tickets
+from app.bots.operator_bot.handlers import replies, restart, start, status, tickets
 from app.services.i18n_service import I18nService
 
 
@@ -22,6 +22,7 @@ async def main() -> None:
     dp.include_router(start.router)
     dp.include_router(tickets.router)
     dp.include_router(status.router)
+    dp.include_router(restart.router)
     dp.include_router(replies.router)
 
     await dp.start_polling(bot)

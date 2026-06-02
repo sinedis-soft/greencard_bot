@@ -10,6 +10,21 @@ TELEGRAM_USER_ID_FIELD = "UF_CRM_1780051881466"
 TELEGRAM_CHAT_ID_FIELD = "UF_CRM_1780237379152"
 
 
+POLICY_NUMBER_FIELD = "UF_CRM_1694177619522"
+POLICY_STATUS_FIELD = "UF_CRM_1718956082020"
+POLICY_FILES_FIELD = "UF_CRM_1714480913426"
+LICENSE_PLATE_FIELD = "UF_CRM_1686152485641"
+
+POLICY_STATUS_VALUES = {
+    "2607": "Действующий",
+    "2609": "Аннулирован",
+    "2611": "В процессе оформления",
+    "2613": "Срок действия страховки завершен",
+    "2643": "Дубликат полиса",
+    "2645": "Зарегистрирован",
+}
+
+
 class Bitrix24Client:
     def __init__(self, webhook_url: str):
         self.webhook_url = webhook_url.rstrip("/")
@@ -128,6 +143,55 @@ class Bitrix24Client:
         if not items:
             return None
         return items[0]
+
+    def find_latest_deal_by_telegram_identity(
+        self, username: str | None = None, user_id: int | str | None = None
+    ) -> dict[str, Any] | None:
+        contact = self.find_contact_by_telegram_identity(
+            username=username, user_id=user_id
+        )
+        if contact and contact.get("ID"):
+            deal = self.find_latest_deal_by_contact_id(contact["ID"])
+            if deal:
+                return deal
+
+        if user_id:
+            deal = self._find_latest_deal({TELEGRAM_CHAT_ID_FIELD: str(user_id)})
+            if deal:
+                return deal
+        return None
+
+    def find_latest_deal_by_contact_id(self, contact_id: int | str) -> dict[str, Any] | None:
+        if not contact_id:
+            return None
+        return self._find_latest_deal({"CONTACT_ID": str(contact_id)})
+
+    def _find_latest_deal(self, crm_filter: dict[str, Any]) -> dict[str, Any] | None:
+        res = self._post(
+            "crm.deal.list",
+            {
+                "order": {"ID": "DESC"},
+                "filter": crm_filter,
+                "select": self._latest_deal_select_fields(),
+            },
+        )
+        items = res.get("result") or []
+        if not items:
+            return None
+        return items[0]
+
+    def _latest_deal_select_fields(self) -> list[str]:
+        return [
+            "ID",
+            "TITLE",
+            "COMMENTS",
+            "CONTACT_ID",
+            TELEGRAM_CHAT_ID_FIELD,
+            POLICY_NUMBER_FIELD,
+            POLICY_STATUS_FIELD,
+            POLICY_FILES_FIELD,
+            LICENSE_PLATE_FIELD,
+        ]
 
     def create_or_update_contact(self, payload: dict[str, Any]) -> int:
         fields = self._contact_fields(payload)
