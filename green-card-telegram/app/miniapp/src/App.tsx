@@ -13,6 +13,17 @@ import kk from "./i18n/kk";
 const dicts:any = { ru, en, pl, ka, kk };
 const currentYear = new Date().getFullYear();
 
+const latinNameRe = /^[A-Za-z][A-Za-z -]*$/;
+const passportRe = /^[A-Za-z0-9]+$/;
+const plateRe = /^[A-Z0-9]{3,8}$/;
+const vinRe = /^[A-HJ-NPR-Z0-9]{17}$/;
+
+const normalizeVehicle = (vehicle:any) => ({
+  ...vehicle,
+  license_plate: String(vehicle.license_plate || "").trim().toUpperCase(),
+  vin: String(vehicle.vin || "").trim().toUpperCase(),
+});
+
 export default function App() {
   const initData = (window as any).Telegram?.WebApp?.initData || "";
   const [submitted, setSubmitted] = useState<any>(null);
@@ -25,22 +36,29 @@ export default function App() {
   });
   const t = useMemo(()=>dicts[form.preferred_language] || ru, [form.preferred_language]);
 
-  const validate = () => {
-    if (!/^\+[1-9]\d{1,14}$/.test(form.phone)) return t.errors.phone;
-    if (!/^\S+@\S+\.\S+$/.test(form.email)) return t.errors.email;
-    if (form.vehicles[0].vin && form.vehicles[0].vin.length !== 17) return t.errors.vin;
-    const y = Number(form.vehicles[0].manufacture_year);
+  const validate = (candidate = form) => {
+    const vehicle = normalizeVehicle(candidate.vehicles[0]);
+    if (!latinNameRe.test(String(candidate.first_name || "").trim())) return t.errors.name || "Name must use Latin letters only";
+    if (!latinNameRe.test(String(candidate.last_name || "").trim())) return t.errors.name || "Name must use Latin letters only";
+    if (!passportRe.test(String(candidate.passport_series_number || "").trim().toUpperCase())) return t.errors.passport || "Passport must contain only Latin letters and digits";
+    if (!/^\+[1-9]\d{1,14}$/.test(candidate.phone)) return t.errors.phone;
+    if (!/^\S+@\S+\.\S+$/.test(candidate.email)) return t.errors.email;
+    if (!plateRe.test(vehicle.license_plate)) return t.errors.license_plate || "License plate must contain 3-8 Latin letters or digits";
+    if (!vinRe.test(vehicle.vin)) return t.errors.vin;
+    const y = Number(vehicle.manufacture_year);
     if (y < 1950 || y > currentYear) return t.errors.year;
-    if (!form.terms_accepted) return t.errors.terms;
-    if (!form.privacy_accepted) return t.errors.privacy;
+    if (!candidate.terms_accepted) return t.errors.terms;
+    if (!candidate.privacy_accepted) return t.errors.privacy;
     return "";
   };
 
   const onSubmit = async () => {
     if (submitted) return;
-    const err = validate();
+    const normalizedForm = { ...form, passport_series_number: String(form.passport_series_number || "").trim().toUpperCase(), vehicles: [normalizeVehicle(form.vehicles[0])] };
+    const err = validate(normalizedForm);
     if (err) return alert(err);
-    const payload = { ...form, telegram_init_data: initData };
+    setForm(normalizedForm);
+    const payload = { ...normalizedForm, telegram_init_data: initData };
     const result = await submitApplication(payload);
     if (result?.detail) {
       const key = String(result.detail);
