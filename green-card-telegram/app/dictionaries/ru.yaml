@@ -112,8 +112,8 @@ application:
   ask_last_name_prefilled: "Фамилия * (Использовать: {value})"
   ask_phone_prefilled: "Телефон (с кодом страны) * (Использовать: {value})"
   ask_email_prefilled: "E-mail * (Использовать: {value})"
-  ask_first_name: "Имя *"
-  ask_last_name: "Фамилия *"
+  ask_first_name: "Имя (Латиницей)*"
+  ask_last_name: "Фамилия (Латиницей)*"
   ask_phone: |
     Телефон (с кодом страны)
     Пример: +48123456789
@@ -124,9 +124,9 @@ application:
     Дата рождения
     Формат: дд.мм.гггг
   ask_birth_date_prefilled: "Дата рождения * (Использовать: {value})"
-  ask_passport: "Серия и номер паспорта без пробелов *"
+  ask_passport: "Серия и номер паспорта без пробелов (латиницей)*"
   ask_passport_prefilled: "Серия и номер паспорта без пробелов * (Использовать: {value})"
-  ask_registration_address: "Адрес регистрации *"
+  ask_registration_address: "Адрес регистрации (латиницей)*"
   ask_registration_address_prefilled: "Адрес регистрации * (Использовать: {value})"
   ask_insurance_period: "Срок страхования (выбрать) *"
   ask_insurance_start_date: |
@@ -141,12 +141,12 @@ application:
   ask_vehicle_type: "Тип ТС *"
   ask_vehicle_type_prefilled: "Тип ТС * (текущий: {value})"
   ask_license_plate: "Госномер *"
-  ask_license_plate_after_start: "Госномер *"
+  ask_license_plate_after_start: "Госномер (латиницей)*"
   validation_license_plate_strict: "Госномер: только латинские буквы и цифры, без пробелов/тире, максимум 8 символов."
   prefilled_vehicle_from_bitrix_editable: "По госномеру нашли данные авто в нашей базе. Значения подставлены — проверьте и при необходимости исправьте."
   vehicle_not_found_manual: "Авто по базе не найдено. Пожалуйста, внесите данные по авто вручную."
   ask_vin: "VIN номер *"
-  ask_brand_model: "Марка и модель ТС *"
+  ask_brand_model: "Марка и модель ТС (латиницей)*"
   ask_manufacture_year: "Год выпуска ТС *"
   ask_fuel_type: "Тип топлива *"
   ask_engine_capacity: "Объем двигателя, см. куб. *"
@@ -216,7 +216,7 @@ application:
   ask_manufacture_year_prefilled: "Год выпуска ТС * (Использовать: {value})"
   ask_fuel_type_prefilled: "Тип топлива * (текущий: {value})"
 
-  validation_passport: "Некорректные серия и номер паспорта (без пробелов)."
+  validation_passport: "Некорректные серия и номер паспорта (вводить без пробелов)."
   validation_address: "Укажите полный адрес регистрации."
   validation_license_plate: "Некорректный госномер."
   validation_vin: "VIN должен содержать 17 символов."
@@ -254,10 +254,10 @@ faq:
       - номер телефона
       - e-Mail
     payment: |
-      Доступн:
-      - оплата путеп перевода на польскую карту, 
+      Доступо:
+      - оплата путем перевода на польскую карту, 
       - оплата BLIKом на номер телефона, 
-      - оплата переводом на польский расчетный счет"
+      - оплата переводом на польский расчетный счет
     coverage: "Территория покрытия:  A - Австрия, B - Бельгия, BG - Болгария, CY - Кипр, CZ - Чехия, D - Германия, DK - Дания, E - Испания, EST - Эстония, F - Франция, FIN - Финляндия, GR - Греция, H - Венгрия, HR - Хорватия, I - Италия, IRL - Ирландия, IS - Исландия, L - Люксембург, LT - Литва, LV - Латвия, M - Мальта, N - Норвегия, NL - Нидерланды, P - Португалия, PL - Польша, RO - Румыния, S - Швеция, SK - Словакия, SLO - Словения, CH - Швейцария."
     mistakes: "Пожалуйста, дважды проверьте VIN, номерной знак и период страхования перед отправкой. Внести правки в последствии не получится!"
     refund: "Возврат средств не оформляется."

@@ -1,32 +1,32 @@
 main_menu:
   calculator: "🧮 Calculator"
   faq: "❓ FAQ"
-  coverage: "🌍 Where does it work?"
+  coverage: "🌍 Coverage Area"
   apply: "📝 Apply"
-  operator: "👨‍💼 Contact an operator"
+  operator: "👨‍💼 Contact an Operator"
   language: "🌐 Language"
 
 menu:
-  title: "Main menu"
+  title: "Main Menu"
 
 language:
   select: "Please select a language"
   changed: "Language updated"
 
 calculator:
-  result_title: "Estimated cost"
-  disclaimer: "Preliminary calculation"
-  apply_cta: "📝 Submit an application"
-  select_vehicle_type: "Select the type of vehicle"
-  select_period: "Select the insurance period (days)"
-  result_template: "Estimated cost: {estimated_price} {currency}\n{disclaimer}"
+  result_title: "Estimated Premium"
+  disclaimer: "Preliminary quotation"
+  apply_cta: "📝 Submit Application"
+  select_vehicle_type: "Select vehicle type"
+  select_period: "Select insurance period (days)"
+  result_template: "Estimated premium: {estimated_price} {currency}\n{disclaimer}"
   vehicle:
-    car: "Passenger car"
+    car: "Passenger Car"
     truck: "Truck"
     bus: "Bus"
     moto: "Motorcycle"
     trailer: "Trailer"
-    special: "Special-purpose vehicle"
+    special: "Special Machinery"
 
 application:
 
@@ -42,16 +42,16 @@ application:
       kazakhstan: "Kazakhstan"
       uzbekistan: "Uzbekistan"
       turkey: "Turkey"
-      usa: "USA"
+      usa: "United States"
       united_kingdom: "United Kingdom"
       azerbaijan: "Azerbaijan"
       georgia: "Georgia"
       moldova: "Moldova"
       ukraine: "Ukraine"
       armenia: "Armenia"
-      other: "Other country"
+      other: "Other Country"
     vehicle_types:
-      car: "Passenger car"
+      car: "Passenger Car"
       truck: "Truck"
       moto: "Motorcycle"
       bus: "Bus"
@@ -59,104 +59,136 @@ application:
     fuel_types:
       petrol: "Petrol"
       diesel: "Diesel"
-      gas_petrol: "Gas / petrol"
+      gas_petrol: "Gas / Petrol"
       electric: "Electric"
       hybrid: "Hybrid"
     power_units:
       hp: "Horsepower"
       kw: "Kilowatt"
-  submitted: "The application has been sent. We will prepare the policy and send you the payment details."
+
+  submitted: "Application submitted. We will prepare the policy and send payment details."
   validation_error: "Data validation error"
   bitrix_error: "Bitrix error"
   mini_app_soon: "The Mini App form will be connected at the next stage."
-  open_form_button: "Open application form"
+  open_form_button: "Open Application Form"
   temporarily_unavailable: "The application form is temporarily unavailable."
+
   form_header: |
-    Application for policy issuance
-    Fill in the data. We will prepare the policy and send you the payment details.
-    ⚠️ATTENTION! By continuing to use the application, you agree to the processing of your Telegram username.⚠️
-  step_1: "1. Contacts"
-  step_2: "2. Insurance and vehicle details"
-  prefilled_from_bitrix: "We found your profile in our database by your Telegram username. Contact details and policyholder data have been filled in automatically."
-  prefilled_from_bitrix_editable: "We found your profile in our database by your Telegram username. The data has been filled in — check it and correct it if necessary. If everything is correct, you may send an empty message at this step."
+    Insurance Policy Application
+    Fill in the details. We will prepare the policy and send payment instructions.
+    ⚠️ATTENTION! By continuing to use the application, you consent to the processing of your Telegram username.⚠️
+
+  step_1: "1. Contact Details"
+  step_2: "2. Insurance and Vehicle Information"
+
+  prefilled_from_bitrix: "We found your profile in our database using your Telegram username. Contact and policyholder details have been filled in automatically."
+
+  prefilled_from_bitrix_editable: "We found your profile in our database using your Telegram username. The data has been prefilled — please verify and edit if necessary. If everything is correct, you may send an empty message at this step."
+
   ask_email_lookup: |
-    We could not find your profile by Telegram username.
-    Please enter your e-mail to search for the client.
-  contact_not_found_manual: "Client was not found by e-mail. Please enter personal data manually."
-  ask_passport_verify: "Client found by e-mail. Enter passport series and number without spaces to confirm your identity."
-  passport_verify_failed_manual: "Passport does not match the data in our database. For security, please enter personal data manually."
+    No profile was found using your Telegram username.
+    Please enter your e-mail address to search for your client profile.
+
+  contact_not_found_manual: "No client was found for the provided e-mail address. Please fill in your personal details manually."
+
+  ask_passport_verify: "Client found by e-mail. Please enter your passport series and number without spaces to verify your identity."
+
+  passport_verify_failed_manual: "The passport details do not match our records. For security reasons, please fill in your personal details manually."
+
   personal_data_summary: |
-    Please check your personal data:
-    Last and first name: {last_name} {first_name}
+    Please verify your personal details:
+    Full name: {last_name} {first_name}
     Date of birth: {birth_date}
     Passport number: {passport}
     Residential address: {registration_address}
     E-mail: {email}
-    Phone: {phone}
+    Phone number: {phone}
 
-    Is the data up to date or do you need to make changes?
+    Are the details correct or would you like to make changes?
+
   vehicle_data_summary: |
-    {vehicle_type} with registration plate: {license_plate}
+    {vehicle_type} with registration number: {license_plate}
     Vehicle registered in: {vehicle_country}
     Year of manufacture: {manufacture_year}
     VIN: {vin}
-    {fuel_type}, engine capacity {engine_capacity} cc, power {engine_power}, {power_unit}
+    {fuel_type}, engine capacity {engine_capacity} cc, engine power {engine_power}, {power_unit}
 
-    Is the data up to date or do you need to make changes?
-  data_actual: "Data is up to date"
-  data_edit: "Need to make changes"
-  ask_first_name_prefilled: "First name * (Use: {value})"
+    Are the details correct or would you like to make changes?
+
+  data_actual: "The data is correct"
+  data_edit: "Changes are required"
+
+  ask_first_name_prefilled: "First Name * (Use: {value})"
 
   prefill_next_button: "YES, NEXT QUESTION"
 
-  ask_last_name_prefilled: "Last name * (Use: {value})"
-  ask_phone_prefilled: "Phone number (with country code) * (Use: {value})"
+  ask_last_name_prefilled: "Last Name * (Use: {value})"
+  ask_phone_prefilled: "Phone Number (with country code) * (Use: {value})"
   ask_email_prefilled: "E-mail * (Use: {value})"
-  ask_first_name: "First name *"
-  ask_last_name: "Last name *"
+
+  ask_first_name: "First Name (Latin characters)*"
+  ask_last_name: "Last Name (Latin characters)*"
+
   ask_phone: |
     Phone number (with country code)
     Example: +48123456789
+
   ask_email: |
     E-mail
-    Example: exempl@mail.pl"
+    Example: example@mail.pl
+
   ask_birth_date: |
     Date of birth
     Format: dd.mm.yyyy
+
   ask_birth_date_prefilled: "Date of birth * (Use: {value})"
-  ask_passport: "Passport series and number without spaces *"
+
+  ask_passport: "Passport series and number without spaces (Latin characters)*"
   ask_passport_prefilled: "Passport series and number without spaces * (Use: {value})"
-  ask_registration_address: "Registration address *"
+
+  ask_registration_address: "Registration address (Latin characters)*"
   ask_registration_address_prefilled: "Registration address * (Use: {value})"
+
   ask_insurance_period: "Insurance period (select) *"
+
   ask_insurance_start_date: |
     Insurance start date
     Format: dd.mm.yyyy
+
   ask_vehicle_country: "Vehicle registration country *"
-  validation_vehicle_country: "Specify the vehicle registration country."
+  validation_vehicle_country: "Please specify the vehicle registration country."
   ask_vehicle_country_prefilled: "Vehicle registration country * (current: {value})"
 
-  choose_from_buttons: "Select a value using the button below."
+  choose_from_buttons: "Please choose an option using the buttons below."
 
   ask_vehicle_type: "Vehicle type *"
   ask_vehicle_type_prefilled: "Vehicle type * (current: {value})"
-  ask_license_plate: "License plate number *"
-  ask_license_plate_after_start: "License plate number *"
-  validation_license_plate_strict: "License plate number: only Latin letters and digits, no spaces/hyphens, maximum 8 characters."
-  prefilled_vehicle_from_bitrix_editable: "We found the vehicle details in our database by the license plate number. The values have been filled in — check them and correct them if necessary."
-  vehicle_not_found_manual: "The vehicle was not found in the database. Please enter the vehicle details manually."
+
+  ask_license_plate: "Registration number *"
+  ask_license_plate_after_start: "Registration number (Latin characters)*"
+
+  validation_license_plate_strict: "Registration number: only Latin letters and digits, no spaces or hyphens, maximum 8 characters."
+
+  prefilled_vehicle_from_bitrix_editable: "We found your vehicle data in our database using the registration number. The values have been prefilled — please verify and edit if necessary."
+
+  vehicle_not_found_manual: "Vehicle not found in the database. Please enter the vehicle details manually."
+
   ask_vin: "VIN number *"
-  ask_brand_model: "Vehicle make and model *"
+  ask_brand_model: "Vehicle make and model (Latin characters)*"
   ask_manufacture_year: "Vehicle year of manufacture *"
   ask_fuel_type: "Fuel type *"
+
   ask_engine_capacity: "Engine capacity, cc *"
   ask_engine_capacity_prefilled: "Engine capacity, cc * (Use: {value})"
+
   ask_engine_power: "Engine power *"
   ask_engine_power_prefilled: "Engine power * (Use: {value})"
-  skip_engine_capacity_electric: "For electric fuel type, engine capacity is not required."
-  ask_power_unit: "Power measurement unit *"
 
-  ask_power_unit_prefilled: "Power measurement unit * (current: {value})"
+  skip_engine_capacity_electric: "Engine capacity is not required for Electric fuel type."
+
+  ask_power_unit: "Power unit *"
+  ask_power_unit_prefilled: "Power unit * (current: {value})"
+
   ask_comment: "Comment (optional)"
   skip_comment_button: "SKIP"
 
@@ -167,65 +199,82 @@ application:
   add_more_docs: "Add more documents"
   all_docs_uploaded: "All documents uploaded"
   ask_techpass_changed: "There is already a photo of the vehicle registration certificate in the database. Has the registration certificate changed?"
+
   techpass_changed_yes: "Yes, it has changed"
   techpass_changed_no: "No, it has not changed"
-  ask_vehicle_finalize: "Add another vehicle or complete the application?"
+
+  ask_vehicle_finalize: "Would you like to add another vehicle or complete the application?"
   add_vehicle: "Add another vehicle"
-  finish_application: "Complete the application"
+  finish_application: "Complete application"
+
   ask_consent: |
     SINEDIS Personal Data Processing Policy
+
     SINEDIS Sp. z o.o. processes personal data in accordance with EU Regulation 2016/679 (GDPR / RODO) and Polish law.
+
     The data is used for:
-    • calculating insurance offers;
+    • preparing insurance quotations;
     • issuing and servicing insurance contracts;
-    • contacting the client;
-    • fulfilling legal requirements;
-    • marketing communication, subject to the user's consent.
+    • communication with the client;
+    • compliance with legal obligations;
+    • marketing communication where user consent has been granted.
+
     The following data may be processed:
-    first name, phone number, e-mail, address, vehicle details, insurance information, payment and technical data.
-    Data may be transferred to insurance companies, IT contractors and other partners necessary for providing services.
+    name, phone number, e-mail, address, vehicle data, insurance information, payment and technical data.
+
+    Data may be shared with insurance companies, IT contractors, and other partners necessary for service provision.
+
     The user has the right to:
-    • access the data;
-    • correct or delete the data;
+    • access their personal data;
+    • correct or delete data;
     • restrict processing;
     • withdraw consent;
     • file a complaint with PUODO.
-    The data controller may be the insurance company that issued the policy or SINEDIS Sp. z o.o.
-    Contacts:
+
+    The data controller may be either the insurance company issuing the policy or SINEDIS Sp. z o.o.
+
+    Contact details:
     SINEDIS Sp. z o.o.
     ul. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
     info@sinedis.pl
-    odo@sinedis.pl - data protection officer
+    odo@sinedis.pl - Data Protection Officer
+
     Full version of the policy:
     https://greencard.agency
+
     ________________________
-    Do you agree to the processing and transfer of personal data?"
-  consent_agree: "✅ Agree and send"
+
+    Do you consent to the processing and transfer of your personal data?
+
+  consent_agree: "✅ Agree and Submit"
   consent_decline: "❌ Decline"
-  declined: "You have refused to transfer the data. The application has been cancelled."
-  validation_name: "Enter at least 2 characters."
+
+  declined: "You declined the transfer of personal data. The application has been cancelled."
+
+  validation_name: "Please enter at least 2 characters."
   validation_phone: "Invalid phone number. Use the format +48123456789."
-  validation_email: "Invalid e-mail."
+  validation_email: "Invalid e-mail address."
 
-  validation_date: "Invalid date. Allowed formats: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. The mm/dd/yyyy format is prohibited."
+  validation_date: "Invalid date. Accepted formats: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. The mm/dd/yyyy format is not allowed."
 
-  validation_age_18: "The policyholder must be at least 18 full years old."
+  validation_age_18: "The policyholder must be at least 18 years old."
   validation_insurance_start_not_past: "The insurance start date cannot be in the past."
+
   ask_vin_prefilled: "VIN number * (Use: {value})"
   ask_brand_model_prefilled: "Vehicle make and model * (Use: {value})"
   ask_manufacture_year_prefilled: "Vehicle year of manufacture * (Use: {value})"
   ask_fuel_type_prefilled: "Fuel type * (current: {value})"
 
-  validation_passport: "Invalid passport series and number (without spaces)."
-  validation_address: "Specify the full registration address."
-  validation_license_plate: "Invalid license plate number."
+  validation_passport: "Invalid passport series or number (enter without spaces)."
+  validation_address: "Please provide the full registration address."
+  validation_license_plate: "Invalid registration number."
   validation_vin: "VIN must contain 17 characters."
-  validation_brand_model: "Specify the make and model."
-  validation_year: "Specify a valid year of manufacture."
-  validation_positive_integer: "Enter a positive integer."
-  validation_positive_number: "Enter a positive number."
-  validation_docs: "Send a photo or PDF/document of the vehicle registration certificate."
+  validation_brand_model: "Please specify the vehicle make and model."
+  validation_year: "Please enter a valid year of manufacture."
+  validation_positive_integer: "Please enter a positive integer."
+  validation_positive_number: "Please enter a positive number."
 
+  validation_docs: "Please send a photo or PDF/document of the vehicle registration certificate."
 
 operator:
   request_received: "Request received"
@@ -238,32 +287,40 @@ operator:
 
 faq:
   title: "Select an FAQ category"
+
   categories:
-    documents: "Documents for issuance"
+    documents: "Documents Required"
     payment: "Payment"
     coverage: "Coverage"
-    mistakes: "Pay attention"
+    mistakes: "Important Notes"
     refund: "Refund"
+
   answers:
     documents: |
-      To issue the policy, the following data will be required: passport details, vehicle details and the insurance validity dates
-      Therefore, you need to prepare:
+      The following information is required to issue the policy: personal identification details, vehicle information, and insurance period details.
+
+      Please prepare:
       - passport
       - vehicle registration certificate
-      - technical data of the vehicle
+      - technical vehicle data
       - phone number
-      - e-Mail
+      - e-mail
+
     payment: |
-      Available:
-      - payment by transfer to a Polish card, 
-      - payment by BLIK to a phone number, 
-      - payment by transfer to a Polish bank account"
+      Available payment methods:
+      - bank transfer to a Polish bank card,
+      - BLIK payment to a phone number,
+      - bank transfer to a Polish bank account
+
     coverage: "Coverage territory: A - Austria, B - Belgium, BG - Bulgaria, CY - Cyprus, CZ - Czech Republic, D - Germany, DK - Denmark, E - Spain, EST - Estonia, F - France, FIN - Finland, GR - Greece, H - Hungary, HR - Croatia, I - Italy, IRL - Ireland, IS - Iceland, L - Luxembourg, LT - Lithuania, LV - Latvia, M - Malta, N - Norway, NL - Netherlands, P - Portugal, PL - Poland, RO - Romania, S - Sweden, SK - Slovakia, SLO - Slovenia, CH - Switzerland."
-    mistakes: "Please double-check the VIN, license plate number and insurance period before sending. It will not be possible to make corrections later!"
-    refund: "Refunds are not processed."
+
+    mistakes: "Please double-check the VIN, registration number, and insurance period before submission. Corrections cannot be made afterwards."
+
+    refund: "Refunds are not available."
 
 coverage:
   text: |
-    Green Card coverage map. 
-    Before your trip, check the country code in your policy. 
+    Green Card coverage map.
+    Before travelling, please verify the country code indicated on your policy.
+
     A - Austria, B - Belgium, BG - Bulgaria, CY - Cyprus, CZ - Czech Republic, D - Germany, DK - Denmark, E - Spain, EST - Estonia, F - France, FIN - Finland, GR - Greece, H - Hungary, HR - Croatia, I - Italy, IRL - Ireland, IS - Iceland, L - Luxembourg, LT - Lithuania, LV - Latvia, M - Malta, N - Norway, NL - Netherlands, P - Portugal, PL - Poland, RO - Romania, S - Sweden, SK - Slovakia, SLO - Slovenia, CH - Switzerland.

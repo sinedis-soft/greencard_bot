@@ -48,7 +48,7 @@ application:
       moldova: "Moldova"
       ukraine: "Ukraina"
       armenia: "Armaniston"
-      other: "Boshqa mamlakat"
+      other: "Boshqa davlat"
     vehicle_types:
       car: "Yengil avtomobil"
       truck: "Yuk avtomobili"
@@ -67,23 +67,23 @@ application:
   submitted: "Ariza yuborildi. Biz polisni tayyorlaymiz va to‘lov rekvizitlarini yuboramiz."
   validation_error: "Ma’lumotlarni tekshirish xatosi"
   bitrix_error: "Bitrix xatosi"
-  mini_app_soon: "Mini App formasi keyingi bosqichda ulanadi."
-  open_form_button: "Ariza formasini ochish"
-  temporarily_unavailable: "Ariza formasi vaqtincha mavjud emas."
+  mini_app_soon: "Mini App shakli keyingi bosqichda ulanadi."
+  open_form_button: "Ariza shaklini ochish"
+  temporarily_unavailable: "Ariza shakli vaqtincha mavjud emas."
   form_header: |
     Polisni rasmiylashtirish uchun ariza
     Ma’lumotlarni to‘ldiring. Biz polisni tayyorlaymiz va to‘lov rekvizitlarini yuboramiz.
-    ⚠️DIQQAT! Ilovadan foydalanishni davom ettirish orqali siz Telegram username ma’lumotingizni qayta ishlashga rozilik bildirasiz.⚠️
-  step_1: "1. Aloqa ma’lumotlari"
-  step_2: "2. Sug‘urta va transport vositasi haqidagi ma’lumotlar"
-  prefilled_from_bitrix: "Telegram foydalanuvchi nomi bo‘yicha profilingiz bizning bazamizdan topildi. Aloqa ma’lumotlari va sug‘urtalanuvchi ma’lumotlari avtomatik to‘ldirildi."
-  prefilled_from_bitrix_editable: "Telegram username bo‘yicha profilingiz bizning bazamizdan topildi. Ma’lumotlar kiritildi — tekshiring va kerak bo‘lsa tuzating. Agar hammasi to‘g‘ri bo‘lsa, ushbu bosqichda bo‘sh xabar yuborishingiz mumkin."
+    ⚠️DIQQAT! Ilovadan foydalanishni davom ettirish orqali siz Telegram username’ingizni qayta ishlashga rozilik bildirasiz.⚠️
+  step_1: "1. Kontaktlar"
+  step_2: "2. Sug‘urta va transport vositasi ma’lumotlari"
+  prefilled_from_bitrix: "Telegram foydalanuvchi nomi bo‘yicha bazamizdan profilingiz topildi. Kontaktlar va sug‘urta qildiruvchi ma’lumotlari avtomatik to‘ldirildi."
+  prefilled_from_bitrix_editable: "Telegram username bo‘yicha bazamizdan profilingiz topildi. Ma’lumotlar to‘ldirildi — tekshiring va zarur bo‘lsa tuzating. Hammasi to‘g‘ri bo‘lsa, ushbu bosqichda bo‘sh xabar yuborishingiz mumkin."
   ask_email_lookup: |
     Telegram username bo‘yicha profil topilmadi.
     Iltimos, mijozni qidirish uchun e-mail kiriting.
-  contact_not_found_manual: "Mijoz e-mail bo‘yicha topilmadi. Shaxsiy ma’lumotlarni qo‘lda to‘ldiring."
-  ask_passport_verify: "Mijoz e-mail bo‘yicha topildi. Shaxsni tasdiqlash uchun pasport seriyasi va raqamini bo‘shliqlarsiz kiriting."
-  passport_verify_failed_manual: "Pasport ma’lumotlari bazadagi ma’lumotlar bilan mos kelmadi. Xavfsizlik uchun shaxsiy ma’lumotlarni qo‘lda to‘ldiring."
+  contact_not_found_manual: "E-mail bo‘yicha mijoz topilmadi. Shaxsiy ma’lumotlarni qo‘lda to‘ldiring."
+  ask_passport_verify: "Mijoz e-mail bo‘yicha topildi. Shaxsni tasdiqlash uchun pasport seriyasi va raqamini bo‘sh joysiz kiriting."
+  passport_verify_failed_manual: "Pasport ma’lumotlari bazadagi ma’lumotlarga mos kelmadi. Xavfsizlik uchun shaxsiy ma’lumotlarni qo‘lda to‘ldiring."
   personal_data_summary: |
     Shaxsiy ma’lumotlarni tekshiring:
     Familiya va ism: {last_name} {first_name}
@@ -93,15 +93,15 @@ application:
     E-mail: {email}
     Telefon: {phone}
 
-    Ma’lumotlar dolzarbmi yoki o‘zgartirish kiritish kerakmi?
+    Ma’lumotlar dolzarbmi yoki o‘zgartirish kerakmi?
   vehicle_data_summary: |
     {vehicle_type}, davlat ro‘yxat raqami: {license_plate}
-    TV ro‘yxatdan o‘tgan mamlakat: {vehicle_country}
-    Ishlab chiqarilgan yili: {manufacture_year}
+    TV ro‘yxatdan o‘tgan davlat: {vehicle_country}
+    Ishlab chiqarilgan yil: {manufacture_year}
     VIN: {vin}
-    {fuel_type}, dvigatel hajmi {engine_capacity} kub sm, quvvat {engine_power}, {power_unit}
+    {fuel_type}, dvigatel hajmi {engine_capacity} sm kub., quvvat {engine_power}, {power_unit}
 
-    Ma’lumotlar dolzarbmi yoki o‘zgartirish kiritish kerakmi?
+    Ma’lumotlar dolzarbmi yoki o‘zgartirish kerakmi?
   data_actual: "Ma’lumotlar dolzarb"
   data_edit: "O‘zgartirish kiritish kerak"
   ask_first_name_prefilled: "Ism * (Foydalanish: {value})"
@@ -109,12 +109,12 @@ application:
   prefill_next_button: "HA, KEYINGI SAVOL"
 
   ask_last_name_prefilled: "Familiya * (Foydalanish: {value})"
-  ask_phone_prefilled: "Telefon (mamlakat kodi bilan) * (Foydalanish: {value})"
+  ask_phone_prefilled: "Telefon (davlat kodi bilan) * (Foydalanish: {value})"
   ask_email_prefilled: "E-mail * (Foydalanish: {value})"
-  ask_first_name: "Ism *"
-  ask_last_name: "Familiya *"
+  ask_first_name: "Ism (lotin yozuvida)*"
+  ask_last_name: "Familiya (lotin yozuvida)*"
   ask_phone: |
-    Telefon (mamlakat kodi bilan)
+    Telefon (davlat kodi bilan)
     Misol: +48123456789
   ask_email: |
     E-mail
@@ -123,33 +123,33 @@ application:
     Tug‘ilgan sana
     Format: kk.oo.yyyy
   ask_birth_date_prefilled: "Tug‘ilgan sana * (Foydalanish: {value})"
-  ask_passport: "Pasport seriyasi va raqami bo‘shliqlarsiz *"
-  ask_passport_prefilled: "Pasport seriyasi va raqami bo‘shliqlarsiz * (Foydalanish: {value})"
-  ask_registration_address: "Ro‘yxatdan o‘tgan manzil *"
+  ask_passport: "Pasport seriyasi va raqami bo‘sh joysiz (lotin yozuvida)*"
+  ask_passport_prefilled: "Pasport seriyasi va raqami bo‘sh joysiz * (Foydalanish: {value})"
+  ask_registration_address: "Ro‘yxatdan o‘tgan manzil (lotin yozuvida)*"
   ask_registration_address_prefilled: "Ro‘yxatdan o‘tgan manzil * (Foydalanish: {value})"
   ask_insurance_period: "Sug‘urta muddati (tanlang) *"
   ask_insurance_start_date: |
     Sug‘urta amal qilishining boshlanish sanasi
     Format: kk.oo.yyyy
-  ask_vehicle_country: "Avtomobil ro‘yxatdan o‘tgan mamlakat *"
-  validation_vehicle_country: "Avtomobil ro‘yxatdan o‘tgan mamlakatni ko‘rsating."
-  ask_vehicle_country_prefilled: "Avtomobil ro‘yxatdan o‘tgan mamlakat * (joriy: {value})"
+  ask_vehicle_country: "Avtomobil ro‘yxatdan o‘tgan davlat *"
+  validation_vehicle_country: "Avtomobil ro‘yxatdan o‘tgan davlatni ko‘rsating."
+  ask_vehicle_country_prefilled: "Avtomobil ro‘yxatdan o‘tgan davlat * (joriy: {value})"
 
   choose_from_buttons: "Quyidagi tugma orqali qiymatni tanlang."
 
   ask_vehicle_type: "TV turi *"
   ask_vehicle_type_prefilled: "TV turi * (joriy: {value})"
   ask_license_plate: "Davlat raqami *"
-  ask_license_plate_after_start: "Davlat raqami *"
-  validation_license_plate_strict: "Davlat raqami: faqat lotin harflari va raqamlar, bo‘shliq/tirelarsiz, ko‘pi bilan 8 ta belgi."
-  prefilled_vehicle_from_bitrix_editable: "Davlat raqami bo‘yicha avtomobil ma’lumotlari bizning bazamizdan topildi. Qiymatlar kiritildi — tekshiring va kerak bo‘lsa tuzating."
+  ask_license_plate_after_start: "Davlat raqami (lotin yozuvida)*"
+  validation_license_plate_strict: "Davlat raqami: faqat lotin harflari va raqamlar, bo‘sh joy/tirelarsiz, ko‘pi bilan 8 belgi."
+  prefilled_vehicle_from_bitrix_editable: "Davlat raqami bo‘yicha bazamizdan avtomobil ma’lumotlari topildi. Qiymatlar to‘ldirildi — tekshiring va zarur bo‘lsa tuzating."
   vehicle_not_found_manual: "Avtomobil bazadan topilmadi. Iltimos, avtomobil ma’lumotlarini qo‘lda kiriting."
   ask_vin: "VIN raqami *"
-  ask_brand_model: "TV markasi va modeli *"
+  ask_brand_model: "TV markasi va modeli (lotin yozuvida)*"
   ask_manufacture_year: "TV ishlab chiqarilgan yili *"
   ask_fuel_type: "Yoqilg‘i turi *"
-  ask_engine_capacity: "Dvigatel hajmi, kub sm *"
-  ask_engine_capacity_prefilled: "Dvigatel hajmi, kub sm * (Foydalanish: {value})"
+  ask_engine_capacity: "Dvigatel hajmi, sm kub. *"
+  ask_engine_capacity_prefilled: "Dvigatel hajmi, sm kub. * (Foydalanish: {value})"
   ask_engine_power: "Dvigatel quvvati *"
   ask_engine_power_prefilled: "Dvigatel quvvati * (Foydalanish: {value})"
   skip_engine_capacity_electric: "Elektr yoqilg‘i turi uchun dvigatel hajmi talab qilinmaydi."
@@ -162,35 +162,37 @@ application:
   ask_vehicle_docs: |
     Texnik pasport (foto yoki PDF)
     Bir nechta fayl biriktirish mumkin.
+
   ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
   add_more_docs: "Add more documents"
   all_docs_uploaded: "All documents uploaded"
   ask_techpass_changed: "Bazadan texnik pasport fotosi allaqachon mavjud. Texnik pasport o‘zgarganmi?"
+
   techpass_changed_yes: "Ha, o‘zgargan"
   techpass_changed_no: "Yo‘q, o‘zgarmagan"
-  ask_vehicle_finalize: "Yana avtomobil qo‘shilsinmi yoki rasmiylashtirish yakunlansinmi?"
+  ask_vehicle_finalize: "Yana avtomobil qo‘shasizmi yoki rasmiylashtirishni yakunlaysizmi?"
   add_vehicle: "Yana avtomobil qo‘shish"
   finish_application: "Rasmiylashtirishni yakunlash"
   ask_consent: |
     SINEDIS shaxsiy ma’lumotlarni qayta ishlash siyosati
-    SINEDIS Sp. z o.o. shaxsiy ma’lumotlarni YI 2016/679 Reglamenti (GDPR / RODO) va Polsha qonunchiligiga muvofiq qayta ishlaydi.
-    Ma’lumotlar quyidagilar uchun ishlatiladi:
+    SINEDIS Sp. z o.o. shaxsiy ma’lumotlarni YI 2016/679 reglamenti (GDPR / RODO) va Polsha qonunchiligiga muvofiq qayta ishlaydi.
+    Ma’lumotlar quyidagi maqsadlarda ishlatiladi:
     • sug‘urta takliflarini hisoblash;
     • sug‘urta shartnomalarini rasmiylashtirish va kuzatib borish;
     • mijoz bilan aloqa qilish;
     • qonunchilik talablarini bajarish;
-    • foydalanuvchi roziligi mavjud bo‘lganda marketing kommunikatsiyasi.
-    Qayta ishlanishi mumkin:
+    • foydalanuvchi roziligi mavjud bo‘lsa, marketing kommunikatsiyasi.
+    Quyidagi ma’lumotlar qayta ishlanishi mumkin:
     ism, telefon, e-mail, manzil, transport vositasi ma’lumotlari, sug‘urta ma’lumotlari, to‘lov va texnik ma’lumotlar.
-    Ma’lumotlar xizmat ko‘rsatish uchun zarur bo‘lgan sug‘urta kompaniyalari, IT-pudratchilar va boshqa hamkorlarga berilishi mumkin.
+    Ma’lumotlar sug‘urta kompaniyalariga, IT pudratchilarga va xizmat ko‘rsatish uchun zarur bo‘lgan boshqa hamkorlarga uzatilishi mumkin.
     Foydalanuvchi quyidagi huquqlarga ega:
     • ma’lumotlarga kirish;
     • ma’lumotlarni tuzatish yoki o‘chirish;
     • qayta ishlashni cheklash;
     • rozilikni qaytarib olish;
-    • PUODOga shikoyat yuborish.
+    • PUODOga shikoyat berish.
     Ma’lumotlar administratori polisni rasmiylashtirgan sug‘urta kompaniyasi yoki SINEDIS Sp. z o.o. bo‘lishi mumkin.
-    Aloqa:
+    Kontaktlar:
     SINEDIS Sp. z o.o.
     ul. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
     info@sinedis.pl
@@ -198,45 +200,44 @@ application:
     Siyosatning to‘liq versiyasi:
     https://greencard.agency
     ________________________
-    Shaxsiy ma’lumotlarni qayta ishlash va uzatishga rozimisiz?"
-  consent_agree: "✅ Roziman va yuborish"
+    Shaxsiy ma’lumotlarni qayta ishlash va uzatishga rozimisiz?
+  consent_agree: "✅ Rozilik berish va yuborish"
   consent_decline: "❌ Rad etish"
-  declined: "Siz ma’lumotlarni uzatishdan bosh tortdingiz. Ariza bekor qilindi."
+  declined: "Siz ma’lumotlarni uzatishni rad etdingiz. Ariza bekor qilindi."
   validation_name: "Kamida 2 ta belgi kiriting."
-  validation_phone: "Telefon raqami noto‘g‘ri. +48123456789 formatidan foydalaning."
+  validation_phone: "Telefon noto‘g‘ri. +48123456789 formatidan foydalaning."
   validation_email: "E-mail noto‘g‘ri."
 
   validation_date: "Sana noto‘g‘ri. Ruxsat etilgan formatlar: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. oo/kk/yyyy formati taqiqlangan."
 
-  validation_age_18: "Sug‘urtalanuvchi kamida to‘liq 18 yoshda bo‘lishi kerak."
+  validation_age_18: "Sug‘urta qildiruvchi kamida to‘liq 18 yoshda bo‘lishi kerak."
   validation_insurance_start_not_past: "Sug‘urta boshlanish sanasi o‘tgan sana bo‘lishi mumkin emas."
   ask_vin_prefilled: "VIN raqami * (Foydalanish: {value})"
   ask_brand_model_prefilled: "TV markasi va modeli * (Foydalanish: {value})"
   ask_manufacture_year_prefilled: "TV ishlab chiqarilgan yili * (Foydalanish: {value})"
   ask_fuel_type_prefilled: "Yoqilg‘i turi * (joriy: {value})"
 
-  validation_passport: "Pasport seriyasi va raqami noto‘g‘ri (bo‘shliqlarsiz)."
+  validation_passport: "Pasport seriyasi va raqami noto‘g‘ri (bo‘sh joysiz kiriting)."
   validation_address: "To‘liq ro‘yxatdan o‘tgan manzilni ko‘rsating."
   validation_license_plate: "Davlat raqami noto‘g‘ri."
-  validation_vin: "VIN 17 ta belgidan iborat bo‘lishi kerak."
+  validation_vin: "VIN 17 belgidan iborat bo‘lishi kerak."
   validation_brand_model: "Marka va modelni ko‘rsating."
   validation_year: "To‘g‘ri ishlab chiqarilgan yilni ko‘rsating."
   validation_positive_integer: "Musbat butun son kiriting."
   validation_positive_number: "Musbat son kiriting."
   validation_docs: "Texnik pasportning fotosi yoki PDF/hujjatini yuboring."
 
-
 operator:
   request_received: "So‘rov qabul qilindi"
   operator_connected: "Operator ulandi"
-  access_denied: "Kirish taqiqlangan"
+  access_denied: "Ruxsat taqiqlangan"
   no_tickets: "Murojaatlar yo‘q"
   taken: "Murojaat qabul qilindi"
   closed: "Murojaat yopildi"
   reply_sent: "Javob yuborildi"
 
 faq:
-  title: "FAQ toifasini tanlang"
+  title: "FAQ kategoriyasini tanlang"
   categories:
     documents: "Rasmiylashtirish uchun hujjatlar"
     payment: "To‘lov"
@@ -245,24 +246,24 @@ faq:
     refund: "Qaytarish"
   answers:
     documents: |
-      Polisni rasmiylashtirish uchun quyidagi ma’lumotlar kerak bo‘ladi: pasport ma’lumotlari, transport vositasi ma’lumotlari va sug‘urta amal qilish sanalari
+      Polisni rasmiylashtirish uchun quyidagi ma’lumotlar kerak bo‘ladi: pasport ma’lumotlari, transport vositasi ma’lumotlari va sug‘urta amal qilish sanalari.
       Shuning uchun quyidagilarni tayyorlashingiz kerak:
       - pasport
-      - transport vositasini ro‘yxatdan o‘tkazish guvohnomasi
+      - transport vositasining ro‘yxatdan o‘tganlik guvohnomasi
       - avtomobilning texnik ma’lumotlari
       - telefon raqami
-      - e-Mail
+      - e-mail
     payment: |
-      Mavjud:
-      - Polsha kartasiga pul o‘tkazish orqali to‘lov, 
-      - telefon raqamiga BLIK orqali to‘lov, 
-      - Polsha bank hisob raqamiga pul o‘tkazish orqali to‘lov"
+      Mavjud to‘lov usullari:
+      - Polsha kartasiga o‘tkazma orqali to‘lov,
+      - telefon raqamiga BLIK orqali to‘lov,
+      - Polsha hisob raqamiga bank o‘tkazmasi orqali to‘lov
     coverage: "Qamrov hududi: A - Avstriya, B - Belgiya, BG - Bolgariya, CY - Kipr, CZ - Chexiya, D - Germaniya, DK - Daniya, E - Ispaniya, EST - Estoniya, F - Fransiya, FIN - Finlyandiya, GR - Gretsiya, H - Vengriya, HR - Xorvatiya, I - Italiya, IRL - Irlandiya, IS - Islandiya, L - Lyuksemburg, LT - Litva, LV - Latviya, M - Malta, N - Norvegiya, NL - Niderlandiya, P - Portugaliya, PL - Polsha, RO - Ruminiya, S - Shvetsiya, SK - Slovakiya, SLO - Sloveniya, CH - Shveytsariya."
-    mistakes: "Yuborishdan oldin VIN, davlat raqami va sug‘urta muddatini ikki marta tekshiring. Keyinchalik tuzatish kiritib bo‘lmaydi!"
-    refund: "Mablag‘ qaytarilmaydi."
+    mistakes: "Iltimos, yuborishdan oldin VIN, davlat raqami va sug‘urta muddatini ikki marta tekshiring. Keyinchalik tuzatish kiritib bo‘lmaydi!"
+    refund: "Mablag‘ qaytarilishi rasmiylashtirilmaydi."
 
 coverage:
   text: |
-    Green Card qamrov xaritasi. 
-    Safardan oldin polisingizdagi mamlakat kodini tekshiring. 
+    Green Card qamrov xaritasi.
+    Safar oldidan polisingizdagi davlat kodini tekshiring.
     A - Avstriya, B - Belgiya, BG - Bolgariya, CY - Kipr, CZ - Chexiya, D - Germaniya, DK - Daniya, E - Ispaniya, EST - Estoniya, F - Fransiya, FIN - Finlyandiya, GR - Gretsiya, H - Vengriya, HR - Xorvatiya, I - Italiya, IRL - Irlandiya, IS - Islandiya, L - Lyuksemburg, LT - Litva, LV - Latviya, M - Malta, N - Norvegiya, NL - Niderlandiya, P - Portugaliya, PL - Polsha, RO - Ruminiya, S - Shvetsiya, SK - Slovakiya, SLO - Sloveniya, CH - Shveytsariya.
