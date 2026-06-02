@@ -102,14 +102,15 @@ def _payment_operator_text(lang: str, data: dict, user) -> str:
     request_id = str(data.get("request_id") or "")
     return (
         "💳 Подтверждение оплаты\n"
+        f"Ответ клиенту: {reply_command(request_id)}\n"
         f"ID: {request_id}\n"
         f"Клиент: {client_name}\n"
         f"Telegram ID: {user.id if user else '—'}\n"
         f"Username: {username}\n"
         f"{operator_language_line(lang)}\n"
-        f"Госномер авто: {data.get('license_plate') or '—'}\n"
-        f"ID сделки: {data.get('deal_id') or '—'}\n"
-        f"Ответ клиенту: {reply_command(request_id)}"
+        f"Госномер авто: {data.get('license_plate') or '—'}\n\n"
+        f"ID сделки: {data.get('deal_id') or '—'}"
+
     )
 
 
@@ -118,9 +119,10 @@ def _operator_ticket_text(request_id: str, client_name: str, source: str, prefer
         "🆘 Новый запрос оператора\n"
         f"ID: {request_id}\n"
         f"Клиент: {client_name}\n"
-        f"{operator_language_line(preferred_language)}\n"
+        f"{reply_instruction(request_id)}\n"
         f"Источник: {source}\n"
-        f"{reply_instruction(request_id)}"
+        f"{operator_language_line(preferred_language)}"
+        
     )
 
 
@@ -134,11 +136,12 @@ async def _forward_client_message_to_operator(message: Message) -> bool:
     OperatorTicketService().mark_client_message(ticket.request_id)
     operator_message = (
         "💬 Сообщение клиента\n"
+        f"{reply_instruction(ticket.request_id)}\n"
         f"ID: {ticket.request_id}\n"
         f"Клиент: {client_name}\n"
-        f"{operator_language_line(ticket.preferred_language)}\n"
+        f"{operator_language_line(ticket.preferred_language)}\n\n"
         f"Текст: {message.text}\n"
-        f"{reply_instruction(ticket.request_id)}"
+
     )
     notifier = OperatorNotifierService()
     if ticket.operator_id:
