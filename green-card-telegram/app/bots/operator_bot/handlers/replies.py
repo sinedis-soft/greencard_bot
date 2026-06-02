@@ -4,12 +4,39 @@ from aiogram import F, Router
 from aiogram.types import Message
 
 from app.bots.operator_bot.handlers.start import _operator_ids
-from app.services.operator_notifier_service import ClientNotifierService
+from app.services.operator_notifier_service import (
+    ClientNotifierService,
+    OperatorNotifierService,
+)
 from app.services.operator_ticket_service import OperatorTicketService
 
 router = Router()
 
 _TICKET_ID_PATTERN = re.compile(r"(?:^|\n)ID:\s*(\S+)")
+
+
+def _telegram_name(user_id: int | None, username: str = "") -> str:
+    username = (username or "").strip()
+    if username:
+        return username if username.startswith("@") else f"@{username}"
+    return f"Telegram ID {user_id}" if user_id else "не указан"
+
+
+def _operator_name(message: Message) -> str:
+    if not message.from_user:
+        return "не указан"
+    if message.from_user.username:
+        return f"@{message.from_user.username}"
+    return message.from_user.full_name or f"Telegram ID {message.from_user.id}"
+
+
+def _operator_reply_notification(
+    request_id: str, client_name: str, operator_name: str
+) -> str:
+    return (
+        f"Клиенту {client_name} ответил на request_id {request_id} "
+        f"оператор {operator_name}"
+    )
 
 
 def _allowed(message: Message) -> bool:
@@ -40,6 +67,13 @@ async def _send_operator_reply(message: Message, request_id: str, text: str) -> 
     ClientNotifierService().send_to_client(ticket.telegram_user_id, text)
     svc.set_status(request_id, "waiting_client")
     svc.log_action(request_id, message.from_user.id, "reply", text)
+    client_name = _telegram_name(
+        ticket.telegram_user_id, svc.get_client_username(ticket.telegram_user_id)
+    )
+    OperatorNotifierService().notify_operator_reply_sent(
+        _operator_reply_notification(request_id, client_name, _operator_name(message)),
+        exclude_operator_id=message.from_user.id if message.from_user else None,
+    )
     await message.answer(message.bot["i18n"].get_text("en", "operator.reply_sent"))
 
 

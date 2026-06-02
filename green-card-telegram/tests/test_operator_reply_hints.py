@@ -72,3 +72,40 @@ def test_client_notifier_restart_notice_includes_start_button(monkeypatch):
             5,
         )
     ]
+
+
+
+def test_operator_notifier_reply_sent_skips_replying_operator(monkeypatch):
+    calls = []
+
+    monkeypatch.setenv("OPERATOR_BOT_TOKEN", "token")
+    monkeypatch.setenv("OPERATOR_IDS", "100,200,300")
+    monkeypatch.setattr(
+        "app.services.operator_notifier_service.requests.post",
+        lambda url, json, timeout: calls.append((url, json, timeout)),
+    )
+
+    OperatorNotifierService().notify_operator_reply_sent(
+        "Клиенту @client ответил на request_id r1 оператор @operator",
+        exclude_operator_id=200,
+    )
+
+    assert calls == [
+        (
+            "https://api.telegram.org/bottoken/sendMessage",
+            {
+                "chat_id": 100,
+                "text": "Клиенту @client ответил на request_id r1 оператор @operator",
+            },
+            5,
+        ),
+        (
+            "https://api.telegram.org/bottoken/sendMessage",
+            {
+                "chat_id": 300,
+                "text": "Клиенту @client ответил на request_id r1 оператор @operator",
+            },
+            5,
+        ),
+    ]
+

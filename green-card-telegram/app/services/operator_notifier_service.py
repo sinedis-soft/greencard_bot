@@ -20,6 +20,19 @@ class OperatorNotifierService:
             if reply_command:
                 self._send_operator_message(chat_id, reply_command)
 
+
+    def notify_operator_reply_sent(
+        self, text: str, exclude_operator_id: int | None = None
+    ) -> None:
+        if not self.token:
+            return
+        for operator_id in self.operator_ids:
+            chat_id = int(operator_id)
+            if exclude_operator_id is not None and chat_id == exclude_operator_id:
+                continue
+            self._send_operator_message(chat_id, text)
+
+
     def notify_payment_confirmation(self, text: str, local_paths: list[str]) -> None:
         if not self.token:
             return

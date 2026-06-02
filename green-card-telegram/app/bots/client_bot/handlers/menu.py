@@ -112,7 +112,6 @@ def _payment_operator_text(lang: str, data: dict, user) -> str:
         f"Госномер авто: {data.get('license_plate') or '—'}\n"
         f"ID сделки: {data.get('deal_id') or '—'}\n"
         f"Ответ клиенту: {reply_command(request_id)}"
-
     )
 
 
@@ -312,7 +311,6 @@ async def payment_confirmation_send(
             comment=f"Payment confirmation for Bitrix deal {data.get('deal_id') or '—'}.",
         )
     )
-
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         local_paths = await _download_payment_files(
