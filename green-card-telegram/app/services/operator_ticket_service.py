@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from sqlalchemy import select
 
-from app.db.models import Base, OperatorActionLog, OperatorTicket
+from app.db.models import Application, Base, OperatorActionLog, OperatorTicket
 from app.db.session import SessionLocal, engine
 
 
@@ -49,6 +49,17 @@ class OperatorTicketService:
             db.commit()
             return True
 
+    def assign_operator_if_empty(self, request_id: str, operator_id: int) -> int | None:
+        with SessionLocal() as db:
+            ticket = db.get(OperatorTicket, request_id)
+            if not ticket:
+                return None
+            if ticket.operator_id is None:
+                ticket.operator_id = operator_id
+                db.commit()
+                return operator_id
+            return ticket.operator_id
+
     def get_ticket(self, request_id: str) -> OperatorTicket | None:
         with SessionLocal() as db:
             return db.get(OperatorTicket, request_id)
@@ -63,6 +74,20 @@ class OperatorTicketService:
                 )
                 .order_by(OperatorTicket.created_at.desc())
             ).first()
+
+    def get_client_username(self, telegram_user_id: int | None) -> str:
+        if not telegram_user_id:
+            return ""
+        with SessionLocal() as db:
+            username = db.scalars(
+                select(Application.telegram_username)
+                .where(
+                    Application.telegram_user_id == telegram_user_id,
+                    Application.telegram_username.is_not(None),
+                )
+                .order_by(Application.updated_at.desc())
+            ).first()
+        return str(username or "").strip()
 
     def mark_client_message(self, request_id: str) -> None:
         with SessionLocal() as db:
