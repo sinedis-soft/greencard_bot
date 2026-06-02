@@ -3,7 +3,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
 def reply_instruction(request_id: str) -> str:
-    return "Ответ клиенту: отправьте ваш текст после"
+    return "Ответ клиенту: отправьте ваш текст после команды /reply {request_id}"
 
 
 def reply_command(request_id: str) -> str:

@@ -318,6 +318,7 @@ class Bitrix24Client:
             return parse.unquote(match.group(1).strip())
         return ""
 
+
     def create_or_update_contact(self, payload: dict[str, Any]) -> int:
         fields = self._contact_fields(payload)
         existing = self._find_contact(fields)
