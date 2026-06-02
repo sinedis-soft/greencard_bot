@@ -4,6 +4,8 @@ main_menu:
   coverage: "🌍 Дзе дзейнічае?"
   apply: "📝 Аформіць"
   operator: "👨‍💼 Звязацца з аператарам"
+  payment_confirmation: "💳 Пацвярджэнне аплаты"
+  latest_deal: "📄 Мая апошняя заяўка"
   language: "🌐 Мова"
 
 menu:
@@ -266,3 +268,52 @@ coverage:
     Карта пакрыцця Green Card.
     Перад паездкай праверце код краіны ў вашым полісе.
     A - Аўстрыя, B - Бельгія, BG - Балгарыя, CY - Кіпр, CZ - Чэхія, D - Германія, DK - Данія, E - Іспанія, EST - Эстонія, F - Францыя, FIN - Фінляндыя, GR - Грэцыя, H - Венгрыя, HR - Харватыя, I - Італія, IRL - Ірландыя, IS - Ісландыя, L - Люксембург, LT - Літва, LV - Латвія, M - Мальта, N - Нарвегія, NL - Нідэрланды, P - Партугалія, PL - Польшча, RO - Румынія, S - Швецыя, SK - Славакія, SLO - Славенія, CH - Швейцарыя.
+
+latest_deal:
+  title_label: "TITLE"
+  policy_number_label: "Нумар поліса"
+  policy_status_label: "Стан поліса"
+  comments_label: "COMMENTS"
+  not_found: "Апошняя заяўка не знойдзена."
+  unavailable: "Не ўдалося атрымаць апошнюю заяўку. Паспрабуйце пазней."
+  payment_instructions: |
+    Ваша заяўка на страхаванне аўтамабіля {license_plate} ўхвалена.
+
+    Пасля аплаты, калі ласка, дашліце пацвярджэнне плацяжу.
+
+    Варыянты аплаты
+
+    BLIK на нумар +48 664 914 738
+    Прызначэнне плацяжу: za ubezpieczenie auto {license_plate}
+
+
+    Банкаўскі перавод у Польшчы:
+    Уладальнік рахунку: DZIANIS BARAVOI
+    Нумар рахунку: 44 1020 1332 0000 1602 1435 6564
+    Банк: Powszechna Kasa Oszczędności Bank Polski SA
+    Прызначэнне плацяжу: za ubezpieczenie auto {license_plate}
+
+
+    Міжнародны банкаўскі перавод:
+    Уладальнік рахунку: DZIANIS BARAVOI
+    Валюта: PLN
+    IBAN: PL44 1020 1332 0000 1602 1435 6564
+    SWIFT/BIC: BPKOPLPW
+    Банк: Powszechna Kasa Oszczędności Bank Polski SA
+    Краіна: Polska
+    Адрэс: ul. H. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    Прызначэнне плацяжу: za ubezpieczenie auto {license_plate}
+
+
+    Перавод на карту:
+    Нумар карты: 4213 5239 3578 6679
+    Тэрмін дзеяння: 09/26
+    Уладальнік: DZIANIS BARAVOI
+    Прызначэнне плацяжу: za ubezpieczenie auto {license_plate}
+payment_confirmation:
+  attach_prompt: "Прымацуйце скан экрана аб адпраўцы сродкаў або PDF-пацвярджэнне з банка."
+  file_received: "Файл атрыманы. Адправіць пацвярджэнне аператару або дадаць яшчэ файл?"
+  send_button: "Адправіць пацвярджэнне"
+  add_more_button: "Дадаць яшчэ файл"
+  sent: "Пацвярджэнне аплаты адпраўлена аператару."
+  no_unpaid: "У вас няма неаплачаных рахункаў. Вы можаце націснуць кнопку «Мая апошняя заяўка»."
