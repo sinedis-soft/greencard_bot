@@ -163,6 +163,9 @@ application:
   ask_vehicle_docs: |
     سند ثبت وسیله نقلیه (عکس یا PDF)
     می‌توانید چند فایل پیوست کنید.
+  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
+  add_more_docs: "Add more documents"
+  all_docs_uploaded: "All documents uploaded"
   ask_techpass_changed: "در پایگاه داده قبلاً عکس سند ثبت وسیله نقلیه وجود دارد. آیا سند ثبت تغییر کرده است؟"
   techpass_changed_yes: "بله، تغییر کرده است"
   techpass_changed_no: "خیر، تغییر نکرده است"

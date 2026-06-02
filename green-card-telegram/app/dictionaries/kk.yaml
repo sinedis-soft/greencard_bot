@@ -163,6 +163,9 @@ application:
   ask_vehicle_docs: |
     Техпаспорт (фото немесе PDF)
     Бірнеше файл тіркеуге болады.
+  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
+  add_more_docs: "Add more documents"
+  all_docs_uploaded: "All documents uploaded"
   ask_techpass_changed: "Базада техпаспорттың фотосы бар. Техпаспорт өзгертілді ме?"
   techpass_changed_yes: "Иә, өзгертілді"
   techpass_changed_no: "Жоқ, өзгертілмеді"

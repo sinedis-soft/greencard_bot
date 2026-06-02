@@ -34,6 +34,7 @@ from app.bots.client_bot.keyboards.apply import (
 
     techpass_changed_keyboard,
     vehicle_types_keyboard,
+    vehicle_docs_complete_keyboard,
 )
 from app.core.config import app_root
 from app.schemas.application import ApplicationCreate
@@ -1305,7 +1306,32 @@ async def vehicle_docs(message: Message, state: FSMContext, i18n: I18nService, l
     elif message.photo:
         docs.append({"type": "photo", "file_id": message.photo[-1].file_id, "name": "photo"})
     await state.update_data(vehicle_docs=docs, reuse_existing_vehicle_docs=False)
-    await _ask_insurance_start_date(message, state, i18n, lang)
+    await message.answer(
+        i18n.get_text(lang, "application.ask_vehicle_docs_complete"),
+        reply_markup=vehicle_docs_complete_keyboard(
+            i18n.get_text(lang, "application.add_more_docs"),
+            i18n.get_text(lang, "application.all_docs_uploaded"),
+        ),
+    )
+
+
+@router.callback_query(F.data == "apply:docs:add_more", ApplyForm.vehicle_docs)
+async def vehicle_docs_add_more(callback: CallbackQuery, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+    lang = lang_store.get(callback.from_user.id, default_language)
+    await callback.message.answer(i18n.get_text(lang, "application.ask_vehicle_docs"))
+    await callback.answer()
+
+
+@router.callback_query(F.data == "apply:docs:complete", ApplyForm.vehicle_docs)
+async def vehicle_docs_complete(callback: CallbackQuery, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+    lang = lang_store.get(callback.from_user.id, default_language)
+    data = await state.get_data()
+    if not data.get("vehicle_docs"):
+        await callback.message.answer(i18n.get_text(lang, "application.validation_docs"))
+        await callback.answer()
+        return
+    await _ask_insurance_start_date(callback.message, state, i18n, lang, callback.from_user)
+    await callback.answer()
 
 
 @router.message(ApplyForm.vehicle_docs)

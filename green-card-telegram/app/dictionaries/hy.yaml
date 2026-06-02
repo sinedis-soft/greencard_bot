@@ -163,6 +163,9 @@ application:
   ask_vehicle_docs: |
     Տեխնիկական անձնագիր (լուսանկար կամ PDF)
     Կարելի է կցել մի քանի ֆայլ։
+  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
+  add_more_docs: "Add more documents"
+  all_docs_uploaded: "All documents uploaded"
   ask_techpass_changed: "Բազայում արդեն կա տեխնիկական անձնագրի լուսանկար։ Տեխնիկական անձնագիրը փոխվե՞լ է։"
   techpass_changed_yes: "Այո, փոխվել է"
   techpass_changed_no: "Ոչ, չի փոխվել"

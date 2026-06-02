@@ -163,6 +163,9 @@ application:
   ask_vehicle_docs: |
     Vehicle registration certificate (photo or PDF)
     You may attach several files.
+  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
+  add_more_docs: "Add more documents"
+  all_docs_uploaded: "All documents uploaded"
   ask_techpass_changed: "There is already a photo of the vehicle registration certificate in the database. Has the registration certificate changed?"
   techpass_changed_yes: "Yes, it has changed"
   techpass_changed_no: "No, it has not changed"

@@ -132,3 +132,11 @@ def skip_comment_keyboard(button_text: str) -> InlineKeyboardMarkup:
     builder.button(text=button_text, callback_data="apply:comment:skip")
 
     return builder.as_markup()
+
+
+def vehicle_docs_complete_keyboard(add_more_text: str, all_uploaded_text: str) -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    builder.button(text=add_more_text, callback_data="apply:docs:add_more")
+    builder.button(text=all_uploaded_text, callback_data="apply:docs:complete")
+    builder.adjust(1)
+    return builder.as_markup()

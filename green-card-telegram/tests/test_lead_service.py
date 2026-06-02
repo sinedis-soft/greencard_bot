@@ -131,6 +131,7 @@ def test_lead_service_adds_telegram_fields_to_contact_payload():
     assert bitrix.deals[0][TELEGRAM_CHAT_ID_FIELD] == 12345
     assert bitrix.deals[1][TELEGRAM_CHAT_ID_FIELD] == 12345
 
+
 def test_bitrix_client_searches_existing_contact_by_telegram_identity_before_email():
     from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
 
