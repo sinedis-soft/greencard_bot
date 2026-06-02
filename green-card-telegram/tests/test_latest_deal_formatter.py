@@ -74,9 +74,8 @@ def test_deal_file_items_extracts_bitrix_file_download_urls():
             POLICY_FILES_FIELD: [
                 {
                     "name": "policy.pdf",
-
-                    "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&fileId=10",
-                    "urlMachine": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=token&fileId=10",
+                    "downloadUrl": "/bitrix/download/1207185/policy.pdf",
+                    "showUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?fileId=10",
 
                 },
                 {
@@ -92,8 +91,111 @@ def test_deal_file_items_extracts_bitrix_file_download_urls():
         (
             "policy.pdf",
 
-            "https://example.bitrix24.com/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=token&fileId=10",
-
+            "https://example.bitrix24.com/bitrix/download/1207185/policy.pdf",
         ),
         ("green-card.pdf", "https://cdn.example.test/green-card.pdf"),
     ]
+
+
+def test_bitrix_client_reads_deal_file_metadata_via_rest():
+    from app.services.bitrix24_client import Bitrix24Client
+
+    calls = []
+
+    class FakeBitrixClient(Bitrix24Client):
+        def _post(self, method, payload):
+            calls.append((method, payload))
+            return {
+                "result": {
+                    POLICY_FILES_FIELD: {
+                        "id": 1207185,
+                        "downloadUrl": "/bitrix/download/1207185/policy.pdf",
+                    }
+                }
+            }
+
+    client = FakeBitrixClient("https://example.bitrix24.com/rest/7/webhook-code")
+
+    assert client.get_deal_file_infos(82163) == [
+        {
+            "id": 1207185,
+            "downloadUrl": "/bitrix/download/1207185/policy.pdf",
+        }
+    ]
+    assert calls == [("crm.deal.get", {"id": 82163})]
+
+
+def test_bitrix_client_download_file_adds_webhook_auth_and_rejects_html(
+    monkeypatch, tmp_path
+):
+    from app.services.bitrix24_client import Bitrix24Client
+    from app.services import bitrix24_client
+
+    opened_urls = []
+
+    class HtmlResponse:
+        headers = {"Content-Type": "text/html; charset=UTF-8"}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+        def read(self):
+            return b"<!DOCTYPE html><html>login</html>"
+
+    def fake_urlopen(req, timeout):
+        opened_urls.append(req.full_url)
+        return HtmlResponse()
+
+    monkeypatch.setattr(bitrix24_client.request, "urlopen", fake_urlopen)
+    client = Bitrix24Client("https://example.bitrix24.com/rest/7/webhook-code")
+
+    try:
+        client.download_deal_file(
+            {"id": 1207185, "downloadUrl": "/bitrix/download/1207185/policy.pdf"},
+            tmp_path,
+        )
+    except RuntimeError as exc:
+        assert "HTML login page" in str(exc)
+    else:
+        raise AssertionError("Expected HTML login page download to fail")
+
+    assert opened_urls == [
+        "https://example.bitrix24.com/bitrix/download/1207185/policy.pdf"
+        "?auth=webhook-code"
+    ]
+
+
+def test_bitrix_client_download_file_saves_non_html_content(monkeypatch, tmp_path):
+    from app.services.bitrix24_client import Bitrix24Client
+    from app.services import bitrix24_client
+
+    class PdfResponse:
+        headers = {
+            "Content-Type": "application/pdf",
+            "Content-Disposition": 'attachment; filename="policy.pdf"',
+        }
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+        def read(self):
+            return b"%PDF-1.4"
+
+    monkeypatch.setattr(
+        bitrix24_client.request, "urlopen", lambda req, timeout: PdfResponse()
+    )
+    client = Bitrix24Client("https://example.bitrix24.com/rest/7/webhook-code")
+
+    path = client.download_deal_file(
+        {"id": 1207185, "downloadUrl": "/bitrix/download/1207185/policy.pdf"},
+        tmp_path,
+    )
+
+    assert path.endswith("policy.pdf")
+    assert (tmp_path / "policy.pdf").read_bytes() == b"%PDF-1.4"

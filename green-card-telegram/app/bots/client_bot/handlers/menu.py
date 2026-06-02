@@ -5,7 +5,9 @@ from uuid import uuid4
 from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
-from aiogram.types import CallbackQuery, Message, URLInputFile
+
+from aiogram.types import CallbackQuery, FSInputFile, Message
+
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from app.bots.client_bot.handlers.apply import send_apply
@@ -16,11 +18,9 @@ from app.bots.client_bot.keyboards.language import language_keyboard
 from app.bots.client_bot.keyboards.main_menu import main_menu_keyboard
 from app.bots.client_bot.menu_actions import menu_action_for_text
 from app.services.bitrix24_client import LICENSE_PLATE_FIELD
-from app.services.latest_deal_formatter import (
-    deal_file_items,
-    is_invoice_deal,
-    latest_deal_text,
-)
+
+from app.services.latest_deal_formatter import is_invoice_deal, latest_deal_text
+
 from app.bots.operator_bot.keyboards.ticket_actions import (
     reply_command,
     reply_instruction,
@@ -102,6 +102,7 @@ def _payment_operator_text(lang: str, data: dict, user) -> str:
     request_id = str(data.get("request_id") or "")
     return (
 
+
         "💳 Подтверждение оплаты\n\n"
 
         f"ID: {request_id}\n"
@@ -111,6 +112,7 @@ def _payment_operator_text(lang: str, data: dict, user) -> str:
         f"{operator_language_line(lang)}\n"
         f"Госномер авто: {data.get('license_plate') or '—'}\n\n"
         f"ID сделки:\n {data.get('deal_id') or '—'}"
+
 
 
     )
@@ -185,9 +187,25 @@ async def _send_latest_deal(message: Message, lang: str, user=None) -> None:
         return
 
     await message.answer(latest_deal_text(message.bot.i18n, lang, deal))
-    webhook_url = getattr(bitrix_client, "webhook_url", "")
-    for file_name, file_url in deal_file_items(deal, webhook_url):
-        await message.answer_document(URLInputFile(file_url, filename=file_name))
+
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        for file_info in bitrix_client.get_deal_file_infos(deal.get("ID")):
+            try:
+                local_path = bitrix_client.download_deal_file(file_info, tmp_dir)
+            except RuntimeError as exc:
+                deal_id = deal.get("ID")
+                if deal_id:
+                    try:
+                        bitrix_client.add_timeline_comment(
+                            "deal",
+                            int(deal_id),
+                            f"Файл не скачан: {exc}",
+                        )
+                    except (RuntimeError, ValueError):
+                        pass
+                continue
+            await message.answer_document(FSInputFile(local_path))
+
 
 
 async def _start_payment_confirmation(

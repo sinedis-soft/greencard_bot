@@ -108,6 +108,7 @@ def test_operator_notifier_reply_sent_skips_replying_operator(monkeypatch):
         ),
     ]
 
+
 def test_operator_notifier_direct_message_sends_only_to_assigned_operator(monkeypatch):
     calls = []
 
