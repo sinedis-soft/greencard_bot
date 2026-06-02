@@ -73,8 +73,6 @@ def test_client_notifier_restart_notice_includes_start_button(monkeypatch):
         )
     ]
 
-
-
 def test_operator_notifier_reply_sent_skips_replying_operator(monkeypatch):
     calls = []
 
@@ -109,3 +107,27 @@ def test_operator_notifier_reply_sent_skips_replying_operator(monkeypatch):
         ),
     ]
 
+def test_operator_notifier_direct_message_sends_only_to_assigned_operator(monkeypatch):
+    calls = []
+
+    monkeypatch.setenv("OPERATOR_BOT_TOKEN", "token")
+    monkeypatch.setenv("OPERATOR_IDS", "100,200,300")
+    monkeypatch.setattr(
+        "app.services.operator_notifier_service.requests.post",
+        lambda url, json, timeout: calls.append((url, json, timeout)),
+    )
+
+    OperatorNotifierService().notify_operator_direct(200, "client message", "/reply r1")
+
+    assert calls == [
+        (
+            "https://api.telegram.org/bottoken/sendMessage",
+            {"chat_id": 200, "text": "client message"},
+            5,
+        ),
+        (
+            "https://api.telegram.org/bottoken/sendMessage",
+            {"chat_id": 200, "text": "/reply r1"},
+            5,
+        ),
+    ]

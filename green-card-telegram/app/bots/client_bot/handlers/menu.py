@@ -99,12 +99,10 @@ async def _download_payment_files(
 def _payment_operator_text(lang: str, data: dict, user) -> str:
     client_name = user.full_name if user else ""
     username = f"@{user.username}" if user and user.username else "—"
-
     request_id = str(data.get("request_id") or "")
     return (
         "💳 Подтверждение оплаты\n"
         f"ID: {request_id}\n"
-
         f"Клиент: {client_name}\n"
         f"Telegram ID: {user.id if user else '—'}\n"
         f"Username: {username}\n"
@@ -134,15 +132,21 @@ async def _forward_client_message_to_operator(message: Message) -> bool:
         return False
     client_name = message.from_user.full_name
     OperatorTicketService().mark_client_message(ticket.request_id)
-    OperatorNotifierService().notify_new_ticket(
+    operator_message = (
         "💬 Сообщение клиента\n"
         f"ID: {ticket.request_id}\n"
         f"Клиент: {client_name}\n"
         f"{operator_language_line(ticket.preferred_language)}\n"
         f"Текст: {message.text}\n"
-        f"{reply_instruction(ticket.request_id)}",
-        reply_command(ticket.request_id),
+        f"{reply_instruction(ticket.request_id)}"
     )
+    notifier = OperatorNotifierService()
+    if ticket.operator_id:
+        notifier.notify_operator_direct(
+            ticket.operator_id, operator_message, reply_command(ticket.request_id)
+        )
+    else:
+        notifier.notify_new_ticket(operator_message, reply_command(ticket.request_id))
     await message.answer(
         message.bot.i18n.get_text(
             message.bot.lang_store.get(
@@ -216,7 +220,6 @@ async def _start_payment_confirmation(
     await state.set_state(PaymentConfirmationForm.awaiting_file)
     await state.update_data(
         payment_files=[],
-
         request_id=f"pay-{message.from_user.id}-{uuid4().hex[:8]}",
 
         deal_id=str(deal.get("ID") or ""),

@@ -64,16 +64,26 @@ async def _send_operator_reply(message: Message, request_id: str, text: str) -> 
     if not ticket or not ticket.telegram_user_id:
         await message.answer("Ticket not found or has no client Telegram ID")
         return
+    assigned_operator_id = ticket.operator_id
+    if assigned_operator_id and assigned_operator_id != message.from_user.id:
+        await message.answer(
+            f"Request {request_id} is already assigned to operator {assigned_operator_id}"
+        )
+        return
+
+    is_first_operator_reply = assigned_operator_id is None
+    svc.assign_operator_if_empty(request_id, message.from_user.id)
     ClientNotifierService().send_to_client(ticket.telegram_user_id, text)
     svc.set_status(request_id, "waiting_client")
     svc.log_action(request_id, message.from_user.id, "reply", text)
-    client_name = _telegram_name(
-        ticket.telegram_user_id, svc.get_client_username(ticket.telegram_user_id)
-    )
-    OperatorNotifierService().notify_operator_reply_sent(
-        _operator_reply_notification(request_id, client_name, _operator_name(message)),
-        exclude_operator_id=message.from_user.id if message.from_user else None,
-    )
+    if is_first_operator_reply:
+        client_name = _telegram_name(
+            ticket.telegram_user_id, svc.get_client_username(ticket.telegram_user_id)
+        )
+        OperatorNotifierService().notify_operator_reply_sent(
+            _operator_reply_notification(request_id, client_name, _operator_name(message)),
+            exclude_operator_id=message.from_user.id if message.from_user else None,
+        )
     await message.answer(message.bot["i18n"].get_text("en", "operator.reply_sent"))
 
 

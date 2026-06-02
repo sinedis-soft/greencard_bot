@@ -49,6 +49,17 @@ class OperatorTicketService:
             db.commit()
             return True
 
+    def assign_operator_if_empty(self, request_id: str, operator_id: int) -> int | None:
+        with SessionLocal() as db:
+            ticket = db.get(OperatorTicket, request_id)
+            if not ticket:
+                return None
+            if ticket.operator_id is None:
+                ticket.operator_id = operator_id
+                db.commit()
+                return operator_id
+            return ticket.operator_id
+
     def get_ticket(self, request_id: str) -> OperatorTicket | None:
         with SessionLocal() as db:
             return db.get(OperatorTicket, request_id)
