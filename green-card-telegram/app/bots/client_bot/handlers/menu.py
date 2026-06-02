@@ -99,14 +99,20 @@ async def _download_payment_files(
 def _payment_operator_text(lang: str, data: dict, user) -> str:
     client_name = user.full_name if user else ""
     username = f"@{user.username}" if user and user.username else "—"
+
+    request_id = str(data.get("request_id") or "")
     return (
         "💳 Подтверждение оплаты\n"
+        f"ID: {request_id}\n"
+
         f"Клиент: {client_name}\n"
         f"Telegram ID: {user.id if user else '—'}\n"
         f"Username: {username}\n"
         f"{operator_language_line(lang)}\n"
         f"Госномер авто: {data.get('license_plate') or '—'}\n"
-        f"ID сделки: {data.get('deal_id') or '—'}"
+        f"ID сделки: {data.get('deal_id') or '—'}\n"
+        f"Ответ клиенту: {reply_command(request_id)}"
+
     )
 
 
@@ -211,6 +217,9 @@ async def _start_payment_confirmation(
     await state.set_state(PaymentConfirmationForm.awaiting_file)
     await state.update_data(
         payment_files=[],
+
+        request_id=f"pay-{message.from_user.id}-{uuid4().hex[:8]}",
+
         deal_id=str(deal.get("ID") or ""),
         license_plate=str(deal.get(LICENSE_PLATE_FIELD) or ""),
     )
@@ -283,6 +292,27 @@ async def payment_confirmation_send(
         )
         await callback.answer()
         return
+
+    request_id = str(
+        data.get("request_id") or f"pay-{callback.from_user.id}-{uuid4().hex[:8]}"
+    )
+    data["request_id"] = request_id
+    OperatorTicketService().create_ticket(
+        TicketPayload(
+            request_id=request_id,
+            telegram_user_id=callback.from_user.id if callback.from_user else None,
+            client_name=callback.from_user.full_name if callback.from_user else "",
+            client_phone="",
+            preferred_language=lang,
+            vehicle_type="",
+            license_plate=str(data.get("license_plate") or ""),
+            vin="",
+            insurance_period_days=0,
+            insurance_start_date="",
+            comment=f"Payment confirmation for Bitrix deal {data.get('deal_id') or '—'}.",
+        )
+    )
+
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         local_paths = await _download_payment_files(

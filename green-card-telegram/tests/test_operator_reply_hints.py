@@ -4,7 +4,10 @@ import types
 requests_stub = types.SimpleNamespace(post=lambda *args, **kwargs: None)
 sys.modules.setdefault("requests", requests_stub)
 
-from app.services.operator_notifier_service import OperatorNotifierService
+from app.services.operator_notifier_service import (
+    ClientNotifierService,
+    OperatorNotifierService,
+)
 
 
 def test_operator_notifier_sends_ticket_text_and_copyable_reply_command(monkeypatch):
@@ -41,4 +44,31 @@ def test_operator_notifier_keeps_single_message_when_reply_command_is_absent(mon
 
     assert calls == [
         ("https://api.telegram.org/bottoken/sendMessage", {"chat_id": 100, "text": "SLA breached: ticket-1"}, 5),
+    ]
+
+
+def test_client_notifier_restart_notice_includes_start_button(monkeypatch):
+    calls = []
+
+    monkeypatch.setenv("BOT_TOKEN", "client-token")
+    monkeypatch.setattr(
+        "app.services.operator_notifier_service.requests.post",
+        lambda url, json, timeout: calls.append((url, json, timeout)),
+    )
+
+    assert ClientNotifierService().send_restart_notice(12345, "restart please") is True
+
+    assert calls == [
+        (
+            "https://api.telegram.org/botclient-token/sendMessage",
+            {
+                "chat_id": 12345,
+                "text": "restart please",
+                "reply_markup": {
+                    "keyboard": [[{"text": "/start"}]],
+                    "resize_keyboard": True,
+                },
+            },
+            5,
+        )
     ]

@@ -51,12 +51,24 @@ class ClientNotifierService:
     def __init__(self) -> None:
         self.client_token = os.getenv("BOT_TOKEN", "")
 
-    def send_to_client(self, telegram_user_id: int, text: str) -> bool:
+    def send_to_client(
+        self, telegram_user_id: int, text: str, reply_markup: dict | None = None
+    ) -> bool:
         if not self.client_token:
             return False
-        requests.post(
+        payload = {"chat_id": telegram_user_id, "text": text}
+        if reply_markup:
+            payload["reply_markup"] = reply_markup
+        response = requests.post(
             f"https://api.telegram.org/bot{self.client_token}/sendMessage",
-            json={"chat_id": telegram_user_id, "text": text},
+            json=payload,
             timeout=5,
         )
-        return True
+        return getattr(response, "ok", True)
+
+    def send_restart_notice(self, telegram_user_id: int, text: str) -> bool:
+        return self.send_to_client(
+            telegram_user_id,
+            text,
+            {"keyboard": [[{"text": "/start"}]], "resize_keyboard": True},
+        )
