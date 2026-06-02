@@ -99,10 +99,12 @@ async def _download_payment_files(
 def _payment_operator_text(lang: str, data: dict, user) -> str:
     client_name = user.full_name if user else ""
     username = f"@{user.username}" if user and user.username else "—"
+
     request_id = str(data.get("request_id") or "")
     return (
         "💳 Подтверждение оплаты\n"
         f"ID: {request_id}\n"
+
         f"Клиент: {client_name}\n"
         f"Telegram ID: {user.id if user else '—'}\n"
         f"Username: {username}\n"
@@ -110,6 +112,7 @@ def _payment_operator_text(lang: str, data: dict, user) -> str:
         f"Госномер авто: {data.get('license_plate') or '—'}\n"
         f"ID сделки: {data.get('deal_id') or '—'}\n"
         f"Ответ клиенту: {reply_command(request_id)}"
+
     )
 
 
@@ -214,7 +217,9 @@ async def _start_payment_confirmation(
     await state.set_state(PaymentConfirmationForm.awaiting_file)
     await state.update_data(
         payment_files=[],
+
         request_id=f"pay-{message.from_user.id}-{uuid4().hex[:8]}",
+
         deal_id=str(deal.get("ID") or ""),
         license_plate=str(deal.get(LICENSE_PLATE_FIELD) or ""),
     )
@@ -307,6 +312,7 @@ async def payment_confirmation_send(
             comment=f"Payment confirmation for Bitrix deal {data.get('deal_id') or '—'}.",
         )
     )
+
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         local_paths = await _download_payment_files(
