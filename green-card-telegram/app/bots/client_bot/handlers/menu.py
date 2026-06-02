@@ -221,6 +221,7 @@ async def _start_payment_confirmation(
     await state.update_data(
         payment_files=[],
         request_id=f"pay-{message.from_user.id}-{uuid4().hex[:8]}",
+
         deal_id=str(deal.get("ID") or ""),
         license_plate=str(deal.get(LICENSE_PLATE_FIELD) or ""),
     )

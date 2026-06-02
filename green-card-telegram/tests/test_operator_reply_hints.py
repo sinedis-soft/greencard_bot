@@ -73,7 +73,6 @@ def test_client_notifier_restart_notice_includes_start_button(monkeypatch):
         )
     ]
 
-
 def test_operator_notifier_reply_sent_skips_replying_operator(monkeypatch):
     calls = []
 
@@ -107,7 +106,6 @@ def test_operator_notifier_reply_sent_skips_replying_operator(monkeypatch):
             5,
         ),
     ]
-
 
 def test_operator_notifier_direct_message_sends_only_to_assigned_operator(monkeypatch):
     calls = []
