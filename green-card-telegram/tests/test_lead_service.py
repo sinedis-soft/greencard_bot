@@ -366,3 +366,60 @@ def test_bitrix_client_prefill_search_uses_email_when_username_is_missing():
             },
         )
     ]
+
+
+def test_bitrix_client_latest_deal_search_uses_contact_found_by_telegram_identity():
+    from app.services.bitrix24_client import (
+        Bitrix24Client,
+        POLICY_FILES_FIELD,
+        TELEGRAM_USER_ID_FIELD,
+    )
+
+    calls = []
+
+    class Client(Bitrix24Client):
+        def _post(self, method, payload):
+            calls.append((method, payload))
+            if method == "crm.contact.list":
+                return {"result": [{"ID": "77", TELEGRAM_USER_ID_FIELD: "12345"}]}
+            return {
+                "result": [{"ID": "200", "TITLE": "Policy", POLICY_FILES_FIELD: []}]
+            }
+
+    deal = Client("https://example.test/rest").find_latest_deal_by_telegram_identity(
+        username="john", user_id=12345
+    )
+
+    assert deal["ID"] == "200"
+    assert calls[0][0] == "crm.contact.list"
+    assert calls[0][1]["filter"] == {TELEGRAM_USER_ID_FIELD: "12345"}
+    assert calls[1][0] == "crm.deal.list"
+    assert calls[1][1]["order"] == {"ID": "DESC"}
+    assert calls[1][1]["filter"] == {"CONTACT_ID": "77"}
+    assert "TITLE" in calls[1][1]["select"]
+    assert POLICY_FILES_FIELD in calls[1][1]["select"]
+
+
+def test_bitrix_client_latest_deal_search_falls_back_to_deal_chat_id():
+    from app.services.bitrix24_client import (
+        Bitrix24Client,
+        TELEGRAM_CHAT_ID_FIELD,
+        TELEGRAM_USER_ID_FIELD,
+    )
+
+    calls = []
+
+    class Client(Bitrix24Client):
+        def _post(self, method, payload):
+            calls.append((method, payload))
+            if method == "crm.contact.list":
+                return {"result": []}
+            return {"result": [{"ID": "201", "TITLE": "Policy"}]}
+
+    deal = Client("https://example.test/rest").find_latest_deal_by_telegram_identity(
+        username="john", user_id=12345
+    )
+
+    assert deal["ID"] == "201"
+    assert calls[0][1]["filter"] == {TELEGRAM_USER_ID_FIELD: "12345"}
+    assert calls[1][1]["filter"] == {TELEGRAM_CHAT_ID_FIELD: "12345"}

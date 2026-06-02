@@ -13,6 +13,8 @@ MENU_ACTION_TEXT_KEYS = {
     "coverage": ("main_menu.coverage",),
     "apply": ("main_menu.apply", "calculator.apply_cta"),
     "operator": ("main_menu.operator",),
+    "latest_deal": ("main_menu.latest_deal",),
+    "payment_confirmation": ("main_menu.payment_confirmation",),
     "language": ("main_menu.language",),
 }
 
@@ -22,6 +24,10 @@ COMMAND_ACTIONS = {
     "/coverage": "coverage",
     "/apply": "apply",
     "/operator": "operator",
+    "/latest": "latest_deal",
+    "/last": "latest_deal",
+    "/payment": "payment_confirmation",
+    "/paid": "payment_confirmation",
     "/language": "language",
     "/lang": "language",
 }
