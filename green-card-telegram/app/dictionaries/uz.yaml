@@ -162,6 +162,9 @@ application:
   ask_vehicle_docs: |
     Texnik pasport (foto yoki PDF)
     Bir nechta fayl biriktirish mumkin.
+  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
+  add_more_docs: "Add more documents"
+  all_docs_uploaded: "All documents uploaded"
   ask_techpass_changed: "Bazadan texnik pasport fotosi allaqachon mavjud. Texnik pasport o‘zgarganmi?"
   techpass_changed_yes: "Ha, o‘zgargan"
   techpass_changed_no: "Yo‘q, o‘zgarmagan"

@@ -34,12 +34,14 @@ def process_bitrix_job(job_id: int):
                     payload.get('telegram_username'),
                     payload.get('telegram_user_id'),
                 )
-                ApplicationService().mark_bitrix_created(
+                app_service = ApplicationService()
+                app_service.mark_bitrix_created(
                     job.request_id,
                     bitrix.get('contact_id'),
                     bitrix.get('company_id'),
                     bitrix.get('deals', []),
                 )
+                app_service.purge_sensitive_data_after_success(job.request_id)
             elif job.job_type == 'create_contact':
                 client.create_or_update_contact(payload)
             elif job.job_type == 'create_company':

@@ -99,3 +99,4 @@ def test_accept_with_valid_signature_and_no_telegram_to_bitrix(monkeypatch):
     serialized = json.dumps(captured)
     assert "telegram_user_id" not in serialized
     assert "username\"" not in serialized
+    assert captured["deal"]["UF_CRM_1780237379152"] == 12345

@@ -163,6 +163,9 @@ application:
   ask_vehicle_docs: |
     ტექნიკური პასპორტი (ფოტო ან PDF)
     შესაძლებელია რამდენიმე ფაილის მიმაგრება.
+  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
+  add_more_docs: "Add more documents"
+  all_docs_uploaded: "All documents uploaded"
   ask_techpass_changed: "ბაზაში უკვე არის ტექნიკური პასპორტის ფოტო. შეიცვალა ტექნიკური პასპორტი?"
   techpass_changed_yes: "დიახ, შეიცვალა"
   techpass_changed_no: "არა, არ შეცვლილა"

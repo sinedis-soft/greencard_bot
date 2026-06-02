@@ -34,6 +34,7 @@ from app.bots.client_bot.keyboards.apply import (
 
     techpass_changed_keyboard,
     vehicle_types_keyboard,
+    vehicle_docs_complete_keyboard,
 )
 from app.core.config import app_root
 from app.schemas.application import ApplicationCreate
@@ -41,14 +42,21 @@ from app.services.i18n_service import I18nService
 from app.services.bitrix_file_service import BitrixFileService
 from app.bots.client_bot.menu_actions import menu_action_for_text
 from app.services.lead_service import LeadService
+from app.validation import (
+    is_latin_name,
+    is_license_plate,
+    is_passport_number,
+    is_vin,
+    normalize_license_plate,
+    normalize_passport,
+    normalize_vin,
+)
 
 router = Router()
 logger = logging.getLogger(__name__)
 
 PHONE_RE = re.compile(r"^\+[1-9]\d{7,14}$")
 EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
-PASSPORT_RE = re.compile(r"^[A-Za-zА-Яа-я0-9]{6,20}$")
-PLATE_RE = re.compile(r"^[A-Z0-9]{1,8}$")
 
 BITRIX_COUNTRY_MAP = {
     "529": "Армения",
@@ -124,7 +132,7 @@ def _bitrix_ids_match(left: object, right: object) -> bool:
 
 
 def _normalize_passport(value: object) -> str:
-    return str(value or "").replace(" ", "").strip().upper()
+    return normalize_passport(value)
 
 
 def _contact_state_data(contact: dict) -> dict:
@@ -456,9 +464,17 @@ def _application_from_state(data: dict, lang: str) -> ApplicationCreate:
     )
 
 
-def _create_bitrix_application(data: dict, lang: str, bitrix_client, telegram_username: str | None, telegram_user_id: int | None) -> dict:
+def _create_bitrix_application(
+    data: dict,
+    lang: str,
+    bitrix_client,
+    telegram_username: str | None,
+    telegram_user_id: int | None,
+) -> dict:
     payload = _application_from_state(data, lang)
-    return LeadService(bitrix_client, app_root() / "config" / "bitrix_mapping.yaml").create_application_leads(payload, telegram_username, telegram_user_id)
+    return LeadService(bitrix_client, app_root() / "config" / "bitrix_mapping.yaml").create_application_leads(
+        payload, telegram_username, telegram_user_id
+    )
 
 
 
@@ -628,7 +644,7 @@ async def passport_verify(message: Message, state: FSMContext, i18n: I18nService
     value = _normalize_passport(message.text)
     data = await state.get_data()
     pending_contact = data.get("pending_contact") or {}
-    if not PASSPORT_RE.match(value):
+    if not is_passport_number(value):
         await message.answer(i18n.get_text(lang, "application.validation_passport"))
         return
     if value != _normalize_passport(pending_contact.get("passport")):
@@ -822,7 +838,7 @@ async def first_name(message: Message, state: FSMContext, i18n: I18nService, lan
     data = await state.get_data()
     if not value:
         value = str(data.get("first_name", "")).strip()
-    if len(value) < 2:
+    if len(value) < 2 or not is_latin_name(value):
         await message.answer(i18n.get_text(lang, "application.validation_name"))
         return
     await state.update_data(first_name=value)
@@ -841,7 +857,7 @@ async def last_name(message: Message, state: FSMContext, i18n: I18nService, lang
     data = await state.get_data()
     if not value:
         value = str(data.get("last_name", "")).strip()
-    if len(value) < 2:
+    if len(value) < 2 or not is_latin_name(value):
         await message.answer(i18n.get_text(lang, "application.validation_name"))
         return
     await state.update_data(last_name=value)
@@ -927,11 +943,11 @@ async def birth_date(message: Message, state: FSMContext, i18n: I18nService, lan
 @router.message(ApplyForm.passport)
 async def passport(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     lang = lang_store.get(message.from_user.id, default_language)
-    value = (message.text or "").strip()
+    value = normalize_passport(message.text)
     data = await state.get_data()
     if not value:
-        value = str(data.get("passport", "")).strip()
-    if not PASSPORT_RE.match(value):
+        value = normalize_passport(data.get("passport", ""))
+    if not is_passport_number(value):
         await message.answer(i18n.get_text(lang, "application.validation_passport"))
         return
     await state.update_data(passport=value)
@@ -1051,8 +1067,8 @@ async def vehicle_type(callback: CallbackQuery, state: FSMContext, i18n: I18nSer
 @router.message(ApplyForm.license_plate)
 async def license_plate(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     lang = lang_store.get(message.from_user.id, default_language)
-    raw = (message.text or "").strip().upper()
-    if not PLATE_RE.match(raw):
+    raw = normalize_license_plate(message.text)
+    if not is_license_plate(raw):
         await message.answer(i18n.get_text(lang, "application.validation_license_plate_strict"))
         return
 
@@ -1116,8 +1132,8 @@ async def license_plate(message: Message, state: FSMContext, i18n: I18nService, 
 @router.message(ApplyForm.vin)
 async def vin(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     lang = lang_store.get(message.from_user.id, default_language)
-    value = (message.text or "").strip().upper()
-    if len(value) != 17:
+    value = normalize_vin(message.text)
+    if not is_vin(value):
         await message.answer(i18n.get_text(lang, "application.validation_vin"))
         return
     await state.update_data(vin=value)
@@ -1288,7 +1304,32 @@ async def vehicle_docs(message: Message, state: FSMContext, i18n: I18nService, l
     elif message.photo:
         docs.append({"type": "photo", "file_id": message.photo[-1].file_id, "name": "photo"})
     await state.update_data(vehicle_docs=docs, reuse_existing_vehicle_docs=False)
-    await _ask_insurance_start_date(message, state, i18n, lang)
+    await message.answer(
+        i18n.get_text(lang, "application.ask_vehicle_docs_complete"),
+        reply_markup=vehicle_docs_complete_keyboard(
+            i18n.get_text(lang, "application.add_more_docs"),
+            i18n.get_text(lang, "application.all_docs_uploaded"),
+        ),
+    )
+
+
+@router.callback_query(F.data == "apply:docs:add_more", ApplyForm.vehicle_docs)
+async def vehicle_docs_add_more(callback: CallbackQuery, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+    lang = lang_store.get(callback.from_user.id, default_language)
+    await callback.message.answer(i18n.get_text(lang, "application.ask_vehicle_docs"))
+    await callback.answer()
+
+
+@router.callback_query(F.data == "apply:docs:complete", ApplyForm.vehicle_docs)
+async def vehicle_docs_complete(callback: CallbackQuery, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+    lang = lang_store.get(callback.from_user.id, default_language)
+    data = await state.get_data()
+    if not data.get("vehicle_docs"):
+        await callback.message.answer(i18n.get_text(lang, "application.validation_docs"))
+        await callback.answer()
+        return
+    await _ask_insurance_start_date(callback.message, state, i18n, lang, callback.from_user)
+    await callback.answer()
 
 
 @router.message(ApplyForm.vehicle_docs)
@@ -1320,7 +1361,13 @@ async def consent_agree(callback: CallbackQuery, state: FSMContext, i18n: I18nSe
     lang = lang_store.get(callback.from_user.id, default_language)
     data = await state.get_data()
     try:
-        bitrix = _create_bitrix_application(data, lang, callback.bot.bitrix_client, callback.from_user.username, callback.from_user.id)
+        bitrix = _create_bitrix_application(
+            data,
+            lang,
+            callback.bot.bitrix_client,
+            callback.from_user.username,
+            callback.from_user.id,
+        )
         await _attach_telegram_docs_to_deals(callback.bot, callback.bot.bitrix_client, data.get("vehicles", []), bitrix.get("deals", []))
     except Exception as exc:
         logger.exception("telegram_application_bitrix_error user_id=%s error=%s", callback.from_user.id, exc)

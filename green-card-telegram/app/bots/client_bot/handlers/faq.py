@@ -4,6 +4,7 @@ from uuid import uuid4
 
 from app.bots.operator_bot.keyboards.ticket_actions import reply_command, reply_instruction
 from app.services.i18n_service import I18nService
+from app.services.operator_message_formatter import operator_language_line
 from app.services.operator_notifier_service import OperatorNotifierService
 from app.services.operator_ticket_service import OperatorTicketService, TicketPayload
 
@@ -68,6 +69,7 @@ async def faq_feedback_down(callback: CallbackQuery, i18n: I18nService, lang_sto
         "🆘 Новый запрос оператора\n"
         f"ID: {request_id}\n"
         f"Клиент: {client_name}\n"
+        f"{operator_language_line(lang)}\n"
         "Источник: FAQ (dislike)\n"
         f"{reply_instruction(request_id)}",
         reply_command(request_id),

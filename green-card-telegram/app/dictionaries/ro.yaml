@@ -163,6 +163,9 @@ application:
   ask_vehicle_docs: |
     Certificatul de înmatriculare (foto sau PDF)
     Puteți atașa mai multe fișiere.
+  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
+  add_more_docs: "Add more documents"
+  all_docs_uploaded: "All documents uploaded"
   ask_techpass_changed: "În baza de date există deja fotografia certificatului de înmatriculare. Certificatul a fost schimbat?"
   techpass_changed_yes: "Da, a fost schimbat"
   techpass_changed_no: "Nu, nu a fost schimbat"
