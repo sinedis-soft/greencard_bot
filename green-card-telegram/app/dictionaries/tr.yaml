@@ -1,7 +1,7 @@
 main_menu:
   calculator: "🧮 Hesaplayıcı"
-  faq: "❓ FAQ"
-  coverage: "🌍 Nerede geçerlidir?"
+  faq: "❓ SSS"
+  coverage: "🌍 Nerede geçerli?"
   apply: "📝 Başvuru yap"
   operator: "👨‍💼 Operatörle iletişime geç"
   language: "🌐 Dil"
@@ -14,19 +14,19 @@ language:
   changed: "Dil güncellendi"
 
 calculator:
-  result_title: "Ön tahmini maliyet"
+  result_title: "Ön maliyet"
   disclaimer: "Ön hesaplama"
-  apply_cta: "📝 Başvuru oluştur"
+  apply_cta: "📝 Başvuru gönder"
   select_vehicle_type: "Araç türünü seçin"
   select_period: "Sigorta süresini seçin (gün)"
-  result_template: "Ön tahmini maliyet: {estimated_price} {currency}\n{disclaimer}"
+  result_template: "Ön maliyet: {estimated_price} {currency}\n{disclaimer}"
   vehicle:
     car: "Binek otomobil"
     truck: "Kamyon"
     bus: "Otobüs"
     moto: "Motosiklet"
     trailer: "Römork"
-    special: "Özel amaçlı araç"
+    special: "Özel ekipman"
 
 application:
   options:
@@ -44,9 +44,9 @@ application:
       moldova: "Moldova"
       ukraine: "Ukrayna"
       armenia: "Ermenistan"
-      other: "Diğer ülke"
+      other: "Başka ülke"
     vehicle_types:
-      car: "Binek araç"
+      car: "Binek"
       truck: "Kamyon"
       moto: "Motosiklet"
       bus: "Otobüs"
@@ -60,7 +60,7 @@ application:
     power_units:
       hp: "Beygir gücü"
       kw: "Kilovat"
-  submitted: "Başvuru gönderildi. Poliçeyi hazırlayacağız ve ödeme bilgilerini göndereceğiz."
+  submitted: "Başvuru gönderildi. Poliçeyi hazırlayıp ödeme bilgilerini göndereceğiz."
   validation_error: "Veri doğrulama hatası"
   bitrix_error: "Bitrix hatası"
   mini_app_soon: "Mini App formu bir sonraki aşamada bağlanacaktır."
@@ -68,18 +68,18 @@ application:
   temporarily_unavailable: "Başvuru formu geçici olarak kullanılamıyor."
   form_header: |
     Poliçe düzenleme başvurusu
-    Bilgileri doldurun. Poliçeyi hazırlayacağız ve ödeme bilgilerini göndereceğiz.
-    ⚠️DİKKAT! Uygulamayı kullanmaya devam ederek Telegram username bilginizin işlenmesini kabul etmiş olursunuz.⚠️
+    Bilgileri doldurun. Poliçeyi hazırlayıp ödeme bilgilerini göndereceğiz.
+    ⚠️DİKKAT! Uygulamayı kullanmaya devam ederek Telegram kullanıcı adınızın işlenmesini kabul etmiş olursunuz.⚠️
   step_1: "1. İletişim bilgileri"
   step_2: "2. Sigorta ve araç bilgileri"
-  prefilled_from_bitrix: "Telegram kullanıcı adınıza göre profiliniz veritabanımızda bulundu. İletişim bilgileri ve sigortalı bilgileri otomatik olarak dolduruldu."
-  prefilled_from_bitrix_editable: "Telegram username bilginize göre profiliniz veritabanımızda bulundu. Bilgiler dolduruldu — kontrol edin ve gerekiyorsa düzeltin. Her şey doğruysa bu adımda boş mesaj gönderebilirsiniz."
+  prefilled_from_bitrix: "Telegram kullanıcı adınıza göre profilinizi veri tabanımızda bulduk. İletişim ve sigortalı bilgileri otomatik olarak dolduruldu."
+  prefilled_from_bitrix_editable: "Telegram kullanıcı adınıza göre profilinizi veri tabanımızda bulduk. Bilgiler dolduruldu — kontrol edin ve gerekirse düzeltin. Her şey doğruysa bu adımda boş mesaj gönderebilirsiniz."
   ask_email_lookup: |
-    Telegram username ile profil bulunamadı.
-    Lütfen müşteriyi aramak için e-mail girin.
+    Telegram kullanıcı adına göre profil bulunamadı.
+    Müşteriyi aramak için lütfen e-mail adresinizi girin.
   contact_not_found_manual: "E-mail ile müşteri bulunamadı. Kişisel bilgileri manuel olarak doldurun."
   ask_passport_verify: "Müşteri e-mail ile bulundu. Kimlik doğrulaması için pasaport seri ve numarasını boşluksuz girin."
-  passport_verify_failed_manual: "Pasaport bilgileri veritabanındaki bilgilerle eşleşmedi. Güvenlik nedeniyle kişisel bilgileri manuel olarak doldurun."
+  passport_verify_failed_manual: "Pasaport bilgileri veri tabanındaki bilgilerle eşleşmedi. Güvenlik nedeniyle kişisel bilgileri manuel olarak doldurun."
   personal_data_summary: |
     Kişisel bilgileri kontrol edin:
     Soyadı ve adı: {last_name} {first_name}
@@ -89,15 +89,15 @@ application:
     E-mail: {email}
     Telefon: {phone}
 
-    Bilgiler güncel mi, yoksa değişiklik yapılması gerekiyor mu?
+    Bilgiler güncel mi yoksa değişiklik yapılması gerekiyor mu?
   vehicle_data_summary: |
-    {vehicle_type}, devlet tescil numarası: {license_plate}
-    Araç şu ülkede kayıtlıdır: {vehicle_country}
+    Devlet plaka numarası: {license_plate} olan {vehicle_type}
+    Araç kayıt ülkesi: {vehicle_country}
     Üretim yılı: {manufacture_year}
     VIN: {vin}
     {fuel_type}, motor hacmi {engine_capacity} cm³, güç {engine_power}, {power_unit}
 
-    Bilgiler güncel mi, yoksa değişiklik yapılması gerekiyor mu?
+    Bilgiler güncel mi yoksa değişiklik yapılması gerekiyor mu?
   data_actual: "Bilgiler güncel"
   data_edit: "Değişiklik yapılması gerekiyor"
   ask_first_name_prefilled: "Ad * (Kullan: {value})"
@@ -105,12 +105,12 @@ application:
   prefill_next_button: "EVET, SONRAKİ SORU"
 
   ask_last_name_prefilled: "Soyadı * (Kullan: {value})"
-  ask_phone_prefilled: "Telefon (ülke kodu ile) * (Kullan: {value})"
+  ask_phone_prefilled: "Telefon (ülke koduyla) * (Kullan: {value})"
   ask_email_prefilled: "E-mail * (Kullan: {value})"
-  ask_first_name: "Ad *"
-  ask_last_name: "Soyadı *"
+  ask_first_name: "Ad (Latin harfleriyle)*"
+  ask_last_name: "Soyadı (Latin harfleriyle)*"
   ask_phone: |
-    Telefon (ülke kodu ile)
+    Telefon (ülke koduyla)
     Örnek: +48123456789
   ask_email: |
     E-mail
@@ -119,30 +119,30 @@ application:
     Doğum tarihi
     Format: gg.aa.yyyy
   ask_birth_date_prefilled: "Doğum tarihi * (Kullan: {value})"
-  ask_passport: "Pasaport seri ve numarası boşluksuz *"
-  ask_passport_prefilled: "Pasaport seri ve numarası boşluksuz * (Kullan: {value})"
-  ask_registration_address: "Kayıt adresi *"
+  ask_passport: "Pasaport seri ve numarası, boşluksuz (Latin harfleriyle)*"
+  ask_passport_prefilled: "Pasaport seri ve numarası, boşluksuz * (Kullan: {value})"
+  ask_registration_address: "Kayıt adresi (Latin harfleriyle)*"
   ask_registration_address_prefilled: "Kayıt adresi * (Kullan: {value})"
   ask_insurance_period: "Sigorta süresi (seçin) *"
   ask_insurance_start_date: |
     Sigortanın başlangıç tarihi
     Format: gg.aa.yyyy
-  ask_vehicle_country: "Aracın kayıt ülkesi *"
-  validation_vehicle_country: "Aracın kayıt ülkesini belirtin."
-  ask_vehicle_country_prefilled: "Aracın kayıt ülkesi * (mevcut: {value})"
+  ask_vehicle_country: "Araç kayıt ülkesi *"
+  validation_vehicle_country: "Araç kayıt ülkesini belirtin."
+  ask_vehicle_country_prefilled: "Araç kayıt ülkesi * (mevcut: {value})"
 
-  choose_from_buttons: "Aşağıdaki düğmeyle değeri seçin."
+  choose_from_buttons: "Aşağıdaki düğmeden değer seçin."
 
   ask_vehicle_type: "Araç türü *"
   ask_vehicle_type_prefilled: "Araç türü * (mevcut: {value})"
-  ask_license_plate: "Plaka numarası *"
-  ask_license_plate_after_start: "Plaka numarası *"
-  validation_license_plate_strict: "Plaka numarası: yalnızca Latin harfleri ve rakamlar, boşluk/tire yok, en fazla 8 karakter."
-  prefilled_vehicle_from_bitrix_editable: "Plaka numarasına göre araç bilgileri veritabanımızda bulundu. Değerler dolduruldu — kontrol edin ve gerekiyorsa düzeltin."
-  vehicle_not_found_manual: "Araç veritabanında bulunamadı. Lütfen araç bilgilerini manuel olarak girin."
+  ask_license_plate: "Plaka *"
+  ask_license_plate_after_start: "Plaka (Latin harfleriyle)*"
+  validation_license_plate_strict: "Plaka: yalnızca Latin harfleri ve rakamlar, boşluk/tire olmadan, en fazla 8 karakter."
+  prefilled_vehicle_from_bitrix_editable: "Plakaya göre aracın bilgilerini veri tabanımızda bulduk. Değerler dolduruldu — kontrol edin ve gerekirse düzeltin."
+  vehicle_not_found_manual: "Araç veri tabanında bulunamadı. Lütfen araç bilgilerini manuel olarak girin."
   ask_vin: "VIN numarası *"
-  ask_brand_model: "Araç marka ve modeli *"
-  ask_manufacture_year: "Aracın üretim yılı *"
+  ask_brand_model: "Araç marka ve modeli (Latin harfleriyle)*"
+  ask_manufacture_year: "Araç üretim yılı *"
   ask_fuel_type: "Yakıt türü *"
   ask_engine_capacity: "Motor hacmi, cm³ *"
   ask_engine_capacity_prefilled: "Motor hacmi, cm³ * (Kullan: {value})"
@@ -156,33 +156,33 @@ application:
   skip_comment_button: "ATLA"
 
   ask_vehicle_docs: |
-    Araç tescil belgesi (fotoğraf veya PDF)
-    Birkaç dosya ekleyebilirsiniz.
-  ask_techpass_changed: "Veritabanında araç tescil belgesinin fotoğrafı zaten mevcut. Tescil belgesi değişti mi?"
+    Araç ruhsatı / teknik pasaport (fotoğraf veya PDF)
+    Birden fazla dosya ekleyebilirsiniz.
+  ask_techpass_changed: "Veri tabanında araç ruhsatının fotoğrafı zaten var. Araç ruhsatı değişti mi?"
   techpass_changed_yes: "Evet, değişti"
   techpass_changed_no: "Hayır, değişmedi"
-  ask_vehicle_finalize: "Başka araç eklensin mi, yoksa başvuru tamamlanacak mı?"
+  ask_vehicle_finalize: "Başka araç eklemek mi yoksa düzenlemeyi tamamlamak mı istiyorsunuz?"
   add_vehicle: "Başka araç ekle"
-  finish_application: "Başvuruyu tamamla"
+  finish_application: "Düzenlemeyi tamamla"
   ask_consent: |
-    SINEDIS Kişisel Verilerin İşlenmesi Politikası
-    SINEDIS Sp. z o.o. kişisel verileri AB 2016/679 Yönetmeliği (GDPR / RODO) ve Polonya mevzuatına uygun olarak işler.
+    SINEDIS kişisel verilerin işlenmesi politikası
+    SINEDIS Sp. z o.o., kişisel verileri AB 2016/679 Tüzüğü (GDPR / RODO) ve Polonya mevzuatına uygun olarak işler.
     Veriler şu amaçlarla kullanılır:
     • sigorta tekliflerinin hesaplanması;
-    • sigorta sözleşmelerinin düzenlenmesi ve hizmetinin sağlanması;
-    • müşteri ile iletişim kurulması;
+    • sigorta sözleşmelerinin düzenlenmesi ve takibi;
+    • müşteri ile iletişim;
     • yasal gerekliliklerin yerine getirilmesi;
-    • kullanıcının onayı olması halinde pazarlama iletişimi.
-    İşlenebilecek veriler:
+    • kullanıcının onayı varsa pazarlama iletişimi.
+    Aşağıdaki veriler işlenebilir:
     ad, telefon, e-mail, adres, araç bilgileri, sigorta bilgileri, ödeme ve teknik veriler.
-    Veriler, hizmetlerin sağlanması için gerekli olan sigorta şirketlerine, IT yüklenicilerine ve diğer iş ortaklarına aktarılabilir.
+    Veriler, hizmetlerin sağlanması için gerekli olan sigorta şirketlerine, IT yüklenicilerine ve diğer ortaklara aktarılabilir.
     Kullanıcının hakları:
     • verilere erişim sağlama;
     • verileri düzeltme veya silme;
-    • işlemeyi sınırlandırma;
+    • işlemeyi kısıtlama;
     • onayı geri çekme;
-    • PUODO’ya şikâyette bulunma.
-    Veri sorumlusu, poliçeyi düzenleyen sigorta şirketi veya SINEDIS Sp. z o.o. olabilir.
+    • PUODO'ya şikâyette bulunma.
+    Veri yöneticisi, poliçeyi düzenleyen sigorta şirketi veya SINEDIS Sp. z o.o. olabilir.
     İletişim:
     SINEDIS Sp. z o.o.
     ul. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
@@ -191,71 +191,71 @@ application:
     Politikanın tam sürümü:
     https://greencard.agency
     ________________________
-    Kişisel verilerin işlenmesine ve aktarılmasına onay veriyor musunuz?"
-  consent_agree: "✅ Onayla ve gönder"
+    Kişisel verilerin işlenmesini ve aktarılmasını kabul ediyor musunuz?
+  consent_agree: "✅ Kabul et ve gönder"
   consent_decline: "❌ Reddet"
   declined: "Verilerin aktarılmasını reddettiniz. Başvuru iptal edildi."
   validation_name: "En az 2 karakter girin."
-  validation_phone: "Geçersiz telefon numarası. +48123456789 formatını kullanın."
-  validation_email: "Geçersiz e-mail."
+  validation_phone: "Telefon numarası hatalı. +48123456789 formatını kullanın."
+  validation_email: "E-mail hatalı."
 
-  validation_date: "Geçersiz tarih. İzin verilen formatlar: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. aa/gg/yyyy formatı yasaktır."
+  validation_date: "Tarih hatalı. Kabul edilen formatlar: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. aa/gg/yyyy formatı yasaktır."
 
   validation_age_18: "Sigortalı en az 18 yaşını doldurmuş olmalıdır."
-  validation_insurance_start_not_past: "Sigorta başlangıç tarihi geçmiş bir tarih olamaz."
+  validation_insurance_start_not_past: "Sigorta başlangıç tarihi geçmişte olamaz."
   ask_vin_prefilled: "VIN numarası * (Kullan: {value})"
   ask_brand_model_prefilled: "Araç marka ve modeli * (Kullan: {value})"
-  ask_manufacture_year_prefilled: "Aracın üretim yılı * (Kullan: {value})"
+  ask_manufacture_year_prefilled: "Araç üretim yılı * (Kullan: {value})"
   ask_fuel_type_prefilled: "Yakıt türü * (mevcut: {value})"
 
-  validation_passport: "Geçersiz pasaport seri ve numarası (boşluksuz)."
+  validation_passport: "Pasaport seri ve numarası hatalıdır (boşluksuz girin)."
   validation_address: "Tam kayıt adresini belirtin."
-  validation_license_plate: "Geçersiz plaka numarası."
+  validation_license_plate: "Plaka hatalı."
   validation_vin: "VIN 17 karakter içermelidir."
   validation_brand_model: "Marka ve modeli belirtin."
   validation_year: "Geçerli üretim yılını belirtin."
-  validation_positive_integer: "Pozitif bir tam sayı girin."
-  validation_positive_number: "Pozitif bir sayı girin."
-  validation_docs: "Araç tescil belgesinin fotoğrafını veya PDF/belgesini gönderin."
+  validation_positive_integer: "Pozitif tam sayı girin."
+  validation_positive_number: "Pozitif sayı girin."
+  validation_docs: "Araç ruhsatının fotoğrafını veya PDF/belgesini gönderin."
 
 
 operator:
   request_received: "Talep alındı"
   operator_connected: "Operatör bağlandı"
   access_denied: "Erişim reddedildi"
-  no_tickets: "Başvuru yok"
-  taken: "Başvuru kabul edildi"
-  closed: "Başvuru kapatıldı"
-  reply_sent: "Yanıt gönderildi"
+  no_tickets: "Talep yok"
+  taken: "Talep kabul edildi"
+  closed: "Talep kapatıldı"
+  reply_sent: "Cevap gönderildi"
 
 faq:
-  title: "FAQ kategorisini seçin"
+  title: "SSS kategorisini seçin"
   categories:
     documents: "Düzenleme için belgeler"
     payment: "Ödeme"
     coverage: "Kapsam"
-    mistakes: "Dikkat edilmesi gerekenler"
+    mistakes: "Dikkat edilecekler"
     refund: "İade"
   answers:
     documents: |
-      Poliçenin düzenlenmesi için şu bilgiler gereklidir: pasaport bilgileri, araç bilgileri ve sigortanın geçerlilik tarihleri
+      Poliçenin düzenlenmesi için şu bilgiler gereklidir: pasaport bilgileri, araç bilgileri ve sigorta geçerlilik tarihleri.
       Bu nedenle şunları hazırlamanız gerekir:
       - pasaport
       - araç tescil belgesi
       - aracın teknik bilgileri
       - telefon numarası
-      - e-Mail
+      - e-mail
     payment: |
-      Mevcut ödeme seçenekleri:
-      - Polonya kartına havale ile ödeme, 
-      - telefon numarasına BLIK ile ödeme, 
-      - Polonya banka hesabına havale ile ödeme"
+      Mevcut ödeme yöntemleri:
+      - Polonya kartına havale,
+      - telefon numarasına BLIK ödemesi,
+      - Polonya banka hesabına havale
     coverage: "Kapsam bölgesi: A - Avusturya, B - Belçika, BG - Bulgaristan, CY - Kıbrıs, CZ - Çekya, D - Almanya, DK - Danimarka, E - İspanya, EST - Estonya, F - Fransa, FIN - Finlandiya, GR - Yunanistan, H - Macaristan, HR - Hırvatistan, I - İtalya, IRL - İrlanda, IS - İzlanda, L - Lüksemburg, LT - Litvanya, LV - Letonya, M - Malta, N - Norveç, NL - Hollanda, P - Portekiz, PL - Polonya, RO - Romanya, S - İsveç, SK - Slovakya, SLO - Slovenya, CH - İsviçre."
-    mistakes: "Göndermeden önce VIN, plaka numarası ve sigorta süresini lütfen iki kez kontrol edin. Daha sonra düzeltme yapmak mümkün olmayacaktır!"
-    refund: "Ücret iadesi yapılmaz."
+    mistakes: "Göndermeden önce lütfen VIN, plaka ve sigorta süresini iki kez kontrol edin. Daha sonra düzeltme yapılamaz!"
+    refund: "Para iadesi yapılmaz."
 
 coverage:
   text: |
-    Green Card kapsam haritası. 
-    Yolculuktan önce poliçenizdeki ülke kodunu kontrol edin. 
+    Green Card kapsam haritası.
+    Seyahatten önce poliçenizdeki ülke kodunu kontrol edin.
     A - Avusturya, B - Belçika, BG - Bulgaristan, CY - Kıbrıs, CZ - Çekya, D - Almanya, DK - Danimarka, E - İspanya, EST - Estonya, F - Fransa, FIN - Finlandiya, GR - Yunanistan, H - Macaristan, HR - Hırvatistan, I - İtalya, IRL - İrlanda, IS - İzlanda, L - Lüksemburg, LT - Litvanya, LV - Letonya, M - Malta, N - Norveç, NL - Hollanda, P - Portekiz, PL - Polonya, RO - Romanya, S - İsveç, SK - Slovakya, SLO - Slovenya, CH - İsviçre.
