@@ -74,7 +74,10 @@ def test_deal_file_items_extracts_bitrix_file_download_urls():
             POLICY_FILES_FIELD: [
                 {
                     "name": "policy.pdf",
-                    "downloadUrl": "/bitrix/tools/crm_show_file.php?fileId=10",
+
+                    "downloadUrl": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=&fileId=10",
+                    "urlMachine": "/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=token&fileId=10",
+
                 },
                 {
                     "NAME": "green-card.pdf",
@@ -88,7 +91,9 @@ def test_deal_file_items_extracts_bitrix_file_download_urls():
     assert items == [
         (
             "policy.pdf",
-            "https://example.bitrix24.com/bitrix/tools/crm_show_file.php?fileId=10",
+
+            "https://example.bitrix24.com/bitrix/components/bitrix/crm.deal.show/show_file.php?auth=token&fileId=10",
+
         ),
         ("green-card.pdf", "https://cdn.example.test/green-card.pdf"),
     ]

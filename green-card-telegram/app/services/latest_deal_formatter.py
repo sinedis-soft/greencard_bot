@@ -77,12 +77,16 @@ def _extract_file_items(value: Any, base_url: str) -> list[tuple[str, str]]:
         return []
     if isinstance(value, dict):
         url = _clean(
-            value.get("downloadUrl")
+
+            value.get("urlMachine")
+            or value.get("URL_MACHINE")
+            or value.get("downloadUrlMachine")
+            or value.get("DOWNLOAD_URL_MACHINE")
+            or value.get("downloadUrl")
             or value.get("DOWNLOAD_URL")
             or value.get("url")
             or value.get("URL")
-            or value.get("urlMachine")
-            or value.get("URL_MACHINE")
+
         )
         name = _clean(
             value.get("name")

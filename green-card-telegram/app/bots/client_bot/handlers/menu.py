@@ -101,6 +101,7 @@ def _payment_operator_text(lang: str, data: dict, user) -> str:
     username = f"@{user.username}" if user and user.username else "—"
     request_id = str(data.get("request_id") or "")
     return (
+
         "💳 Подтверждение оплаты\n\n"
 
         f"ID: {request_id}\n"
@@ -110,6 +111,7 @@ def _payment_operator_text(lang: str, data: dict, user) -> str:
         f"{operator_language_line(lang)}\n"
         f"Госномер авто: {data.get('license_plate') or '—'}\n\n"
         f"ID сделки:\n {data.get('deal_id') or '—'}"
+
 
     )
 
@@ -223,7 +225,6 @@ async def _start_payment_confirmation(
     await state.update_data(
         payment_files=[],
         request_id=f"pay-{message.from_user.id}-{uuid4().hex[:8]}",
-
         deal_id=str(deal.get("ID") or ""),
         license_plate=str(deal.get(LICENSE_PLATE_FIELD) or ""),
     )
