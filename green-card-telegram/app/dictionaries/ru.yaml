@@ -281,6 +281,7 @@ latest_deal:
   delivery_email_button: "Прислать на почту"
   delivery_chat_button: "Прислать сюда"
   delivery_request_sent: "Запрос отправлен оператору."
+
   payment_instructions: |
     Ваша заявка на страхование автомобиля {license_plate} одобрена.
 

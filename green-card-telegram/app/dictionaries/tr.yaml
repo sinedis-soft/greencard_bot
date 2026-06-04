@@ -281,6 +281,7 @@ latest_deal:
   delivery_email_button: "E-postaya gönder"
   delivery_chat_button: "Buraya gönder"
   delivery_request_sent: "Talep operatöre gönderildi."
+
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 

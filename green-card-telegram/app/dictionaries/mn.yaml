@@ -294,6 +294,7 @@ latest_deal:
   delivery_email_button: "Имэйлээр илгээх"
   delivery_chat_button: "Энд илгээх"
   delivery_request_sent: "Хүсэлтийг операторт илгээлээ."
+
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 

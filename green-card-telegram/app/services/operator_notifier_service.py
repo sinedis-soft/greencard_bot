@@ -86,6 +86,7 @@ class ClientNotifierService:
         )
         return getattr(response, "ok", True)
 
+
     def send_document_to_client(self, telegram_user_id: int, local_path: str) -> bool:
         if not self.client_token:
             return False
@@ -98,7 +99,7 @@ class ClientNotifierService:
                 timeout=10,
             )
         return getattr(response, "ok", True)
-
+      
     def send_restart_notice(self, telegram_user_id: int, text: str) -> bool:
         return self.send_to_client(
             telegram_user_id,

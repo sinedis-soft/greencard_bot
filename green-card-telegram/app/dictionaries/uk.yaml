@@ -280,6 +280,7 @@ latest_deal:
   delivery_email_button: "Надіслати на пошту"
   delivery_chat_button: "Надіслати сюди"
   delivery_request_sent: "Запит надіслано оператору."
+
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 

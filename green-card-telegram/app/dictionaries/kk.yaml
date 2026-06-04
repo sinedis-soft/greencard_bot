@@ -282,6 +282,7 @@ latest_deal:
   delivery_email_button: "Поштаға жіберу"
   delivery_chat_button: "Осы жерге жіберу"
   delivery_request_sent: "Сұрау операторға жіберілді."
+
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 

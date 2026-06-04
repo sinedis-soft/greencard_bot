@@ -282,6 +282,7 @@ latest_deal:
   delivery_email_button: "ارسال به ایمیل"
   delivery_chat_button: "ارسال همین‌جا"
   delivery_request_sent: "درخواست برای اپراتور ارسال شد."
+
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 

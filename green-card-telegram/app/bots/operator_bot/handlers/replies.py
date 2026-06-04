@@ -40,7 +40,6 @@ def _operator_reply_notification(
         f"оператор {operator_name}"
     )
 
-
 def _operator_done_notification(
     request_id: str, client_name: str, operator_name: str
 ) -> str:
@@ -48,7 +47,6 @@ def _operator_done_notification(
         f"Оператор {operator_name} выполнил действие по request_id {request_id} "
         f"для клиента {client_name}. Остальным операторам выполнять это действие не нужно."
     )
-
 
 def _allowed(message: Message) -> bool:
     return bool(message.from_user and message.from_user.id in _operator_ids())
@@ -112,12 +110,14 @@ async def _send_operator_reply(message: Message, request_id: str, text: str) -> 
     svc.set_status(request_id, "waiting_client")
     svc.log_action(request_id, message.from_user.id, "reply", text)
     if is_first_operator_reply:
+
         OperatorNotifierService().notify_operator_reply_sent(
             _operator_reply_notification(
                 request_id,
                 _client_name_for_ticket(svc, ticket.telegram_user_id),
                 _operator_name(message),
             ),
+
             exclude_operator_id=message.from_user.id if message.from_user else None,
         )
     await message.answer(message.bot["i18n"].get_text("en", "operator.reply_sent"))
