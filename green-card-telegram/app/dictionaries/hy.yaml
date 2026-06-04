@@ -4,6 +4,8 @@ main_menu:
   coverage: "🌍 Որտե՞ղ է գործում"
   apply: "📝 Ձևակերպել"
   operator: "👨‍💼 Կապ հաստատել օպերատորի հետ"
+  payment_confirmation: "💳 Վճարման հաստատում"
+  latest_deal: "📄 Իմ վերջին հայտը"
   language: "🌐 Լեզու"
 
 menu:
@@ -266,3 +268,56 @@ coverage:
     Green Card ծածկույթի քարտեզ։
     Ճանապարհորդությունից առաջ ստուգեք երկրի կոդը ձեր պոլիսում։
     A - Ավստրիա, B - Բելգիա, BG - Բուլղարիա, CY - Կիպրոս, CZ - Չեխիա, D - Գերմանիա, DK - Դանիա, E - Իսպանիա, EST - Էստոնիա, F - Ֆրանսիա, FIN - Ֆինլանդիա, GR - Հունաստան, H - Հունգարիա, HR - Խորվաթիա, I - Իտալիա, IRL - Իռլանդիա, IS - Իսլանդիա, L - Լյուքսեմբուրգ, LT - Լիտվա, LV - Լատվիա, M - Մալթա, N - Նորվեգիա, NL - Նիդերլանդներ, P - Պորտուգալիա, PL - Լեհաստան, RO - Ռումինիա, S - Շվեդիա, SK - Սլովակիա, SLO - Սլովենիա, CH - Շվեյցարիա։
+
+latest_deal:
+  title_label: "TITLE"
+  policy_number_label: "Policy number"
+  policy_status_label: "Policy status"
+  comments_label: "COMMENTS"
+  not_found: "No latest application was found."
+  unavailable: "Could not get your latest application. Please try again later."
+  delivery_prompt: "Ինչպե՞ս ուղարկել ձեզ պոլիսը:"
+  delivery_email_button: "Ուղարկել էլ. փոստին"
+  delivery_chat_button: "Ուղարկել այստեղ"
+  delivery_request_sent: "Հարցումն ուղարկվել է օպերատորին:"
+  payment_instructions: |
+    Your application for car insurance for {license_plate} has been approved.
+
+    After payment, please send the payment confirmation.
+
+    Payment options
+
+    BLIK to +48 664 914 738
+    Payment reference: za ubezpieczenie auto {license_plate}
+
+
+    Bank transfer in Poland:
+    Account holder: DZIANIS BARAVOI
+    Account number: 44 1020 1332 0000 1602 1435 6564
+    Bank: Powszechna Kasa Oszczędności Bank Polski SA
+    Payment reference: za ubezpieczenie auto {license_plate}
+
+
+    International bank transfer:
+    Account holder: DZIANIS BARAVOI
+    Currency: PLN
+    IBAN: PL44 1020 1332 0000 1602 1435 6564
+    SWIFT/BIC: BPKOPLPW
+    Bank: Powszechna Kasa Oszczędności Bank Polski SA
+    Country: Polska
+    Address: ul. H. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    Payment reference: za ubezpieczenie auto {license_plate}
+
+
+    Card transfer:
+    Card number: 4213 5239 3578 6679
+    Valid thru: 09/26
+    Cardholder: DZIANIS BARAVOI
+    Payment reference: za ubezpieczenie auto {license_plate}
+payment_confirmation:
+  attach_prompt: "Կցեք միջոցների փոխանցման էկրանի նկար կամ բանկի PDF հաստատում։"
+  file_received: "Ֆայլը ստացվել է։ Ուղարկե՞լ հաստատումը օպերատորին, թե՞ ավելացնել ևս մեկ ֆայլ։"
+  send_button: "Ուղարկել հաստատումը"
+  add_more_button: "Ավելացնել ևս մեկ ֆայլ"
+  sent: "Վճարման հաստատումն ուղարկվել է օպերատորին։"
+  no_unpaid: "Դուք չունեք չվճարված հաշիվներ։ Կարող եք սեղմել «Իմ վերջին հայտը» կոճակը։"

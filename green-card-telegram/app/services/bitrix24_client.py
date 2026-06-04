@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import re
+from pathlib import Path
 from typing import Any
 from urllib import error, parse, request
 
@@ -8,6 +10,21 @@ from urllib import error, parse, request
 TELEGRAM_USERNAME_FIELD = "UF_CRM_1697013093804"
 TELEGRAM_USER_ID_FIELD = "UF_CRM_1780051881466"
 TELEGRAM_CHAT_ID_FIELD = "UF_CRM_1780237379152"
+
+
+POLICY_NUMBER_FIELD = "UF_CRM_1694177619522"
+POLICY_STATUS_FIELD = "UF_CRM_1718956082020"
+POLICY_FILES_FIELD = "UF_CRM_1714480913426"
+LICENSE_PLATE_FIELD = "UF_CRM_1686152485641"
+
+POLICY_STATUS_VALUES = {
+    "2607": "Действующий",
+    "2609": "Аннулирован",
+    "2611": "В процессе оформления",
+    "2613": "Срок действия страховки завершен",
+    "2643": "Дубликат полиса",
+    "2645": "Зарегистрирован",
+}
 
 
 class Bitrix24Client:
@@ -128,6 +145,178 @@ class Bitrix24Client:
         if not items:
             return None
         return items[0]
+
+    def find_latest_deal_by_telegram_identity(
+        self, username: str | None = None, user_id: int | str | None = None
+    ) -> dict[str, Any] | None:
+        contact = self.find_contact_by_telegram_identity(
+            username=username, user_id=user_id
+        )
+        if contact and contact.get("ID"):
+            deal = self.find_latest_deal_by_contact_id(contact["ID"])
+            if deal:
+                return deal
+
+        if user_id:
+            deal = self._find_latest_deal({TELEGRAM_CHAT_ID_FIELD: str(user_id)})
+            if deal:
+                return deal
+        return None
+
+    def find_latest_deal_by_contact_id(self, contact_id: int | str) -> dict[str, Any] | None:
+        if not contact_id:
+            return None
+        return self._find_latest_deal({"CONTACT_ID": str(contact_id)})
+
+    def _find_latest_deal(self, crm_filter: dict[str, Any]) -> dict[str, Any] | None:
+        res = self._post(
+            "crm.deal.list",
+            {
+                "order": {"ID": "DESC"},
+                "filter": crm_filter,
+                "select": self._latest_deal_select_fields(),
+            },
+        )
+        items = res.get("result") or []
+        if not items:
+            return None
+        return items[0]
+
+    def _latest_deal_select_fields(self) -> list[str]:
+        return [
+            "ID",
+            "TITLE",
+            "COMMENTS",
+            "CONTACT_ID",
+            TELEGRAM_CHAT_ID_FIELD,
+            POLICY_NUMBER_FIELD,
+            POLICY_STATUS_FIELD,
+            POLICY_FILES_FIELD,
+            LICENSE_PLATE_FIELD,
+        ]
+
+    def get_deal(self, deal_id: int | str) -> dict[str, Any] | None:
+        if not deal_id:
+            return None
+        result = self._post("crm.deal.get", {"id": deal_id}).get("result")
+        return result if isinstance(result, dict) else None
+
+    def get_deal_file_infos(
+        self, deal_id: int | str, field_name: str = POLICY_FILES_FIELD
+    ) -> list[dict[str, Any]]:
+        deal = self.get_deal(deal_id)
+        if not deal:
+            return []
+        return self._normalize_file_infos(deal.get(field_name))
+
+    def download_deal_file(
+        self, file_info: dict[str, Any], target_dir: str | Path
+    ) -> str:
+        url = self._file_download_url(file_info)
+        if not url:
+            raise RuntimeError(f"Bitrix file metadata has no download URL: {file_info}")
+
+        req = request.Request(url, headers={"User-Agent": "GreenCardTelegramBot/1.0"})
+        try:
+            with request.urlopen(req, timeout=60) as resp:
+                content_type = str(resp.headers.get("Content-Type", "")).lower()
+                content_disposition = str(resp.headers.get("Content-Disposition", ""))
+                content = resp.read()
+        except (error.URLError, TimeoutError) as exc:
+            raise RuntimeError(f"Bitrix file download failed: {exc}") from exc
+
+        if self._looks_like_html(content_type, content):
+            raise RuntimeError(
+                "Bitrix returned an HTML login page instead of a deal file"
+            )
+
+        target = Path(target_dir)
+        target.mkdir(parents=True, exist_ok=True)
+        filename = self._download_filename(file_info, content_disposition)
+        path = target / filename
+        path.write_bytes(content)
+        return str(path)
+
+    def _normalize_file_infos(self, value: Any) -> list[dict[str, Any]]:
+        if not value:
+            return []
+        if isinstance(value, dict):
+            return [value]
+        if isinstance(value, list):
+            return [item for item in value if isinstance(item, dict)]
+        return []
+
+    def _file_download_url(self, file_info: dict[str, Any]) -> str:
+        url = str(
+            file_info.get("downloadUrl")
+            or file_info.get("DOWNLOAD_URL")
+            or file_info.get("url")
+            or file_info.get("URL")
+            or file_info.get("showUrl")
+            or file_info.get("SHOW_URL")
+            or ""
+        ).strip()
+        if not url:
+            return ""
+        if url.startswith("/"):
+            url = parse.urljoin(self._portal_base_url(), url)
+        return self._with_webhook_auth(url)
+
+    def _portal_base_url(self) -> str:
+        parsed = parse.urlparse(self.webhook_url)
+        return f"{parsed.scheme}://{parsed.netloc}/"
+
+    def _webhook_code(self) -> str:
+        parts = [
+            part
+            for part in parse.urlparse(self.webhook_url).path.split("/")
+            if part
+        ]
+        if len(parts) >= 3 and parts[0] == "rest":
+            return parts[2]
+        return ""
+
+    def _with_webhook_auth(self, url: str) -> str:
+        webhook_code = self._webhook_code()
+        if not webhook_code:
+            return url
+        parsed = parse.urlparse(url)
+        query = parse.parse_qsl(parsed.query, keep_blank_values=True)
+        filtered = [(key, value) for key, value in query if key != "auth"]
+        filtered.append(("auth", webhook_code))
+        return parse.urlunparse(parsed._replace(query=parse.urlencode(filtered)))
+
+    def _looks_like_html(self, content_type: str, content: bytes) -> bool:
+        if "text/html" in content_type:
+            return True
+        prefix = content[:500].lstrip().lower()
+        return prefix.startswith(b"<!doctype html") or b"<html" in prefix
+
+    def _download_filename(
+        self, file_info: dict[str, Any], content_disposition: str
+    ) -> str:
+        filename = self._filename_from_content_disposition(content_disposition)
+        if not filename:
+            filename = str(
+                file_info.get("name")
+                or file_info.get("NAME")
+                or file_info.get("fileName")
+                or file_info.get("FILE_NAME")
+                or f"bitrix_file_{file_info.get('id') or file_info.get('ID') or 'file'}"
+            )
+        filename = Path(filename).name.strip() or "bitrix_file"
+        return "".join(ch if ch.isalnum() or ch in ".-_" else "_" for ch in filename)
+
+    def _filename_from_content_disposition(self, value: str) -> str:
+        if not value:
+            return ""
+        utf_match = re.search(r"filename\*=UTF-8''([^;]+)", value, flags=re.I)
+        if utf_match:
+            return parse.unquote(utf_match.group(1).strip().strip('"'))
+        match = re.search(r'filename="?([^";]+)"?', value, flags=re.I)
+        if match:
+            return parse.unquote(match.group(1).strip())
+        return ""
 
     def create_or_update_contact(self, payload: dict[str, Any]) -> int:
         fields = self._contact_fields(payload)
