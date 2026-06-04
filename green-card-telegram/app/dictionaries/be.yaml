@@ -276,6 +276,12 @@ latest_deal:
   comments_label: "COMMENTS"
   not_found: "Апошняя заяўка не знойдзена."
   unavailable: "Не ўдалося атрымаць апошнюю заяўку. Паспрабуйце пазней."
+
+  delivery_prompt: "Як вам адправіць поліс?"
+  delivery_email_button: "Даслаць на пошту"
+  delivery_chat_button: "Даслаць сюды"
+  delivery_request_sent: "Запыт адпраўлены аператару."
+
   payment_instructions: |
     Ваша заяўка на страхаванне аўтамабіля {license_plate} ўхвалена.
 

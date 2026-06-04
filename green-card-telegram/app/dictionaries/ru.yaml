@@ -277,6 +277,11 @@ latest_deal:
   comments_label: "COMMENTS"
   not_found: "Последняя заявка не найдена."
   unavailable: "Не удалось получить последнюю заявку. Попробуйте позже."
+  delivery_prompt: "Как отправить вам полис?"
+  delivery_email_button: "Прислать на почту"
+  delivery_chat_button: "Прислать сюда"
+  delivery_request_sent: "Запрос отправлен оператору."
+
   payment_instructions: |
     Ваша заявка на страхование автомобиля {license_plate} одобрена.
 

@@ -133,3 +133,29 @@ def test_operator_notifier_direct_message_sends_only_to_assigned_operator(monkey
             5,
         ),
     ]
+
+
+
+def test_client_notifier_can_upload_policy_document_to_client(monkeypatch, tmp_path):
+    calls = []
+    document = tmp_path / "policy.pdf"
+    document.write_bytes(b"%PDF-1.4")
+
+    monkeypatch.setenv("BOT_TOKEN", "client-token")
+
+    def fake_post(url, **kwargs):
+        calls.append((url, kwargs))
+        return types.SimpleNamespace(ok=True)
+
+    monkeypatch.setattr(
+        "app.services.operator_notifier_service.requests.post",
+        fake_post,
+    )
+
+    assert ClientNotifierService().send_document_to_client(12345, str(document)) is True
+
+    assert calls[0][0] == "https://api.telegram.org/botclient-token/sendDocument"
+    assert calls[0][1]["data"] == {"chat_id": 12345}
+    assert calls[0][1]["files"]["document"][0] == "policy.pdf"
+    assert calls[0][1]["timeout"] == 10
+

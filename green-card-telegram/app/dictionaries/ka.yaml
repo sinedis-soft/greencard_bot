@@ -368,6 +368,11 @@ latest_deal:
   comments_label: "COMMENTS"
   not_found: "No latest application was found."
   unavailable: "Could not get your latest application. Please try again later."
+  delivery_prompt: "როგორ გსურთ პოლისის მიღება?"
+  delivery_email_button: "ელფოსტაზე გაგზავნა"
+  delivery_chat_button: "აქ გაგზავნა"
+  delivery_request_sent: "მოთხოვნა ოპერატორს გაეგზავნა."
+
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 

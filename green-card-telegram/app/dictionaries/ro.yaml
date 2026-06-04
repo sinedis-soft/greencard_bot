@@ -279,6 +279,11 @@ latest_deal:
   comments_label: "COMMENTS"
   not_found: "No latest application was found."
   unavailable: "Could not get your latest application. Please try again later."
+  delivery_prompt: "Cum doriți să primiți polița?"
+  delivery_email_button: "Trimite pe e-mail"
+  delivery_chat_button: "Trimite aici"
+  delivery_request_sent: "Solicitarea a fost trimisă operatorului."
+
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 

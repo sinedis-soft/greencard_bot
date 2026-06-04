@@ -6,7 +6,7 @@ from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 
-from aiogram.types import CallbackQuery, FSInputFile, Message
+from aiogram.types import CallbackQuery, Message
 
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
@@ -25,6 +25,8 @@ from app.bots.operator_bot.keyboards.ticket_actions import (
     reply_command,
     reply_instruction,
 )
+from app.services.bitrix24_client import LICENSE_PLATE_FIELD, POLICY_FILES_FIELD
+from app.services.latest_deal_formatter import is_invoice_deal, latest_deal_text
 from app.services.operator_message_formatter import operator_language_line
 from app.services.operator_notifier_service import OperatorNotifierService
 from app.services.operator_ticket_service import OperatorTicketService, TicketPayload
@@ -35,6 +37,105 @@ router = Router()
 class PaymentConfirmationForm(StatesGroup):
     awaiting_file = State()
     review_files = State()
+
+
+
+def _policy_delivery_keyboard(i18n, lang: str, deal_id: str):
+    builder = InlineKeyboardBuilder()
+    builder.button(
+        text=i18n.get_text(lang, "latest_deal.delivery_email_button"),
+        callback_data=f"latest_deal_policy:email:{deal_id}",
+    )
+    builder.button(
+        text=i18n.get_text(lang, "latest_deal.delivery_chat_button"),
+        callback_data=f"latest_deal_policy:chat:{deal_id}",
+    )
+    builder.adjust(1)
+    return builder.as_markup()
+
+
+def _policy_file_infos_from_deal(deal: dict, bitrix_client) -> list[dict]:
+    deal_id = deal.get("ID")
+    if deal_id:
+        try:
+            infos = bitrix_client.get_deal_file_infos(deal_id)
+            if infos:
+                return infos
+        except RuntimeError:
+            pass
+    value = deal.get(POLICY_FILES_FIELD)
+    if isinstance(value, dict):
+        return [value]
+    if isinstance(value, list):
+        return [item for item in value if isinstance(item, dict)]
+    return []
+
+
+def _client_summary(user, lang: str) -> str:
+    username = f"@{user.username}" if user and user.username else "—"
+    return (
+        f"Клиент: {user.full_name if user else '—'}\n"
+        f"Telegram ID: {user.id if user else '—'}\n"
+        f"Username: {username}\n"
+        f"{operator_language_line(lang)}"
+    )
+
+
+def _policy_delivery_request_text(
+    request_id: str, delivery_method: str, deal_id: str, user, lang: str
+) -> str:
+    client = _client_summary(user, lang)
+    if delivery_method == "email":
+        return (
+            "📧 Клиент просит прислать полис на почту\n"
+            f"ID: {request_id}\n"
+            f"{client}\n"
+            f"ID сделки: {deal_id}\n"
+            f"Необходимо перевести сделку {deal_id} в стадию ОТПРАВИТЬ ПОЛИС.\n"
+            f"Когда действие выполнено, отправьте: /done {request_id}"
+        )
+    return (
+        "📎 Клиент просит прислать полис сюда, в Telegram-диалог\n"
+        f"ID: {request_id}\n"
+        f"{client}\n"
+        f"ID сделки: {deal_id}\n"
+        "Необходимо прислать клиенту полис в диалог. "
+        "Ответьте на это сообщение документом/фото. "
+        "Если файлов несколько, отправьте их поочередно ответом на это сообщение.\n"
+        f"Текстовый ответ клиенту: {reply_command(request_id)}"
+    )
+
+
+async def _create_policy_delivery_ticket(
+    callback: CallbackQuery, delivery_method: str, deal_id: str, lang: str
+) -> None:
+    request_id = f"policy-{delivery_method}-{deal_id}-{uuid4().hex[:8]}"
+    OperatorTicketService().create_ticket(
+        TicketPayload(
+            request_id=request_id,
+            telegram_user_id=callback.from_user.id if callback.from_user else None,
+            client_name=callback.from_user.full_name if callback.from_user else "",
+            client_phone="",
+            preferred_language=lang,
+            vehicle_type="",
+            license_plate="",
+            vin="",
+            insurance_period_days=0,
+            insurance_start_date="",
+            comment=(
+                f"Policy delivery request ({delivery_method}) "
+                f"for Bitrix deal {deal_id}."
+            ),
+        )
+    )
+    OperatorNotifierService().notify_new_ticket(
+        _policy_delivery_request_text(
+            request_id, delivery_method, deal_id, callback.from_user, lang
+        )
+    )
+    await callback.message.answer(
+        callback.bot.i18n.get_text(lang, "latest_deal.delivery_request_sent")
+    )
 
 
 def _payment_confirmation_keyboard(i18n, lang: str):
@@ -101,10 +202,7 @@ def _payment_operator_text(lang: str, data: dict, user) -> str:
     username = f"@{user.username}" if user and user.username else "—"
     request_id = str(data.get("request_id") or "")
     return (
-
-
         "💳 Подтверждение оплаты\n\n"
-
         f"ID: {request_id}\n"
         f"Клиент: {client_name}\n\n"
         f"Telegram ID: {user.id if user else '—'}\n"
@@ -112,9 +210,6 @@ def _payment_operator_text(lang: str, data: dict, user) -> str:
         f"{operator_language_line(lang)}\n"
         f"Госномер авто: {data.get('license_plate') or '—'}\n\n"
         f"ID сделки:\n {data.get('deal_id') or '—'}"
-
-
-
     )
 
 
@@ -144,7 +239,6 @@ async def _forward_client_message_to_operator(message: Message) -> bool:
         f"Клиент: {client_name}\n"
         f"{operator_language_line(ticket.preferred_language)}\n\n"
         f"Текст клиента:\n {message.text}\n"
-
     )
     notifier = OperatorNotifierService()
     if ticket.operator_id:
@@ -188,23 +282,12 @@ async def _send_latest_deal(message: Message, lang: str, user=None) -> None:
 
     await message.answer(latest_deal_text(message.bot.i18n, lang, deal))
 
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        for file_info in bitrix_client.get_deal_file_infos(deal.get("ID")):
-            try:
-                local_path = bitrix_client.download_deal_file(file_info, tmp_dir)
-            except RuntimeError as exc:
-                deal_id = deal.get("ID")
-                if deal_id:
-                    try:
-                        bitrix_client.add_timeline_comment(
-                            "deal",
-                            int(deal_id),
-                            f"Файл не скачан: {exc}",
-                        )
-                    except (RuntimeError, ValueError):
-                        pass
-                continue
-            await message.answer_document(FSInputFile(local_path))
+    deal_id = str(deal.get("ID") or "")
+    if deal_id and _policy_file_infos_from_deal(deal, bitrix_client):
+        await message.answer(
+            message.bot.i18n.get_text(lang, "latest_deal.delivery_prompt"),
+            reply_markup=_policy_delivery_keyboard(message.bot.i18n, lang, deal_id),
+        )
 
 
 
@@ -352,6 +435,19 @@ async def payment_confirmation_send(
     )
     await callback.answer()
 
+
+
+@router.callback_query(F.data.startswith("latest_deal_policy:"))
+async def latest_deal_policy_delivery(callback: CallbackQuery) -> None:
+    lang = callback.bot.lang_store.get(
+        callback.from_user.id, callback.bot.default_language
+    )
+    parts = (callback.data or "").split(":", maxsplit=2)
+    if len(parts) != 3 or parts[1] not in {"email", "chat"}:
+        await callback.answer()
+        return
+    await _create_policy_delivery_ticket(callback, parts[1], parts[2], lang)
+    await callback.answer()
 
 @router.callback_query(F.data == "payment_confirmation:latest_deal")
 async def payment_confirmation_latest_deal(callback: CallbackQuery) -> None:

@@ -290,6 +290,11 @@ latest_deal:
   comments_label: "COMMENTS"
   not_found: "No latest application was found."
   unavailable: "Could not get your latest application. Please try again later."
+  delivery_prompt: "Даатгалын полисыг хэрхэн авах вэ?"
+  delivery_email_button: "Имэйлээр илгээх"
+  delivery_chat_button: "Энд илгээх"
+  delivery_request_sent: "Хүсэлтийг операторт илгээлээ."
+
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 

@@ -278,6 +278,11 @@ latest_deal:
   comments_label: "COMMENTS"
   not_found: "No latest application was found."
   unavailable: "Could not get your latest application. Please try again later."
+  delivery_prompt: "بیمه‌نامه را چگونه برای شما ارسال کنیم؟"
+  delivery_email_button: "ارسال به ایمیل"
+  delivery_chat_button: "ارسال همین‌جا"
+  delivery_request_sent: "درخواست برای اپراتور ارسال شد."
+
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 

@@ -276,6 +276,11 @@ latest_deal:
   comments_label: "COMMENTS"
   not_found: "No latest application was found."
   unavailable: "Could not get your latest application. Please try again later."
+  delivery_prompt: "Як вам надіслати поліс?"
+  delivery_email_button: "Надіслати на пошту"
+  delivery_chat_button: "Надіслати сюди"
+  delivery_request_sent: "Запит надіслано оператору."
+
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 

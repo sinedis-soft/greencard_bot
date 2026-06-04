@@ -334,6 +334,11 @@ latest_deal:
   comments_label: "COMMENTS"
   not_found: "No latest application was found."
   unavailable: "Could not get your latest application. Please try again later."
+  delivery_prompt: "How would you like to receive the policy?"
+  delivery_email_button: "Send by e-mail"
+  delivery_chat_button: "Send here"
+  delivery_request_sent: "The request has been sent to an operator."
+
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 
