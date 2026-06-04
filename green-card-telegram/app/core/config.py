@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     default_language: str = "en"
     mini_app_url: str = ""
     bot_token: str = ""
+    pii_hash_secret: str = ""
+    redis_url: str = ""
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 

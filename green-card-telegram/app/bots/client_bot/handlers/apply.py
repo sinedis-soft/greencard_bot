@@ -486,6 +486,23 @@ async def apply_command(message: Message, state: FSMContext, i18n: I18nService, 
     lang = lang_store.get(message.from_user.id, default_language)
     await state.clear()
     await state.update_data(vehicles=[], current_vehicle={})
+    from app.services.reminder_service import ReminderService
+
+    try:
+        reminder_service = ReminderService()
+        reminder_service.mark_calculator_converted(message.from_user.id)
+        draft = reminder_service.create_application_draft(
+            telegram_user_id=message.from_user.id,
+            telegram_chat_id=message.chat.id,
+            product_type="green_card",
+            source_channel="telegram_bot",
+            current_step="started",
+            safe_context={"language": lang},
+            language=lang,
+        )
+        await state.update_data(application_draft_id=draft.draft_id)
+    except Exception as exc:
+        logger.exception("application_draft_reminder_failed user_id=%s error=%s", message.from_user.id, exc)
     await message.answer(i18n.get_text(lang, "application.form_header"))
 
     contact = None
@@ -1378,6 +1395,14 @@ async def consent_agree(callback: CallbackQuery, state: FSMContext, i18n: I18nSe
         await callback.answer()
         return
 
+    from app.services.reminder_service import ReminderService
+
+    try:
+        reminder_service = ReminderService()
+        reminder_service.complete_active_drafts(callback.from_user.id)
+        reminder_service.mark_calculator_converted(callback.from_user.id)
+    except Exception as exc:
+        logger.exception("application_reminder_completion_failed user_id=%s error=%s", callback.from_user.id, exc)
     await state.clear()
     await callback.message.answer(i18n.get_text(lang, "application.submitted"))
     await callback.answer()
@@ -1386,6 +1411,12 @@ async def consent_agree(callback: CallbackQuery, state: FSMContext, i18n: I18nSe
 @router.callback_query(F.data == "apply:consent:decline", ApplyForm.consent)
 async def consent_decline(callback: CallbackQuery, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
     lang = lang_store.get(callback.from_user.id, default_language)
+    from app.services.reminder_service import ReminderService
+
+    try:
+        ReminderService().cancel_active_drafts(callback.from_user.id)
+    except Exception as exc:
+        logger.exception("application_draft_cancel_failed user_id=%s error=%s", callback.from_user.id, exc)
     await state.clear()
     await callback.message.answer(i18n.get_text(lang, "application.declined"))
     await callback.answer()

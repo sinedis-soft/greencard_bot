@@ -10,6 +10,7 @@ class FakeI18n:
             "main_menu.apply": "📝 Submit an application",
             "main_menu.operator": "👨‍💼 Contact an operator",
             "main_menu.latest_deal": "📄 My latest application",
+            "main_menu.my_applications": "📄 My applications",
             "main_menu.payment_confirmation": "💳 Payment confirmation",
             "main_menu.language": "🌐 Language",
             "calculator.apply_cta": "📝 Submit an application",
@@ -21,6 +22,7 @@ class FakeI18n:
             "main_menu.apply": "📝 გაფორმება",
             "main_menu.operator": "👨‍💼 ოპერატორთან დაკავშირება",
             "main_menu.latest_deal": "📄 ჩემი ბოლო განაცხადი",
+            "main_menu.my_applications": "📄 Мои заявки",
             "main_menu.payment_confirmation": "💳 გადახდის დადასტურება",
             "main_menu.language": "🌐 ენა",
             "calculator.apply_cta": "📝 განაცხადის გაფორმება",
@@ -32,6 +34,7 @@ class FakeI18n:
             "main_menu.apply": "📝 Өтінім беру",
             "main_menu.operator": "👨‍💼 Оператормен байланысу",
             "main_menu.latest_deal": "📄 Менің соңғы өтінімім",
+            "main_menu.my_applications": "📄 Мои заявки",
             "main_menu.payment_confirmation": "💳 Төлемді растау",
             "main_menu.language": "🌐 Тіл",
             "calculator.apply_cta": "📝 Өтінім беру",
@@ -43,6 +46,7 @@ class FakeI18n:
             "main_menu.apply": "📝 Złóż wniosek",
             "main_menu.operator": "👨‍💼 Skontaktuj się z operatorem",
             "main_menu.latest_deal": "📄 My latest application",
+            "main_menu.my_applications": "📄 My applications",
             "main_menu.payment_confirmation": "💳 Payment confirmation",
             "main_menu.language": "🌐 Język",
             "calculator.apply_cta": "📝 Złóż wniosek",
@@ -54,6 +58,7 @@ class FakeI18n:
             "main_menu.apply": "📝 Оформить заявку",
             "main_menu.operator": "👨‍💼 Связаться с оператором",
             "main_menu.latest_deal": "📄 Моя последняя заявка",
+            "main_menu.my_applications": "📄 Мои заявки",
             "main_menu.payment_confirmation": "💳 Подтверждение оплаты",
             "main_menu.language": "🌐 Язык",
             "calculator.apply_cta": "📝 Оформить заявку",
@@ -79,6 +84,7 @@ def test_menu_actions_match_localized_buttons_for_all_languages():
         "main_menu.apply": "apply",
         "main_menu.operator": "operator",
         "main_menu.latest_deal": "latest_deal",
+        "main_menu.my_applications": "my_applications",
         "main_menu.payment_confirmation": "payment_confirmation",
         "main_menu.language": "language",
     }
@@ -109,4 +115,5 @@ def test_command_aliases_still_work():
     assert menu_action_for_text(i18n, "/coverage", "pl", "ru") == "coverage"
     assert menu_action_for_text(i18n, "/lang", "ka", "ru") == "language"
     assert menu_action_for_text(i18n, "/latest", "ru", "ru") == "latest_deal"
+    assert menu_action_for_text(i18n, "/my", "ru", "ru") == "my_applications"
     assert menu_action_for_text(i18n, "/payment", "ru", "ru") == "payment_confirmation"

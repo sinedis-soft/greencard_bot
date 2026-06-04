@@ -4,7 +4,6 @@ from uuid import uuid4
 
 from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import State, StatesGroup
 
 from aiogram.types import CallbackQuery, Message
 
@@ -14,9 +13,11 @@ from app.bots.client_bot.handlers.apply import send_apply
 from app.bots.client_bot.handlers.calculator import start_calculator
 from app.bots.client_bot.handlers.coverage import send_coverage
 from app.bots.client_bot.handlers.faq import show_faq_categories
+from app.bots.client_bot.handlers.my_applications import send_my_applications
 from app.bots.client_bot.keyboards.language import language_keyboard
 from app.bots.client_bot.keyboards.main_menu import main_menu_keyboard
 from app.bots.client_bot.menu_actions import menu_action_for_text
+from app.bots.client_bot.states.payment import PaymentConfirmationForm
 from app.services.bitrix24_client import LICENSE_PLATE_FIELD
 
 from app.services.latest_deal_formatter import is_invoice_deal, latest_deal_text
@@ -29,14 +30,30 @@ from app.services.bitrix24_client import LICENSE_PLATE_FIELD, POLICY_FILES_FIELD
 from app.services.latest_deal_formatter import is_invoice_deal, latest_deal_text
 from app.services.operator_message_formatter import operator_language_line
 from app.services.operator_notifier_service import OperatorNotifierService
+from app.services.blocked_user_service import BlockedUserService
+from app.services.data_deletion_request_service import DataDeletionRequestService
 from app.services.operator_ticket_service import OperatorTicketService, TicketPayload
+from app.services.rate_limit_service import RateLimitService
 
 router = Router()
 
+def _data_deletion_confirm_keyboard():
+    builder = InlineKeyboardBuilder()
+    builder.button(text="Создать запрос", callback_data="data_deletion:create")
+    builder.button(text="Отмена", callback_data="data_deletion:cancel")
+    builder.adjust(1)
+    return builder.as_markup()
 
-class PaymentConfirmationForm(StatesGroup):
-    awaiting_file = State()
-    review_files = State()
+
+async def _show_data_deletion_warning(message: Message) -> None:
+    await message.answer(
+        "Вы можете запросить удаление ваших данных.\n\n"
+        "Мы создадим обращение администратору. Данные не будут удалены автоматически, "
+        "потому что часть информации может храниться в CRM, бухгалтерских документах "
+        "или страховой истории и может требоваться по закону или договору.",
+        reply_markup=_data_deletion_confirm_keyboard(),
+    )
+
 
 def _policy_delivery_keyboard(i18n, lang: str, deal_id: str):
     builder = InlineKeyboardBuilder()
@@ -227,11 +244,22 @@ def _operator_ticket_text(request_id: str, client_name: str, source: str, prefer
 async def _forward_client_message_to_operator(message: Message) -> bool:
     if not message.from_user or not message.text:
         return False
-    ticket = OperatorTicketService().get_active_by_user(message.from_user.id)
+    telegram_user_id = message.from_user.id
+    if BlockedUserService().is_blocked(telegram_user_id):
+        await message.answer("Ваш доступ временно ограничен. Если это ошибка, дождитесь ответа оператора.")
+        return True
+    hour_limit, day_limit = RateLimitService().check_operator_message(telegram_user_id)
+    if not hour_limit.allowed:
+        await message.answer("Вы отправили слишком много сообщений оператору за последний час. Пожалуйста, дождитесь ответа.")
+        return True
+    if not day_limit.allowed:
+        await message.answer("Сегодня достигнут лимит сообщений оператору. Если вопрос срочный, дождитесь ответа по уже созданному обращению.")
+        return True
+    ticket = OperatorTicketService().get_active_by_user(telegram_user_id)
     if not ticket:
         return False
     client_name = message.from_user.full_name
-    OperatorTicketService().mark_client_message(ticket.request_id)
+    OperatorTicketService().mark_client_message(ticket.request_id, message.text)
     operator_message = (
         "💬 Сообщение клиента\n"
         f"ID: {ticket.request_id}\n"
@@ -454,6 +482,26 @@ async def payment_confirmation_latest_deal(callback: CallbackQuery) -> None:
     await callback.answer()
 
 
+
+@router.callback_query(F.data == "data_deletion:create")
+async def create_data_deletion_request(callback: CallbackQuery) -> None:
+    request = DataDeletionRequestService().create_request(
+        telegram_user_id=callback.from_user.id,
+        telegram_chat_id=callback.message.chat.id if callback.message else None,
+    )
+    await callback.message.edit_text(
+        "Запрос на удаление данных создан.\n\n"
+        f"Номер: {request.request_id}\n"
+        "Администратор проверит юридические основания хранения и свяжется с вами."
+    )
+    await callback.answer()
+
+
+@router.callback_query(F.data == "data_deletion:cancel")
+async def cancel_data_deletion_request(callback: CallbackQuery) -> None:
+    await callback.message.edit_text("Запрос на удаление данных отменён.")
+    await callback.answer()
+
 @router.message(F.text)
 async def menu_click_router(message: Message, state: FSMContext) -> None:
     lang = message.bot.lang_store.get(
@@ -463,7 +511,9 @@ async def menu_click_router(message: Message, state: FSMContext) -> None:
         message.bot.i18n, message.text, lang, message.bot.default_language
     )
 
-    if action == "calculator":
+    if (message.text or "").strip() in {"/delete_data", "/data_deletion", "Запросить удаление данных"}:
+        await _show_data_deletion_warning(message)
+    elif action == "calculator":
         await start_calculator(message)
     elif action == "faq":
         await show_faq_categories(message)
@@ -473,6 +523,8 @@ async def menu_click_router(message: Message, state: FSMContext) -> None:
         await send_apply(message, state)
     elif action == "latest_deal":
         await _send_latest_deal(message, lang)
+    elif action == "my_applications":
+        await send_my_applications(message)
     elif action == "payment_confirmation":
         await _start_payment_confirmation(message, state, lang)
     elif action == "language":

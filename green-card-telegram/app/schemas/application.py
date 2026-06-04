@@ -75,5 +75,6 @@ class ApplicationCreate(BaseModel):
     vehicles: list[VehicleData] = Field(min_length=1)
     terms_accepted: bool
     privacy_accepted: bool
+    accepted_consents: list[str] = Field(default_factory=list)
     company: Optional[CompanyData] = None
     telegram_init_data: str

@@ -1,14 +1,13 @@
 from aiogram import F, Router
 from aiogram.types import Message
-import os
-
 from app.services.i18n_service import I18nService
+from app.services.operator_service import OperatorService
 
 router = Router()
 
 
 def _operator_ids() -> set[int]:
-    return {int(x.strip()) for x in os.getenv("OPERATOR_IDS", "").split(",") if x.strip()}
+    return OperatorService().active_operator_ids()
 
 
 def _allowed(message: Message) -> bool:

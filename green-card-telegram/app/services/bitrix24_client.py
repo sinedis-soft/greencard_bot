@@ -10,12 +10,22 @@ from urllib import error, parse, request
 TELEGRAM_USERNAME_FIELD = "UF_CRM_1697013093804"
 TELEGRAM_USER_ID_FIELD = "UF_CRM_1780051881466"
 TELEGRAM_CHAT_ID_FIELD = "UF_CRM_1780237379152"
+REQUEST_ID_FIELD = "UF_CRM_1780595513795"
+SHOW_IN_TELEGRAM_FIELD = "UF_CRM_1780595576304"
+REPEAT_FROM_DEAL_FIELD = "UF_CRM_REPEAT_FROM_DEAL_ID"
+REPEAT_MODE_FIELD = "UF_CRM_REPEAT_MODE"
+DOCS_REUSE_REQUESTED_FIELD = "UF_CRM_DOCS_REUSE_REQUESTED"
+PRODUCT_TYPE_FIELD = "UF_CRM_PRODUCT_TYPE"
+POLICY_EXPECTED_AT_FIELD = "UF_CRM_POLICY_EXPECTED_AT"
+POLICY_SENT_AT_FIELD = "UF_CRM_POLICY_SENT_AT"
+PUBLIC_STATUS_FIELD = "UF_CRM_PUBLIC_STATUS"
 
 
 POLICY_NUMBER_FIELD = "UF_CRM_1694177619522"
 POLICY_STATUS_FIELD = "UF_CRM_1718956082020"
 POLICY_FILES_FIELD = "UF_CRM_1714480913426"
 LICENSE_PLATE_FIELD = "UF_CRM_1686152485641"
+VIN_FIELD = "UF_CRM_1686152659867"
 
 POLICY_STATUS_VALUES = {
     "2607": "Действующий",
@@ -116,28 +126,41 @@ class Bitrix24Client:
             "UF_CRM_CONTACT_1686145698592",
             TELEGRAM_USERNAME_FIELD,
             TELEGRAM_USER_ID_FIELD,
+            TELEGRAM_CHAT_ID_FIELD,
         ]
 
     def find_deal_by_license_plate(self, plate: str) -> dict[str, Any] | None:
-        if not plate:
+        return self._find_deal_by_vehicle_field(LICENSE_PLATE_FIELD, plate)
+
+    def find_deal_by_vin(self, vin: str) -> dict[str, Any] | None:
+        return self._find_deal_by_vehicle_field(VIN_FIELD, vin)
+
+    def _find_deal_by_vehicle_field(self, field: str, value: str) -> dict[str, Any] | None:
+        if not value:
             return None
         payload = {
             "order": {"ID": "DESC"},
-            "filter": {"UF_CRM_1686152485641": plate},
+            "filter": {field: value},
             "select": [
                 "ID",
+                "TITLE",
+                "STAGE_ID",
+                "DATE_CREATE",
                 "CONTACT_ID",
+                "CLOSED",
                 "UF_CRM_1686154280439",
                 "UF_CRM_1686152306664",
                 "UF_CRM_1686152515152",
                 "UF_CRM_1686152614718",
-                "UF_CRM_1686152659867",
+                VIN_FIELD,
                 "UF_CRM_1686152567597",
                 "UF_CRM_1686152745455",
                 "UF_CRM_1686152831791",
                 "UF_CRM_1686152861297",
                 "UF_CRM_1686152902186",
-                "UF_CRM_1686152485641",
+                LICENSE_PLATE_FIELD,
+                PRODUCT_TYPE_FIELD,
+                SHOW_IN_TELEGRAM_FIELD,
             ],
         }
         res = self._post("crm.deal.list", payload)
@@ -168,6 +191,63 @@ class Bitrix24Client:
             return None
         return self._find_latest_deal({"CONTACT_ID": str(contact_id)})
 
+
+    def list_deals_by_contact_id(
+        self,
+        contact_id: int | str,
+        limit: int = 10,
+        show_in_telegram_only: bool = True,
+    ) -> list[dict[str, Any]]:
+        if not contact_id:
+            return []
+        crm_filter: dict[str, Any] = {"CONTACT_ID": str(contact_id)}
+        if show_in_telegram_only:
+            crm_filter[SHOW_IN_TELEGRAM_FIELD] = "1"
+
+        res = self._post(
+            "crm.deal.list",
+            {
+                "order": {"DATE_CREATE": "DESC", "ID": "DESC"},
+                "filter": crm_filter,
+                "select": self._client_application_deal_select_fields(),
+            },
+        )
+        items = res.get("result") or []
+        return [item for item in items if isinstance(item, dict)][: max(limit, 0)]
+
+    def _client_application_deal_select_fields(self) -> list[str]:
+        return [
+            "ID",
+            "TITLE",
+            "STAGE_ID",
+            "DATE_CREATE",
+            "CATEGORY_ID",
+            "CONTACT_ID",
+            "COMPANY_ID",
+            REQUEST_ID_FIELD,
+            TELEGRAM_CHAT_ID_FIELD,
+            LICENSE_PLATE_FIELD,
+            "UF_CRM_1686152306664",
+            "UF_CRM_1686152149204",
+            "UF_CRM_1686152209741",
+            "UF_CRM_1686152567597",
+            "UF_CRM_1686152659867",
+            "UF_CRM_1686152515152",
+            "UF_CRM_1686152614718",
+            "UF_CRM_1686152745455",
+            "UF_CRM_1686152831791",
+            "UF_CRM_1686152861297",
+            "UF_CRM_1686152902186",
+            PRODUCT_TYPE_FIELD,
+            POLICY_NUMBER_FIELD,
+            POLICY_STATUS_FIELD,
+            POLICY_FILES_FIELD,
+            POLICY_EXPECTED_AT_FIELD,
+            POLICY_SENT_AT_FIELD,
+            PUBLIC_STATUS_FIELD,
+            SHOW_IN_TELEGRAM_FIELD,
+        ]
+
     def _find_latest_deal(self, crm_filter: dict[str, Any]) -> dict[str, Any] | None:
         res = self._post(
             "crm.deal.list",
@@ -194,6 +274,10 @@ class Bitrix24Client:
             POLICY_FILES_FIELD,
             LICENSE_PLATE_FIELD,
         ]
+
+
+    def deal_url(self, deal_id: int | str) -> str:
+        return parse.urljoin(self._portal_base_url(), f"crm/deal/details/{deal_id}/")
 
     def get_deal(self, deal_id: int | str) -> dict[str, Any] | None:
         if not deal_id:
@@ -393,7 +477,7 @@ class Bitrix24Client:
         return update_fields
 
     def _contact_select_fields(self) -> list[str]:
-        return ["ID", "PHONE", "EMAIL", TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD]
+        return ["ID", "PHONE", "EMAIL", TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD, TELEGRAM_CHAT_ID_FIELD]
 
     def _find_company_id(self, fields: dict[str, Any]) -> int | None:
         company_inn = fields.get("UF_CRM_COMPANY_1692911328252")

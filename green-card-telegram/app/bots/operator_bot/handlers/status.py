@@ -20,8 +20,12 @@ async def take_callback(callback: CallbackQuery) -> None:
         return
     request_id = callback.data.split(":", 1)[1]
     svc = OperatorTicketService()
-    svc.set_status(request_id, "in_progress")
-    svc.log_action(request_id, callback.from_user.id, "take")
+    ok, reason = svc.take_ticket(request_id, callback.from_user.id)
+    if not ok:
+        await callback.message.answer("Ticket is already assigned or not found")
+        await callback.answer()
+        return
+    svc.log_action(request_id, callback.from_user.id, "ticket_taken")
     notify_client_operator_connected(request_id)
     await callback.message.answer(
         f"{callback.bot['i18n'].get_text('en', 'operator.taken')}\n{reply_instruction(request_id)}"
@@ -48,8 +52,8 @@ async def close_callback(callback: CallbackQuery) -> None:
         return
     request_id = callback.data.split(":", 1)[1]
     svc = OperatorTicketService()
-    svc.set_status(request_id, "closed")
-    svc.log_action(request_id, callback.from_user.id, "close")
+    svc.close_ticket(request_id, callback.from_user.id, "resolved")
+    svc.log_action(request_id, callback.from_user.id, "ticket_closed")
     await callback.message.answer(callback.bot["i18n"].get_text("en", "operator.closed"))
     await callback.answer()
 
@@ -61,8 +65,9 @@ async def take_cmd(message: Message) -> None:
         return
     request_id = message.text.split(maxsplit=1)[1]
     svc = OperatorTicketService()
-    if svc.set_status(request_id, "in_progress"):
-        svc.log_action(request_id, message.from_user.id, "take")
+    ok, reason = svc.take_ticket(request_id, message.from_user.id)
+    if ok:
+        svc.log_action(request_id, message.from_user.id, "ticket_taken")
         notify_client_operator_connected(request_id)
         await message.answer(f"{message.bot['i18n'].get_text('en', 'operator.taken')}\n{reply_instruction(request_id)}")
         await message.answer(reply_command(request_id))
@@ -75,6 +80,6 @@ async def close_cmd(message: Message) -> None:
         return
     request_id = message.text.split(maxsplit=1)[1]
     svc = OperatorTicketService()
-    if svc.set_status(request_id, "closed"):
-        svc.log_action(request_id, message.from_user.id, "close")
+    if svc.close_ticket(request_id, message.from_user.id, "resolved"):
+        svc.log_action(request_id, message.from_user.id, "ticket_closed")
         await message.answer(message.bot["i18n"].get_text("en", "operator.closed"))

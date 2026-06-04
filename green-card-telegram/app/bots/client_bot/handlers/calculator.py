@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import F, Router
 from aiogram.types import CallbackQuery, Message
 
@@ -6,6 +8,7 @@ from app.services.calculator_service import CalculatorService
 from app.services.i18n_service import I18nService
 
 router = Router()
+logger = logging.getLogger(__name__)
 
 
 @router.message(F.text == "/calc")
@@ -50,5 +53,19 @@ async def calc_choose_period(
         disclaimer=result["disclaimer"],
     )
     await callback.message.answer(text)
+    from app.services.reminder_service import ReminderService
+
+    try:
+        ReminderService().create_calculator_followup(
+            telegram_user_id=callback.from_user.id,
+            telegram_chat_id=callback.message.chat.id,
+            vehicle_type=vehicle_type,
+            insurance_period_days=period,
+            estimated_price=result.get("estimated_price"),
+            currency=result.get("currency"),
+            language=lang,
+        )
+    except Exception as exc:
+        logger.exception("calculator_followup_reminder_failed user_id=%s error=%s", callback.from_user.id, exc)
     await callback.message.answer(i18n.get_text(lang, "calculator.apply_cta"))
     await callback.answer()

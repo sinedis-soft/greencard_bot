@@ -34,6 +34,7 @@ def process_bitrix_job(job_id: int):
                     payload.get('telegram_username'),
                     payload.get('telegram_user_id'),
                     payload.get('telegram_chat_id'),
+                    payload.get('request_id') or job.request_id,
                 )
                 app_service = ApplicationService()
                 app_service.mark_bitrix_created(

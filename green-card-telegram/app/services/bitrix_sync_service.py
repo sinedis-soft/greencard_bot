@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from sqlalchemy import select
 
-from app.db.models import Application, BitrixSyncJob
+from app.db.models import Application, BitrixSyncJob, OperatorTicket
 from app.db.session import SessionLocal
 
 RETRY_DELAYS = [60, 300, 900]
@@ -35,6 +35,28 @@ class BitrixSyncService:
                 if app:
                     app.status = "failed"
                     app.last_error = err
+                    existing_ticket = db.scalar(
+                        select(OperatorTicket).where(
+                            OperatorTicket.request_id == f"bitrix-{job.request_id}"
+                        )
+                    )
+                    if not existing_ticket:
+                        db.add(
+                            OperatorTicket(
+                                request_id=f"bitrix-{job.request_id}",
+                                telegram_user_id=app.telegram_user_id,
+                                telegram_chat_id=app.telegram_user_id,
+                                bitrix_contact_id=app.bitrix_contact_id,
+                                reason="bitrix_sync_failed",
+                                priority="urgent",
+                                status="new",
+                                preferred_language=app.telegram_language_code or "ru",
+                                first_response_deadline=datetime.utcnow() + timedelta(minutes=5),
+                                sla_due_at=datetime.utcnow() + timedelta(minutes=5),
+                                last_client_message_at=datetime.utcnow(),
+                                last_message_preview=f"Ошибка передачи заявки в Bitrix: {err}",
+                            )
+                        )
             else:
                 job.status = "bitrix_retrying"
                 job.next_retry_at = datetime.utcnow() + timedelta(seconds=RETRY_DELAYS[attempts - 1])

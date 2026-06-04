@@ -4,7 +4,7 @@ from pathlib import Path
 
 from aiogram import Bot, Dispatcher
 
-from app.bots.client_bot.handlers import apply, calculator, coverage, faq, language, menu
+from app.bots.client_bot.handlers import apply, calculator, coverage, faq, language, my_applications, menu
 from app.services.bitrix24_client import Bitrix24Client
 from app.services.calculator_service import CalculatorService
 from app.services.i18n_service import I18nService
@@ -43,6 +43,7 @@ async def main() -> None:
     dp.include_router(faq.router)
     dp.include_router(coverage.router)
     dp.include_router(apply.router)
+    dp.include_router(my_applications.router)
     dp.include_router(menu.router)
 
     await dp.start_polling(bot)

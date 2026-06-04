@@ -1,8 +1,8 @@
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 from uuid import uuid4
 
-from sqlalchemy import and_, or_, select
+from sqlalchemy import select
 
 from app.db.models import AnalyticsEvent, Application, BitrixSyncJob, Policyholder, UploadedDocument, Vehicle
 from app.db.session import SessionLocal
@@ -63,32 +63,10 @@ class ApplicationService:
             return app, False
 
     def _find_duplicate(self, db, payload: ApplicationCreate, tg_user_id: int | None):
-        dup_contact = db.scalar(
-            select(Application)
-            .join(Policyholder, Policyholder.application_id == Application.id)
-            .where(or_(Policyholder.phone == payload.phone, Policyholder.email == payload.email, Application.telegram_user_id == tg_user_id))
-            .order_by(Application.created_at.desc())
-        )
-        if not dup_contact:
-            return None
-        window_from = datetime.utcnow() - timedelta(hours=24)
-        first_v = payload.vehicles[0]
-        dup_app = db.scalar(
-            select(Application)
-            .join(Policyholder, Policyholder.application_id == Application.id)
-            .join(Vehicle, Vehicle.application_id == Application.id)
-            .where(
-                and_(
-                    Vehicle.vin == first_v.vin,
-                    Vehicle.license_plate == first_v.license_plate,
-                    Vehicle.insurance_start_date == str(first_v.insurance_start_date),
-                    Policyholder.phone == payload.phone,
-                    Application.created_at >= window_from,
-                )
-            )
-            .order_by(Application.created_at.desc())
-        )
-        return dup_app
+        # Duplicate checks moved to ApplicationGuardService so this service does not
+        # query local raw phone/email/VIN/license plate values. The local PII tables
+        # remain temporary storage for the initial Bitrix submission only.
+        return None
 
     def mark_bitrix_pending(self, request_id: str):
         with SessionLocal() as db:

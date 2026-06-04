@@ -2,7 +2,7 @@ from pathlib import Path
 
 ALLOWED_MIME = {"image/jpeg", "image/png", "application/pdf"}
 MAX_FILE_SIZE = 10 * 1024 * 1024
-MAX_FILES = 10
+MAX_FILES = 9
 
 
 class FileValidationError(ValueError):
