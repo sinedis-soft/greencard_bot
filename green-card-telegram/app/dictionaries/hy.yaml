@@ -280,7 +280,6 @@ latest_deal:
   delivery_email_button: "Ուղարկել էլ. փոստին"
   delivery_chat_button: "Ուղարկել այստեղ"
   delivery_request_sent: "Հարցումն ուղարկվել է օպերատորին:"
-
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 

@@ -283,7 +283,6 @@ latest_deal:
   delivery_email_button: "Trimite pe e-mail"
   delivery_chat_button: "Trimite aici"
   delivery_request_sent: "Solicitarea a fost trimisă operatorului."
-
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 

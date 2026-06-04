@@ -135,7 +135,6 @@ def test_operator_notifier_direct_message_sends_only_to_assigned_operator(monkey
     ]
 
 
-
 def test_client_notifier_can_upload_policy_document_to_client(monkeypatch, tmp_path):
     calls = []
     document = tmp_path / "policy.pdf"
@@ -158,4 +157,3 @@ def test_client_notifier_can_upload_policy_document_to_client(monkeypatch, tmp_p
     assert calls[0][1]["data"] == {"chat_id": 12345}
     assert calls[0][1]["files"]["document"][0] == "policy.pdf"
     assert calls[0][1]["timeout"] == 10
-

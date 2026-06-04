@@ -38,8 +38,6 @@ class PaymentConfirmationForm(StatesGroup):
     awaiting_file = State()
     review_files = State()
 
-
-
 def _policy_delivery_keyboard(i18n, lang: str, deal_id: str):
     builder = InlineKeyboardBuilder()
     builder.button(
@@ -202,6 +200,7 @@ def _payment_operator_text(lang: str, data: dict, user) -> str:
     username = f"@{user.username}" if user and user.username else "—"
     request_id = str(data.get("request_id") or "")
     return (
+
         "💳 Подтверждение оплаты\n\n"
         f"ID: {request_id}\n"
         f"Клиент: {client_name}\n\n"
@@ -239,6 +238,7 @@ async def _forward_client_message_to_operator(message: Message) -> bool:
         f"Клиент: {client_name}\n"
         f"{operator_language_line(ticket.preferred_language)}\n\n"
         f"Текст клиента:\n {message.text}\n"
+
     )
     notifier = OperatorNotifierService()
     if ticket.operator_id:
@@ -288,8 +288,6 @@ async def _send_latest_deal(message: Message, lang: str, user=None) -> None:
             message.bot.i18n.get_text(lang, "latest_deal.delivery_prompt"),
             reply_markup=_policy_delivery_keyboard(message.bot.i18n, lang, deal_id),
         )
-
-
 
 async def _start_payment_confirmation(
     message: Message, state: FSMContext, lang: str
@@ -434,8 +432,6 @@ async def payment_confirmation_send(
         reply_markup=main_menu_keyboard(callback.bot.i18n, lang),
     )
     await callback.answer()
-
-
 
 @router.callback_query(F.data.startswith("latest_deal_policy:"))
 async def latest_deal_policy_delivery(callback: CallbackQuery) -> None:

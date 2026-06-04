@@ -281,7 +281,6 @@ latest_deal:
   delivery_email_button: "Pochtaga yuborish"
   delivery_chat_button: "Shu yerga yuborish"
   delivery_request_sent: "Soʻrov operatorga yuborildi."
-
   payment_instructions: |
     Your application for car insurance for {license_plate} has been approved.
 
