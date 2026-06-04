@@ -4,7 +4,10 @@ import types
 requests_stub = types.SimpleNamespace(post=lambda *args, **kwargs: None)
 sys.modules.setdefault("requests", requests_stub)
 
-from app.services.operator_notifier_service import OperatorNotifierService
+from app.services.operator_notifier_service import (
+    ClientNotifierService,
+    OperatorNotifierService,
+)
 
 
 def test_operator_notifier_sends_ticket_text_and_copyable_reply_command(monkeypatch):
@@ -42,3 +45,115 @@ def test_operator_notifier_keeps_single_message_when_reply_command_is_absent(mon
     assert calls == [
         ("https://api.telegram.org/bottoken/sendMessage", {"chat_id": 100, "text": "SLA breached: ticket-1"}, 5),
     ]
+
+
+def test_client_notifier_restart_notice_includes_start_button(monkeypatch):
+    calls = []
+
+    monkeypatch.setenv("BOT_TOKEN", "client-token")
+    monkeypatch.setattr(
+        "app.services.operator_notifier_service.requests.post",
+        lambda url, json, timeout: calls.append((url, json, timeout)),
+    )
+
+    assert ClientNotifierService().send_restart_notice(12345, "restart please") is True
+
+    assert calls == [
+        (
+            "https://api.telegram.org/botclient-token/sendMessage",
+            {
+                "chat_id": 12345,
+                "text": "restart please",
+                "reply_markup": {
+                    "keyboard": [[{"text": "/start"}]],
+                    "resize_keyboard": True,
+                },
+            },
+            5,
+        )
+    ]
+
+
+def test_operator_notifier_reply_sent_skips_replying_operator(monkeypatch):
+    calls = []
+
+    monkeypatch.setenv("OPERATOR_BOT_TOKEN", "token")
+    monkeypatch.setenv("OPERATOR_IDS", "100,200,300")
+    monkeypatch.setattr(
+        "app.services.operator_notifier_service.requests.post",
+        lambda url, json, timeout: calls.append((url, json, timeout)),
+    )
+
+    OperatorNotifierService().notify_operator_reply_sent(
+        "Клиенту @client ответил на request_id r1 оператор @operator",
+        exclude_operator_id=200,
+    )
+
+    assert calls == [
+        (
+            "https://api.telegram.org/bottoken/sendMessage",
+            {
+                "chat_id": 100,
+                "text": "Клиенту @client ответил на request_id r1 оператор @operator",
+            },
+            5,
+        ),
+        (
+            "https://api.telegram.org/bottoken/sendMessage",
+            {
+                "chat_id": 300,
+                "text": "Клиенту @client ответил на request_id r1 оператор @operator",
+            },
+            5,
+        ),
+    ]
+
+
+def test_operator_notifier_direct_message_sends_only_to_assigned_operator(monkeypatch):
+    calls = []
+
+    monkeypatch.setenv("OPERATOR_BOT_TOKEN", "token")
+    monkeypatch.setenv("OPERATOR_IDS", "100,200,300")
+    monkeypatch.setattr(
+        "app.services.operator_notifier_service.requests.post",
+        lambda url, json, timeout: calls.append((url, json, timeout)),
+    )
+
+    OperatorNotifierService().notify_operator_direct(200, "client message", "/reply r1")
+
+    assert calls == [
+        (
+            "https://api.telegram.org/bottoken/sendMessage",
+            {"chat_id": 200, "text": "client message"},
+            5,
+        ),
+        (
+            "https://api.telegram.org/bottoken/sendMessage",
+            {"chat_id": 200, "text": "/reply r1"},
+            5,
+        ),
+    ]
+
+
+def test_client_notifier_can_upload_policy_document_to_client(monkeypatch, tmp_path):
+    calls = []
+    document = tmp_path / "policy.pdf"
+    document.write_bytes(b"%PDF-1.4")
+
+    monkeypatch.setenv("BOT_TOKEN", "client-token")
+
+    def fake_post(url, **kwargs):
+        calls.append((url, kwargs))
+        return types.SimpleNamespace(ok=True)
+
+    monkeypatch.setattr(
+        "app.services.operator_notifier_service.requests.post",
+        fake_post,
+    )
+
+    assert ClientNotifierService().send_document_to_client(12345, str(document)) is True
+
+    assert calls[0][0] == "https://api.telegram.org/botclient-token/sendDocument"
+    assert calls[0][1]["data"] == {"chat_id": 12345}
+    assert calls[0][1]["files"]["document"][0] == "policy.pdf"
+    assert calls[0][1]["timeout"] == 10
