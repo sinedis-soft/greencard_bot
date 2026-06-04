@@ -5,7 +5,9 @@ from uuid import uuid4
 from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
+
 from aiogram.types import CallbackQuery, Message
+
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from app.bots.client_bot.handlers.apply import send_apply
@@ -15,6 +17,10 @@ from app.bots.client_bot.handlers.faq import show_faq_categories
 from app.bots.client_bot.keyboards.language import language_keyboard
 from app.bots.client_bot.keyboards.main_menu import main_menu_keyboard
 from app.bots.client_bot.menu_actions import menu_action_for_text
+from app.services.bitrix24_client import LICENSE_PLATE_FIELD
+
+from app.services.latest_deal_formatter import is_invoice_deal, latest_deal_text
+
 from app.bots.operator_bot.keyboards.ticket_actions import (
     reply_command,
     reply_instruction,
@@ -31,7 +37,6 @@ router = Router()
 class PaymentConfirmationForm(StatesGroup):
     awaiting_file = State()
     review_files = State()
-
 
 def _policy_delivery_keyboard(i18n, lang: str, deal_id: str):
     builder = InlineKeyboardBuilder()
@@ -195,15 +200,15 @@ def _payment_operator_text(lang: str, data: dict, user) -> str:
     username = f"@{user.username}" if user and user.username else "—"
     request_id = str(data.get("request_id") or "")
     return (
-        "💳 Подтверждение оплаты\n"
+
+        "💳 Подтверждение оплаты\n\n"
         f"ID: {request_id}\n"
-        f"Клиент: {client_name}\n"
+        f"Клиент: {client_name}\n\n"
         f"Telegram ID: {user.id if user else '—'}\n"
         f"Username: {username}\n"
         f"{operator_language_line(lang)}\n"
-        f"Госномер авто: {data.get('license_plate') or '—'}\n"
-        f"ID сделки: {data.get('deal_id') or '—'}\n"
-        f"Ответ клиенту: {reply_command(request_id)}"
+        f"Госномер авто: {data.get('license_plate') or '—'}\n\n"
+        f"ID сделки:\n {data.get('deal_id') or '—'}"
     )
 
 
@@ -212,9 +217,10 @@ def _operator_ticket_text(request_id: str, client_name: str, source: str, prefer
         "🆘 Новый запрос оператора\n"
         f"ID: {request_id}\n"
         f"Клиент: {client_name}\n"
-        f"{operator_language_line(preferred_language)}\n"
         f"Источник: {source}\n"
-        f"{reply_instruction(request_id)}"
+        f"{operator_language_line(preferred_language)}\n\n"
+        f"Уточните, что ему надо!"
+        
     )
 
 
@@ -230,9 +236,9 @@ async def _forward_client_message_to_operator(message: Message) -> bool:
         "💬 Сообщение клиента\n"
         f"ID: {ticket.request_id}\n"
         f"Клиент: {client_name}\n"
-        f"{operator_language_line(ticket.preferred_language)}\n"
-        f"Текст: {message.text}\n"
-        f"{reply_instruction(ticket.request_id)}"
+        f"{operator_language_line(ticket.preferred_language)}\n\n"
+        f"Текст клиента:\n {message.text}\n"
+
     )
     notifier = OperatorNotifierService()
     if ticket.operator_id:
@@ -275,13 +281,13 @@ async def _send_latest_deal(message: Message, lang: str, user=None) -> None:
         return
 
     await message.answer(latest_deal_text(message.bot.i18n, lang, deal))
+
     deal_id = str(deal.get("ID") or "")
     if deal_id and _policy_file_infos_from_deal(deal, bitrix_client):
         await message.answer(
             message.bot.i18n.get_text(lang, "latest_deal.delivery_prompt"),
             reply_markup=_policy_delivery_keyboard(message.bot.i18n, lang, deal_id),
         )
-
 
 async def _start_payment_confirmation(
     message: Message, state: FSMContext, lang: str
@@ -427,7 +433,6 @@ async def payment_confirmation_send(
     )
     await callback.answer()
 
-
 @router.callback_query(F.data.startswith("latest_deal_policy:"))
 async def latest_deal_policy_delivery(callback: CallbackQuery) -> None:
     lang = callback.bot.lang_store.get(
@@ -439,7 +444,6 @@ async def latest_deal_policy_delivery(callback: CallbackQuery) -> None:
         return
     await _create_policy_delivery_ticket(callback, parts[1], parts[2], lang)
     await callback.answer()
-
 
 @router.callback_query(F.data == "payment_confirmation:latest_deal")
 async def payment_confirmation_latest_deal(callback: CallbackQuery) -> None:

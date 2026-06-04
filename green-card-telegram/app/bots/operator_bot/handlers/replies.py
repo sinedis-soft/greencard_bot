@@ -32,7 +32,6 @@ def _policy_file_keyboard():
     builder.adjust(1)
     return builder.as_markup()
 
-
 def _telegram_name(user_id: int | None, username: str = "") -> str:
     username = (username or "").strip()
     if username:
@@ -47,6 +46,7 @@ def _operator_name(message: Message | CallbackQuery) -> str:
     if user.username:
         return f"@{user.username}"
     return user.full_name or f"Telegram ID {user.id}"
+
 
 
 def _operator_reply_notification(
@@ -66,8 +66,8 @@ def _operator_done_notification(
         f"для клиента {client_name}. Остальным операторам выполнять это действие не нужно."
     )
 
-
 def _allowed(message: Message | CallbackQuery) -> bool:
+
     return bool(message.from_user and message.from_user.id in _operator_ids())
 
 
@@ -108,6 +108,7 @@ def _operator_file_from_message(message: Message) -> dict[str, str] | None:
 def _ticket_for_operator_action(
     request_id: str, operator_id: int | None
 ):
+
     svc = OperatorTicketService()
     ticket = svc.get_ticket(request_id)
     if not ticket or not ticket.telegram_user_id:
@@ -141,8 +142,8 @@ async def _send_operator_reply(message: Message, request_id: str, text: str) -> 
     if error:
         await message.answer(error)
         return
-
     is_first_operator_reply = ticket.operator_id is None
+
     svc.assign_operator_if_empty(request_id, message.from_user.id)
     ClientNotifierService().send_to_client(ticket.telegram_user_id, text)
     svc.set_status(request_id, "waiting_client")
@@ -179,6 +180,7 @@ async def _send_operator_file_reply(message: Message, request_id: str) -> None:
     with tempfile.TemporaryDirectory() as tmp_dir:
         local_path = await _download_operator_file(message, file_info, tmp_dir)
         ClientNotifierService().send_document_to_client(ticket.telegram_user_id, local_path)
+
     svc.set_status(request_id, "waiting_client")
     svc.log_action(
         request_id, message.from_user.id, "send_policy_file", file_info["name"]
@@ -265,7 +267,6 @@ async def _send_policy_file_session(
     )
     await state.clear()
     await target_message.answer("Полис отправлен клиенту.")
-
 
 async def _mark_operator_action_done(message: Message, request_id: str) -> None:
     if not _allowed(message):
@@ -369,7 +370,6 @@ async def policy_file_session_send(
 ) -> None:
     await _send_policy_file_session(callback, state)
     await callback.answer()
-
 
 @router.message(F.reply_to_message & F.text)
 async def reply_to_ticket_message(message: Message) -> None:
