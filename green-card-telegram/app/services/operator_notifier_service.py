@@ -4,12 +4,23 @@ from pathlib import Path
 import requests
 
 
+
 class OperatorNotifierService:
     def __init__(self) -> None:
         self.token = os.getenv("OPERATOR_BOT_TOKEN", "")
-        self.operator_ids = [
-            x.strip() for x in os.getenv("OPERATOR_IDS", "").split(",") if x.strip()
-        ]
+        self.operator_ids = self._operator_ids()
+
+
+    def _operator_ids(self) -> list[str]:
+        try:
+            from app.services.operator_service import OperatorService
+
+            ids = OperatorService().active_operator_ids()
+        except Exception:
+            ids = set()
+        if not ids:
+            ids = {int(x.strip()) for x in os.getenv("OPERATOR_IDS", "").split(",") if x.strip()}
+        return [str(operator_id) for operator_id in sorted(ids)]
 
     def notify_new_ticket(self, text: str, reply_command: str | None = None) -> None:
         if not self.token:

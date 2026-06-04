@@ -13,8 +13,8 @@ def build_init_data(bot_token: str, user: dict) -> str:
 
 
 def test_models_exist():
-    from app.db.models import Application, Vehicle, Policyholder, OperatorTicket, OperatorActionLog, UploadedDocument
-    assert Application and Vehicle and Policyholder and OperatorTicket and OperatorActionLog and UploadedDocument
+    from app.db.models import Application, Vehicle, Policyholder, OperatorTicket, OperatorActionLog, OperatorTicketTransfer, OperatorInternalComment, UploadedDocument, TelegramBitrixLink, ClientActionLog, RepeatApplicationDraft
+    assert Application and Vehicle and Policyholder and OperatorTicket and OperatorActionLog and OperatorTicketTransfer and OperatorInternalComment and UploadedDocument and TelegramBitrixLink and ClientActionLog and RepeatApplicationDraft
 
 
 def test_multi_vehicle_payload_shape():

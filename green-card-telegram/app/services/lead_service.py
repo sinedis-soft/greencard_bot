@@ -3,7 +3,7 @@ from pathlib import Path
 import yaml
 
 from app.schemas.application import ApplicationCreate, PolicyholderType
-from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_CHAT_ID_FIELD, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
+from app.services.bitrix24_client import Bitrix24Client, PRODUCT_TYPE_FIELD, REQUEST_ID_FIELD, SHOW_IN_TELEGRAM_FIELD, TELEGRAM_CHAT_ID_FIELD, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
 
 
 BITRIX_LANGUAGE_FIELD = "UF_CRM_1753957395750"
@@ -202,8 +202,8 @@ class LeadService:
         self.bitrix_client = bitrix_client
         self.mapping = yaml.safe_load(mapping_file.read_text(encoding="utf-8"))
 
-    def create_application_leads(self, app_data: ApplicationCreate, telegram_username: str | None = None, telegram_user_id: int | None = None, telegram_chat_id: int | None = None) -> dict:
-        contact_payload = self._build_contact_payload(app_data, telegram_username, telegram_user_id)
+    def create_application_leads(self, app_data: ApplicationCreate, telegram_username: str | None = None, telegram_user_id: int | None = None, telegram_chat_id: int | None = None, request_id: str | None = None) -> dict:
+        contact_payload = self._build_contact_payload(app_data, telegram_username, telegram_user_id, telegram_chat_id)
         contact_id = self.bitrix_client.create_or_update_contact(contact_payload)
 
         company_id = None
@@ -214,12 +214,12 @@ class LeadService:
         deals: list[int] = []
         for vehicle in app_data.vehicles:
 
-            deal_payload = self._build_deal_payload(app_data, vehicle.model_dump(), contact_id, company_id, telegram_user_id)
+            deal_payload = self._build_deal_payload(app_data, vehicle.model_dump(), contact_id, company_id, telegram_chat_id or telegram_user_id, request_id)
 
             deals.append(self.bitrix_client.create_deal(deal_payload))
         return {"success": True, "contact_id": contact_id, "company_id": company_id, "deals": deals}
 
-    def _build_contact_payload(self, app_data: ApplicationCreate, telegram_username: str | None = None, telegram_user_id: int | None = None) -> dict:
+    def _build_contact_payload(self, app_data: ApplicationCreate, telegram_username: str | None = None, telegram_user_id: int | None = None, telegram_chat_id: int | None = None) -> dict:
         field_map = self.mapping["contact"]
         data = app_data.model_dump()
         payload = {crm_key: data[local_key] for crm_key, local_key in field_map.items()}
@@ -228,6 +228,8 @@ class LeadService:
             payload[TELEGRAM_USERNAME_FIELD] = telegram_username
         if telegram_user_id:
             payload[TELEGRAM_USER_ID_FIELD] = telegram_user_id
+        if telegram_chat_id:
+            payload[TELEGRAM_CHAT_ID_FIELD] = telegram_chat_id
         return payload
 
     def _build_company_payload(self, app_data: ApplicationCreate) -> dict:
@@ -237,7 +239,7 @@ class LeadService:
         return {crm_key: data.get(local_key, "") for crm_key, local_key in field_map.items()}
 
 
-    def _build_deal_payload(self, app_data: ApplicationCreate, vehicle: dict, contact_id: int, company_id: int | None, telegram_user_id: int | None = None) -> dict:
+    def _build_deal_payload(self, app_data: ApplicationCreate, vehicle: dict, contact_id: int, company_id: int | None, telegram_user_id: int | None = None, request_id: str | None = None) -> dict:
 
         field_map = self.mapping["deal"]
         deal_data = {"deal_title": f"Lead {app_data.last_name} {app_data.first_name} {vehicle.get('license_plate', '')}".strip(), "contact_id": contact_id, "company_id": company_id, "comment": vehicle.get("comment", ""), **vehicle}
@@ -245,8 +247,12 @@ class LeadService:
         payload[BITRIX_LANGUAGE_FIELD] = self._bitrix_language_id(app_data.preferred_language)
 
         if telegram_user_id:
-            # In a private chat with the bot Telegram uses the user ID as chat_id.
+            # Store the Telegram chat id used for client bot messaging.
             payload[TELEGRAM_CHAT_ID_FIELD] = telegram_user_id
+        if request_id:
+            payload[REQUEST_ID_FIELD] = request_id
+        payload[SHOW_IN_TELEGRAM_FIELD] = "1"
+        payload[PRODUCT_TYPE_FIELD] = "Green Card"
 
         # Vehicle documents are Bitrix file fields. They are uploaded after deal creation
         # via BitrixFileService, so do not send textual Telegram/API metadata here.

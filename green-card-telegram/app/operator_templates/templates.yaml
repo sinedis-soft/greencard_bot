@@ -1,0 +1,82 @@
+operator_templates:
+  need_vehicle_registration_front:
+    title: "Нужен техпаспорт"
+    text:
+      ru: "По заявке {request_id} нужен техпаспорт транспортного средства. Пожалуйста, загрузите фото или PDF."
+      en: "For application {request_id}, we need the vehicle registration document. Please upload a photo or PDF."
+    next_status: waiting_client
+    expected_client_action: upload_document
+  photo_unreadable:
+    title: "Фото нечитаемое"
+    text:
+      ru: "Документ по заявке {request_id} нечитаемый. Пожалуйста, загрузите более чёткое фото."
+      en: "The document for application {request_id} is unreadable. Please upload a clearer photo."
+    next_status: waiting_client
+    expected_client_action: upload_document
+  waiting_payment:
+    title: "Ожидаем оплату"
+    text:
+      ru: "По заявке {request_id} ожидается оплата. После оплаты загрузите подтверждение платежа."
+      en: "Payment is expected for application {request_id}. After payment, please upload the receipt."
+    next_status: waiting_client
+    expected_client_action: upload_payment
+  policy_ready:
+    title: "Полис готов"
+    text:
+      ru: "Полис по заявке {request_id} готов. Мы отправляем файл в этом чате."
+      en: "The policy for application {request_id} is ready. We are sending the file in this chat."
+    next_status: in_progress
+    expected_client_action: none
+  vin_error:
+    title: "Ошибка в VIN"
+    text:
+      ru: "По заявке {request_id} нужно уточнить VIN. Проверьте VIN в техпаспорте и отправьте корректное значение."
+      en: "For application {request_id}, we need to clarify the VIN. Please check it and send the correct value."
+    next_status: waiting_client
+    expected_client_action: text_reply
+  need_start_date:
+    title: "Уточнить дату начала"
+    text:
+      ru: "По заявке {request_id} нужно уточнить дату начала страховки. Напишите дату в формате ДД.ММ.ГГГГ."
+      en: "For application {request_id}, please clarify the insurance start date in DD.MM.YYYY format."
+    next_status: waiting_client
+    expected_client_action: text_reply
+  need_registration_country:
+    title: "Уточнить страну регистрации"
+    text:
+      ru: "По заявке {request_id} нужно уточнить страну регистрации транспортного средства."
+      en: "For application {request_id}, please clarify the vehicle registration country."
+    next_status: waiting_client
+    expected_client_action: text_reply
+
+internal_comment_templates:
+  urgent:
+    title: "Клиент просит срочно"
+    text: "Клиент просит срочно."
+    type: "urgent"
+    pinned: false
+  wise_payment:
+    title: "Оплата пришла на Wise"
+    text: "Оплата пришла на Wise. Нужно сверить сумму и назначение платежа."
+    type: "payment"
+    pinned: false
+  check_country:
+    title: "Проверить страну регистрации"
+    text: "Проверить страну регистрации ТС перед выпуском полиса."
+    type: "risk"
+    pinned: true
+  do_not_send:
+    title: "Не отправлять до оплаты"
+    text: "Не отправлять полис клиенту до подтверждения оплаты."
+    type: "warning"
+    pinned: true
+  check_docs:
+    title: "Проверить документы"
+    text: "Проверить документы перед продолжением оформления."
+    type: "document"
+    pinned: false
+  senior_needed:
+    title: "Нужен старший оператор"
+    text: "Нужен старший оператор для проверки ситуации."
+    type: "urgent"
+    pinned: true

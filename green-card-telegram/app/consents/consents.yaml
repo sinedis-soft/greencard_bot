@@ -1,0 +1,17 @@
+consents:
+  terms_of_service:
+    version: "2026-06-01"
+    ru: "Я принимаю условия сервиса Green Card Agency и подтверждаю корректность данных заявки."
+    en: "I accept the Green Card Agency terms of service and confirm that the application data is correct."
+  privacy_policy:
+    version: "2026-06-01"
+    ru: "Я подтверждаю, что ознакомлен с политикой конфиденциальности Green Card Agency."
+    en: "I confirm that I have read the Green Card Agency privacy policy."
+  personal_data_processing:
+    version: "2026-06-01"
+    ru: "Я даю согласие на обработку персональных данных для оформления страхового полиса."
+    en: "I consent to personal data processing for issuing the insurance policy."
+  marketing_optional:
+    version: "2026-06-01"
+    ru: "Я согласен получать информационные и маркетинговые сообщения."
+    en: "I agree to receive informational and marketing messages."

@@ -5,11 +5,11 @@ from pathlib import Path
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
 from app.core.config import get_settings
-from app.core.security import ensure_consents
 from app.db.models import UploadedDocument, Vehicle
 from app.db.session import SessionLocal
 from app.schemas.application import ApplicationCreate
 from app.services.analytics_service import AnalyticsService
+from app.services.application_guard_service import ApplicationGuardService
 from app.services.application_service import ApplicationService
 from app.services.bitrix24_client import Bitrix24Client
 from app.services.bitrix_file_service import BitrixFileService
@@ -17,7 +17,10 @@ from app.services.bitrix_sync_service import BitrixSyncService
 from app.services.calculator_service import CalculatorService
 from app.services.file_storage_service import FileStorageService, FileValidationError, MAX_FILES
 from app.services.lead_service import LeadService
+from app.services.notification_service import NotificationService
+from app.services.reminder_service import ReminderService
 from app.services.telegram_auth_service import TelegramAuthError, TelegramAuthService
+from app.services.consent_service import ConsentService
 from app.workers.bitrix_retry_worker import enqueue_bitrix_job
 
 router = APIRouter(prefix="/api/applications", tags=["applications"])
@@ -31,7 +34,6 @@ async def create_application(application_json: str = Form(...), vehicle_docs: li
     analytics.track("application_submit_attempt", payload={"vehicle_count": len(payload.vehicles), "preferred_language": payload.preferred_language})
     analytics.track("miniapp_opened", telegram_user_id=None, payload={"source":"miniapp"})
 
-    ensure_consents(payload.terms_accepted, payload.privacy_accepted)
     if len(vehicle_docs) > MAX_FILES:
         raise HTTPException(status_code=400, detail="too_many_files")
 
@@ -41,10 +43,34 @@ async def create_application(application_json: str = Form(...), vehicle_docs: li
         analytics.track("application_submit_failed", payload={"error": str(exc)})
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
+    guard = ApplicationGuardService()
+    guard_result = guard.check_before_create(payload, tg.telegram_user_id, len(vehicle_docs))
+    if not guard_result.allowed:
+        analytics.track("application_submit_failed", telegram_user_id=tg.telegram_user_id, payload=guard_result.to_dict())
+        raise HTTPException(status_code=409 if guard_result.severity in {"soft", "medium"} else 400, detail=guard_result.to_dict())
+
     app_service = ApplicationService()
     local_app, is_duplicate = app_service.create_local(payload, tg.telegram_user_id, tg.username, tg.language_code)
     request_id = local_app.request_id
+    accepted_consents = ConsentService().validate_required(payload)
+    ConsentService().save_consents(local_app.id, tg.telegram_user_id, payload.preferred_language, accepted_consents)
+    guard.record_application(local_app.id, tg.telegram_user_id, payload, status="submitted")
     logger.info("application_received request_id=%s", request_id)
+    NotificationService().send(
+        event_key="application_accepted",
+        recipient_type="client",
+        recipient_id=str(tg.telegram_chat_id or tg.telegram_user_id),
+        channel="client_telegram",
+        language=payload.preferred_language,
+        context={"request_id": request_id, "public_status": "документы переданы на проверку"},
+        dedupe_key=f"application_accepted:{request_id}",
+    )
+    try:
+        reminder_service = ReminderService()
+        reminder_service.mark_calculator_converted(tg.telegram_user_id)
+        reminder_service.complete_active_drafts(tg.telegram_user_id)
+    except Exception as exc:
+        logger.exception("application_reminder_cleanup_failed user_id=%s error=%s", tg.telegram_user_id, exc)
 
     if is_duplicate:
         logger.info("application_duplicate request_id=%s", request_id)
@@ -60,12 +86,14 @@ async def create_application(application_json: str = Form(...), vehicle_docs: li
     sync = BitrixSyncService()
     try:
         logger.info("bitrix_create_contact_company_deal request_id=%s", request_id)
-        bitrix = lead_service.create_application_leads(payload, tg.username, tg.telegram_user_id, tg.telegram_chat_id)
+        bitrix = lead_service.create_application_leads(payload, tg.username, tg.telegram_user_id, tg.telegram_chat_id, request_id)
         app_service.mark_bitrix_created(request_id, bitrix.get("contact_id"), bitrix.get("company_id"), bitrix.get("deals", []))
+        guard.update_application_status(local_app.id, "bitrix_created", (bitrix.get("deals") or [None])[0])
     except Exception as exc:
         logger.exception("bitrix_error request_id=%s error=%s", request_id, exc)
         app_service.mark_bitrix_pending(request_id)
-        jid = sync.create_job(request_id, "create_application_leads", {"application": payload.model_dump(mode="json"), "telegram_username": tg.username, "telegram_user_id": tg.telegram_user_id, "telegram_chat_id": tg.telegram_chat_id})
+        guard.update_application_status(local_app.id, "bitrix_pending")
+        jid = sync.create_job(request_id, "create_application_leads", {"application": payload.model_dump(mode="json"), "telegram_username": tg.username, "telegram_user_id": tg.telegram_user_id, "telegram_chat_id": tg.telegram_chat_id, "request_id": request_id})
         enqueue_bitrix_job(jid)
 
     storage = FileStorageService()

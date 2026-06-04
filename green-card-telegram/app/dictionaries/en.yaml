@@ -6,6 +6,7 @@ main_menu:
   operator: "👨‍💼 Contact an Operator"
   payment_confirmation: "💳 Payment confirmation"
   latest_deal: "📄 My latest application"
+  my_applications: "📄 My applications"
   language: "🌐 Language"
 
 menu:
@@ -379,3 +380,56 @@ payment_confirmation:
   add_more_button: "Add another file"
   sent: "Payment confirmation was sent to the operator."
   no_unpaid: "You have no unpaid invoices. You can press “My latest application”."
+my_applications:
+  title: "Your latest applications:"
+  empty: "You do not have applications linked to this Telegram account yet. If you bought a policy before, contact an operator and we will link your history."
+  unavailable: "Applications are temporarily unavailable. Please try again later."
+  not_found: "Application was not found or is not available for this Telegram account."
+  policy_status_button: "Where is my policy?"
+  repeat_button: "Apply again"
+  open_button: "Open"
+  operator_button: "Contact operator"
+  payment_button: "Confirm payment"
+  policy_button: "Get policy"
+  policy_not_found: "Policy file was not found yet. We sent a request to an operator."
+repeat_application:
+  start_prompt: |
+    Re-apply using the previous application
+
+    Vehicle: {vehicle_plate_masked}
+    Type: {vehicle_type}
+    Registration country: {registration_country}
+
+    Enter the new policy start date in DD.MM.YYYY format.
+  ask_start_date: "Enter the new policy start date in DD.MM.YYYY format."
+  invalid_start_date: "Enter a valid start date: not in the past and in DD.MM.YYYY format."
+  ask_period: "Choose the insurance period."
+  ask_docs: "Use documents from the previous application or upload new ones?"
+  docs_reuse_button: "Use previous documents"
+  docs_upload_new_button: "Upload new documents"
+  preview: |
+    Check the new application:
+
+    Type: Green Card
+    Vehicle: {vehicle_plate_masked}
+    Start date: {new_start_date}
+    Period: {new_period_days} days
+    Documents: {docs_mode_title}
+
+    The price is preliminary. Final price is confirmed by an operator after checking the data.
+  confirm_button: "Confirm"
+  change_button: "Change"
+  cancel_button: "Cancel"
+  cancelled: "Repeat application was cancelled."
+  unavailable: "Repeat application is temporarily unavailable. Try again later or contact an operator."
+  created: |
+    New application was created.
+
+    Number: {request_id}
+    Status: {public_status}
+
+    An operator will check the data and tell you the next step.
+policy_status:
+  unavailable: "We could not check the policy status right now. Please try again later."
+  check_later_button: "Check later"
+  back_to_applications_button: "My applications"

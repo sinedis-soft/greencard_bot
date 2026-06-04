@@ -124,16 +124,17 @@ def test_lead_service_adds_telegram_fields_to_contact_payload():
     bitrix = FakeBitrixClient()
     service = LeadService(bitrix, MAPPING_FILE)
 
-    service.create_application_leads(application_payload(), "john", 12345)
+    service.create_application_leads(application_payload(), "john", 12345, 67890, "req-1")
 
     assert bitrix.contacts[0][TELEGRAM_USERNAME_FIELD] == "john"
     assert bitrix.contacts[0][TELEGRAM_USER_ID_FIELD] == 12345
-    assert bitrix.deals[0][TELEGRAM_CHAT_ID_FIELD] == 12345
-    assert bitrix.deals[1][TELEGRAM_CHAT_ID_FIELD] == 12345
+    assert bitrix.contacts[0][TELEGRAM_CHAT_ID_FIELD] == 67890
+    assert bitrix.deals[0][TELEGRAM_CHAT_ID_FIELD] == 67890
+    assert bitrix.deals[1][TELEGRAM_CHAT_ID_FIELD] == 67890
 
 
 def test_bitrix_client_searches_existing_contact_by_telegram_identity_before_email():
-    from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
+    from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_CHAT_ID_FIELD, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
 
     calls = []
 
@@ -166,7 +167,7 @@ def test_bitrix_client_searches_existing_contact_by_telegram_identity_before_ema
     )
 
     assert contact_id == 77
-    assert calls[0] == ("crm.contact.list", {"filter": {TELEGRAM_USER_ID_FIELD: 12345}, "select": ["ID", "PHONE", "EMAIL", TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD]})
+    assert calls[0] == ("crm.contact.list", {"filter": {TELEGRAM_USER_ID_FIELD: 12345}, "select": ["ID", "PHONE", "EMAIL", TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD, TELEGRAM_CHAT_ID_FIELD]})
     assert calls[1][0] == "crm.contact.update"
     assert "EMAIL" not in calls[1][1]["fields"]
     assert "PHONE" not in calls[1][1]["fields"]
@@ -203,7 +204,7 @@ def test_bitrix_client_creates_contact_only_after_email_miss():
 
 
 def test_bitrix_client_prefill_search_uses_telegram_username():
-    from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
+    from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_CHAT_ID_FIELD, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
 
     calls = []
 
@@ -231,6 +232,7 @@ def test_bitrix_client_prefill_search_uses_telegram_username():
                     "UF_CRM_CONTACT_1686145698592",
                     TELEGRAM_USERNAME_FIELD,
                     TELEGRAM_USER_ID_FIELD,
+                    TELEGRAM_CHAT_ID_FIELD,
                 ],
             },
         )
@@ -273,7 +275,7 @@ def test_bitrix_client_vehicle_lookup_returns_first_deal_from_descending_id_orde
 
 
 def test_bitrix_client_prefill_search_prefers_stable_telegram_user_id_before_username():
-    from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
+    from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_CHAT_ID_FIELD, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
 
     calls = []
 
@@ -334,7 +336,7 @@ def test_lead_service_does_not_send_text_document_metadata_to_bitrix_file_field(
 
 
 def test_bitrix_client_prefill_search_uses_email_when_username_is_missing():
-    from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
+    from app.services.bitrix24_client import Bitrix24Client, TELEGRAM_CHAT_ID_FIELD, TELEGRAM_USERNAME_FIELD, TELEGRAM_USER_ID_FIELD
 
     calls = []
 
@@ -362,6 +364,7 @@ def test_bitrix_client_prefill_search_uses_email_when_username_is_missing():
                     "UF_CRM_CONTACT_1686145698592",
                     TELEGRAM_USERNAME_FIELD,
                     TELEGRAM_USER_ID_FIELD,
+                    TELEGRAM_CHAT_ID_FIELD,
                 ],
             },
         )
