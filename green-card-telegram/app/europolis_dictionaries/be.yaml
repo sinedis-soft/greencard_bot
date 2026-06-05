@@ -1,0 +1,377 @@
+main_menu:
+  calculator: "🧮 Калькулятар"
+  faq: "❓ FAQ"
+  coverage: "🌍 Дзе дзейнічае?"
+  apply: "📝 Аформіць"
+  operator: "👨‍💼 Звязацца з аператарам"
+  payment_confirmation: "💳 Пацвярджэнне аплаты"
+  latest_deal: "📄 Мая апошняя заяўка"
+  my_applications: "📄 Мои заявки"
+  language: "🌐 Мова"
+
+menu:
+  title: "Галоўнае меню"
+
+language:
+  select: "Калі ласка, абярыце мову"
+  changed: "Мова абноўлена"
+
+calculator:
+  result_title: "Папярэдні кошт"
+  disclaimer: "Папярэдні разлік"
+  apply_cta: "📝 Аформіць заяўку"
+  select_vehicle_type: "Абярыце тып транспартнага сродку"
+  select_period: "Абярыце тэрмін страхавання (дзён)"
+  result_template: "Папярэдні кошт: {estimated_price} {currency}\n{disclaimer}"
+  vehicle:
+    car: "Легкавы аўтамабіль"
+    truck: "Грузавы аўтамабіль"
+    bus: "Аўтобус"
+    moto: "Матацыкл"
+    trailer: "Прычэп"
+    special: "Спецтэхніка"
+
+application:
+
+  calendar:
+    cancel: "Скасаваць"
+    today: "Сёння"
+
+  options:
+    period_days: "{days} дзён"
+    countries:
+      belarus: "Беларусь"
+      russia: "Расія"
+      kazakhstan: "Казахстан"
+      uzbekistan: "Узбекістан"
+      turkey: "Турцыя"
+      usa: "ЗША"
+      united_kingdom: "Вялікабрытанія"
+      azerbaijan: "Азербайджан"
+      georgia: "Грузія"
+      moldova: "Малдова"
+      ukraine: "Украіна"
+      armenia: "Арменія"
+      other: "Іншая краіна"
+    vehicle_types:
+      car: "Легкавы"
+      truck: "Грузавы"
+      moto: "Матацыкл"
+      bus: "Аўтобус"
+      trailer: "Прычэп"
+    fuel_types:
+      petrol: "Бензін"
+      diesel: "Дызель"
+      gas_petrol: "Газ / бензін"
+      electric: "Электра"
+      hybrid: "Гібрыд"
+    power_units:
+      hp: "Конскія сілы"
+      kw: "Кілават"
+  submitted: "Заяўка адпраўлена. Мы падрыхтуем поліс і дашлём рэквізіты для аплаты."
+  validation_error: "Памылка праверкі даных"
+  bitrix_error: "Памылка Bitrix"
+  mini_app_soon: "Форма Mini App будзе падключана на наступным этапе."
+  open_form_button: "Адкрыць форму заяўкі"
+  temporarily_unavailable: "Форма заяўкі часова недаступная."
+  form_header: |
+    Заяўка на афармленне поліса
+    Запоўніце даныя. Мы падрыхтуем поліс і дашлём рэквізіты для аплаты.
+    ⚠️УВАГА! Працягваючы карыстацца дадаткам, вы згаджаецеся на апрацоўку вашага username Telegram.⚠️
+  step_1: "1. Кантакты"
+  step_2: "2. Даныя пра страхоўку і транспартны сродак"
+  prefilled_from_bitrix: "Мы знайшлі ваш профіль у нашай базе па username Telegram. Кантакты і даныя страхавальніка падстаўлены аўтаматычна."
+  prefilled_from_bitrix_editable: "Мы знайшлі ваш профіль у нашай базе па username Telegram. Даныя падстаўлены — праверце і пры неабходнасці выпраўце. Калі ўсё правільна, можна адпраўляць пустое паведамленне на гэтым этапе."
+  ask_email_lookup: |
+    Профіль па username Telegram не знойдзены.
+    Калі ласка, увядзіце e-mail для пошуку кліента.
+  contact_not_found_manual: "Кліент па e-mail не знойдзены. Запоўніце персанальныя даныя ўручную."
+  ask_passport_verify: "Кліент знойдзены па e-mail. Увядзіце серыю і нумар пашпарта без прабелаў для пацвярджэння асобы."
+  passport_verify_failed_manual: "Пашпарт не супаў з данымі ў базе. Для бяспекі запоўніце персанальныя даныя ўручную."
+  personal_data_summary: |
+    Праверце персанальныя даныя:
+    Прозвішча і імя: {last_name} {first_name}
+    Дата нараджэння: {birth_date}
+    Нумар пашпарта: {passport}
+    Адрас пражывання: {registration_address}
+    E-mail: {email}
+    Тэлефон: {phone}
+
+    Даныя актуальныя ці неабходна ўнесці змены?
+  vehicle_data_summary: |
+    {vehicle_type} з дзяржаўным нумарам рэгістрацыі: {license_plate}
+    ТС зарэгістраваны ў краіне: {vehicle_country}
+    Год выпуску: {manufacture_year}
+    VIN: {vin}
+    {fuel_type}, аб’ём рухавіка {engine_capacity} куб. см, магутнасць {engine_power}, {power_unit}
+
+    Даныя актуальныя ці неабходна ўнесці змены?
+  data_actual: "Даныя актуальныя"
+  data_edit: "Неабходна ўнесці змены"
+  ask_first_name_prefilled: "Імя * (Выкарыстаць: {value})"
+
+  prefill_next_button: "ТАК, НАСТУПНАЕ ПЫТАННЕ"
+
+  ask_last_name_prefilled: "Прозвішча * (Выкарыстаць: {value})"
+  ask_phone_prefilled: "Тэлефон (з кодам краіны) * (Выкарыстаць: {value})"
+  ask_email_prefilled: "E-mail * (Выкарыстаць: {value})"
+  ask_first_name: "Імя (лацінкай)*"
+  ask_last_name: "Прозвішча (лацінкай)*"
+  ask_phone: |
+    Тэлефон (з кодам краіны)
+    Прыклад: +48123456789
+  ask_email: |
+    E-mail
+    Прыклад: exempl@mail.pl
+  ask_birth_date: |
+    Дата нараджэння
+    Фармат: дд.мм.гггг
+  ask_birth_date_prefilled: "Дата нараджэння * (Выкарыстаць: {value})"
+  ask_passport: "Серыя і нумар пашпарта без прабелаў (лацінкай)*"
+  ask_passport_prefilled: "Серыя і нумар пашпарта без прабелаў * (Выкарыстаць: {value})"
+  ask_registration_address: "Адрас рэгістрацыі (лацінкай)*"
+  ask_registration_address_prefilled: "Адрас рэгістрацыі * (Выкарыстаць: {value})"
+  ask_insurance_period: "Тэрмін страхавання (абраць) *"
+  ask_insurance_start_date: |
+    Дата пачатку дзеяння страхоўкі
+    Фармат: дд.мм.гггг
+  ask_vehicle_country: "Краіна рэгістрацыі аўто *"
+  validation_vehicle_country: "Укажыце краіну рэгістрацыі аўто."
+  ask_vehicle_country_prefilled: "Краіна рэгістрацыі аўто * (бягучая: {value})"
+
+  choose_from_buttons: "Абярыце значэнне кнопкай ніжэй."
+
+  ask_vehicle_type: "Тып ТС *"
+  ask_vehicle_type_prefilled: "Тып ТС * (бягучы: {value})"
+  ask_license_plate: "Дзяржнумар *"
+  ask_license_plate_after_start: "Дзяржнумар (лацінкай)*"
+  validation_license_plate_strict: "Дзяржнумар: толькі лацінскія літары і лічбы, без прабелаў/дэфісаў, максімум 8 сімвалаў."
+  prefilled_vehicle_from_bitrix_editable: "Па дзяржнумары мы знайшлі даныя аўто ў нашай базе. Значэнні падстаўлены — праверце і пры неабходнасці выпраўце."
+  vehicle_not_found_manual: "Аўто ў базе не знойдзена. Калі ласка, увядзіце даныя аўтамабіля ўручную."
+  ask_vin: "VIN нумар *"
+  ask_brand_model: "Марка і мадэль ТС (лацінкай)*"
+  ask_manufacture_year: "Год выпуску ТС *"
+  ask_fuel_type: "Тып паліва *"
+  ask_engine_capacity: "Аб’ём рухавіка, куб. см *"
+  ask_engine_capacity_prefilled: "Аб’ём рухавіка, куб. см * (Выкарыстаць: {value})"
+  ask_engine_power: "Магутнасць рухавіка *"
+  ask_engine_power_prefilled: "Магутнасць рухавіка * (Выкарыстаць: {value})"
+  skip_engine_capacity_electric: "Для тыпу паліва Электра аб’ём рухавіка не патрабуецца."
+  ask_power_unit: "Адзінка вымярэння магутнасці *"
+
+  ask_power_unit_prefilled: "Адзінка вымярэння магутнасці * (бягучая: {value})"
+  ask_comment: "Каментарый (неабавязкова)"
+  skip_comment_button: "ПРАПУСЦІЦЬ"
+
+  ask_vehicle_docs: |
+    Тэхпашпарт (фота або PDF)
+    Можна прымацаваць некалькі файлаў.
+  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
+  add_more_docs: "Add more documents"
+  all_docs_uploaded: "All documents uploaded"
+  ask_techpass_changed: "У базе ўжо ёсць фота тэхпашпарта. Тэхпашпарт змяняўся?"
+  techpass_changed_yes: "Так, змяняўся"
+  techpass_changed_no: "Не, не змяняўся"
+  ask_vehicle_finalize: "Дадаць яшчэ аўто ці завяршыць афармленне?"
+  add_vehicle: "Дадаць яшчэ аўто"
+  finish_application: "Завяршыць афармленне"
+  ask_consent: |
+    Палітыка апрацоўкі персанальных даных SINEDIS
+    SINEDIS Sp. z o.o. апрацоўвае персанальныя даныя ў адпаведнасці з Рэгламентам ЕС 2016/679 (GDPR / RODO) і заканадаўствам Польшчы.
+    Даныя выкарыстоўваюцца для:
+    • разліку страхавых прапаноў;
+    • афармлення і суправаджэння страхавых дагавораў;
+    • сувязі з кліентам;
+    • выканання патрабаванняў заканадаўства;
+    • маркетынгавай камунікацыі пры наяўнасці згоды карыстальніка.
+    Могуць апрацоўвацца:
+    імя, тэлефон, e-mail, адрас, даныя транспартнага сродку, страхавая інфармацыя, плацежныя і тэхнічныя даныя.
+    Даныя могуць перадавацца страхавым кампаніям, IT-падрадчыкам і іншым партнёрам, неабходным для аказання паслуг.
+    Карыстальнік мае права:
+    • атрымаць доступ да даных;
+    • выправіць або выдаліць даныя;
+    • абмежаваць апрацоўку;
+    • адклікаць згоду;
+    • падаць скаргу ў PUODO.
+    Адміністратарам даных можа выступаць страхавая кампанія, якая аформіла поліс, або SINEDIS Sp. z o.o.
+    Кантакты:
+    SINEDIS Sp. z o.o.
+    ul. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    info@sinedis.pl
+    odo@sinedis.pl - інспектар па ахове даных
+    Поўная версія палітыкі:
+    https://greencard.agency
+    ________________________
+    Ці згодныя вы на апрацоўку і перадачу персанальных даных?
+  consent_agree: "✅ Пагадзіцца і адправіць"
+  consent_decline: "❌ Адмовіцца"
+  declined: "Вы адмовіліся ад перадачы даных. Заяўка скасавана."
+  validation_name: "Увядзіце мінімум 2 сімвалы."
+  validation_phone: "Некарэктны тэлефон. Выкарыстоўвайце фармат +48123456789."
+  validation_email: "Некарэктны e-mail."
+
+  validation_date: "Некарэктная дата. Дапушчальныя фарматы: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. Фармат мм/дд/гггг забаронены."
+
+  validation_age_18: "Страхавальнік павінен быць не маладзейшы за 18 поўных гадоў."
+  validation_insurance_start_not_past: "Дата пачатку страхавання не можа быць у мінулым."
+  ask_vin_prefilled: "VIN нумар * (Выкарыстаць: {value})"
+  ask_brand_model_prefilled: "Марка і мадэль ТС * (Выкарыстаць: {value})"
+  ask_manufacture_year_prefilled: "Год выпуску ТС * (Выкарыстаць: {value})"
+  ask_fuel_type_prefilled: "Тып паліва * (бягучы: {value})"
+
+  validation_passport: "Некарэктныя серыя і нумар пашпарта (уводзіць без прабелаў)."
+  validation_address: "Укажыце поўны адрас рэгістрацыі."
+  validation_license_plate: "Некарэктны дзяржнумар."
+  validation_vin: "VIN павінен утрымліваць 17 сімвалаў."
+  validation_brand_model: "Укажыце марку і мадэль."
+  validation_year: "Укажыце карэктны год выпуску."
+  validation_positive_integer: "Увядзіце дадатны цэлы лік."
+  validation_positive_number: "Увядзіце дадатны лік."
+  validation_docs: "Дашліце фота або PDF/дакумент тэхпашпарта."
+
+operator:
+  request_received: "Запыт атрыманы"
+  operator_connected: "Аператар падключаны"
+  access_denied: "Доступ забаронены"
+  no_tickets: "Няма зваротаў"
+  taken: "Зварот прыняты"
+  closed: "Зварот закрыты"
+  reply_sent: "Адказ адпраўлены"
+
+faq:
+  title: "Абярыце катэгорыю FAQ"
+  categories:
+    documents: "Дакументы для афармлення"
+    payment: "Аплата"
+    coverage: "Пакрыццё"
+    mistakes: "На што звярнуць увагу"
+    refund: "Вяртанне сродкаў"
+  answers:
+    documents: |
+      Для афармлення поліса спатрэбяцца наступныя даныя: пашпартныя даныя, даныя транспартнага сродку і даныя па тэрмінах дзеяння страхоўкі.
+      Таму вам неабходна падрыхтаваць:
+      - пашпарт
+      - пасведчанне аб рэгістрацыі транспартнага сродку
+      - тэхнічныя даныя аўтамабіля
+      - нумар тэлефона
+      - e-Mail
+    payment: |
+      Даступна:
+      - аплата пераводам на польскую карту,
+      - аплата BLIK на нумар тэлефона,
+      - аплата пераводам на польскі разліковы рахунак
+    coverage: "Тэрыторыя пакрыцця: A - Аўстрыя, B - Бельгія, BG - Балгарыя, CY - Кіпр, CZ - Чэхія, D - Германія, DK - Данія, E - Іспанія, EST - Эстонія, F - Францыя, FIN - Фінляндыя, GR - Грэцыя, H - Венгрыя, HR - Харватыя, I - Італія, IRL - Ірландыя, IS - Ісландыя, L - Люксембург, LT - Літва, LV - Латвія, M - Мальта, N - Нарвегія, NL - Нідэрланды, P - Партугалія, PL - Польшча, RO - Румынія, S - Швецыя, SK - Славакія, SLO - Славенія, CH - Швейцарыя."
+    mistakes: "Калі ласка, двойчы праверце VIN, нумарны знак і перыяд страхавання перад адпраўкай. Унесці змены пазней будзе немагчыма!"
+    refund: "Вяртанне сродкаў не ажыццяўляецца."
+
+coverage:
+  text: |
+    Карта пакрыцця OC graniczne (border insurance).
+    Перад паездкай праверце код краіны ў вашым полісе.
+    A - Аўстрыя, B - Бельгія, BG - Балгарыя, CY - Кіпр, CZ - Чэхія, D - Германія, DK - Данія, E - Іспанія, EST - Эстонія, F - Францыя, FIN - Фінляндыя, GR - Грэцыя, H - Венгрыя, HR - Харватыя, I - Італія, IRL - Ірландыя, IS - Ісландыя, L - Люксембург, LT - Літва, LV - Латвія, M - Мальта, N - Нарвегія, NL - Нідэрланды, P - Партугалія, PL - Польшча, RO - Румынія, S - Швецыя, SK - Славакія, SLO - Славенія, CH - Швейцарыя.
+
+latest_deal:
+  title_label: "TITLE"
+  policy_number_label: "Нумар поліса"
+  policy_status_label: "Стан поліса"
+  comments_label: "COMMENTS"
+  not_found: "Апошняя заяўка не знойдзена."
+  unavailable: "Не ўдалося атрымаць апошнюю заяўку. Паспрабуйце пазней."
+  delivery_prompt: "Як вам адправіць поліс?"
+  delivery_email_button: "Даслаць на пошту"
+  delivery_chat_button: "Даслаць сюды"
+  delivery_request_sent: "Запыт адпраўлены аператару."
+  payment_instructions: |
+    Ваша заяўка на страхаванне аўтамабіля {license_plate} ўхвалена.
+
+    Пасля аплаты, калі ласка, дашліце пацвярджэнне плацяжу.
+
+    Варыянты аплаты
+
+    BLIK на нумар +48 664 914 738
+    Прызначэнне плацяжу: za ubezpieczenie auto {license_plate}
+
+
+    Банкаўскі перавод у Польшчы:
+    Уладальнік рахунку: DZIANIS BARAVOI
+    Нумар рахунку: 44 1020 1332 0000 1602 1435 6564
+    Банк: Powszechna Kasa Oszczędności Bank Polski SA
+    Прызначэнне плацяжу: za ubezpieczenie auto {license_plate}
+
+
+    Міжнародны банкаўскі перавод:
+    Уладальнік рахунку: DZIANIS BARAVOI
+    Валюта: PLN
+    IBAN: PL44 1020 1332 0000 1602 1435 6564
+    SWIFT/BIC: BPKOPLPW
+    Банк: Powszechna Kasa Oszczędności Bank Polski SA
+    Краіна: Polska
+    Адрэс: ul. H. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    Прызначэнне плацяжу: za ubezpieczenie auto {license_plate}
+
+
+    Перавод на карту:
+    Нумар карты: 4213 5239 3578 6679
+    Тэрмін дзеяння: 09/26
+    Уладальнік: DZIANIS BARAVOI
+    Прызначэнне плацяжу: za ubezpieczenie auto {license_plate}
+payment_confirmation:
+  attach_prompt: "Прымацуйце скан экрана аб адпраўцы сродкаў або PDF-пацвярджэнне з банка."
+  file_received: "Файл атрыманы. Адправіць пацвярджэнне аператару або дадаць яшчэ файл?"
+  send_button: "Адправіць пацвярджэнне"
+  add_more_button: "Дадаць яшчэ файл"
+  sent: "Пацвярджэнне аплаты адпраўлена аператару."
+  no_unpaid: "У вас няма неаплачаных рахункаў. Вы можаце націснуць кнопку «Мая апошняя заяўка»."
+my_applications:
+  title: "Ваши последние заявки:"
+  empty: "У вас пока нет заявок, связанных с этим Telegram-аккаунтом. Если вы уже оформляли полис ранее, напишите оператору — мы свяжем вашу историю заявок."
+  unavailable: "Сейчас не удалось загрузить заявки. Попробуйте позже."
+  not_found: "Заявка не найдена или недоступна для этого Telegram-аккаунта."
+  policy_status_button: "Где мой полис?"
+  repeat_button: "Оформить снова"
+  open_button: "Открыть"
+  operator_button: "Связаться с оператором"
+  payment_button: "Подтвердить оплату"
+  policy_button: "Получить полис"
+  policy_not_found: "Полис пока не найден. Мы передали запрос оператору."
+repeat_application:
+  start_prompt: |
+    Оформление по предыдущей заявке
+
+    Авто: {vehicle_plate_masked}
+    Тип: {vehicle_type}
+    Страна регистрации: {registration_country}
+
+    Для нового полиса введите дату начала страховки в формате ДД.ММ.ГГГГ.
+  ask_start_date: "Введите новую дату начала страховки в формате ДД.ММ.ГГГГ."
+  invalid_start_date: "Введите корректную дату начала: не в прошлом и в формате ДД.ММ.ГГГГ."
+  ask_period: "Выберите срок страхования."
+  ask_docs: "Использовать документы из предыдущей заявки или загрузить новые?"
+  docs_reuse_button: "Да, использовать прежние"
+  docs_upload_new_button: "Нет, загрузить новые"
+  preview: |
+    Проверьте новую заявку:
+
+    Тип: OC graniczne (border insurance)
+    Авто: {vehicle_plate_masked}
+    Дата начала: {new_start_date}
+    Срок: {new_period_days} дней
+    Документы: {docs_mode_title}
+
+    Стоимость предварительная. Окончательная цена подтверждается оператором после проверки данных.
+  confirm_button: "Подтвердить"
+  change_button: "Изменить"
+  cancel_button: "Отмена"
+  cancelled: "Повторное оформление отменено."
+  unavailable: "Повторное оформление сейчас недоступно. Попробуйте позже или свяжитесь с оператором."
+  created: |
+    Новая заявка создана.
+
+    Номер: {request_id}
+    Статус: {public_status}
+
+    Оператор проверит данные и сообщит следующий шаг.
+policy_status:
+  unavailable: "Сейчас не удалось проверить статус полиса. Попробуйте позже."
+  check_later_button: "Проверить позже"
+  back_to_applications_button: "Мои заявки"

@@ -63,6 +63,7 @@ async def faq_feedback_down(callback: CallbackQuery, i18n: I18nService, lang_sto
             insurance_period_days=0,
             insurance_start_date="",
             comment="FAQ dislike: user requested operator assistance.",
+            client_bot=getattr(callback.bot, "client_bot_code", "default"),
         )
     )
     OperatorNotifierService().notify_new_ticket(

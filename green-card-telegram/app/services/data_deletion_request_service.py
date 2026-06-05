@@ -18,6 +18,7 @@ class DataDeletionRequestService:
         telegram_user_id: int,
         telegram_chat_id: int | None = None,
         bitrix_contact_id: int | None = None,
+        client_bot: str = "default",
     ) -> DataDeletionRequest:
         with SessionLocal() as db:
             existing = db.scalar(
@@ -61,6 +62,7 @@ class DataDeletionRequestService:
                 insurance_start_date="",
                 comment="Клиент запросил удаление/анонимизацию данных. Проверьте юридические основания хранения в Bitrix и локальной БД.",
                 last_message_preview="Запрос на удаление данных.",
+                client_bot=client_bot,
             )
         )
         return request

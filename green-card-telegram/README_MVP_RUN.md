@@ -8,7 +8,8 @@
 
 1. **Docker + Docker Compose plugin**
 2. Доступ к токенам Telegram-ботов:
-   - `BOT_TOKEN` (клиентский бот)
+   - `BOT_TOKEN` (клиентский бот для польской страховой компании)
+   - `EUROPOLIS_BOT_TOKEN` (клиентский бот EuroPolis для латвийской страховой компании)
    - `OPERATOR_BOT_TOKEN` (операторский бот)
    - `ADMIN_BOT_TOKEN` (опционально, если админские уведомления должны идти отдельным ботом)
 3. URL Mini App (если фронт уже размещён)
@@ -45,6 +46,7 @@ nano .env
 
 ```env
 BOT_TOKEN=123456:ABC...
+EUROPOLIS_BOT_TOKEN=223456:EUROPOLIS...
 OPERATOR_BOT_TOKEN=654321:XYZ...
 ADMIN_BOT_TOKEN=987654:ADMIN...
 
@@ -52,6 +54,9 @@ ADMIN_BOT_TOKEN=987654:ADMIN...
 OPERATOR_IDS=123456789,987654321
 
 MINI_APP_URL=https://miniapp.example.com
+EUROPOLIS_MINI_APP_URL=https://europolis-miniapp.example.com
+# Если у EuroPolis отдельный Bitrix webhook, укажите его; иначе будет использован BITRIX24_WEBHOOK_URL.
+EUROPOLIS_BITRIX24_WEBHOOK_URL=
 BITRIX24_WEBHOOK_URL=https://yourcompany.bitrix24.com/rest/1/your_webhook/
 DATABASE_URL=postgresql+psycopg://postgres:postgres@postgres:5432/oc_graniczne
 REDIS_URL=redis://redis:6379/0
@@ -60,21 +65,26 @@ ADMIN_API_TOKEN=super-secret-admin-token
 BITRIX_MESSAGE_API_TOKEN=super-secret-bitrix-token
 PII_HASH_SECRET=replace-with-long-random-secret
 DEFAULT_LANGUAGE=ru
+EUROPOLIS_DEFAULT_LANGUAGE=ru
 ```
 
 Расшифровка:
-- `BOT_TOKEN` — токен клиентского бота.
+- `BOT_TOKEN` — токен клиентского бота для польской страховой компании.
+- `EUROPOLIS_BOT_TOKEN` — токен клиентского бота EuroPolis для латвийской страховой компании; обращения попадают в тот же операторский бот.
 - `OPERATOR_BOT_TOKEN` — токен бота операторов.
 - `ADMIN_BOT_TOKEN` — токен для админских уведомлений; если пустой, используется `OPERATOR_BOT_TOKEN`.
 - `OPERATOR_IDS` — **только первичный bootstrap/fallback** для доступа операторов, пока таблица `operators` пуста или БД временно недоступна. Постоянно операторов нужно вести через `/api/admin/operators`.
-- `MINI_APP_URL` — URL фронта Mini App.
+- `MINI_APP_URL` — URL фронта Mini App основного клиентского бота.
+- `EUROPOLIS_MINI_APP_URL` — URL фронта Mini App EuroPolis, если он отличается.
+- `EUROPOLIS_BITRIX24_WEBHOOK_URL` — отдельный webhook Bitrix24 для EuroPolis; если пустой, используется общий `BITRIX24_WEBHOOK_URL`.
 - `BITRIX24_WEBHOOK_URL` — webhook Bitrix24.
 - `DATABASE_URL` — строка подключения к PostgreSQL.
 - `REDIS_URL` — Redis для очередей, rate-limit и кэша текстов.
 - `ADMIN_API_TOKEN` — токен доступа к admin endpoint.
 - `BITRIX_MESSAGE_API_TOKEN` — токен, которым Bitrix подписывает запросы в backend.
 - `PII_HASH_SECRET` — секрет HMAC-SHA256 для индекса дублей; в проде должен быть длинным и случайным.
-- `DEFAULT_LANGUAGE` — язык по умолчанию.
+- `DEFAULT_LANGUAGE` — язык по умолчанию для основного клиентского бота.
+- `EUROPOLIS_DEFAULT_LANGUAGE` — язык по умолчанию для EuroPolis-бота.
 
 > Важно: `.env` не коммитим в git. При смене `PII_HASH_SECRET` старые HMAC-индексы дублей перестанут совпадать с новыми.
 

@@ -141,6 +141,7 @@ async def _create_policy_delivery_ticket(
                 f"Policy delivery request ({delivery_method}) "
                 f"for Bitrix deal {deal_id}."
             ),
+            client_bot=getattr(callback.bot, "client_bot_code", "default"),
         )
     )
     OperatorNotifierService().notify_new_ticket(
@@ -442,6 +443,7 @@ async def payment_confirmation_send(
             insurance_period_days=0,
             insurance_start_date="",
             comment=f"Payment confirmation for Bitrix deal {data.get('deal_id') or '—'}.",
+            client_bot=getattr(callback.bot, "client_bot_code", "default"),
         )
     )
 
@@ -488,6 +490,7 @@ async def create_data_deletion_request(callback: CallbackQuery) -> None:
     request = DataDeletionRequestService().create_request(
         telegram_user_id=callback.from_user.id,
         telegram_chat_id=callback.message.chat.id if callback.message else None,
+        client_bot=getattr(callback.bot, "client_bot_code", "default"),
     )
     await callback.message.edit_text(
         "Запрос на удаление данных создан.\n\n"
@@ -548,6 +551,7 @@ async def menu_click_router(message: Message, state: FSMContext) -> None:
                 insurance_period_days=0,
                 insurance_start_date="",
                 comment="Main menu: user requested operator assistance.",
+                client_bot=getattr(message.bot, "client_bot_code", "default"),
             )
         )
         OperatorNotifierService().notify_new_ticket(

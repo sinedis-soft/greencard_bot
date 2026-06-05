@@ -71,6 +71,7 @@ class OperatorTicket(Base):
     request_id: Mapped[str] = mapped_column(String(64), primary_key=True)
     telegram_user_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
     telegram_chat_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
+    client_bot: Mapped[str] = mapped_column(String(32), default="default", index=True)
     bitrix_deal_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True, index=True)
     bitrix_contact_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True, index=True)
     reason: Mapped[str | None] = mapped_column(String(100), nullable=True, index=True)
