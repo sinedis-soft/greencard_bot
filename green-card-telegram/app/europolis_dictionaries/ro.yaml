@@ -22,9 +22,17 @@ calculator:
   apply_cta: "📝 Trimiteți cererea"
   select_vehicle_type: "Alegeți tipul mijlocului de transport"
   select_period: "Alegeți perioada de asigurare (zile)"
-  result_template: "Cost preliminar: {estimated_price} {currency}\n{disclaimer}"
+  result_template: "Cost preliminar: {estimated_price}\n{disclaimer}"
+  price_unavailable: "Prețul nu este disponibil pentru perioada selectată."
+  period:
+    "30": "1 month"
+    "60": "2 months"
+    "90": "3 months"
+    "180": "6 months"
+    "365": "12 months"
   vehicle:
     car: "Autoturism"
+    van: "Autobuze"
     truck: "Camion"
     bus: "Autobuz"
     moto: "Motocicletă"

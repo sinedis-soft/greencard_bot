@@ -22,9 +22,17 @@ calculator:
   apply_cta: "📝 Хүсэлт илгээх"
   select_vehicle_type: "Тээврийн хэрэгслийн төрлийг сонгоно уу"
   select_period: "Даатгалын хугацааг сонгоно уу (хоногоор)"
-  result_template: "Урьдчилсан үнэ: {estimated_price} {currency}\n{disclaimer}"
+  result_template: "Урьдчилсан үнэ: {estimated_price}\n{disclaimer}"
+  price_unavailable: "Сонгосон хугацаанд үнэ боломжгүй байна."
+  period:
+    "30": "1 month"
+    "60": "2 months"
+    "90": "3 months"
+    "180": "6 months"
+    "365": "12 months"
   vehicle:
     car: "Суудлын автомашин"
+    van: "Автобус"
     truck: "Ачааны автомашин"
     bus: "Автобус"
     moto: "Мотоцикл"

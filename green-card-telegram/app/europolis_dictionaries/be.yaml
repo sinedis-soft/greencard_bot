@@ -22,9 +22,17 @@ calculator:
   apply_cta: "📝 Аформіць заяўку"
   select_vehicle_type: "Абярыце тып транспартнага сродку"
   select_period: "Абярыце тэрмін страхавання (дзён)"
-  result_template: "Папярэдні кошт: {estimated_price} {currency}\n{disclaimer}"
+  result_template: "Папярэдні кошт: {estimated_price}\n{disclaimer}"
+  price_unavailable: "Для абранага тэрміну кошт недаступны."
+  period:
+    "30": "1 месяц"
+    "60": "2 месяцы"
+    "90": "3 месяцы"
+    "180": "6 месяцаў"
+    "365": "12 месяцаў"
   vehicle:
     car: "Легкавы аўтамабіль"
+    van: "Аўтобусы"
     truck: "Грузавы аўтамабіль"
     bus: "Аўтобус"
     moto: "Матацыкл"

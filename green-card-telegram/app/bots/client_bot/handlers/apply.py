@@ -796,9 +796,19 @@ def _create_bitrix_application(
 
 
 @router.message(F.text == "/apply")
-async def apply_command(message: Message, state: FSMContext, i18n: I18nService, lang_store: dict[int, str], default_language: str) -> None:
+async def apply_command(
+    message: Message,
+    state: FSMContext,
+    i18n: I18nService,
+    lang_store: dict[int, str],
+    default_language: str,
+    user=None,
+) -> None:
+    user = user or message.from_user
+    if not user:
+        return
 
-    lang = lang_store.get(message.from_user.id, default_language)
+    lang = lang_store.get(user.id, default_language)
     await state.clear()
     client_bot = getattr(message.bot, "client_bot_code", "default")
     await state.update_data(vehicles=[], current_vehicle={}, client_bot=client_bot)
@@ -806,9 +816,9 @@ async def apply_command(message: Message, state: FSMContext, i18n: I18nService, 
 
     try:
         reminder_service = ReminderService()
-        reminder_service.mark_calculator_converted(message.from_user.id)
+        reminder_service.mark_calculator_converted(user.id)
         draft = reminder_service.create_application_draft(
-            telegram_user_id=message.from_user.id,
+            telegram_user_id=user.id,
             telegram_chat_id=message.chat.id,
             product_type="border_insurance",
             source_channel="telegram_bot",
@@ -818,32 +828,52 @@ async def apply_command(message: Message, state: FSMContext, i18n: I18nService, 
         )
         await state.update_data(application_draft_id=draft.draft_id)
     except Exception as exc:
-        logger.exception("application_draft_reminder_failed user_id=%s error=%s", message.from_user.id, exc)
+        logger.exception(
+            "application_draft_reminder_failed user_id=%s error=%s", user.id, exc
+        )
     await message.answer(i18n.get_text(lang, "application.form_header"))
 
     contact = None
-    username = (message.from_user.username or "").strip()
-    if hasattr(message.bot, "bitrix_client"):
-        if _is_europolis_bot(message.bot) and hasattr(
-            message.bot.bitrix_client, "find_europolis_contact_by_telegram_identity"
-        ):
-            contact = message.bot.bitrix_client.find_europolis_contact_by_telegram_identity(
-                username=username or None, user_id=message.from_user.id
-            )
-        elif username:
-            contact = message.bot.bitrix_client.find_contact_by_telegram_username(username)
+    username = (user.username or "").strip()
+    try:
+        if hasattr(message.bot, "bitrix_client"):
+            if _is_europolis_bot(message.bot) and hasattr(
+                message.bot.bitrix_client, "find_europolis_contact_by_telegram_identity"
+            ):
+                contact = (
+                    message.bot.bitrix_client.find_europolis_contact_by_telegram_identity(
+                        username=username or None, user_id=user.id
+                    )
+                )
+            elif username:
+                contact = message.bot.bitrix_client.find_contact_by_telegram_username(username)
 
-    if _is_europolis_bot(message.bot):
-        if contact:
-            contact_data = _contact_state_data(contact)
-            await state.update_data(**contact_data)
-            company_id = contact_data.get("bitrix_company_id")
-            if company_id and hasattr(message.bot.bitrix_client, "get_europolis_company_prefill"):
-                company = message.bot.bitrix_client.get_europolis_company_prefill(company_id)
-                if company:
-                    await state.update_data(**_company_state_data(company))
-        await _ask_first_name_for_edit(message, state, i18n, lang)
-        return
+        if _is_europolis_bot(message.bot):
+            if contact:
+                contact_data = _contact_state_data(contact)
+                await state.update_data(**contact_data)
+                company_id = contact_data.get("bitrix_company_id")
+                if company_id and hasattr(
+                    message.bot.bitrix_client, "get_europolis_company_prefill"
+                ):
+                    company = message.bot.bitrix_client.get_europolis_company_prefill(
+                        company_id
+                    )
+                    if company:
+                        await state.update_data(**_company_state_data(company))
+            await _ask_first_name_for_edit(message, state, i18n, lang)
+            return
+    except RuntimeError as exc:
+        logger.exception(
+            "application_bitrix_prefill_failed user_id=%s client_bot=%s error=%s",
+            user.id,
+            client_bot,
+            exc,
+        )
+        if _is_europolis_bot(message.bot):
+            await _ask_first_name_for_edit(message, state, i18n, lang)
+            return
+
 
     if contact:
         await state.update_data(**_contact_state_data(contact))
@@ -873,15 +903,25 @@ async def _send_prefilled_prompt(message: Message, i18n: I18nService, lang: str,
     )
 
 
-async def send_apply(message: Message, state: FSMContext) -> None:
-    await apply_command(message, state, message.bot.i18n, message.bot.lang_store, message.bot.default_language)
+async def send_apply(message: Message, state: FSMContext, user=None) -> None:
+    await apply_command(
+        message,
+        state,
+        message.bot.i18n,
+        message.bot.lang_store,
+        message.bot.default_language,
+        user=user,
+    )
 
 
 
-@router.message(StateFilter(ApplyForm), F.text.regexp(r"^(?:/|🧮|❓|🌍|📝|👨‍💼|🌐)"))
-
+@router.message(
+    StateFilter(ApplyForm), F.text.regexp(r"^(?:/|🧮|❓|🌍|📝|📄|💳|👨‍💼|🌐)")
+)
 async def menu_shortcut_during_apply(message: Message, state: FSMContext) -> None:
-    lang = message.bot.lang_store.get(message.from_user.id, message.bot.default_language)
+    lang = message.bot.lang_store.get(
+        message.from_user.id, message.bot.default_language
+    )
     action = menu_action_for_text(
         message.bot.i18n, message.text, lang, message.bot.default_language
     )

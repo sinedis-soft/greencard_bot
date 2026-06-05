@@ -23,6 +23,7 @@ calculator:
   select_vehicle_type: "აირჩიეთ სატრანსპორტო საშუალების ტიპი"
   select_period: "აირჩიეთ დაზღვევის ვადა (დღეებში)"
   result_template: "წინასწარი ღირებულება: {estimated_price} {currency}\n{disclaimer}"
+  price_unavailable: "არჩეული ვადისთვის ფასი მიუწვდომელია."
   vehicle:
     car: "მსუბუქი ავტომობილი"
     truck: "სატვირთო ავტომობილი"

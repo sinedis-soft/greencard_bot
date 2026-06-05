@@ -23,6 +23,7 @@ calculator:
   select_vehicle_type: "Ընտրեք տրանսպորտային միջոցի տեսակը"
   select_period: "Ընտրեք ապահովագրության ժամկետը (օրերով)"
   result_template: "Նախնական արժեքը՝ {estimated_price} {currency}\n{disclaimer}"
+  price_unavailable: "Ընտրված ժամկետի համար արժեքը հասանելի չէ։"
   vehicle:
     car: "Թեթև մարդատար ավտոմեքենա"
     truck: "Բեռնատար ավտոմեքենա"

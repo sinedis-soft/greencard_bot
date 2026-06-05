@@ -7,9 +7,12 @@ VEHICLE_TYPES = ["car", "truck", "bus", "moto", "trailer", "special"]
 PERIODS = [30, 60, 90, 180, 365]
 
 
-def vehicle_types_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
+def vehicle_types_keyboard(
+    i18n: I18nService, lang: str, vehicle_types: tuple[str, ...] | None = None
+) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
-    for vtype in VEHICLE_TYPES:
+    selected_vehicle_types = vehicle_types or tuple(VEHICLE_TYPES)
+    for vtype in selected_vehicle_types:
         builder.button(
             text=i18n.get_text(lang, f"calculator.vehicle.{vtype}"),
             callback_data=f"calc:vehicle:{vtype}",
@@ -18,10 +21,18 @@ def vehicle_types_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup
     return builder.as_markup()
 
 
-def periods_keyboard() -> InlineKeyboardMarkup:
+def periods_keyboard(
+    i18n: I18nService | None = None, lang: str = ""
+) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     for days in PERIODS:
-        builder.button(text=str(days), callback_data=f"calc:period:{days}")
+        text = str(days)
+        if i18n is not None and lang:
+            key = f"calculator.period.{days}"
+            localized = i18n.get_text(lang, key)
+            if localized != key:
+                text = localized
+        builder.button(text=text, callback_data=f"calc:period:{days}")
     builder.adjust(3, 2)
     return builder.as_markup()
 

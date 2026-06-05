@@ -23,6 +23,7 @@ calculator:
   select_vehicle_type: "Тээврийн хэрэгслийн төрлийг сонгоно уу"
   select_period: "Даатгалын хугацааг сонгоно уу (хоногоор)"
   result_template: "Урьдчилсан үнэ: {estimated_price} {currency}\n{disclaimer}"
+  price_unavailable: "Сонгосон хугацаанд үнэ боломжгүй байна."
   vehicle:
     car: "Суудлын автомашин"
     truck: "Ачааны автомашин"

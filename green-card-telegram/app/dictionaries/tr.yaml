@@ -23,6 +23,7 @@ calculator:
   select_vehicle_type: "Araç türünü seçin"
   select_period: "Sigorta süresini seçin (gün)"
   result_template: "Ön fiyat: {estimated_price} {currency}\n{disclaimer}"
+  price_unavailable: "Seçilen dönem için fiyat mevcut değil."
   vehicle:
     car: "Binek araç"
     truck: "Kamyon"

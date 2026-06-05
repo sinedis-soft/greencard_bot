@@ -11,6 +11,8 @@ async def main() -> None:
         default_language_env="EUROPOLIS_DEFAULT_LANGUAGE",
         mini_app_url_env="EUROPOLIS_MINI_APP_URL",
         bitrix_webhook_env="EUROPOLIS_BITRIX24_WEBHOOK_URL",
+        tariffs_file="europolis_tariffs.yaml",
+        calculator_vehicle_types=("car", "van", "truck", "trailer", "special"),
     )
 
 

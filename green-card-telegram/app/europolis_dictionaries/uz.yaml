@@ -22,9 +22,17 @@ calculator:
   apply_cta: "📝 Ariza rasmiylashtirish"
   select_vehicle_type: "Transport vositasi turini tanlang"
   select_period: "Sug‘urta muddatini tanlang (kun)"
-  result_template: "Dastlabki narx: {estimated_price} {currency}\n{disclaimer}"
+  result_template: "Dastlabki narx: {estimated_price}\n{disclaimer}"
+  price_unavailable: "Tanlangan muddat uchun narx mavjud emas."
+  period:
+    "30": "1 month"
+    "60": "2 months"
+    "90": "3 months"
+    "180": "6 months"
+    "365": "12 months"
   vehicle:
     car: "Yengil avtomobil"
+    van: "Avtobuslar"
     truck: "Yuk avtomobili"
     bus: "Avtobus"
     moto: "Mototsikl"

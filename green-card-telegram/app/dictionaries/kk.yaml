@@ -23,6 +23,7 @@ calculator:
   select_vehicle_type: "Көлік құралын таңдаңыз"
   select_period: "Сақтандыру мерзімін таңдаңыз (күн)"
   result_template: "Алдын ала құны: {estimated_price} {currency}\n{disclaimer}"
+  price_unavailable: "Таңдалған мерзім үшін баға қолжетімді емес."
   vehicle:
     car: "Жеңіл автомобиль"
     truck: "Жүк автомобилі"
