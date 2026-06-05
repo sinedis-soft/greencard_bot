@@ -78,6 +78,7 @@ application:
     Заявка на оформление полиса
     Заполните данные. Мы подготовим полис и пришлём реквизиты на оплату.
     ⚠️ВНИМАНИЕ! Продолжая использовать приложение, вы соглашаетесь на обработку вашего username телеграмма.⚠️
+
   step_1: "1. Контакты"
   step_2: "2. Данные о страховке и транспортном средстве"
   prefilled_from_bitrix: "Нашли ваш профиль в нашей базе по имени пользователя Telegram. Контакты и данные страхователя подставлены автоматически."
@@ -115,25 +116,55 @@ application:
   ask_last_name_prefilled: "Фамилия * (Использовать: {value})"
   ask_phone_prefilled: "Телефон (с кодом страны) * (Использовать: {value})"
   ask_email_prefilled: "E-mail * (Использовать: {value})"
-  ask_first_name: "Имя (Латиницей)*"
-  ask_last_name: "Фамилия (Латиницей)*"
+
+  ask_first_name: "Имя *"
+  ask_last_name: "Фамилия *"
   ask_phone: |
-    Телефон (с кодом страны)
+    Телефон (с кодом страны) *
     Пример: +48123456789
   ask_email: |
-    E-mail
-    Пример: exempl@mail.pl"
+    E-mail *
+    Пример: example@mail.com
+  ask_policyholder_type: "Заявку делаем на физическое лицо или юридическое лицо?"
+  policyholder_individual: "Физическое лицо"
+  policyholder_company: "Юридическое лицо"
+  confirm_company: "Оформляем заявку для компании: {company_title}?"
+  company_confirm_yes: "Да, продолжить"
+  company_choose_other: "Выбрать другую компанию"
+  choose_company: "Выберите компанию, от имени которой оформляется заявка"
+  company_not_found: "Компания не найдена."
+  individual_data_header: "Данные страхователя (физическое лицо)"
+  company_data_header: "Данные страхователя (юридическое лицо)"
+  ask_company_title: "Название компании *"
+  validation_company_title: "Укажите название компании."
+  ask_company_inn: "ИНН компании *"
+  ask_company_inn_prefilled: "ИНН компании * (Использовать: {value})"
+  ask_company_country: "Страна регистрации компании *"
+  validation_company_country: "Укажите страну регистрации компании."
+  ask_company_email: "E-mail компании *"
+  ask_company_phone: "Телефон компании (с кодом страны) *"
+  ask_company_ceo_title: "Должность руководителя *"
+  ask_company_ceo_title_prefilled: "Должность руководителя * (Использовать: {value})"
+  ask_company_ceo_full_name: "ФИО руководителя *"
+  ask_company_ceo_full_name_prefilled: "ФИО руководителя * (Использовать: {value})"
+  validation_company_inn: "Укажите ИНН компании."
+  validation_company_ceo_title: "Укажите должность руководителя."
+  validation_company_ceo_full_name: "Укажите ФИО руководителя."
   ask_birth_date: |
-    Дата рождения
-    Формат: дд.мм.гггг
+    Дата рождения *
+
+    дд.мм.гггг
   ask_birth_date_prefilled: "Дата рождения * (Использовать: {value})"
   ask_passport: "Серия и номер паспорта без пробелов (латиницей)*"
   ask_passport_prefilled: "Серия и номер паспорта без пробелов * (Использовать: {value})"
-  ask_registration_address: "Адрес регистрации (латиницей)*"
+  ask_registration_address: |
+    Адрес регистрации *
+    Страна, город, улица, дом, квартира (если есть)
+    Укажите адрес одной строкой.
   ask_registration_address_prefilled: "Адрес регистрации * (Использовать: {value})"
-  ask_insurance_period: "Срок страхования (выбрать) *"
+  ask_insurance_period: "Срок страхования *"
   ask_insurance_start_date: |
-    Дата начала действия страховки
+    Дата начала действия страховки *
     Формат: дд.мм.гггг
   ask_vehicle_country: "Страна регистрации авто *"
   validation_vehicle_country: "Укажите страну регистрации авто."
@@ -146,6 +177,8 @@ application:
   ask_license_plate: "Госномер *"
   ask_license_plate_after_start: "Госномер (латиницей)*"
   validation_license_plate_strict: "Госномер: только латинские буквы и цифры, без пробелов/тире, максимум 8 символов."
+
+  validation_license_plate_long: "Госномер: только латинские буквы и цифры, без пробелов/тире, максимум 20 символов."
   prefilled_vehicle_from_bitrix_editable: "По госномеру нашли данные авто в нашей базе. Значения подставлены — проверьте и при необходимости исправьте."
   vehicle_not_found_manual: "Авто по базе не найдено. Пожалуйста, внесите данные по авто вручную."
   ask_vin: "VIN номер *"
@@ -164,7 +197,7 @@ application:
   skip_comment_button: "ПРОПУСТИТЬ"
 
   ask_vehicle_docs: |
-    Техпаспорт (фото или PDF)
+    Техпаспорт (фото или PDF) *
     Можно прикрепить несколько файлов.
   ask_vehicle_docs_complete: "Документ прикреплён. Нужно добавить ещё документы?"
   add_more_docs: "Надо еще добавить документы"

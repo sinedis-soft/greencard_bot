@@ -26,6 +26,7 @@ POLICY_STATUS_FIELD = "UF_CRM_1718956082020"
 POLICY_FILES_FIELD = "UF_CRM_1714480913426"
 LICENSE_PLATE_FIELD = "UF_CRM_1686152485641"
 VIN_FIELD = "UF_CRM_1686152659867"
+EUROPOLIS_COMPANY_COUNTRY_FIELD = "UF_CRM_1720721997376"
 
 POLICY_STATUS_VALUES = {
     "2607": "Действующий",
@@ -114,6 +115,77 @@ class Bitrix24Client:
                 return items[0]
         return None
 
+    def find_europolis_contact(
+        self,
+        username: str | None = None,
+        user_id: int | str | None = None,
+        email: str | None = None,
+        phone: str | None = None,
+    ) -> dict[str, Any] | None:
+        filters: list[dict[str, Any]] = []
+        user_id = str(user_id or "").strip()
+        username = (username or "").strip()
+        email = (email or "").strip()
+        phone = (phone or "").strip()
+        if user_id:
+            filters.append({TELEGRAM_USER_ID_FIELD: user_id})
+        if username:
+            filters.append({TELEGRAM_USERNAME_FIELD: username})
+        if email:
+            filters.append({"EMAIL": email})
+        if phone:
+            filters.append({"PHONE": phone})
+
+        for crm_filter in filters:
+            res = self._post(
+                "crm.contact.list",
+                {"filter": crm_filter, "select": self._europolis_contact_select_fields()},
+            )
+            items = res.get("result") or []
+            if items:
+                return items[0]
+        return None
+
+    def find_europolis_contact_by_telegram_identity(
+        self, username: str | None = None, user_id: int | str | None = None
+    ) -> dict[str, Any] | None:
+        return self.find_europolis_contact(username=username, user_id=user_id)
+
+    def _europolis_contact_select_fields(self) -> list[str]:
+        return [
+            "ID",
+            "LAST_NAME",
+            "NAME",
+            "BIRTHDATE",
+            "ADDRESS",
+            "PHONE",
+            "EMAIL",
+            "COMPANY_ID",
+            "COMPANY_IDS",
+            TELEGRAM_USERNAME_FIELD,
+            TELEGRAM_USER_ID_FIELD,
+            TELEGRAM_CHAT_ID_FIELD,
+        ]
+
+    def get_europolis_company_prefill(self, company_id: int | str | None) -> dict[str, Any] | None:
+        if not company_id:
+            return None
+        return self._find_first(
+            "crm.company.list",
+            "ID",
+            company_id,
+            [
+                "ID",
+                "TITLE",
+                "UF_CRM_COMPANY_1692911328252",
+                EUROPOLIS_COMPANY_COUNTRY_FIELD,
+                "PHONE",
+                "EMAIL",
+                "UF_CRM_1709019814756",
+                "UF_CRM_1709019759168",
+            ],
+        )
+
     def _prefill_contact_select_fields(self) -> list[str]:
         return [
             "ID",
@@ -128,6 +200,64 @@ class Bitrix24Client:
             TELEGRAM_USER_ID_FIELD,
             TELEGRAM_CHAT_ID_FIELD,
         ]
+
+    def list_europolis_companies(self, company_ids: list[int | str]) -> list[dict[str, Any]]:
+        companies: list[dict[str, Any]] = []
+        seen: set[str] = set()
+        for company_id in company_ids:
+            normalized = str(company_id or "").strip()
+            if not normalized or normalized in seen:
+                continue
+            seen.add(normalized)
+            company = self.get_europolis_company_prefill(normalized)
+            if company:
+                companies.append(company)
+        return companies
+
+    def find_europolis_company_by_tax_id(self, tax_id: str) -> dict[str, Any] | None:
+        tax_id = str(tax_id or "").strip()
+        if not tax_id:
+            return None
+        return self._find_first(
+            "crm.company.list",
+            "UF_CRM_COMPANY_1692911328252",
+            tax_id,
+            [
+                "ID",
+                "TITLE",
+                "UF_CRM_COMPANY_1692911328252",
+                EUROPOLIS_COMPANY_COUNTRY_FIELD,
+                "PHONE",
+                "EMAIL",
+                "UF_CRM_1709019814756",
+                "UF_CRM_1709019759168",
+            ],
+        )
+
+    def link_contact_to_companies(self, contact_id: int | str, company_ids: list[int | str]) -> None:
+        normalized = [str(company_id).strip() for company_id in company_ids if str(company_id).strip()]
+        if not contact_id or not normalized:
+            return
+        self._post("crm.contact.update", {"id": contact_id, "fields": {"COMPANY_IDS": normalized}})
+
+    def find_europolis_vehicle_docs_by_company_and_plate(self, company_id: int | str | None, plate: str) -> dict[str, Any] | None:
+        if not company_id or not plate:
+            return None
+        res = self._post(
+            "crm.deal.list",
+            {
+                "order": {"ID": "DESC"},
+                "filter": {"COMPANY_ID": str(company_id), LICENSE_PLATE_FIELD: plate},
+                "select": ["ID", "CONTACT_ID", "COMPANY_ID", "UF_CRM_1686154280439"],
+            },
+        )
+        items = res.get("result") or []
+        if not items:
+            return None
+        return items[0]
+
+    def find_europolis_vehicle_docs_by_license_plate(self, plate: str) -> dict[str, Any] | None:
+        return self.find_europolis_vehicle_docs_by_company_and_plate(None, plate)
 
     def find_deal_by_license_plate(self, plate: str) -> dict[str, Any] | None:
         return self._find_deal_by_vehicle_field(LICENSE_PLATE_FIELD, plate)
