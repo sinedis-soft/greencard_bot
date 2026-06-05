@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any
 
-from sqlalchemy import case, select
+from sqlalchemy import case, nullslast, select
 
 from app.db.models import Application, Base, OperatorActionLog, OperatorInternalComment, OperatorTicket, OperatorTicketTransfer
 from app.db.session import SessionLocal, engine
@@ -273,13 +273,27 @@ class OperatorTicketService:
 
     def get_active_by_user(self, telegram_user_id: int) -> OperatorTicket | None:
         with SessionLocal() as db:
+            status_priority = case(
+                {
+                    "waiting_client": 0,
+                    "waiting_operator": 1,
+                    "in_progress": 2,
+                    "new": 3,
+                },
+                value=OperatorTicket.status,
+                else_=9,
+            )
             ticket = db.scalars(
                 select(OperatorTicket)
                 .where(
                     OperatorTicket.telegram_user_id == telegram_user_id,
-                    OperatorTicket.status.in_(("new", "in_progress", "waiting_client", "waiting_operator")),
+                    OperatorTicket.status.in_(OPEN_TICKET_STATUSES),
                 )
-                .order_by(OperatorTicket.created_at.desc())
+                .order_by(
+                    status_priority.asc(),
+                    nullslast(OperatorTicket.last_operator_message_at.desc()),
+                    OperatorTicket.created_at.desc(),
+                )
             ).first()
             if ticket:
                 db.expunge(ticket)
