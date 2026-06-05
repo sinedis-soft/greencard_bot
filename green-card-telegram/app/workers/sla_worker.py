@@ -5,7 +5,10 @@ from sqlalchemy import select
 from app.db.models import OperatorTicket
 from app.db.session import SessionLocal
 from app.services.analytics_service import AnalyticsService
-from app.services.operator_message_formatter import operator_language_line
+from app.services.operator_message_formatter import (
+    operator_client_bot_line,
+    operator_language_line,
+)
 from app.services.operator_notifier_service import ClientNotifierService, OperatorNotifierService
 
 SLA_ACTIVE_STATUSES = ("new", "waiting_operator", "in_progress")
@@ -35,7 +38,9 @@ def run_sla_checks() -> dict:
             t.sla_breach = True
             t.reminder_sent_at = now
             OperatorNotifierService().notify_new_ticket(
-                f"SLA breached: {t.request_id}\n{operator_language_line(t.preferred_language)}"
+                f"SLA breached: {t.request_id}\n"
+                f"{operator_client_bot_line(t.client_bot)}\n"
+                f"{operator_language_line(t.preferred_language)}"
             )
             AnalyticsService().track("sla_breach", request_id=t.request_id, telegram_user_id=t.telegram_user_id)
             AnalyticsService().track("operator_reminder_sent", request_id=t.request_id, telegram_user_id=t.telegram_user_id)
@@ -53,7 +58,11 @@ def run_sla_checks() -> dict:
         )
         for t in stale_clients:
             if t.telegram_user_id:
-                ClientNotifierService().send_to_client(t.telegram_user_id, "Reminder: please complete your application")
+                ClientNotifierService().send_to_client(
+                    t.telegram_user_id,
+                    "Reminder: please complete your application",
+                    client_bot=t.client_bot,
+                )
             t.reminder_sent_at = now
             AnalyticsService().track("application_reminder_sent", request_id=t.request_id, telegram_user_id=t.telegram_user_id)
             reminded_clients += 1

@@ -10,7 +10,10 @@ from app.services.bitrix24_client import (
 )
 from app.services.bitrix_deal_mapper import safe_deal_card
 from app.services.client_application_service import ClientApplicationService
-from app.services.operator_message_formatter import operator_language_line
+from app.services.operator_message_formatter import (
+    operator_client_bot_line,
+    operator_language_line,
+)
 from app.services.operator_notifier_service import OperatorNotifierService
 from app.services.operator_ticket_service import OperatorTicketService, TicketPayload
 from app.services.policy_status_mapper import (
@@ -44,6 +47,7 @@ class PolicyStatusService:
         preferred_language: str = "ru",
         client_name: str = "",
         notify_operator: bool = True,
+        client_bot: str = "default",
     ) -> dict:
         deal = self.client_applications.get_client_deal(
             telegram_user_id=telegram_user_id,
@@ -70,6 +74,7 @@ class PolicyStatusService:
                 preferred_language=preferred_language,
                 client_name=client_name,
                 notify_operator=notify_operator,
+                client_bot=client_bot,
             )
 
         message = build_policy_client_message(
@@ -110,6 +115,7 @@ class PolicyStatusService:
         preferred_language: str,
         client_name: str,
         notify_operator: bool,
+        client_bot: str = "default",
     ) -> PolicyTicketResult:
         deal_id = int(card["deal_id"])
         existing = self.ticket_service.get_open_by_deal_reason(
@@ -135,13 +141,24 @@ class PolicyStatusService:
                 insurance_period_days=int(card.get("insurance_period_days") or 0),
                 insurance_start_date=str(card.get("insurance_start_date") or ""),
                 comment=f"Где мой полис? Bitrix deal {deal_id}. Delayed: {'yes' if is_delayed else 'no'}",
+                client_bot=client_bot,
             )
         )
         if notify_operator:
-            self._notify_operator(request_id, deal, card, is_delayed, preferred_language)
+            self._notify_operator(
+                request_id, deal, card, is_delayed, preferred_language, client_bot
+            )
         return PolicyTicketResult(created=True, already_open=False, request_id=request_id)
 
-    def _notify_operator(self, request_id: str, deal: dict, card: dict, is_delayed: bool, lang: str) -> None:
+    def _notify_operator(
+        self,
+        request_id: str,
+        deal: dict,
+        card: dict,
+        is_delayed: bool,
+        lang: str,
+        client_bot: str | None = None,
+    ) -> None:
         status_id = _single_value(deal.get(POLICY_STATUS_FIELD))
         status_title = POLICY_STATUS_VALUES.get(status_id, status_id or "—")
         OperatorNotifierService().notify_new_ticket(
@@ -155,5 +172,6 @@ class PolicyStatusService:
             f"Статус полиса: {status_title}\n"
             f"Файл полиса: {'есть' if _has_policy_file(deal.get(POLICY_FILES_FIELD)) else 'отсутствует'}\n"
             f"Задержка: {'да' if is_delayed else 'нет'}\n"
+            f"{operator_client_bot_line(client_bot)}\n"
             f"{operator_language_line(lang)}",
         )

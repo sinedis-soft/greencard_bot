@@ -28,7 +28,10 @@ from app.bots.operator_bot.keyboards.ticket_actions import (
 )
 from app.services.bitrix24_client import LICENSE_PLATE_FIELD, POLICY_FILES_FIELD
 from app.services.latest_deal_formatter import is_invoice_deal, latest_deal_text
-from app.services.operator_message_formatter import operator_language_line
+from app.services.operator_message_formatter import (
+    operator_client_bot_line,
+    operator_language_line,
+)
 from app.services.operator_notifier_service import OperatorNotifierService
 from app.services.blocked_user_service import BlockedUserService
 from app.services.data_deletion_request_service import DataDeletionRequestService
@@ -86,20 +89,26 @@ def _policy_file_infos_from_deal(deal: dict, bitrix_client) -> list[dict]:
     return []
 
 
-def _client_summary(user, lang: str) -> str:
+def _client_summary(user, lang: str, client_bot: str | None = None) -> str:
     username = f"@{user.username}" if user and user.username else "—"
     return (
         f"Клиент: {user.full_name if user else '—'}\n"
         f"Telegram ID: {user.id if user else '—'}\n"
         f"Username: {username}\n"
+        f"{operator_client_bot_line(client_bot)}\n"
         f"{operator_language_line(lang)}"
     )
 
 
 def _policy_delivery_request_text(
-    request_id: str, delivery_method: str, deal_id: str, user, lang: str
+    request_id: str,
+    delivery_method: str,
+    deal_id: str,
+    user,
+    lang: str,
+    client_bot: str | None = None,
 ) -> str:
-    client = _client_summary(user, lang)
+    client = _client_summary(user, lang, client_bot)
     if delivery_method == "email":
         return (
             "📧 Клиент просит прислать полис на почту\n"
@@ -125,6 +134,7 @@ async def _create_policy_delivery_ticket(
     callback: CallbackQuery, delivery_method: str, deal_id: str, lang: str
 ) -> None:
     request_id = f"policy-{delivery_method}-{deal_id}-{uuid4().hex[:8]}"
+    client_bot = getattr(callback.bot, "client_bot_code", "default")
     OperatorTicketService().create_ticket(
         TicketPayload(
             request_id=request_id,
@@ -141,11 +151,17 @@ async def _create_policy_delivery_ticket(
                 f"Policy delivery request ({delivery_method}) "
                 f"for Bitrix deal {deal_id}."
             ),
+            client_bot=client_bot,
         )
     )
     OperatorNotifierService().notify_new_ticket(
         _policy_delivery_request_text(
-            request_id, delivery_method, deal_id, callback.from_user, lang
+            request_id,
+            delivery_method,
+            deal_id,
+            callback.from_user,
+            lang,
+            client_bot,
         )
     )
     await callback.message.answer(
@@ -212,32 +228,40 @@ async def _download_payment_files(
     return downloaded
 
 
-def _payment_operator_text(lang: str, data: dict, user) -> str:
+def _payment_operator_text(
+    lang: str, data: dict, user, client_bot: str | None = None
+) -> str:
     client_name = user.full_name if user else ""
     username = f"@{user.username}" if user and user.username else "—"
     request_id = str(data.get("request_id") or "")
     return (
-
         "💳 Подтверждение оплаты\n\n"
         f"ID: {request_id}\n"
         f"Клиент: {client_name}\n\n"
         f"Telegram ID: {user.id if user else '—'}\n"
         f"Username: {username}\n"
+        f"{operator_client_bot_line(client_bot)}\n"
         f"{operator_language_line(lang)}\n"
         f"Госномер авто: {data.get('license_plate') or '—'}\n\n"
         f"ID сделки:\n {data.get('deal_id') or '—'}"
     )
 
 
-def _operator_ticket_text(request_id: str, client_name: str, source: str, preferred_language: str) -> str:
+def _operator_ticket_text(
+    request_id: str,
+    client_name: str,
+    source: str,
+    preferred_language: str,
+    client_bot: str | None = None,
+) -> str:
     return (
         "🆘 Новый запрос оператора\n"
         f"ID: {request_id}\n"
         f"Клиент: {client_name}\n"
         f"Источник: {source}\n"
+        f"{operator_client_bot_line(client_bot)}\n"
         f"{operator_language_line(preferred_language)}\n\n"
         f"Уточните, что ему надо!"
-        
     )
 
 
@@ -264,9 +288,9 @@ async def _forward_client_message_to_operator(message: Message) -> bool:
         "💬 Сообщение клиента\n"
         f"ID: {ticket.request_id}\n"
         f"Клиент: {client_name}\n"
+        f"{operator_client_bot_line(ticket.client_bot)}\n"
         f"{operator_language_line(ticket.preferred_language)}\n\n"
         f"Текст клиента:\n {message.text}\n"
-
     )
     notifier = OperatorNotifierService()
     if ticket.operator_id:
@@ -442,6 +466,7 @@ async def payment_confirmation_send(
             insurance_period_days=0,
             insurance_start_date="",
             comment=f"Payment confirmation for Bitrix deal {data.get('deal_id') or '—'}.",
+            client_bot=getattr(callback.bot, "client_bot_code", "default"),
         )
     )
 
@@ -450,7 +475,12 @@ async def payment_confirmation_send(
             callback.message, files, Path(tmp_dir)
         )
         OperatorNotifierService().notify_payment_confirmation(
-            _payment_operator_text(lang, data, callback.from_user),
+            _payment_operator_text(
+                lang,
+                data,
+                callback.from_user,
+                getattr(callback.bot, "client_bot_code", "default"),
+            ),
             local_paths,
         )
 
@@ -488,6 +518,7 @@ async def create_data_deletion_request(callback: CallbackQuery) -> None:
     request = DataDeletionRequestService().create_request(
         telegram_user_id=callback.from_user.id,
         telegram_chat_id=callback.message.chat.id if callback.message else None,
+        client_bot=getattr(callback.bot, "client_bot_code", "default"),
     )
     await callback.message.edit_text(
         "Запрос на удаление данных создан.\n\n"
@@ -548,10 +579,17 @@ async def menu_click_router(message: Message, state: FSMContext) -> None:
                 insurance_period_days=0,
                 insurance_start_date="",
                 comment="Main menu: user requested operator assistance.",
+                client_bot=getattr(message.bot, "client_bot_code", "default"),
             )
         )
         OperatorNotifierService().notify_new_ticket(
-            _operator_ticket_text(request_id, client_name, "Главное меню", lang),
+            _operator_ticket_text(
+                request_id,
+                client_name,
+                "Главное меню",
+                lang,
+                getattr(message.bot, "client_bot_code", "default"),
+            ),
             reply_command(request_id),
         )
         await message.answer(

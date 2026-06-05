@@ -22,7 +22,10 @@ from app.core.config import get_settings
 from app.services.bitrix24_client import Bitrix24Client, LICENSE_PLATE_FIELD, POLICY_FILES_FIELD
 from app.services.bitrix_deal_mapper import safe_deal_card, safe_deal_text
 from app.services.client_application_service import ClientApplicationService
-from app.services.operator_message_formatter import operator_language_line
+from app.services.operator_message_formatter import (
+    operator_client_bot_line,
+    operator_language_line,
+)
 from app.services.operator_notifier_service import OperatorNotifierService
 from app.services.operator_ticket_service import OperatorTicketService, TicketPayload
 from app.services.repeat_application_service import RepeatApplicationError, RepeatApplicationService
@@ -157,6 +160,7 @@ async def check_policy_status(callback: CallbackQuery) -> None:
         await callback.answer()
         return
     deal_id = (callback.data or "").rsplit(":", maxsplit=1)[-1]
+    client_bot = getattr(callback.bot, "client_bot_code", "default")
     try:
         result = _policy_status_service(callback.bot).check(
             telegram_user_id=callback.from_user.id,
@@ -164,6 +168,7 @@ async def check_policy_status(callback: CallbackQuery) -> None:
             deal_id=int(deal_id),
             preferred_language=lang,
             client_name=callback.from_user.full_name,
+            client_bot=client_bot,
         )
     except (RuntimeError, PolicyStatusError):
         await callback.message.answer(callback.bot.i18n.get_text(lang, "policy_status.unavailable"))
@@ -407,6 +412,7 @@ async def _create_operator_ticket(callback: CallbackQuery, card: dict, reason: s
     lang = _lang(callback)
     deal_id = card.get("deal_id")
     request_id = f"myapp-{callback.from_user.id}-{uuid4().hex[:8]}"
+    client_bot = getattr(callback.bot, "client_bot_code", "default")
     OperatorTicketService().create_ticket(
         TicketPayload(
             request_id=request_id,
@@ -423,6 +429,7 @@ async def _create_operator_ticket(callback: CallbackQuery, card: dict, reason: s
             insurance_period_days=0,
             insurance_start_date=str(card.get("insurance_start_date") or ""),
             comment=f"{reason}; Bitrix deal {deal_id or '—'}",
+            client_bot=client_bot,
         )
     )
     _service(callback.bot).log_action(
@@ -435,6 +442,7 @@ async def _create_operator_ticket(callback: CallbackQuery, card: dict, reason: s
         f"Тип: {card.get('product_type') or 'OC graniczne (border insurance)'}\n"
         f"Авто: {card.get('vehicle_plate_masked') or '—'}\n"
         f"Статус: {card.get('public_status') or '—'}\n"
+        f"{operator_client_bot_line(client_bot)}\n"
         f"{operator_language_line(lang)}",
         reply_command(request_id),
     )

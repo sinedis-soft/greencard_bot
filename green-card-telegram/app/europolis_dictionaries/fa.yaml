@@ -1,0 +1,379 @@
+main_menu:
+  calculator: "🧮 ماشین‌حساب"
+  faq: "❓ سوالات متداول"
+  coverage: "🌍 کجا معتبر است؟"
+  apply: "📝 ثبت درخواست"
+  operator: "👨‍💼 تماس با اپراتور"
+  payment_confirmation: "💳 تأیید پرداخت"
+  latest_deal: "📄 آخرین درخواست من"
+  my_applications: "📄 Мои заявки"
+  language: "🌐 زبان"
+
+menu:
+  title: "منوی اصلی"
+
+language:
+  select: "لطفاً زبان را انتخاب کنید"
+  changed: "زبان به‌روزرسانی شد"
+
+calculator:
+  result_title: "هزینه اولیه"
+  disclaimer: "محاسبه اولیه"
+  apply_cta: "📝 ثبت درخواست"
+  select_vehicle_type: "نوع وسیله نقلیه را انتخاب کنید"
+  select_period: "مدت بیمه را انتخاب کنید (روز)"
+  result_template: "هزینه اولیه: {estimated_price} {currency}\n{disclaimer}"
+  vehicle:
+    car: "خودروی سواری"
+    truck: "خودروی باری"
+    bus: "اتوبوس"
+    moto: "موتورسیکلت"
+    trailer: "تریلر"
+    special: "ماشین‌آلات ویژه"
+
+application:
+
+  calendar:
+    cancel: "لغو"
+    today: "امروز"
+
+  options:
+    period_days: "{days} روز"
+    countries:
+      belarus: "بلاروس"
+      russia: "روسیه"
+      kazakhstan: "قزاقستان"
+      uzbekistan: "ازبکستان"
+      turkey: "ترکیه"
+      usa: "ایالات متحده آمریکا"
+      united_kingdom: "بریتانیا"
+      azerbaijan: "آذربایجان"
+      georgia: "گرجستان"
+      moldova: "مولداوی"
+      ukraine: "اوکراین"
+      armenia: "ارمنستان"
+      other: "کشور دیگر"
+    vehicle_types:
+      car: "سواری"
+      truck: "باری"
+      moto: "موتورسیکلت"
+      bus: "اتوبوس"
+      trailer: "تریلر"
+    fuel_types:
+      petrol: "بنزین"
+      diesel: "دیزل"
+      gas_petrol: "گاز / بنزین"
+      electric: "برقی"
+      hybrid: "هیبریدی"
+    power_units:
+      hp: "اسب بخار"
+      kw: "کیلووات"
+  submitted: "درخواست ارسال شد. ما بیمه‌نامه را آماده کرده و اطلاعات پرداخت را ارسال می‌کنیم."
+  validation_error: "خطای بررسی داده‌ها"
+  bitrix_error: "خطای Bitrix"
+  mini_app_soon: "فرم Mini App در مرحله بعدی متصل خواهد شد."
+  open_form_button: "باز کردن فرم درخواست"
+  temporarily_unavailable: "فرم درخواست موقتاً در دسترس نیست."
+  form_header: |
+    درخواست صدور بیمه‌نامه
+    اطلاعات را وارد کنید. ما بیمه‌نامه را آماده کرده و اطلاعات پرداخت را ارسال می‌کنیم.
+    ⚠️توجه! با ادامه استفاده از برنامه، شما با پردازش username تلگرام خود موافقت می‌کنید.⚠️
+  step_1: "1. اطلاعات تماس"
+  step_2: "2. اطلاعات بیمه و وسیله نقلیه"
+  prefilled_from_bitrix: "پروفایل شما در پایگاه داده ما بر اساس username تلگرام پیدا شد. اطلاعات تماس و اطلاعات بیمه‌گذار به‌صورت خودکار وارد شده است."
+  prefilled_from_bitrix_editable: "پروفایل شما در پایگاه داده ما بر اساس username تلگرام پیدا شد. اطلاعات وارد شده است — بررسی کنید و در صورت نیاز اصلاح کنید. اگر همه چیز درست است، می‌توانید در این مرحله پیام خالی ارسال کنید."
+  ask_email_lookup: |
+    پروفایل بر اساس username تلگرام پیدا نشد.
+    لطفاً برای جستجوی مشتری، e-mail را وارد کنید.
+  contact_not_found_manual: "مشتری بر اساس e-mail پیدا نشد. اطلاعات شخصی را به‌صورت دستی وارد کنید."
+  ask_passport_verify: "مشتری بر اساس e-mail پیدا شد. برای تأیید هویت، سری و شماره گذرنامه را بدون فاصله وارد کنید."
+  passport_verify_failed_manual: "گذرنامه با اطلاعات موجود در پایگاه داده مطابقت ندارد. برای امنیت، اطلاعات شخصی را به‌صورت دستی وارد کنید."
+  personal_data_summary: |
+    اطلاعات شخصی را بررسی کنید:
+    نام خانوادگی و نام: {last_name} {first_name}
+    تاریخ تولد: {birth_date}
+    شماره گذرنامه: {passport}
+    نشانی محل سکونت: {registration_address}
+    E-mail: {email}
+    تلفن: {phone}
+
+    آیا اطلاعات به‌روز است یا باید تغییراتی اعمال شود؟
+  vehicle_data_summary: |
+    {vehicle_type} با شماره ثبت دولتی: {license_plate}
+    وسیله نقلیه در کشور زیر ثبت شده است: {vehicle_country}
+    سال تولید: {manufacture_year}
+    VIN: {vin}
+    {fuel_type}، حجم موتور {engine_capacity} سانتی‌متر مکعب، قدرت {engine_power}، {power_unit}
+
+    آیا اطلاعات به‌روز است یا باید تغییراتی اعمال شود؟
+  data_actual: "اطلاعات به‌روز است"
+  data_edit: "نیاز به اعمال تغییرات است"
+  ask_first_name_prefilled: "نام * (استفاده از: {value})"
+
+  prefill_next_button: "بله، سؤال بعدی"
+
+  ask_last_name_prefilled: "نام خانوادگی * (استفاده از: {value})"
+  ask_phone_prefilled: "تلفن (با کد کشور) * (استفاده از: {value})"
+  ask_email_prefilled: "E-mail * (استفاده از: {value})"
+  ask_first_name: "نام (با حروف لاتین)*"
+  ask_last_name: "نام خانوادگی (با حروف لاتین)*"
+  ask_phone: |
+    تلفن (با کد کشور)
+    مثال: +48123456789
+  ask_email: |
+    E-mail
+    مثال: exempl@mail.pl
+  ask_birth_date: |
+    تاریخ تولد
+    قالب: روز.ماه.سال
+  ask_birth_date_prefilled: "تاریخ تولد * (استفاده از: {value})"
+  ask_passport: "سری و شماره گذرنامه بدون فاصله (با حروف لاتین)*"
+  ask_passport_prefilled: "سری و شماره گذرنامه بدون فاصله * (استفاده از: {value})"
+  ask_registration_address: "نشانی ثبت‌شده (با حروف لاتین)*"
+  ask_registration_address_prefilled: "نشانی ثبت‌شده * (استفاده از: {value})"
+  ask_insurance_period: "مدت بیمه (انتخاب شود) *"
+  ask_insurance_start_date: |
+    تاریخ شروع اعتبار بیمه
+    قالب: روز.ماه.سال
+  ask_vehicle_country: "کشور ثبت خودرو *"
+  validation_vehicle_country: "کشور ثبت خودرو را مشخص کنید."
+  ask_vehicle_country_prefilled: "کشور ثبت خودرو * (فعلی: {value})"
+
+  choose_from_buttons: "مقدار را با دکمه زیر انتخاب کنید."
+
+  ask_vehicle_type: "نوع وسیله نقلیه *"
+  ask_vehicle_type_prefilled: "نوع وسیله نقلیه * (فعلی: {value})"
+  ask_license_plate: "شماره پلاک *"
+  ask_license_plate_after_start: "شماره پلاک (با حروف لاتین)*"
+  validation_license_plate_strict: "شماره پلاک: فقط حروف لاتین و اعداد، بدون فاصله/خط تیره، حداکثر 8 کاراکتر."
+  prefilled_vehicle_from_bitrix_editable: "اطلاعات خودرو بر اساس شماره پلاک در پایگاه داده ما پیدا شد. مقادیر وارد شده است — بررسی کنید و در صورت نیاز اصلاح کنید."
+  vehicle_not_found_manual: "خودرو در پایگاه داده پیدا نشد. لطفاً اطلاعات خودرو را به‌صورت دستی وارد کنید."
+  ask_vin: "شماره VIN *"
+  ask_brand_model: "برند و مدل وسیله نقلیه (با حروف لاتین)*"
+  ask_manufacture_year: "سال تولید وسیله نقلیه *"
+  ask_fuel_type: "نوع سوخت *"
+  ask_engine_capacity: "حجم موتور، سانتی‌متر مکعب *"
+  ask_engine_capacity_prefilled: "حجم موتور، سانتی‌متر مکعب * (استفاده از: {value})"
+  ask_engine_power: "قدرت موتور *"
+  ask_engine_power_prefilled: "قدرت موتور * (استفاده از: {value})"
+  skip_engine_capacity_electric: "برای نوع سوخت برقی، حجم موتور لازم نیست."
+  ask_power_unit: "واحد اندازه‌گیری قدرت *"
+
+  ask_power_unit_prefilled: "واحد اندازه‌گیری قدرت * (فعلی: {value})"
+  ask_comment: "توضیح (اختیاری)"
+  skip_comment_button: "رد کردن"
+
+  ask_vehicle_docs: |
+    کارت/سند فنی خودرو (عکس یا PDF)
+    می‌توانید چند فایل پیوست کنید.
+
+  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
+  add_more_docs: "Add more documents"
+  all_docs_uploaded: "All documents uploaded"
+  ask_techpass_changed: "در پایگاه داده قبلاً عکس سند ثبت وسیله نقلیه وجود دارد. آیا سند ثبت تغییر کرده است؟"
+
+  techpass_changed_yes: "بله، تغییر کرده است"
+  techpass_changed_no: "خیر، تغییر نکرده است"
+  ask_vehicle_finalize: "خودروی دیگری اضافه شود یا صدور درخواست تکمیل شود؟"
+  add_vehicle: "افزودن خودروی دیگر"
+  finish_application: "تکمیل درخواست"
+  ask_consent: |
+    سیاست پردازش داده‌های شخصی SINEDIS
+    SINEDIS Sp. z o.o. داده‌های شخصی را مطابق با مقررات اتحادیه اروپا 2016/679 (GDPR / RODO) و قوانین لهستان پردازش می‌کند.
+    داده‌ها برای موارد زیر استفاده می‌شوند:
+    • محاسبه پیشنهادهای بیمه‌ای؛
+    • صدور و پشتیبانی قراردادهای بیمه؛
+    • ارتباط با مشتری؛
+    • اجرای الزامات قانونی؛
+    • ارتباطات بازاریابی در صورت وجود رضایت کاربر.
+    داده‌های زیر ممکن است پردازش شوند:
+    نام، تلفن، e-mail، نشانی، اطلاعات وسیله نقلیه، اطلاعات بیمه‌ای، داده‌های پرداختی و فنی.
+    داده‌ها ممکن است به شرکت‌های بیمه، پیمانکاران IT و سایر شرکای لازم برای ارائه خدمات منتقل شوند.
+    کاربر حق دارد:
+    • به داده‌ها دسترسی دریافت کند؛
+    • داده‌ها را اصلاح یا حذف کند؛
+    • پردازش را محدود کند؛
+    • رضایت خود را پس بگیرد؛
+    • به PUODO شکایت ارائه کند.
+    مدیر داده‌ها می‌تواند شرکت بیمه صادرکننده بیمه‌نامه یا SINEDIS Sp. z o.o. باشد.
+    اطلاعات تماس:
+    SINEDIS Sp. z o.o.
+    ul. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    info@sinedis.pl
+    odo@sinedis.pl - بازرس حفاظت از داده‌ها
+    نسخه کامل سیاست:
+    https://greencard.agency
+    ________________________
+    آیا با پردازش و انتقال داده‌های شخصی موافق هستید؟
+  consent_agree: "✅ موافقت و ارسال"
+  consent_decline: "❌ عدم موافقت"
+  declined: "شما از انتقال داده‌ها خودداری کردید. درخواست لغو شد."
+  validation_name: "حداقل 2 کاراکتر وارد کنید."
+  validation_phone: "شماره تلفن نامعتبر است. از قالب +48123456789 استفاده کنید."
+  validation_email: "e-mail نامعتبر است."
+
+  validation_date: "تاریخ نامعتبر است. قالب‌های مجاز: 16/06/1985، 16.06.1985، 16.06.85، 16-06-1985، 1985-06-16. قالب ماه/روز/سال ممنوع است."
+
+  validation_age_18: "بیمه‌گذار باید حداقل 18 سال کامل داشته باشد."
+  validation_insurance_start_not_past: "تاریخ شروع بیمه نمی‌تواند در گذشته باشد."
+  ask_vin_prefilled: "شماره VIN * (استفاده از: {value})"
+  ask_brand_model_prefilled: "برند و مدل وسیله نقلیه * (استفاده از: {value})"
+  ask_manufacture_year_prefilled: "سال تولید وسیله نقلیه * (استفاده از: {value})"
+  ask_fuel_type_prefilled: "نوع سوخت * (فعلی: {value})"
+
+  validation_passport: "سری و شماره گذرنامه نامعتبر است (بدون فاصله وارد شود)."
+  validation_address: "نشانی کامل ثبت‌شده را وارد کنید."
+  validation_license_plate: "شماره پلاک نامعتبر است."
+  validation_vin: "VIN باید شامل 17 کاراکتر باشد."
+  validation_brand_model: "برند و مدل را مشخص کنید."
+  validation_year: "سال تولید معتبر را وارد کنید."
+  validation_positive_integer: "یک عدد صحیح مثبت وارد کنید."
+  validation_positive_number: "یک عدد مثبت وارد کنید."
+  validation_docs: "عکس یا PDF/سند فنی خودرو را ارسال کنید."
+
+operator:
+  request_received: "درخواست دریافت شد"
+  operator_connected: "اپراتور متصل شد"
+  access_denied: "دسترسی ممنوع است"
+  no_tickets: "درخواستی وجود ندارد"
+  taken: "درخواست پذیرفته شد"
+  closed: "درخواست بسته شد"
+  reply_sent: "پاسخ ارسال شد"
+
+faq:
+  title: "دسته‌بندی سوالات متداول را انتخاب کنید"
+  categories:
+    documents: "مدارک لازم برای صدور"
+    payment: "پرداخت"
+    coverage: "پوشش"
+    mistakes: "موارد قابل توجه"
+    refund: "بازپرداخت"
+  answers:
+    documents: |
+      برای صدور بیمه‌نامه، داده‌های زیر لازم است: اطلاعات گذرنامه، اطلاعات وسیله نقلیه و اطلاعات مربوط به تاریخ‌های اعتبار بیمه.
+      بنابراین باید آماده کنید:
+      - گذرنامه
+      - گواهی ثبت وسیله نقلیه
+      - اطلاعات فنی خودرو
+      - شماره تلفن
+      - e-Mail
+    payment: |
+      روش‌های موجود:
+      - پرداخت از طریق انتقال به کارت لهستانی،
+      - پرداخت با BLIK به شماره تلفن،
+      - پرداخت از طریق انتقال به حساب بانکی لهستانی
+    coverage: "محدوده پوشش: A - اتریش، B - بلژیک، BG - بلغارستان، CY - قبرس، CZ - جمهوری چک، D - آلمان، DK - دانمارک، E - اسپانیا، EST - استونی، F - فرانسه، FIN - فنلاند، GR - یونان، H - مجارستان، HR - کرواسی، I - ایتالیا، IRL - ایرلند، IS - ایسلند، L - لوکزامبورگ، LT - لیتوانی، LV - لتونی، M - مالت، N - نروژ، NL - هلند، P - پرتغال، PL - لهستان، RO - رومانی، S - سوئد، SK - اسلواکی، SLO - اسلوونی، CH - سوئیس."
+    mistakes: "لطفاً قبل از ارسال، VIN، شماره پلاک و مدت بیمه را دوباره بررسی کنید. بعداً امکان اعمال اصلاحات وجود نخواهد داشت!"
+    refund: "بازپرداخت وجه انجام نمی‌شود."
+
+coverage:
+  text: |
+    نقشه پوشش OC graniczne (border insurance).
+    قبل از سفر، کد کشور را در بیمه‌نامه خود بررسی کنید.
+    A - اتریش، B - بلژیک، BG - بلغارستان، CY - قبرس، CZ - جمهوری چک، D - آلمان، DK - دانمارک، E - اسپانیا، EST - استونی، F - فرانسه، FIN - فنلاند، GR - یونان، H - مجارستان، HR - کرواسی، I - ایتالیا، IRL - ایرلند، IS - ایسلند، L - لوکزامبورگ، LT - لیتوانی، LV - لتونی، M - مالت، N - نروژ، NL - هلند، P - پرتغال، PL - لهستان، RO - رومانی، S - سوئد، SK - اسلواکی، SLO - اسلوونی، CH - سوئیس.
+
+latest_deal:
+  title_label: "TITLE"
+  policy_number_label: "Policy number"
+  policy_status_label: "Policy status"
+  comments_label: "COMMENTS"
+  not_found: "No latest application was found."
+  unavailable: "Could not get your latest application. Please try again later."
+  delivery_prompt: "بیمه‌نامه را چگونه برای شما ارسال کنیم؟"
+  delivery_email_button: "ارسال به ایمیل"
+  delivery_chat_button: "ارسال همین‌جا"
+  delivery_request_sent: "درخواست برای اپراتور ارسال شد."
+  payment_instructions: |
+    Your application for car insurance for {license_plate} has been approved.
+
+    After payment, please send the payment confirmation.
+
+    Payment options
+
+    BLIK to +48 664 914 738
+    Payment reference: za ubezpieczenie auto {license_plate}
+
+
+    Bank transfer in Poland:
+    Account holder: DZIANIS BARAVOI
+    Account number: 44 1020 1332 0000 1602 1435 6564
+    Bank: Powszechna Kasa Oszczędności Bank Polski SA
+    Payment reference: za ubezpieczenie auto {license_plate}
+
+
+    International bank transfer:
+    Account holder: DZIANIS BARAVOI
+    Currency: PLN
+    IBAN: PL44 1020 1332 0000 1602 1435 6564
+    SWIFT/BIC: BPKOPLPW
+    Bank: Powszechna Kasa Oszczędności Bank Polski SA
+    Country: Polska
+    Address: ul. H. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    Payment reference: za ubezpieczenie auto {license_plate}
+
+
+    Card transfer:
+    Card number: 4213 5239 3578 6679
+    Valid thru: 09/26
+    Cardholder: DZIANIS BARAVOI
+    Payment reference: za ubezpieczenie auto {license_plate}
+payment_confirmation:
+  attach_prompt: "اسکرین‌شات ارسال وجه یا تأییدیه PDF بانک را پیوست کنید."
+  file_received: "فایل دریافت شد. تأییدیه برای اپراتور ارسال شود یا فایل دیگری اضافه می‌کنید؟"
+  send_button: "ارسال تأییدیه"
+  add_more_button: "افزودن فایل دیگر"
+  sent: "تأیید پرداخت برای اپراتور ارسال شد."
+  no_unpaid: "شما فاکتور پرداخت‌نشده‌ای ندارید. می‌توانید دکمه «آخرین درخواست من» را بزنید."
+my_applications:
+  title: "Ваши последние заявки:"
+  empty: "У вас пока нет заявок, связанных с этим Telegram-аккаунтом. Если вы уже оформляли полис ранее, напишите оператору — мы свяжем вашу историю заявок."
+  unavailable: "Сейчас не удалось загрузить заявки. Попробуйте позже."
+  not_found: "Заявка не найдена или недоступна для этого Telegram-аккаунта."
+  policy_status_button: "Где мой полис?"
+  repeat_button: "Оформить снова"
+  open_button: "Открыть"
+  operator_button: "Связаться с оператором"
+  payment_button: "Подтвердить оплату"
+  policy_button: "Получить полис"
+  policy_not_found: "Полис пока не найден. Мы передали запрос оператору."
+repeat_application:
+  start_prompt: |
+    Оформление по предыдущей заявке
+
+    Авто: {vehicle_plate_masked}
+    Тип: {vehicle_type}
+    Страна регистрации: {registration_country}
+
+    Для нового полиса введите дату начала страховки в формате ДД.ММ.ГГГГ.
+  ask_start_date: "Введите новую дату начала страховки в формате ДД.ММ.ГГГГ."
+  invalid_start_date: "Введите корректную дату начала: не в прошлом и в формате ДД.ММ.ГГГГ."
+  ask_period: "Выберите срок страхования."
+  ask_docs: "Использовать документы из предыдущей заявки или загрузить новые?"
+  docs_reuse_button: "Да, использовать прежние"
+  docs_upload_new_button: "Нет, загрузить новые"
+  preview: |
+    Проверьте новую заявку:
+
+    Тип: OC graniczne (border insurance)
+    Авто: {vehicle_plate_masked}
+    Дата начала: {new_start_date}
+    Срок: {new_period_days} дней
+    Документы: {docs_mode_title}
+
+    Стоимость предварительная. Окончательная цена подтверждается оператором после проверки данных.
+  confirm_button: "Подтвердить"
+  change_button: "Изменить"
+  cancel_button: "Отмена"
+  cancelled: "Повторное оформление отменено."
+  unavailable: "Повторное оформление сейчас недоступно. Попробуйте позже или свяжитесь с оператором."
+  created: |
+    Новая заявка создана.
+
+    Номер: {request_id}
+    Статус: {public_status}
+
+    Оператор проверит данные и сообщит следующий шаг.
+policy_status:
+  unavailable: "Сейчас не удалось проверить статус полиса. Попробуйте позже."
+  check_later_button: "Проверить позже"
+  back_to_applications_button: "Мои заявки"

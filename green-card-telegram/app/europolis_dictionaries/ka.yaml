@@ -1,0 +1,469 @@
+main_menu:
+  calculator: "🧮 კალკულატორი"
+  faq: "❓ FAQ"
+  coverage: "🌍 სად მოქმედებს?"
+  apply: "📝 გაფორმება"
+  operator: "👨‍💼 ოპერატორთან დაკავშირება"
+  payment_confirmation: "💳 გადახდის დადასტურება"
+  latest_deal: "📄 ჩემი ბოლო განაცხადი"
+  my_applications: "📄 Мои заявки"
+  language: "🌐 ენა"
+
+menu:
+  title: "მთავარი მენიუ"
+
+language:
+  select: "გთხოვთ, აირჩიოთ ენა"
+  changed: "ენა განახლდა"
+calculator:
+  result_title: "წინასწარი ღირებულება"
+  disclaimer: "წინასწარი გაანგარიშება"
+  apply_cta: "📝 განაცხადის გაფორმება"
+  select_vehicle_type: "აირჩიეთ სატრანსპორტო საშუალების ტიპი"
+  select_period: "აირჩიეთ დაზღვევის ვადა (დღე)"
+  result_template: "წინასწარი ღირებულება: {estimated_price} {currency}\n{disclaimer}"
+
+  vehicle:
+    car: "მსუბუქი ავტომობილი"
+    truck: "სატვირთო ავტომობილი"
+    bus: "ავტობუსი"
+    moto: "მოტოციკლი"
+    trailer: "მისაბმელი"
+    special: "სპეცტექნიკა"
+
+application:
+
+  calendar:
+    cancel: "გაუქმება"
+    today: "დღეს"
+
+  options:
+    period_days: "{days} დღე"
+
+    countries:
+      belarus: "ბელარუსი"
+      russia: "რუსეთი"
+      kazakhstan: "ყაზახეთი"
+      uzbekistan: "უზბეკეთი"
+      turkey: "თურქეთი"
+      usa: "აშშ"
+      united_kingdom: "გაერთიანებული სამეფო"
+      azerbaijan: "აზერბაიჯანი"
+      georgia: "საქართველო"
+      moldova: "მოლდოვა"
+      ukraine: "უკრაინა"
+      armenia: "სომხეთი"
+      other: "სხვა ქვეყანა"
+
+    vehicle_types:
+      car: "მსუბუქი"
+      truck: "სატვირთო"
+      moto: "მოტოციკლი"
+      bus: "ავტობუსი"
+      trailer: "მისაბმელი"
+
+    fuel_types:
+      petrol: "ბენზინი"
+      diesel: "დიზელი"
+      gas_petrol: "გაზი / ბენზინი"
+      electric: "ელექტრო"
+      hybrid: "ჰიბრიდი"
+
+    power_units:
+      hp: "ცხენის ძალა"
+      kw: "კილოვატი"
+
+  submitted: "განაცხადი გაგზავნილია. ჩვენ მოვამზადებთ პოლისს და გამოგიგზავნით გადახდის რეკვიზიტებს."
+  validation_error: "მონაცემების შემოწმების შეცდომა"
+  bitrix_error: "Bitrix-ის შეცდომა"
+
+  mini_app_soon: "Mini App-ის ფორმა შემდეგ ეტაპზე დაემატება."
+  open_form_button: "განაცხადის ფორმის გახსნა"
+  temporarily_unavailable: "განაცხადის ფორმა დროებით მიუწვდომელია."
+
+  form_header: |
+    პოლისის გაფორმების განაცხადი
+    შეავსეთ მონაცემები. ჩვენ მოვამზადებთ პოლისს და გამოგიგზავნით გადახდის რეკვიზიტებს.
+    ⚠️ყურადღება! აპლიკაციის გამოყენების გაგრძელებით, თქვენ ეთანხმებით თქვენი Telegram username-ის დამუშავებას.⚠️
+
+  step_1: "1. კონტაქტები"
+  step_2: "2. დაზღვევისა და სატრანსპორტო საშუალების მონაცემები"
+
+  prefilled_from_bitrix: "თქვენი პროფილი ჩვენს ბაზაში Telegram username-ის მიხედვით მოიძებნა. კონტაქტები და დამზღვევის მონაცემები ავტომატურად შეივსო."
+
+  prefilled_from_bitrix_editable: "თქვენი პროფილი ჩვენს ბაზაში Telegram username-ის მიხედვით მოიძებნა. მონაცემები ავტომატურად შეივსო — გადაამოწმეთ და საჭიროების შემთხვევაში შეასწორეთ. თუ ყველაფერი სწორია, ამ ეტაპზე შეგიძლიათ ცარიელი შეტყობინება გაგზავნოთ."
+
+  ask_email_lookup: |
+    Telegram username-ის მიხედვით პროფილი ვერ მოიძებნა.
+    გთხოვთ, შეიყვანოთ e-mail კლიენტის მოსაძებნად.
+
+  contact_not_found_manual: "კლიენტი e-mail-ით ვერ მოიძებნა. შეავსეთ პერსონალური მონაცემები ხელით."
+
+  ask_passport_verify: "კლიენტი e-mail-ით მოიძებნა. პიროვნების დასადასტურებლად შეიყვანეთ პასპორტის სერია და ნომერი გამოტოვებების გარეშე."
+
+  passport_verify_failed_manual: "პასპორტის მონაცემები ბაზაში არსებულ მონაცემებს არ ემთხვევა. უსაფრთხოების მიზნით, შეავსეთ პერსონალური მონაცემები ხელით."
+
+  personal_data_summary: |
+    გადაამოწმეთ პერსონალური მონაცემები:
+    გვარი და სახელი: {last_name} {first_name}
+    დაბადების თარიღი: {birth_date}
+    პასპორტის ნომერი: {passport}
+    საცხოვრებელი მისამართი: {registration_address}
+    E-mail: {email}
+    ტელეფონი: {phone}
+
+    მონაცემები აქტუალურია თუ საჭიროა ცვლილებების შეტანა?
+
+  vehicle_data_summary: |
+    {vehicle_type} სახელმწიფო სარეგისტრაციო ნომრით: {license_plate}
+    სატრანსპორტო საშუალება რეგისტრირებულია ქვეყანაში: {vehicle_country}
+    გამოშვების წელი: {manufacture_year}
+    VIN: {vin}
+    {fuel_type}, ძრავის მოცულობა {engine_capacity} სმ³, სიმძლავრე {engine_power}, {power_unit}
+
+    მონაცემები აქტუალურია თუ საჭიროა ცვლილებების შეტანა?
+
+  data_actual: "მონაცემები აქტუალურია"
+  data_edit: "საჭიროა ცვლილებების შეტანა"
+
+  ask_first_name_prefilled: "სახელი * (გამოიყენეთ: {value})"
+
+  prefill_next_button: "დიახ, შემდეგი კითხვა"
+
+  ask_last_name_prefilled: "გვარი * (გამოიყენეთ: {value})"
+  ask_phone_prefilled: "ტელეფონი (ქვეყნის კოდით) * (გამოიყენეთ: {value})"
+  ask_email_prefilled: "E-mail * (გამოიყენეთ: {value})"
+
+  ask_first_name: "სახელი (ლათინურად)*"
+  ask_last_name: "გვარი (ლათინურად)*"
+
+  ask_phone: |
+    ტელეფონი (ქვეყნის კოდით)
+    მაგალითი: +48123456789
+
+  ask_email: |
+    E-mail
+    მაგალითი: exempl@mail.pl
+
+  ask_birth_date: |
+    დაბადების თარიღი
+    ფორმატი: დდ.თთ.წწწწ
+
+  ask_birth_date_prefilled: "დაბადების თარიღი * (გამოიყენეთ: {value})"
+
+  ask_passport: "პასპორტის სერია და ნომერი გამოტოვებების გარეშე (ლათინურად)*"
+
+  ask_passport_prefilled: "პასპორტის სერია და ნომერი გამოტოვებების გარეშე * (გამოიყენეთ: {value})"
+
+  ask_registration_address: "რეგისტრაციის მისამართი (ლათინურად)*"
+
+  ask_registration_address_prefilled: "რეგისტრაციის მისამართი * (გამოიყენეთ: {value})"
+
+  ask_insurance_period: "დაზღვევის ვადა (აირჩიეთ) *"
+
+  ask_insurance_start_date: |
+    დაზღვევის მოქმედების დაწყების თარიღი
+    ფორმატი: დდ.თთ.წწწწ
+
+  ask_vehicle_country: "ავტომობილის რეგისტრაციის ქვეყანა *"
+
+  validation_vehicle_country: "მიუთითეთ ავტომობილის რეგისტრაციის ქვეყანა."
+
+  ask_vehicle_country_prefilled: "ავტომობილის რეგისტრაციის ქვეყანა * (მიმდინარე: {value})"
+
+  choose_from_buttons: "აირჩიეთ მნიშვნელობა ქვემოთ მოცემული ღილაკით."
+
+  ask_vehicle_type: "სატრანსპორტო საშუალების ტიპი *"
+
+  ask_vehicle_type_prefilled: "სატრანსპორტო საშუალების ტიპი * (მიმდინარე: {value})"
+
+  ask_license_plate: "სახელმწიფო ნომერი *"
+
+  ask_license_plate_after_start: "სახელმწიფო ნომერი (ლათინურად)*"
+
+  validation_license_plate_strict: "სახელმწიფო ნომერი: მხოლოდ ლათინური ასოები და ციფრები, გამოტოვებებისა და დეფისების გარეშე, მაქსიმუმ 8 სიმბოლო."
+
+  prefilled_vehicle_from_bitrix_editable: "სახელმწიფო ნომრის მიხედვით ავტომობილის მონაცემები ჩვენს ბაზაში მოიძებნა. მონაცემები ავტომატურად შეივსო — გადაამოწმეთ და საჭიროების შემთხვევაში შეასწორეთ."
+
+  vehicle_not_found_manual: "ავტომობილი ბაზაში ვერ მოიძებნა. გთხოვთ, შეიყვანოთ ავტომობილის მონაცემები ხელით."
+
+  ask_vin: "VIN ნომერი *"
+
+  ask_brand_model: "სატრანსპორტო საშუალების მარკა და მოდელი (ლათინურად)*"
+
+  ask_manufacture_year: "სატრანსპორტო საშუალების გამოშვების წელი *"
+
+  ask_fuel_type: "საწვავის ტიპი *"
+
+  ask_engine_capacity: "ძრავის მოცულობა, სმ³ *"
+
+  ask_engine_capacity_prefilled: "ძრავის მოცულობა, სმ³ * (გამოიყენეთ: {value})"
+
+  ask_engine_power: "ძრავის სიმძლავრე *"
+
+  ask_engine_power_prefilled: "ძრავის სიმძლავრე * (გამოიყენეთ: {value})"
+
+  skip_engine_capacity_electric: "ელექტრო ტიპის სატრანსპორტო საშუალებისთვის ძრავის მოცულობის მითითება საჭირო არ არის."
+
+  ask_power_unit: "სიმძლავრის საზომი ერთეული *"
+
+  ask_power_unit_prefilled: "სიმძლავრის საზომი ერთეული * (მიმდინარე: {value})"
+
+  ask_comment: "კომენტარი (არასავალდებულო)"
+
+  skip_comment_button: "გამოტოვება"
+
+  ask_vehicle_docs: |
+    ტექპასპორტი (ფოტო ან PDF)
+    შესაძლებელია რამდენიმე ფაილის მიმაგრება.
+
+  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
+  add_more_docs: "Add more documents"
+  all_docs_uploaded: "All documents uploaded"
+  ask_techpass_changed: "ბაზაში უკვე არის ტექნიკური პასპორტის ფოტო. შეიცვალა ტექნიკური პასპორტი?"
+
+  techpass_changed_yes: "დიახ, შეიცვალა"
+  techpass_changed_no: "არა, არ შეცვლილა"
+
+  ask_vehicle_finalize: "დაამატოთ კიდევ ერთი ავტომობილი თუ დაასრულოთ გაფორმება?"
+
+  add_vehicle: "კიდევ ერთი ავტომობილის დამატება"
+  finish_application: "გაფორმების დასრულება"
+
+  ask_consent: |
+    SINEDIS-ის პერსონალური მონაცემების დამუშავების პოლიტიკა
+
+    SINEDIS Sp. z o.o. ამუშავებს პერსონალურ მონაცემებს ევროკავშირის რეგლამენტის 2016/679 (GDPR / RODO) და პოლონეთის კანონმდებლობის შესაბამისად.
+
+    მონაცემები გამოიყენება:
+    • სადაზღვევო შეთავაზებების გაანგარიშებისთვის;
+    • სადაზღვევო ხელშეკრულებების გაფორმებისა და მომსახურებისთვის;
+    • კლიენტთან კომუნიკაციისთვის;
+    • კანონმდებლობის მოთხოვნების შესასრულებლად;
+    • მარკეტინგული კომუნიკაციისთვის მომხმარებლის თანხმობის არსებობის შემთხვევაში.
+
+    შეიძლება დამუშავდეს:
+    სახელი, ტელეფონი, e-mail, მისამართი, სატრანსპორტო საშუალების მონაცემები, სადაზღვევო ინფორმაცია, გადახდისა და ტექნიკური მონაცემები.
+
+    მონაცემები შეიძლება გადაეცეს სადაზღვევო კომპანიებს, IT-კონტრაქტორებს და სხვა პარტნიორებს, რომლებიც აუცილებელია მომსახურების გასაწევად.
+
+    მომხმარებელს აქვს უფლება:
+    • მიიღოს წვდომა მონაცემებზე;
+    • შეასწოროს ან წაშალოს მონაცემები;
+    • შეზღუდოს მონაცემთა დამუშავება;
+    • გაიწვიოს თანხმობა;
+    • შეიტანოს საჩივარი PUODO-ში.
+
+    მონაცემთა ადმინისტრატორი შეიძლება იყოს როგორც პოლისის გამფორმებელი სადაზღვევო კომპანია, ასევე SINEDIS Sp. z o.o.
+
+    კონტაქტები:
+    SINEDIS Sp. z o.o.
+    ul. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    info@sinedis.pl
+    odo@sinedis.pl - მონაცემთა დაცვის ინსპექტორი
+
+    პოლიტიკის სრული ვერსია:
+    https://greencard.agency
+
+    ________________________
+
+    ეთანხმებით პერსონალური მონაცემების დამუშავებასა და გადაცემას?
+
+  consent_agree: "✅ თანხმობა და გაგზავნა"
+  consent_decline: "❌ უარის თქმა"
+
+  declined: "თქვენ უარი თქვით მონაცემების გადაცემაზე. განაცხადი გაუქმებულია."
+
+  validation_name: "შეიყვანეთ მინიმუმ 2 სიმბოლო."
+
+  validation_phone: "ტელეფონის ნომერი არასწორია. გამოიყენეთ ფორმატი +48123456789."
+
+  validation_email: "არასწორი e-mail."
+
+  validation_date: "არასწორი თარიღი. დასაშვები ფორმატებია: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. ფორმატი მმ/დდ/წწწწ აკრძალულია."
+
+  validation_age_18: "დამზღვევი უნდა იყოს არანაკლებ 18 სრული წლის."
+
+  validation_insurance_start_not_past: "დაზღვევის დაწყების თარიღი არ შეიძლება იყოს წარსულში."
+
+  ask_vin_prefilled: "VIN ნომერი * (გამოიყენეთ: {value})"
+
+  ask_brand_model_prefilled: "სატრანსპორტო საშუალების მარკა და მოდელი * (გამოიყენეთ: {value})"
+
+  ask_manufacture_year_prefilled: "სატრანსპორტო საშუალების გამოშვების წელი * (გამოიყენეთ: {value})"
+
+  ask_fuel_type_prefilled: "საწვავის ტიპი * (მიმდინარე: {value})"
+
+  validation_passport: "პასპორტის სერია და ნომერი არასწორია (შეიყვანეთ გამოტოვებების გარეშე)."
+
+  validation_address: "მიუთითეთ სრული რეგისტრაციის მისამართი."
+
+  validation_license_plate: "არასწორი სახელმწიფო ნომერი."
+
+  validation_vin: "VIN უნდა შეიცავდეს 17 სიმბოლოს."
+
+  validation_brand_model: "მიუთითეთ მარკა და მოდელი."
+
+  validation_year: "მიუთითეთ გამოშვების სწორი წელი."
+
+  validation_positive_integer: "შეიყვანეთ დადებითი მთელი რიცხვი."
+
+  validation_positive_number: "შეიყვანეთ დადებითი რიცხვი."
+
+  validation_docs: "გამოგზავნეთ ტექპასპორტის ფოტო ან PDF/დოკუმენტი."
+
+operator:
+  request_received: "მოთხოვნა მიღებულია"
+  operator_connected: "ოპერატორი ჩაერთო"
+  access_denied: "წვდომა აკრძალულია"
+  no_tickets: "მიმართვები არ არის"
+  taken: "მიმართვა მიღებულია"
+  closed: "მიმართვა დახურულია"
+  reply_sent: "პასუხი გაგზავნილია"
+
+faq:
+  title: "აირჩიეთ FAQ-ის კატეგორია"
+
+  categories:
+    documents: "გაფორმებისთვის საჭირო დოკუმენტები"
+    payment: "გადახდა"
+    coverage: "დაფარვა"
+    mistakes: "რას უნდა მიაქციოთ ყურადღება"
+    refund: "თანხის დაბრუნება"
+
+  answers:
+    documents: |
+      პოლისის გასაფორმებლად საჭირო იქნება შემდეგი მონაცემები: პასპორტის მონაცემები, სატრანსპორტო საშუალების მონაცემები და დაზღვევის მოქმედების თარიღები.
+
+      ამიტომ საჭიროა მოამზადოთ:
+      - პასპორტი
+      - სატრანსპორტო საშუალების რეგისტრაციის მოწმობა
+      - ავტომობილის ტექნიკური მონაცემები
+      - ტელეფონის ნომერი
+      - e-mail
+
+    payment: |
+      ხელმისაწვდომია:
+      - გადახდა პოლონურ ბარათზე საბანკო გადარიცხვით,
+      - გადახდა BLIK-ით ტელეფონის ნომერზე,
+      - გადახდა პოლონურ საბანკო ანგარიშზე გადარიცხვით
+
+    coverage: "დაფარვის ტერიტორია: A - ავსტრია, B - ბელგია, BG - ბულგარეთი, CY - კვიპროსი, CZ - ჩეხეთი, D - გერმანია, DK - დანია, E - ესპანეთი, EST - ესტონეთი, F - საფრანგეთი, FIN - ფინეთი, GR - საბერძნეთი, H - უნგრეთი, HR - ხორვატია, I - იტალია, IRL - ირლანდია, IS - ისლანდია, L - ლუქსემბურგი, LT - ლიტვა, LV - ლატვია, M - მალტა, N - ნორვეგია, NL - ნიდერლანდები, P - პორტუგალია, PL - პოლონეთი, RO - რუმინეთი, S - შვედეთი, SK - სლოვაკეთი, SLO - სლოვენია, CH - შვეიცარია."
+
+    mistakes: "გთხოვთ, გაგზავნამდე ორჯერ გადაამოწმოთ VIN, სახელმწიფო ნომერი და დაზღვევის პერიოდი. შემდგომში ცვლილებების შეტანა შეუძლებელი იქნება!"
+
+    refund: "თანხის დაბრუნება არ ხორციელდება."
+
+coverage:
+  text: |
+    OC graniczne (border insurance)-ის დაფარვის რუკა.
+
+    გამგზავრებამდე გადაამოწმეთ ქვეყნის კოდი თქვენს პოლისში.
+
+    A - ავსტრია, B - ბელგია, BG - ბულგარეთი, CY - კვიპროსი, CZ - ჩეხეთი, D - გერმანია, DK - დანია, E - ესპანეთი, EST - ესტონეთი, F - საფრანგეთი, FIN - ფინეთი, GR - საბერძნეთი, H - უნგრეთი, HR - ხორვატია, I - იტალია, IRL - ირლანდია, IS - ისლანდია, L - ლუქსემბურგი, LT - ლიტვა, LV - ლატვია, M - მალტა, N - ნორვეგია, NL - ნიდერლანდები, P - პორტუგალია, PL - პოლონეთი, RO - რუმინეთი, S - შვედეთი, SK - სლოვაკეთი, SLO - სლოვენია, CH - შვეიცარია.
+
+latest_deal:
+  title_label: "TITLE"
+  policy_number_label: "Policy number"
+  policy_status_label: "Policy status"
+  comments_label: "COMMENTS"
+  not_found: "No latest application was found."
+  unavailable: "Could not get your latest application. Please try again later."
+  delivery_prompt: "როგორ გსურთ პოლისის მიღება?"
+  delivery_email_button: "ელფოსტაზე გაგზავნა"
+  delivery_chat_button: "აქ გაგზავნა"
+  delivery_request_sent: "მოთხოვნა ოპერატორს გაეგზავნა."
+  payment_instructions: |
+    Your application for car insurance for {license_plate} has been approved.
+
+    After payment, please send the payment confirmation.
+
+    Payment options
+
+    BLIK to +48 664 914 738
+    Payment reference: za ubezpieczenie auto {license_plate}
+
+
+    Bank transfer in Poland:
+    Account holder: DZIANIS BARAVOI
+    Account number: 44 1020 1332 0000 1602 1435 6564
+    Bank: Powszechna Kasa Oszczędności Bank Polski SA
+    Payment reference: za ubezpieczenie auto {license_plate}
+
+
+    International bank transfer:
+    Account holder: DZIANIS BARAVOI
+    Currency: PLN
+    IBAN: PL44 1020 1332 0000 1602 1435 6564
+    SWIFT/BIC: BPKOPLPW
+    Bank: Powszechna Kasa Oszczędności Bank Polski SA
+    Country: Polska
+    Address: ul. H. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    Payment reference: za ubezpieczenie auto {license_plate}
+
+
+    Card transfer:
+    Card number: 4213 5239 3578 6679
+    Valid thru: 09/26
+    Cardholder: DZIANIS BARAVOI
+    Payment reference: za ubezpieczenie auto {license_plate}
+payment_confirmation:
+  attach_prompt: "დაურთეთ თანხის გაგზავნის ეკრანის სურათი ან ბანკის PDF დადასტურება."
+  file_received: "ფაილი მიღებულია. გავუგზავნოთ დადასტურება ოპერატორს თუ დავამატოთ კიდევ ერთი ფაილი?"
+  send_button: "დადასტურების გაგზავნა"
+  add_more_button: "კიდევ ერთი ფაილის დამატება"
+  sent: "გადახდის დადასტურება გაეგზავნა ოპერატორს."
+  no_unpaid: "თქვენ არ გაქვთ გადაუხდელი ანგარიშები. შეგიძლიათ დააჭიროთ ღილაკს „ჩემი ბოლო განაცხადი“."
+my_applications:
+  title: "Ваши последние заявки:"
+  empty: "У вас пока нет заявок, связанных с этим Telegram-аккаунтом. Если вы уже оформляли полис ранее, напишите оператору — мы свяжем вашу историю заявок."
+  unavailable: "Сейчас не удалось загрузить заявки. Попробуйте позже."
+  not_found: "Заявка не найдена или недоступна для этого Telegram-аккаунта."
+  policy_status_button: "Где мой полис?"
+  repeat_button: "Оформить снова"
+  open_button: "Открыть"
+  operator_button: "Связаться с оператором"
+  payment_button: "Подтвердить оплату"
+  policy_button: "Получить полис"
+  policy_not_found: "Полис пока не найден. Мы передали запрос оператору."
+repeat_application:
+  start_prompt: |
+    Оформление по предыдущей заявке
+
+    Авто: {vehicle_plate_masked}
+    Тип: {vehicle_type}
+    Страна регистрации: {registration_country}
+
+    Для нового полиса введите дату начала страховки в формате ДД.ММ.ГГГГ.
+  ask_start_date: "Введите новую дату начала страховки в формате ДД.ММ.ГГГГ."
+  invalid_start_date: "Введите корректную дату начала: не в прошлом и в формате ДД.ММ.ГГГГ."
+  ask_period: "Выберите срок страхования."
+  ask_docs: "Использовать документы из предыдущей заявки или загрузить новые?"
+  docs_reuse_button: "Да, использовать прежние"
+  docs_upload_new_button: "Нет, загрузить новые"
+  preview: |
+    Проверьте новую заявку:
+
+    Тип: OC graniczne (border insurance)
+    Авто: {vehicle_plate_masked}
+    Дата начала: {new_start_date}
+    Срок: {new_period_days} дней
+    Документы: {docs_mode_title}
+
+    Стоимость предварительная. Окончательная цена подтверждается оператором после проверки данных.
+  confirm_button: "Подтвердить"
+  change_button: "Изменить"
+  cancel_button: "Отмена"
+  cancelled: "Повторное оформление отменено."
+  unavailable: "Повторное оформление сейчас недоступно. Попробуйте позже или свяжитесь с оператором."
+  created: |
+    Новая заявка создана.
+
+    Номер: {request_id}
+    Статус: {public_status}
+
+    Оператор проверит данные и сообщит следующий шаг.
+policy_status:
+  unavailable: "Сейчас не удалось проверить статус полиса. Попробуйте позже."
+  check_later_button: "Проверить позже"
+  back_to_applications_button: "Мои заявки"

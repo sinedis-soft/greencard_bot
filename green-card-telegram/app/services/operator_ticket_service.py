@@ -85,6 +85,7 @@ class TicketPayload:
     status: str = "new"
     last_message_preview: str | None = None
     internal_note: str | None = None
+    client_bot: str = "default"
 
 
 class OperatorTicketService:

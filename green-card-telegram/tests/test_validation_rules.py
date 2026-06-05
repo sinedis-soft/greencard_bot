@@ -1,6 +1,7 @@
 from app.validation import (
     is_latin_name,
     is_license_plate,
+    is_license_plate_long,
     is_passport_number,
     is_vin,
     normalize_license_plate,
@@ -40,3 +41,10 @@ def test_vin_is_trimmed_uppercase_17_chars_and_excludes_i_o_q():
     assert not is_vin("WVWZZZ1JZXW00000I")
     assert not is_vin("WVWZZZ1JZXW00000O")
     assert not is_vin("WVWZZZ1JZXW00000Q")
+
+
+def test_long_license_plate_allows_up_to_20_latin_alnum_chars():
+    assert is_license_plate_long("AB123456789012345678")
+    assert not is_license_plate_long("AB1234567890123456789")
+    assert not is_license_plate_long("AB-123")
+    assert not is_license_plate_long("АВ123")

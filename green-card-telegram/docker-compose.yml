@@ -50,6 +50,13 @@ services:
     command: python -m app.bots.client_bot.bot
     depends_on: [redis]
 
+  europolis_client_bot:
+    restart: unless-stopped
+    build: .
+    env_file: .env
+    command: python -m app.bots.europolis_client_bot.bot
+    depends_on: [redis]
+
   operator_bot:
     restart: unless-stopped
     build: .

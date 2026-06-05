@@ -3,6 +3,7 @@ import re
 LATIN_NAME_RE = re.compile(r"^[A-Za-z][A-Za-z -]*$")
 PASSPORT_RE = re.compile(r"^[A-Za-z0-9]+$")
 LICENSE_PLATE_RE = re.compile(r"^[A-Z0-9]{3,8}$")
+LICENSE_PLATE_LONG_RE = re.compile(r"^[A-Z0-9]{3,20}$")
 VIN_RE = re.compile(r"^[A-HJ-NPR-Z0-9]{17}$")
 
 
@@ -28,6 +29,10 @@ def is_passport_number(value: str) -> bool:
 
 def is_license_plate(value: str) -> bool:
     return bool(LICENSE_PLATE_RE.fullmatch(value))
+
+
+def is_license_plate_long(value: str) -> bool:
+    return bool(LICENSE_PLATE_LONG_RE.fullmatch(value))
 
 
 def is_vin(value: str) -> bool:

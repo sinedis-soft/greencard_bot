@@ -4,7 +4,10 @@ from uuid import uuid4
 
 from app.bots.operator_bot.keyboards.ticket_actions import reply_command, reply_instruction
 from app.services.i18n_service import I18nService
-from app.services.operator_message_formatter import operator_language_line
+from app.services.operator_message_formatter import (
+    operator_client_bot_line,
+    operator_language_line,
+)
 from app.services.operator_notifier_service import OperatorNotifierService
 from app.services.operator_ticket_service import OperatorTicketService, TicketPayload
 
@@ -50,6 +53,7 @@ async def faq_feedback_down(callback: CallbackQuery, i18n: I18nService, lang_sto
     lang = lang_store.get(callback.from_user.id, default_language)
     request_id = f"faq-{callback.from_user.id}-{uuid4().hex[:8]}"
     client_name = callback.from_user.full_name if callback.from_user else ""
+    client_bot = getattr(callback.bot, "client_bot_code", "default")
     OperatorTicketService().create_ticket(
         TicketPayload(
             request_id=request_id,
@@ -63,14 +67,16 @@ async def faq_feedback_down(callback: CallbackQuery, i18n: I18nService, lang_sto
             insurance_period_days=0,
             insurance_start_date="",
             comment="FAQ dislike: user requested operator assistance.",
+            client_bot=client_bot,
         )
     )
     OperatorNotifierService().notify_new_ticket(
         "🆘 Новый запрос оператора\n"
         f"ID: {request_id}\n"
         f"Клиент: {client_name}\n"
-        f"{operator_language_line(lang)}\n"
         "Источник: FAQ (dislike)\n"
+        f"{operator_client_bot_line(client_bot)}\n"
+        f"{operator_language_line(lang)}\n"
         f"{reply_instruction(request_id)}",
         reply_command(request_id),
     )

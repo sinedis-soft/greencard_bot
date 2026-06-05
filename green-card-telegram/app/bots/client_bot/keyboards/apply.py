@@ -95,6 +95,35 @@ def finalize_vehicle_keyboard(add_text: str, finish_text: str) -> InlineKeyboard
     return builder.as_markup()
 
 
+
+def policyholder_type_keyboard(individual_text: str, company_text: str) -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    builder.button(text=individual_text, callback_data="apply:policyholder:individual")
+    builder.button(text=company_text, callback_data="apply:policyholder:company")
+    builder.adjust(1)
+    return builder.as_markup()
+
+
+def company_confirm_keyboard(yes_text: str, choose_text: str) -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    builder.button(text=yes_text, callback_data="apply:company:confirm")
+    builder.button(text=choose_text, callback_data="apply:company:choose_other")
+    builder.adjust(1)
+    return builder.as_markup()
+
+
+def company_select_keyboard(companies: list[dict]) -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    for company in companies:
+        company_id = str(company.get("ID") or company.get("id") or "").strip()
+        if not company_id:
+            continue
+        title = str(company.get("TITLE") or company.get("title") or f"Компания {company_id}").strip()
+        builder.button(text=title[:64], callback_data=f"apply:company:select:{company_id}")
+    builder.button(text="Ввести новую компанию", callback_data="apply:company:choose_other")
+    builder.adjust(1)
+    return builder.as_markup()
+
 def consent_keyboard(agree_text: str, decline_text: str) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.button(text=agree_text, callback_data="apply:consent:agree")
