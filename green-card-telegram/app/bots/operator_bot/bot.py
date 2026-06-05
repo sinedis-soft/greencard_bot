@@ -3,7 +3,10 @@ import os
 from pathlib import Path
 
 from aiogram import Bot, Dispatcher
+from aiogram.types import BotCommand
 
+from app.bots.operator_bot.command_menu import OPERATOR_COMMANDS
+from app.bots.operator_bot.handlers import help as help_handler
 from app.bots.operator_bot.handlers import replies, restart, start, status, tickets
 from app.services.i18n_service import I18nService
 
@@ -19,7 +22,15 @@ async def main() -> None:
     dp["operator_ids"] = operator_ids
     dp["i18n"] = i18n
 
+    await bot.set_my_commands(
+        [
+            BotCommand(command=command, description=description)
+            for command, description in OPERATOR_COMMANDS
+        ]
+    )
+
     dp.include_router(start.router)
+    dp.include_router(help_handler.router)
     dp.include_router(tickets.router)
     dp.include_router(status.router)
     dp.include_router(restart.router)
