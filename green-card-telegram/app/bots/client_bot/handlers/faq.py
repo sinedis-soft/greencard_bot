@@ -12,11 +12,42 @@ from app.services.operator_notifier_service import OperatorNotifierService
 from app.services.operator_ticket_service import OperatorTicketService, TicketPayload
 
 router = Router()
-FAQ_CATEGORIES = ["documents", "payment", "coverage", "mistakes", "refund"]
+FAQ_CATEGORIES = [
+    "documents",
+    "payment",
+    "coverage",
+    "validity",
+    "delivery",
+    "border",
+    "accident",
+    "mistakes",
+    "refund",
+    "whatis",
+    "nogreencard",
+    "vehicles",
+    "extension",
+    "legalentity",
+    "online",
+    "database",
+    "restrictions",
+    "support",
+]
 
 
 def _faq_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
-    rows = [[InlineKeyboardButton(text=i18n.get_text(lang, f"faq.categories.{cat}"), callback_data=f"faq:{cat}")] for cat in FAQ_CATEGORIES]
+    buttons = [
+        InlineKeyboardButton(
+            text=i18n.get_text(lang, f"faq.categories.{cat}"),
+            callback_data=f"faq:{cat}"
+        )
+        for cat in FAQ_CATEGORIES
+    ]
+
+    rows = [
+        buttons[i:i + 2]
+        for i in range(0, len(buttons), 2)
+    ]
+
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
 
