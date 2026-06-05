@@ -149,6 +149,7 @@ def test_europolis_belarusian_menu_buttons_match_after_telegram_emoji_variation(
     assert menu_action_for_text(i18n, "Мои заявки", "be", "ru") == "my_applications"
 
 
+
 def test_europolis_belarusian_menu_buttons_match_without_leading_icon():
     i18n = FakeI18n()
     i18n.dictionaries["be"] = {
@@ -168,5 +169,6 @@ def test_europolis_belarusian_menu_buttons_match_without_leading_icon():
     assert menu_action_for_text(i18n, "Аформіць", "be", "ru") == "apply"
     assert (
         menu_action_for_text(i18n, "Пацвярджэнне аплаты", "be", "ru")
+
         == "payment_confirmation"
     )
