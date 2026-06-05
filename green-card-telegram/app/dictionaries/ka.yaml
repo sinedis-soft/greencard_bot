@@ -356,7 +356,7 @@ faq:
 
 coverage:
   text: |
-    Green Card-ის დაფარვის რუკა.
+    OC graniczne (border insurance)-ის დაფარვის რუკა.
 
     გამგზავრებამდე გადაამოწმეთ ქვეყნის კოდი თქვენს პოლისში.
 
@@ -444,7 +444,7 @@ repeat_application:
   preview: |
     Проверьте новую заявку:
 
-    Тип: Green Card
+    Тип: OC graniczne (border insurance)
     Авто: {vehicle_plate_masked}
     Дата начала: {new_start_date}
     Срок: {new_period_days} дней

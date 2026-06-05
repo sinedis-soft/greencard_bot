@@ -35,7 +35,7 @@ def test_safe_deal_card_masks_private_fields_and_maps_status():
     assert card == {
         "deal_id": 52581,
         "request_number": "GC-2026-000123",
-        "product_type": "Green Card",
+        "product_type": "OC graniczne (border insurance)",
         "vehicle_plate_masked": "AM***AB",
         "insurance_start_date": "2026-06-15",
         "insurance_period_days": 30,

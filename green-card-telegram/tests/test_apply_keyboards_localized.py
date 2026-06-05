@@ -64,6 +64,9 @@ from app.bots.client_bot.keyboards.apply import (  # noqa: E402
     power_units_keyboard,
     vehicle_types_keyboard,
 )
+from app.bots.client_bot.keyboards.calculator import (  # noqa: E402
+    apply_cta_keyboard as calculator_apply_cta_keyboard,
+)
 
 if _installed_i18n_stub:
     sys.modules.pop("app.services.i18n_service", None)
@@ -80,6 +83,7 @@ class FakeI18n:
         "application.options.vehicle_types.car": "Թեթև ավտոմեքենա",
         "application.options.fuel_types.petrol": "Բենզին",
         "application.options.power_units.hp": "Ձիաուժ",
+        "calculator.apply_cta": "📝 Ուղարկել հայտ",
     }
 
     def get_text(self, lang, key, fallback_lang="en"):
@@ -120,3 +124,10 @@ def test_application_option_callbacks_keep_existing_canonical_values():
     assert "apply:fuel:Бензин" in _callback_data(fuel_types_keyboard(I18N, "hy"))
     assert "apply:power:Лошадиные силы" in _callback_data(power_units_keyboard(I18N, "hy"))
     assert "apply:period:30" in _callback_data(periods_keyboard(I18N, "hy"))
+
+
+def test_calculator_apply_cta_is_inline_button():
+    markup = calculator_apply_cta_keyboard(I18N, "hy")
+
+    assert _button_texts(markup) == ["📝 Ուղարկել հայտ"]
+    assert _callback_data(markup) == ["calc:apply"]

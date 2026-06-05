@@ -80,7 +80,7 @@ VEHICLE_TYPE_TITLES = {
 def repeat_available(deal: dict[str, Any]) -> bool:
     if not _is_visible_in_telegram(deal):
         return False
-    if not _is_green_card_product(deal):
+    if not _is_border_insurance_product(deal):
         return False
     if str(deal.get("STAGE_ID") or "") in BLOCKED_STAGE_IDS:
         return False
@@ -104,7 +104,7 @@ def repeat_preview(
     old_deal: dict[str, Any], new_start_date: str, new_period_days: int, docs_mode: str
 ) -> dict[str, Any]:
     return {
-        "product": "Green Card",
+        "product": "OC graniczne (border insurance)",
         "vehicle_plate_masked": mask_plate(_clean(old_deal.get(LICENSE_PLATE_FIELD))),
         "vehicle_type": vehicle_type_title(old_deal.get(VEHICLE_TYPE_FIELD)),
         "registration_country": country_title(old_deal.get(COUNTRY_FIELD)),
@@ -126,14 +126,14 @@ def build_repeat_deal_payload(
     old_deal_id = _clean(old_deal.get("ID"))
     masked_plate = mask_plate(_clean(old_deal.get(LICENSE_PLATE_FIELD))) or "—"
     fields: dict[str, Any] = {
-        "TITLE": f"Повторное оформление Green Card / {masked_plate} / {new_start_date}",
+        "TITLE": f"Повторное оформление OC graniczne (border insurance) / {masked_plate} / {new_start_date}",
         "CONTACT_ID": old_deal.get("CONTACT_ID"),
         "COMPANY_ID": old_deal.get("COMPANY_ID"),
         INSURANCE_START_FIELD: new_start_date,
         INSURANCE_PERIOD_FIELD: new_period_days,
         REQUEST_ID_FIELD: request_id,
         SHOW_IN_TELEGRAM_FIELD: "1",
-        PRODUCT_TYPE_FIELD: "Green Card",
+        PRODUCT_TYPE_FIELD: "OC graniczne (border insurance)",
         REPEAT_FROM_DEAL_FIELD: old_deal_id,
         REPEAT_MODE_FIELD: "repeat",
         DOCS_REUSE_REQUESTED_FIELD: "1" if docs_mode == DOCS_MODE_REUSE else "0",
@@ -176,9 +176,9 @@ def _is_visible_in_telegram(deal: dict[str, Any]) -> bool:
     return value not in {"0", "n", "false", "no"}
 
 
-def _is_green_card_product(deal: dict[str, Any]) -> bool:
+def _is_border_insurance_product(deal: dict[str, Any]) -> bool:
     value = _single_value(deal.get(PRODUCT_TYPE_FIELD))
-    return not value or value.casefold() == "green card"
+    return not value or value.casefold() == "oc graniczne (border insurance)"
 
 
 def _single_value(value: Any) -> str:

@@ -266,7 +266,7 @@ faq:
 
 coverage:
   text: |
-    Карта пакрыцця Green Card.
+    Карта пакрыцця OC graniczne (border insurance).
     Перад паездкай праверце код краіны ў вашым полісе.
     A - Аўстрыя, B - Бельгія, BG - Балгарыя, CY - Кіпр, CZ - Чэхія, D - Германія, DK - Данія, E - Іспанія, EST - Эстонія, F - Францыя, FIN - Фінляндыя, GR - Грэцыя, H - Венгрыя, HR - Харватыя, I - Італія, IRL - Ірландыя, IS - Ісландыя, L - Люксембург, LT - Літва, LV - Латвія, M - Мальта, N - Нарвегія, NL - Нідэрланды, P - Партугалія, PL - Польшча, RO - Румынія, S - Швецыя, SK - Славакія, SLO - Славенія, CH - Швейцарыя.
 
@@ -352,7 +352,7 @@ repeat_application:
   preview: |
     Проверьте новую заявку:
 
-    Тип: Green Card
+    Тип: OC graniczne (border insurance)
     Авто: {vehicle_plate_masked}
     Дата начала: {new_start_date}
     Срок: {new_period_days} дней

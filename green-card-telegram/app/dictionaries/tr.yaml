@@ -267,7 +267,7 @@ faq:
 
 coverage:
   text: |
-    Green Card kapsam haritası.
+    OC graniczne (border insurance) kapsam haritası.
     Seyahatten önce poliçenizdeki ülke kodunu kontrol edin.
     A - Avusturya, B - Belçika, BG - Bulgaristan, CY - Kıbrıs, CZ - Çekya, D - Almanya, DK - Danimarka, E - İspanya, EST - Estonya, F - Fransa, FIN - Finlandiya, GR - Yunanistan, H - Macaristan, HR - Hırvatistan, I - İtalya, IRL - İrlanda, IS - İzlanda, L - Lüksemburg, LT - Litvanya, LV - Letonya, M - Malta, N - Norveç, NL - Hollanda, P - Portekiz, PL - Polonya, RO - Romanya, S - İsveç, SK - Slovakya, SLO - Slovenya, CH - İsviçre.
 
@@ -353,7 +353,7 @@ repeat_application:
   preview: |
     Проверьте новую заявку:
 
-    Тип: Green Card
+    Тип: OC graniczne (border insurance)
     Авто: {vehicle_plate_masked}
     Дата начала: {new_start_date}
     Срок: {new_period_days} дней

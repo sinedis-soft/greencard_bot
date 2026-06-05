@@ -269,7 +269,7 @@ faq:
 
 coverage:
   text: |
-    Harta de acoperire Green Card.
+    Harta de acoperire OC graniczne (border insurance).
     Înainte de călătorie, verificați codul țării din polița dvs.
     A - Austria, B - Belgia, BG - Bulgaria, CY - Cipru, CZ - Cehia, D - Germania, DK - Danemarca, E - Spania, EST - Estonia, F - Franța, FIN - Finlanda, GR - Grecia, H - Ungaria, HR - Croația, I - Italia, IRL - Irlanda, IS - Islanda, L - Luxemburg, LT - Lituania, LV - Letonia, M - Malta, N - Norvegia, NL - Țările de Jos, P - Portugalia, PL - Polonia, RO - România, S - Suedia, SK - Slovacia, SLO - Slovenia, CH - Elveția.
 
@@ -355,7 +355,7 @@ repeat_application:
   preview: |
     Проверьте новую заявку:
 
-    Тип: Green Card
+    Тип: OC graniczne (border insurance)
     Авто: {vehicle_plate_masked}
     Дата начала: {new_start_date}
     Срок: {new_period_days} дней

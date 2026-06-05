@@ -21,7 +21,7 @@ def _payload(request_id: str, deal_id: int, reason: str = "policy_status_request
         client_name="",
         client_phone="",
         preferred_language="ru",
-        vehicle_type="Green Card",
+        vehicle_type="OC graniczne (border insurance)",
         license_plate="AM***AB",
         vin="",
         insurance_period_days=30,
@@ -51,6 +51,32 @@ def test_take_ticket_assigns_once():
 
     assert svc.take_ticket(request_id, 1001) == (True, "taken")
     assert svc.take_ticket(request_id, 2002) == (False, "already_assigned")
+
+
+def test_get_active_by_user_prefers_ticket_waiting_for_client_reply():
+    svc = OperatorTicketService()
+    suffix = uuid4().hex[:8]
+    telegram_user_id = int("598" + suffix[:7], 16)
+    waiting_request_id = f"OP-TEST-WAITING-{suffix}"
+    newer_request_id = f"OP-TEST-NEWER-{suffix}"
+
+    waiting_payload = _payload(waiting_request_id, 52600, "client_requested_operator")
+    waiting_payload.telegram_user_id = telegram_user_id
+    waiting_payload.telegram_chat_id = telegram_user_id
+    svc.create_ticket(waiting_payload)
+    assert svc.take_ticket(waiting_request_id, 470919281) == (True, "taken")
+    assert svc.set_status(waiting_request_id, "waiting_client") is True
+
+    newer_payload = _payload(newer_request_id, 52601, "policy_status_request")
+    newer_payload.telegram_user_id = telegram_user_id
+    newer_payload.telegram_chat_id = telegram_user_id
+    svc.create_ticket(newer_payload)
+
+    ticket = svc.get_active_by_user(telegram_user_id)
+
+    assert ticket is not None
+    assert ticket.request_id == waiting_request_id
+    assert ticket.operator_id == 470919281
 
 
 def test_sla_worker_uses_sla_due_at(monkeypatch):

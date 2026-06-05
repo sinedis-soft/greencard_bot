@@ -323,7 +323,7 @@ faq:
 
 coverage:
   text: |
-    Green Card coverage map.
+    OC graniczne (border insurance) coverage map.
     Before travelling, please verify the country code indicated on your policy.
 
     A - Austria, B - Belgium, BG - Bulgaria, CY - Cyprus, CZ - Czech Republic, D - Germany, DK - Denmark, E - Spain, EST - Estonia, F - France, FIN - Finland, GR - Greece, H - Hungary, HR - Croatia, I - Italy, IRL - Ireland, IS - Iceland, L - Luxembourg, LT - Lithuania, LV - Latvia, M - Malta, N - Norway, NL - Netherlands, P - Portugal, PL - Poland, RO - Romania, S - Sweden, SK - Slovakia, SLO - Slovenia, CH - Switzerland.
@@ -410,7 +410,7 @@ repeat_application:
   preview: |
     Check the new application:
 
-    Type: Green Card
+    Type: OC graniczne (border insurance)
     Vehicle: {vehicle_plate_masked}
     Start date: {new_start_date}
     Period: {new_period_days} days

@@ -116,7 +116,7 @@ class ReminderService:
         request_id: str | None,
         vehicle_plate_masked: str,
         end_date: date | datetime,
-        product_type: str = "green_card",
+        product_type: str = "border_insurance",
         language: str = "ru",
     ) -> list[ReminderTask]:
         policy_end = end_date.date() if isinstance(end_date, datetime) else end_date
@@ -155,7 +155,7 @@ class ReminderService:
         insurance_period_days: int | None,
         estimated_price: Decimal | float | int | str | None,
         currency: str | None,
-        product_type: str = "green_card",
+        product_type: str = "border_insurance",
         language: str = "ru",
         delay_minutes: int = 45,
     ) -> CalculatorLead:
@@ -213,7 +213,7 @@ class ReminderService:
         self,
         telegram_user_id: int,
         telegram_chat_id: int,
-        product_type: str = "green_card",
+        product_type: str = "border_insurance",
         source_channel: str = "telegram_bot",
         current_step: str | None = None,
         safe_context: dict[str, Any] | None = None,

@@ -267,7 +267,7 @@ faq:
 
 coverage:
   text: |
-    Green Card qamrov xaritasi.
+    OC graniczne (border insurance) qamrov xaritasi.
     Safar oldidan polisingizdagi davlat kodini tekshiring.
     A - Avstriya, B - Belgiya, BG - Bolgariya, CY - Kipr, CZ - Chexiya, D - Germaniya, DK - Daniya, E - Ispaniya, EST - Estoniya, F - Fransiya, FIN - Finlyandiya, GR - Gretsiya, H - Vengriya, HR - Xorvatiya, I - Italiya, IRL - Irlandiya, IS - Islandiya, L - Lyuksemburg, LT - Litva, LV - Latviya, M - Malta, N - Norvegiya, NL - Niderlandiya, P - Portugaliya, PL - Polsha, RO - Ruminiya, S - Shvetsiya, SK - Slovakiya, SLO - Sloveniya, CH - Shveytsariya.
 
@@ -353,7 +353,7 @@ repeat_application:
   preview: |
     Проверьте новую заявку:
 
-    Тип: Green Card
+    Тип: OC graniczne (border insurance)
     Авто: {vehicle_plate_masked}
     Дата начала: {new_start_date}
     Срок: {new_period_days} дней

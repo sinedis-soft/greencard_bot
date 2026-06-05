@@ -317,7 +317,7 @@ async def repeat_application_confirm(callback: CallbackQuery, state: FSMContext)
             callback,
             {
                 "deal_id": result.bitrix_deal_id,
-                "product_type": "Green Card",
+                "product_type": "OC graniczne (border insurance)",
                 "vehicle_plate_masked": "—",
                 "public_status": result.public_status,
             },
@@ -397,7 +397,7 @@ async def operator_for_application(callback: CallbackQuery) -> None:
             await callback.answer()
             return
     else:
-        card = {"deal_id": None, "product_type": "Green Card", "vehicle_plate_masked": "—", "public_status": "—"}
+        card = {"deal_id": None, "product_type": "OC graniczne (border insurance)", "vehicle_plate_masked": "—", "public_status": "—"}
     await _create_operator_ticket(callback, card, "client_requested_operator")
     await callback.message.answer(callback.bot.i18n.get_text(lang, "operator.operator_connected"))
     await callback.answer()
@@ -417,7 +417,7 @@ async def _create_operator_ticket(callback: CallbackQuery, card: dict, reason: s
             client_name=callback.from_user.full_name if callback.from_user else "",
             client_phone="",
             preferred_language=lang,
-            vehicle_type=str(card.get("product_type") or "Green Card"),
+            vehicle_type=str(card.get("product_type") or "OC graniczne (border insurance)"),
             license_plate=str(card.get("vehicle_plate_masked") or ""),
             vin="",
             insurance_period_days=0,
@@ -432,7 +432,7 @@ async def _create_operator_ticket(callback: CallbackQuery, card: dict, reason: s
         "🆘 Клиент запросил оператора по заявке\n\n"
         f"ID: {request_id}\n"
         f"Сделка: {deal_id or '—'}\n"
-        f"Тип: {card.get('product_type') or 'Green Card'}\n"
+        f"Тип: {card.get('product_type') or 'OC graniczne (border insurance)'}\n"
         f"Авто: {card.get('vehicle_plate_masked') or '—'}\n"
         f"Статус: {card.get('public_status') or '—'}\n"
         f"{operator_language_line(lang)}",

@@ -1,5 +1,5 @@
 export default {
-  appTitle: "Green Card Agency",
+  appTitle: "OC graniczne (border insurance) Agency",
   next: "Далее",
   back: "Назад",
   submit: "Отправить заявку",

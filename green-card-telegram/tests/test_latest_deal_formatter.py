@@ -40,13 +40,13 @@ def test_latest_deal_text_includes_policy_fields_when_present():
         I18N,
         "ru",
         {
-            "TITLE": "Green Card AA123BB",
+            "TITLE": "OC graniczne (border insurance) AA123BB",
             POLICY_NUMBER_FIELD: "POL-1",
             POLICY_STATUS_FIELD: "2607",
         },
     )
 
-    assert "TITLE: Green Card AA123BB" in text
+    assert "TITLE: OC graniczne (border insurance) AA123BB" in text
     assert "Номер полиса: POL-1" in text
     assert "Состояние полиса: Действующий" in text
 

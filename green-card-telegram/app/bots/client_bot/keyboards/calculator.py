@@ -10,7 +10,10 @@ PERIODS = [30, 60, 90, 180, 365]
 def vehicle_types_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     for vtype in VEHICLE_TYPES:
-        builder.button(text=i18n.get_text(lang, f"calculator.vehicle.{vtype}"), callback_data=f"calc:vehicle:{vtype}")
+        builder.button(
+            text=i18n.get_text(lang, f"calculator.vehicle.{vtype}"),
+            callback_data=f"calc:vehicle:{vtype}",
+        )
     builder.adjust(2, 2, 2)
     return builder.as_markup()
 
@@ -20,4 +23,13 @@ def periods_keyboard() -> InlineKeyboardMarkup:
     for days in PERIODS:
         builder.button(text=str(days), callback_data=f"calc:period:{days}")
     builder.adjust(3, 2)
+    return builder.as_markup()
+
+
+def apply_cta_keyboard(i18n: I18nService, lang: str) -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    builder.button(
+        text=i18n.get_text(lang, "calculator.apply_cta"), callback_data="calc:apply"
+    )
+    builder.adjust(1)
     return builder.as_markup()

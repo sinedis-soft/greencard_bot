@@ -300,7 +300,7 @@ class Bitrix24Client:
         if not url:
             raise RuntimeError(f"Bitrix file metadata has no download URL: {file_info}")
 
-        req = request.Request(url, headers={"User-Agent": "GreenCardTelegramBot/1.0"})
+        req = request.Request(url, headers={"User-Agent": "OCGraniczneTelegramBot/1.0"})
         try:
             with request.urlopen(req, timeout=60) as resp:
                 content_type = str(resp.headers.get("Content-Type", "")).lower()

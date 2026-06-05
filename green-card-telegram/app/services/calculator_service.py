@@ -30,7 +30,7 @@ class CalculatorService:
     def _estimate_from_db(self, vehicle_type: str, insurance_period_days: int) -> dict | None:
         try:
             tariff = TariffAdminService().find_active(
-                product_type="green_card",
+                product_type="border_insurance",
                 vehicle_type=vehicle_type,
                 insurance_period_days=insurance_period_days,
             )

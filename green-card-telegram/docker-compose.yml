@@ -3,7 +3,7 @@ services:
     restart: unless-stopped
     image: postgres:16
     environment:
-      POSTGRES_DB: green_card
+      POSTGRES_DB: oc_graniczne
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports: ["5432:5432"]
