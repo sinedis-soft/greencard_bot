@@ -23,6 +23,7 @@ calculator:
   select_vehicle_type: "Выберите тип транспортного средства"
   select_period: "Выберите срок страхования (дней)"
   result_template: "Предварительная стоимость: {estimated_price} {currency}\n{disclaimer}"
+  price_unavailable: "Для выбранного срока стоимость недоступна."
   vehicle:
     car: "Легковой автомобиль"
     truck: "Грузовой автомобиль"

@@ -22,9 +22,17 @@ calculator:
   apply_cta: "📝 Өтінім беру"
   select_vehicle_type: "Көлік құралының түрін таңдаңыз"
   select_period: "Сақтандыру мерзімін таңдаңыз (күн)"
-  result_template: "Алдын ала құны: {estimated_price} {currency}\n{disclaimer}"
+  result_template: "Алдын ала құны: {estimated_price}\n{disclaimer}"
+  price_unavailable: "Таңдалған мерзім үшін баға қолжетімді емес."
+  period:
+    "30": "1 month"
+    "60": "2 months"
+    "90": "3 months"
+    "180": "6 months"
+    "365": "12 months"
   vehicle:
     car: "Жеңіл автокөлік"
+    van: "Автобустар"
     truck: "Жүк автокөлігі"
     bus: "Автобус"
     moto: "Мотоцикл"

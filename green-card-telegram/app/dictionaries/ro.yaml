@@ -23,6 +23,7 @@ calculator:
   select_vehicle_type: "Selectați tipul vehiculului"
   select_period: "Selectați perioada asigurării (zile)"
   result_template: "Cost estimativ: {estimated_price} {currency}\n{disclaimer}"
+  price_unavailable: "Prețul nu este disponibil pentru perioada selectată."
   vehicle:
     car: "Autoturism"
     truck: "Camion"

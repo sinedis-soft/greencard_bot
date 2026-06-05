@@ -23,6 +23,7 @@ calculator:
   select_vehicle_type: "Select vehicle type"
   select_period: "Select insurance period (days)"
   result_template: "Estimated price: {estimated_price} {currency}\n{disclaimer}"
+  price_unavailable: "Price is not available for the selected period."
   vehicle:
     car: "Passenger Car"
     truck: "Truck"

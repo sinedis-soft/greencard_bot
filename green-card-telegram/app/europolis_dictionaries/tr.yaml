@@ -22,9 +22,17 @@ calculator:
   apply_cta: "📝 Başvuru gönder"
   select_vehicle_type: "Araç türünü seçin"
   select_period: "Sigorta süresini seçin (gün)"
-  result_template: "Ön maliyet: {estimated_price} {currency}\n{disclaimer}"
+  result_template: "Ön maliyet: {estimated_price}\n{disclaimer}"
+  price_unavailable: "Seçilen dönem için fiyat mevcut değil."
+  period:
+    "30": "1 month"
+    "60": "2 months"
+    "90": "3 months"
+    "180": "6 months"
+    "365": "12 months"
   vehicle:
     car: "Binek otomobil"
+    van: "Otobüsler"
     truck: "Kamyon"
     bus: "Otobüs"
     moto: "Motosiklet"

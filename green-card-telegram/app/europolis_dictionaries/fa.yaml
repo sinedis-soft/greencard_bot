@@ -22,9 +22,17 @@ calculator:
   apply_cta: "📝 ثبت درخواست"
   select_vehicle_type: "نوع وسیله نقلیه را انتخاب کنید"
   select_period: "مدت بیمه را انتخاب کنید (روز)"
-  result_template: "هزینه اولیه: {estimated_price} {currency}\n{disclaimer}"
+  result_template: "هزینه اولیه: {estimated_price}\n{disclaimer}"
+  price_unavailable: "قیمت برای مدت انتخاب‌شده در دسترس نیست."
+  period:
+    "30": "1 month"
+    "60": "2 months"
+    "90": "3 months"
+    "180": "6 months"
+    "365": "12 months"
   vehicle:
     car: "خودروی سواری"
+    van: "اتوبوس‌ها"
     truck: "خودروی باری"
     bus: "اتوبوس"
     moto: "موتورسیکلت"

@@ -22,9 +22,17 @@ calculator:
   apply_cta: "📝 Ուղարկել հայտ"
   select_vehicle_type: "Ընտրեք տրանսպորտային միջոցի տեսակը"
   select_period: "Ընտրեք ապահովագրության ժամկետը (օր)"
-  result_template: "Նախնական արժեքը՝ {estimated_price} {currency}\n{disclaimer}"
+  result_template: "Նախնական արժեքը՝ {estimated_price}\n{disclaimer}"
+  price_unavailable: "Ընտրված ժամկետի համար արժեքը հասանելի չէ։"
+  period:
+    "30": "1 month"
+    "60": "2 months"
+    "90": "3 months"
+    "180": "6 months"
+    "365": "12 months"
   vehicle:
     car: "Թեթև մարդատար ավտոմեքենա"
+    van: "Ավտոբուսներ"
     truck: "Բեռնատար ավտոմեքենա"
     bus: "Ավտոբուս"
     moto: "Մոտոցիկլ"

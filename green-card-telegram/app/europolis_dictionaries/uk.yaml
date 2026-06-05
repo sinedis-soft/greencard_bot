@@ -22,9 +22,17 @@ calculator:
   apply_cta: "📝 Оформити заявку"
   select_vehicle_type: "Оберіть тип транспортного засобу"
   select_period: "Оберіть строк страхування (днів)"
-  result_template: "Попередня вартість: {estimated_price} {currency}\n{disclaimer}"
+  result_template: "Попередня вартість: {estimated_price}\n{disclaimer}"
+  price_unavailable: "Для обраного строку вартість недоступна."
+  period:
+    "30": "1 місяць"
+    "60": "2 місяці"
+    "90": "3 місяці"
+    "180": "6 місяців"
+    "365": "12 місяців"
   vehicle:
     car: "Легковий автомобіль"
+    van: "Автобуси"
     truck: "Вантажний автомобіль"
     bus: "Автобус"
     moto: "Мотоцикл"

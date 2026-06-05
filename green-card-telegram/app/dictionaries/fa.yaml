@@ -23,6 +23,7 @@ calculator:
   select_vehicle_type: "نوع وسیله نقلیه را انتخاب کنید"
   select_period: "مدت بیمه را انتخاب کنید (روز)"
   result_template: "هزینه تقریبی: {estimated_price} {currency}\n{disclaimer}"
+  price_unavailable: "قیمت برای مدت انتخاب‌شده در دسترس نیست."
   vehicle:
     car: "خودروی سواری"
     truck: "کامیون"

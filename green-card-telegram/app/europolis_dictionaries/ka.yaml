@@ -21,10 +21,18 @@ calculator:
   apply_cta: "📝 განაცხადის გაფორმება"
   select_vehicle_type: "აირჩიეთ სატრანსპორტო საშუალების ტიპი"
   select_period: "აირჩიეთ დაზღვევის ვადა (დღე)"
-  result_template: "წინასწარი ღირებულება: {estimated_price} {currency}\n{disclaimer}"
+  result_template: "წინასწარი ღირებულება: {estimated_price}\n{disclaimer}"
+  price_unavailable: "არჩეული ვადისთვის ფასი მიუწვდომელია."
 
+  period:
+    "30": "1 month"
+    "60": "2 months"
+    "90": "3 months"
+    "180": "6 months"
+    "365": "12 months"
   vehicle:
     car: "მსუბუქი ავტომობილი"
+    van: "ავტობუსები"
     truck: "სატვირთო ავტომობილი"
     bus: "ავტობუსი"
     moto: "მოტოციკლი"

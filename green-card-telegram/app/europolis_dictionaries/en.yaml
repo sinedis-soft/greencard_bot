@@ -22,9 +22,17 @@ calculator:
   apply_cta: "📝 Submit Application"
   select_vehicle_type: "Select vehicle type"
   select_period: "Select insurance period (days)"
-  result_template: "Estimated premium: {estimated_price} {currency}\n{disclaimer}"
+  result_template: "Estimated premium: {estimated_price}\n{disclaimer}"
+  price_unavailable: "Price is not available for the selected period."
+  period:
+    "30": "1 month"
+    "60": "2 months"
+    "90": "3 months"
+    "180": "6 months"
+    "365": "12 months"
   vehicle:
     car: "Passenger Car"
+    van: "Buses"
     truck: "Truck"
     bus: "Bus"
     moto: "Motorcycle"

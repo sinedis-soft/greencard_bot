@@ -26,7 +26,9 @@ async def calc_command(
     lang = lang_store.get(message.from_user.id, default_language)
     await message.answer(
         i18n.get_text(lang, "calculator.select_vehicle_type"),
-        reply_markup=vehicle_types_keyboard(i18n, lang),
+        reply_markup=vehicle_types_keyboard(
+            i18n, lang, getattr(message.bot, "calculator_vehicle_types", None)
+        ),
     )
 
 
@@ -51,7 +53,7 @@ async def calc_choose_vehicle(
     lang = lang_store.get(callback.from_user.id, default_language)
     await callback.message.answer(
         i18n.get_text(lang, "calculator.select_period"),
-        reply_markup=periods_keyboard(),
+        reply_markup=periods_keyboard(i18n, lang),
     )
     await callback.answer()
 
@@ -70,9 +72,22 @@ async def calc_choose_period(
     result = calculator_service.estimate(
         vehicle_type=vehicle_type, insurance_period_days=period
     )
+    if result["estimated_price"] is None:
+        await callback.message.answer(
+            i18n.get_text(lang, "calculator.price_unavailable")
+        )
+        await callback.answer()
+        return
+
+    estimated_price = result["estimated_price"]
+    currency = result["currency"]
+    if result.get("currency_symbol"):
+        estimated_price = f"{result['currency_symbol']} {float(estimated_price):.2f}"
+        currency = ""
+
     text = i18n.get_text(lang, "calculator.result_template").format(
-        estimated_price=result["estimated_price"],
-        currency=result["currency"],
+        estimated_price=estimated_price,
+        currency=currency,
         disclaimer=i18n.get_text(lang, "calculator.disclaimer"),
     )
     await callback.message.answer(text, reply_markup=apply_cta_keyboard(i18n, lang))
@@ -87,6 +102,8 @@ async def calc_choose_period(
             estimated_price=result.get("estimated_price"),
             currency=result.get("currency"),
             language=lang,
+            client_bot=getattr(callback.bot, "client_bot_code", "default"),
+            apply_button_text=i18n.get_text(lang, "calculator.apply_cta"),
         )
     except Exception as exc:
         logger.exception(
@@ -101,5 +118,5 @@ async def calc_choose_period(
 async def calc_apply(callback: CallbackQuery, state: FSMContext) -> None:
     from app.bots.client_bot.handlers.apply import send_apply
 
-    await send_apply(callback.message, state)
+    await send_apply(callback.message, state, user=callback.from_user)
     await callback.answer()

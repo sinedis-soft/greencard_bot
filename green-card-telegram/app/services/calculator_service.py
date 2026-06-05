@@ -22,8 +22,9 @@ class CalculatorService:
             estimated_price = vehicle_tariffs.get("default", 0)
 
         return {
-            "estimated_price": estimated_price,
+            "estimated_price": self._available_price(estimated_price),
             "currency": self._tariffs.get("currency", "USD"),
+            "currency_symbol": self._tariffs.get("currency_symbol", ""),
             "disclaimer": self._tariffs.get("disclaimer", ""),
         }
 
@@ -39,7 +40,19 @@ class CalculatorService:
         if not tariff:
             return None
         return {
-            "estimated_price": tariff["price"],
+            "estimated_price": self._available_price(tariff["price"]),
             "currency": tariff["currency"],
+            "currency_symbol": self._tariffs.get("currency_symbol", ""),
             "disclaimer": self._tariffs.get("disclaimer", ""),
         }
+
+    def _available_price(self, value) -> float | int | None:
+        if value is None:
+            return None
+        try:
+            numeric = float(value)
+        except (TypeError, ValueError):
+            return None
+        if numeric <= 0:
+            return None
+        return value

@@ -23,6 +23,7 @@ calculator:
   select_vehicle_type: "Абярыце тып транспартнага сродку"
   select_period: "Абярыце тэрмін страхавання (дзён)"
   result_template: "Папярэдні кошт: {estimated_price} {currency}\n{disclaimer}"
+  price_unavailable: "Для абранага тэрміну кошт недаступны."
   vehicle:
     car: "Легкавы аўтамабіль"
     truck: "Грузавы аўтамабіль"

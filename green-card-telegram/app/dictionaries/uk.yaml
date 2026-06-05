@@ -23,6 +23,7 @@ calculator:
   select_vehicle_type: "Оберіть тип транспортного засобу"
   select_period: "Оберіть строк страхування (днів)"
   result_template: "Попередня вартість: {estimated_price} {currency}\n{disclaimer}"
+  price_unavailable: "Для обраного строку вартість недоступна."
   vehicle:
     car: "Легковий автомобіль"
     truck: "Вантажний автомобіль"

@@ -158,6 +158,8 @@ class ReminderService:
         product_type: str = "border_insurance",
         language: str = "ru",
         delay_minutes: int = 45,
+        client_bot: str = "default",
+        apply_button_text: str = "📝 Оформить",
     ) -> CalculatorLead:
         now = datetime.utcnow()
         price = Decimal(str(estimated_price)) if estimated_price is not None else None
@@ -198,6 +200,8 @@ class ReminderService:
             "estimated_price": str(price) if price is not None else "",
             "currency": currency or "",
             "language": language,
+            "client_bot": client_bot,
+            "apply_button_text": apply_button_text,
         }
         self.create_reminder(
             telegram_user_id=telegram_user_id,
@@ -358,6 +362,8 @@ class ReminderService:
             language=language,
             context=context,
             dedupe_key=task.dedupe_key or f"{task.reminder_type}:{task.id}",
+            reply_markup=self._reply_markup_for_task(task.reminder_type, context),
+            client_bot=str(context.get("client_bot") or "default"),
         )
         if result.status in {"sent", "skipped"}:
             task.status = REMINDER_STATUS_SENT if result.status == "sent" else REMINDER_STATUS_EXPIRED
@@ -367,6 +373,18 @@ class ReminderService:
         task.status = REMINDER_STATUS_FAILED
         task.updated_at = now
         return "failed"
+
+    def _reply_markup_for_task(
+        self, reminder_type: str, context: dict[str, Any]
+    ) -> dict[str, Any] | None:
+        if reminder_type != "calculator_followup":
+            return None
+        button_text = str(context.get("apply_button_text") or "📝 Оформить")
+        return {
+            "inline_keyboard": [
+                [{"text": button_text, "callback_data": "calc:apply"}],
+            ]
+        }
 
     def _is_task_relevant(self, db, task: ReminderTask, now: datetime) -> bool:
         context = self._loads_context(task.context_json)

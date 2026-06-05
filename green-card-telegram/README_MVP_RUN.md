@@ -76,7 +76,7 @@ EUROPOLIS_DEFAULT_LANGUAGE=ru
 - `OPERATOR_IDS` — **только первичный bootstrap/fallback** для доступа операторов, пока таблица `operators` пуста или БД временно недоступна. Постоянно операторов нужно вести через `/api/admin/operators`.
 - `MINI_APP_URL` — URL фронта Mini App основного клиентского бота.
 - `EUROPOLIS_MINI_APP_URL` — URL фронта Mini App EuroPolis, если он отличается.
-- `EUROPOLIS_BITRIX24_WEBHOOK_URL` — отдельный webhook Bitrix24 для EuroPolis; если пустой, используется общий `BITRIX24_WEBHOOK_URL`.
+- `EUROPOLIS_BITRIX24_WEBHOOK_URL` — отдельный webhook Bitrix24 для EuroPolis; если пустой, бот также проверит алиасы `EUROPOLIS_BITRIX_WEBHOOK_URL`, `EUROPOLIS_BITRIX24_URL`, `EUROPOLIS_BITRIX_URL`, `BITRIX24_EUROPOLIS_WEBHOOK_URL`, `BITRIX_EUROPOLIS_WEBHOOK_URL`, затем общий `BITRIX24_WEBHOOK_URL`.
 - `BITRIX24_WEBHOOK_URL` — webhook Bitrix24.
 - `DATABASE_URL` — строка подключения к PostgreSQL.
 - `REDIS_URL` — Redis для очередей, rate-limit и кэша текстов.

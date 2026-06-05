@@ -23,6 +23,7 @@ calculator:
   select_vehicle_type: "Transport vositasi turini tanlang"
   select_period: "Sug‘urta muddatini tanlang (kunlarda)"
   result_template: "Dastlabki narx: {estimated_price} {currency}\n{disclaimer}"
+  price_unavailable: "Tanlangan muddat uchun narx mavjud emas."
   vehicle:
     car: "Yengil avtomobil"
     truck: "Yuk avtomobili"

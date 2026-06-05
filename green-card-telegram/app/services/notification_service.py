@@ -11,6 +11,7 @@ from sqlalchemy import select
 
 from app.db.models import NotificationDeduplication, NotificationLog, NotificationRule, NotificationTemplate
 from app.db.session import SessionLocal
+from app.services.operator_notifier_service import ClientNotifierService
 from app.services.operator_service import OperatorService
 
 NOTIFICATION_CHANNELS = {"client_telegram", "operator_telegram", "admin_telegram", "bitrix_comment", "email"}
@@ -73,6 +74,8 @@ class NotificationService:
         language: str = "ru",
         context: dict[str, Any] | None = None,
         dedupe_key: str | None = None,
+        reply_markup: dict[str, Any] | None = None,
+        client_bot: str | None = None,
     ) -> NotificationResult:
         context = self._safe_context(context or {})
         if channel not in NOTIFICATION_CHANNELS:
@@ -100,7 +103,7 @@ class NotificationService:
 
         body = self.render_template(template, context)
         try:
-            self._send_to_channel(channel, recipient_id, body)
+            self._send_to_channel(channel, recipient_id, body, reply_markup, client_bot)
             if dedupe_key:
                 self._remember_dedupe(event_key, recipient_id or "", dedupe_key)
             result = NotificationResult("sent", event_key, recipient_type, recipient_id, channel)
@@ -170,9 +173,25 @@ class NotificationService:
         except KeyError:
             return template
 
-    def _send_to_channel(self, channel: str, recipient_id: str | None, text: str) -> None:
+    def _send_to_channel(
+        self,
+        channel: str,
+        recipient_id: str | None,
+        text: str,
+        reply_markup: dict[str, Any] | None = None,
+        client_bot: str | None = None,
+    ) -> None:
         if channel == "client_telegram":
-            self._send_telegram(os.getenv("BOT_TOKEN", ""), recipient_id, text)
+            if not recipient_id:
+                raise RuntimeError("recipient_id_required")
+            sent = ClientNotifierService().send_to_client(
+                int(recipient_id),
+                text,
+                reply_markup=reply_markup,
+                client_bot=client_bot,
+            )
+            if not sent:
+                raise RuntimeError("telegram_send_failed")
         elif channel == "operator_telegram":
             self._send_operator_telegram(recipient_id, text)
         elif channel == "admin_telegram":
