@@ -44,6 +44,7 @@ class PolicyStatusService:
         preferred_language: str = "ru",
         client_name: str = "",
         notify_operator: bool = True,
+        client_bot: str = "default",
     ) -> dict:
         deal = self.client_applications.get_client_deal(
             telegram_user_id=telegram_user_id,
@@ -70,6 +71,7 @@ class PolicyStatusService:
                 preferred_language=preferred_language,
                 client_name=client_name,
                 notify_operator=notify_operator,
+                client_bot=client_bot,
             )
 
         message = build_policy_client_message(
@@ -110,6 +112,7 @@ class PolicyStatusService:
         preferred_language: str,
         client_name: str,
         notify_operator: bool,
+        client_bot: str = "default",
     ) -> PolicyTicketResult:
         deal_id = int(card["deal_id"])
         existing = self.ticket_service.get_open_by_deal_reason(
@@ -135,6 +138,7 @@ class PolicyStatusService:
                 insurance_period_days=int(card.get("insurance_period_days") or 0),
                 insurance_start_date=str(card.get("insurance_start_date") or ""),
                 comment=f"Где мой полис? Bitrix deal {deal_id}. Delayed: {'yes' if is_delayed else 'no'}",
+                client_bot=client_bot,
             )
         )
         if notify_operator:

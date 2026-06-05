@@ -81,38 +81,55 @@ class OperatorNotifierService:
 class ClientNotifierService:
     def __init__(self) -> None:
         self.client_token = os.getenv("BOT_TOKEN", "")
+        self.europolis_token = os.getenv("EUROPOLIS_BOT_TOKEN", "")
+
+    def _token_for_client_bot(self, client_bot: str | None = None) -> str:
+        if client_bot == "europolis":
+            return self.europolis_token or self.client_token
+        return self.client_token
 
     def send_to_client(
-        self, telegram_user_id: int, text: str, reply_markup: dict | None = None
+        self,
+        telegram_user_id: int,
+        text: str,
+        reply_markup: dict | None = None,
+        client_bot: str | None = None,
     ) -> bool:
-        if not self.client_token:
+        token = self._token_for_client_bot(client_bot)
+        if not token:
             return False
         payload = {"chat_id": telegram_user_id, "text": text}
         if reply_markup:
             payload["reply_markup"] = reply_markup
         response = requests.post(
-            f"https://api.telegram.org/bot{self.client_token}/sendMessage",
+            f"https://api.telegram.org/bot{token}/sendMessage",
             json=payload,
             timeout=5,
         )
         return getattr(response, "ok", True)
 
-    def send_document_to_client(self, telegram_user_id: int, local_path: str) -> bool:
-        if not self.client_token:
+    def send_document_to_client(
+        self, telegram_user_id: int, local_path: str, client_bot: str | None = None
+    ) -> bool:
+        token = self._token_for_client_bot(client_bot)
+        if not token:
             return False
         path = Path(local_path)
         with path.open("rb") as file_obj:
             response = requests.post(
-                f"https://api.telegram.org/bot{self.client_token}/sendDocument",
+                f"https://api.telegram.org/bot{token}/sendDocument",
                 data={"chat_id": telegram_user_id},
                 files={"document": (path.name, file_obj)},
                 timeout=10,
             )
         return getattr(response, "ok", True)
 
-    def send_restart_notice(self, telegram_user_id: int, text: str) -> bool:
+    def send_restart_notice(
+        self, telegram_user_id: int, text: str, client_bot: str | None = None
+    ) -> bool:
         return self.send_to_client(
             telegram_user_id,
             text,
             {"keyboard": [[{"text": "/start"}]], "resize_keyboard": True},
+            client_bot,
         )

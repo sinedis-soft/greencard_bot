@@ -242,7 +242,7 @@ async def ticket_template_send_callback(callback: CallbackQuery) -> None:
         await callback.message.answer(f"Тикет уже назначен оператору {assigned}.")
         await callback.answer()
         return
-    ClientNotifierService().send_to_client(ticket.telegram_user_id, text)
+    ClientNotifierService().send_to_client(ticket.telegram_user_id, text, client_bot=ticket.client_bot)
     svc.set_status(request_id, template.next_status)
     svc.log_action(
         request_id,
@@ -292,7 +292,7 @@ async def _send_template_direct(callback: CallbackQuery, request_id: str, templa
         ticket.preferred_language or "ru",
         request_id=ticket.request_id,
     )
-    ClientNotifierService().send_to_client(ticket.telegram_user_id, text)
+    ClientNotifierService().send_to_client(ticket.telegram_user_id, text, client_bot=ticket.client_bot)
     svc.set_status(request_id, template.next_status)
     svc.log_action(request_id, callback.from_user.id, action, text, {"template_key": template_key})
     await callback.message.answer("Запрос отправлен клиенту.")

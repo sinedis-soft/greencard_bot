@@ -1,0 +1,417 @@
+main_menu:
+  calculator: "🧮 Calculator"
+  faq: "❓ FAQ"
+  coverage: "🌍 Coverage Area"
+  apply: "📝 Apply"
+  operator: "👨‍💼 Contact an Operator"
+  payment_confirmation: "💳 Payment confirmation"
+  latest_deal: "📄 My latest application"
+  my_applications: "📄 My applications"
+  language: "🌐 Language"
+
+menu:
+  title: "Main Menu"
+
+language:
+  select: "Please select a language"
+  changed: "Language updated"
+
+calculator:
+  result_title: "Estimated Premium"
+  disclaimer: "Preliminary quotation"
+  apply_cta: "📝 Submit Application"
+  select_vehicle_type: "Select vehicle type"
+  select_period: "Select insurance period (days)"
+  result_template: "Estimated premium: {estimated_price} {currency}\n{disclaimer}"
+  vehicle:
+    car: "Passenger Car"
+    truck: "Truck"
+    bus: "Bus"
+    moto: "Motorcycle"
+    trailer: "Trailer"
+    special: "Special Machinery"
+
+application:
+
+  calendar:
+    cancel: "Cancel"
+    today: "Today"
+
+  options:
+    period_days: "{days} days"
+    countries:
+      belarus: "Belarus"
+      russia: "Russia"
+      kazakhstan: "Kazakhstan"
+      uzbekistan: "Uzbekistan"
+      turkey: "Turkey"
+      usa: "United States"
+      united_kingdom: "United Kingdom"
+      azerbaijan: "Azerbaijan"
+      georgia: "Georgia"
+      moldova: "Moldova"
+      ukraine: "Ukraine"
+      armenia: "Armenia"
+      other: "Other Country"
+    vehicle_types:
+      car: "Passenger Car"
+      truck: "Truck"
+      moto: "Motorcycle"
+      bus: "Bus"
+      trailer: "Trailer"
+    fuel_types:
+      petrol: "Petrol"
+      diesel: "Diesel"
+      gas_petrol: "Gas / Petrol"
+      electric: "Electric"
+      hybrid: "Hybrid"
+    power_units:
+      hp: "Horsepower"
+      kw: "Kilowatt"
+
+  submitted: "Application submitted. We will prepare the policy and send payment details."
+  validation_error: "Data validation error"
+  bitrix_error: "Bitrix error"
+  mini_app_soon: "The Mini App form will be connected at the next stage."
+  open_form_button: "Open Application Form"
+  temporarily_unavailable: "The application form is temporarily unavailable."
+
+  form_header: |
+    Insurance Policy Application
+    Fill in the details. We will prepare the policy and send payment instructions.
+    ⚠️ATTENTION! By continuing to use the application, you consent to the processing of your Telegram username.⚠️
+
+  step_1: "1. Contact Details"
+  step_2: "2. Insurance and Vehicle Information"
+
+  prefilled_from_bitrix: "We found your profile in our database using your Telegram username. Contact and policyholder details have been filled in automatically."
+
+  prefilled_from_bitrix_editable: "We found your profile in our database using your Telegram username. The data has been prefilled — please verify and edit if necessary. If everything is correct, you may send an empty message at this step."
+
+  ask_email_lookup: |
+    No profile was found using your Telegram username.
+    Please enter your e-mail address to search for your client profile.
+
+  contact_not_found_manual: "No client was found for the provided e-mail address. Please fill in your personal details manually."
+
+  ask_passport_verify: "Client found by e-mail. Please enter your passport series and number without spaces to verify your identity."
+
+  passport_verify_failed_manual: "The passport details do not match our records. For security reasons, please fill in your personal details manually."
+
+  personal_data_summary: |
+    Please verify your personal details:
+    Full name: {last_name} {first_name}
+    Date of birth: {birth_date}
+    Passport number: {passport}
+    Residential address: {registration_address}
+    E-mail: {email}
+    Phone number: {phone}
+
+    Are the details correct or would you like to make changes?
+
+  vehicle_data_summary: |
+    {vehicle_type} with registration number: {license_plate}
+    Vehicle registered in: {vehicle_country}
+    Year of manufacture: {manufacture_year}
+    VIN: {vin}
+    {fuel_type}, engine capacity {engine_capacity} cc, engine power {engine_power}, {power_unit}
+
+    Are the details correct or would you like to make changes?
+
+  data_actual: "The data is correct"
+  data_edit: "Changes are required"
+
+  ask_first_name_prefilled: "First Name * (Use: {value})"
+
+  prefill_next_button: "YES, NEXT QUESTION"
+
+  ask_last_name_prefilled: "Last Name * (Use: {value})"
+  ask_phone_prefilled: "Phone Number (with country code) * (Use: {value})"
+  ask_email_prefilled: "E-mail * (Use: {value})"
+
+  ask_first_name: "First Name (Latin characters)*"
+  ask_last_name: "Last Name (Latin characters)*"
+
+  ask_phone: |
+    Phone number (with country code)
+    Example: +48123456789
+
+  ask_email: |
+    E-mail
+    Example: example@mail.pl
+
+  ask_birth_date: |
+    Date of birth
+    Format: dd.mm.yyyy
+
+  ask_birth_date_prefilled: "Date of birth * (Use: {value})"
+
+  ask_passport: "Passport series and number without spaces (Latin characters)*"
+  ask_passport_prefilled: "Passport series and number without spaces * (Use: {value})"
+
+  ask_registration_address: "Registration address (Latin characters)*"
+  ask_registration_address_prefilled: "Registration address * (Use: {value})"
+
+  ask_insurance_period: "Insurance period (select) *"
+
+  ask_insurance_start_date: |
+    Insurance start date
+    Format: dd.mm.yyyy
+
+  ask_vehicle_country: "Vehicle registration country *"
+  validation_vehicle_country: "Please specify the vehicle registration country."
+  ask_vehicle_country_prefilled: "Vehicle registration country * (current: {value})"
+
+  choose_from_buttons: "Please choose an option using the buttons below."
+
+  ask_vehicle_type: "Vehicle type *"
+  ask_vehicle_type_prefilled: "Vehicle type * (current: {value})"
+
+  ask_license_plate: "Registration number *"
+  ask_license_plate_after_start: "Registration number (Latin characters)*"
+
+  validation_license_plate_strict: "Registration number: only Latin letters and digits, no spaces or hyphens, maximum 8 characters."
+
+  prefilled_vehicle_from_bitrix_editable: "We found your vehicle data in our database using the registration number. The values have been prefilled — please verify and edit if necessary."
+
+  vehicle_not_found_manual: "Vehicle not found in the database. Please enter the vehicle details manually."
+
+  ask_vin: "VIN number *"
+  ask_brand_model: "Vehicle make and model (Latin characters)*"
+  ask_manufacture_year: "Vehicle year of manufacture *"
+  ask_fuel_type: "Fuel type *"
+
+  ask_engine_capacity: "Engine capacity, cc *"
+  ask_engine_capacity_prefilled: "Engine capacity, cc * (Use: {value})"
+
+  ask_engine_power: "Engine power *"
+  ask_engine_power_prefilled: "Engine power * (Use: {value})"
+
+  skip_engine_capacity_electric: "Engine capacity is not required for Electric fuel type."
+
+  ask_power_unit: "Power unit *"
+  ask_power_unit_prefilled: "Power unit * (current: {value})"
+
+  ask_comment: "Comment (optional)"
+  skip_comment_button: "SKIP"
+
+  ask_vehicle_docs: |
+    Vehicle registration certificate (photo or PDF)
+    You may attach several files.
+  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
+  add_more_docs: "Add more documents"
+  all_docs_uploaded: "All documents uploaded"
+  ask_techpass_changed: "There is already a photo of the vehicle registration certificate in the database. Has the registration certificate changed?"
+
+  techpass_changed_yes: "Yes, it has changed"
+  techpass_changed_no: "No, it has not changed"
+
+  ask_vehicle_finalize: "Would you like to add another vehicle or complete the application?"
+  add_vehicle: "Add another vehicle"
+  finish_application: "Complete application"
+
+  ask_consent: |
+    EuroPolis informed consent for personal data processing
+    EuroPolis and the Latvian insurance company issuing the policy process personal data under Regulation (EU) 2016/679 (GDPR) and the laws of the Republic of Latvia.
+    Data is used to:
+    • calculate insurance offers for individuals and legal entities;
+    • issue and support insurance contracts;
+    • contact the client or company representative;
+    • verify documents and meet legal requirements;
+    • transfer the required information to the insurance company, CRM, payment, IT and other service providers involved in delivering the service.
+    Processed data may include:
+    name, phone, e-mail, address, passport or registration details, company and representative details, vehicle data, insurance information, payment data and technical Telegram conversation data.
+    The user or legal-entity representative confirms they are authorised to provide the data and agrees to its processing for policy issuance.
+    The data subject has the right to:
+    • access their data;
+    • correct or delete data;
+    • restrict processing;
+    • withdraw consent;
+    • file a complaint with the Latvian data protection supervisory authority.
+    The data controller may be the Latvian insurance company issuing the policy or EuroPolis for client support activities.
+    ________________________
+    Do you agree to personal data processing and transfer for issuing the EuroPolis policy?
+  consent_agree: "✅ Agree and Submit"
+  consent_decline: "❌ Decline"
+
+  declined: "You declined the transfer of personal data. The application has been cancelled."
+
+  validation_name: "Please enter at least 2 characters."
+  validation_phone: "Invalid phone number. Use the format +48123456789."
+  validation_email: "Invalid e-mail address."
+
+  validation_date: "Invalid date. Accepted formats: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. The mm/dd/yyyy format is not allowed."
+
+  validation_age_18: "The policyholder must be at least 18 years old."
+  validation_insurance_start_not_past: "The insurance start date cannot be in the past."
+
+  ask_vin_prefilled: "VIN number * (Use: {value})"
+  ask_brand_model_prefilled: "Vehicle make and model * (Use: {value})"
+  ask_manufacture_year_prefilled: "Vehicle year of manufacture * (Use: {value})"
+  ask_fuel_type_prefilled: "Fuel type * (current: {value})"
+
+  validation_passport: "Invalid passport series or number (enter without spaces)."
+  validation_address: "Please provide the full registration address."
+  validation_license_plate: "Invalid registration number."
+  validation_vin: "VIN must contain 17 characters."
+  validation_brand_model: "Please specify the vehicle make and model."
+  validation_year: "Please enter a valid year of manufacture."
+  validation_positive_integer: "Please enter a positive integer."
+  validation_positive_number: "Please enter a positive number."
+
+  validation_docs: "Please send a photo or PDF/document of the vehicle registration certificate."
+
+operator:
+  request_received: "Request received"
+  operator_connected: "Operator connected"
+  access_denied: "Access denied"
+  no_tickets: "No requests"
+  taken: "Request accepted"
+  closed: "Request closed"
+  reply_sent: "Reply sent"
+
+faq:
+  title: "Select an FAQ category"
+
+  categories:
+    documents: "Documents Required"
+    payment: "Payment"
+    coverage: "Coverage"
+    mistakes: "Important Notes"
+    refund: "Refund"
+
+  answers:
+    documents: |
+      The following information is required to issue the policy: personal identification details, vehicle information, and insurance period details.
+
+      Please prepare:
+      - passport
+      - vehicle registration certificate
+      - technical vehicle data
+      - phone number
+      - e-mail
+
+    payment: |
+      Available payment methods:
+      - bank transfer to a Polish bank card,
+      - BLIK payment to a phone number,
+      - bank transfer to a Polish bank account
+
+    coverage: "Coverage territory: A - Austria, B - Belgium, BG - Bulgaria, CY - Cyprus, CZ - Czech Republic, D - Germany, DK - Denmark, E - Spain, EST - Estonia, F - France, FIN - Finland, GR - Greece, H - Hungary, HR - Croatia, I - Italy, IRL - Ireland, IS - Iceland, L - Luxembourg, LT - Lithuania, LV - Latvia, M - Malta, N - Norway, NL - Netherlands, P - Portugal, PL - Poland, RO - Romania, S - Sweden, SK - Slovakia, SLO - Slovenia, CH - Switzerland."
+
+    mistakes: "Please double-check the VIN, registration number, and insurance period before submission. Corrections cannot be made afterwards."
+
+    refund: "Refunds are not available."
+
+coverage:
+  text: |
+    OC graniczne (border insurance) coverage map.
+    Before travelling, please verify the country code indicated on your policy.
+
+    A - Austria, B - Belgium, BG - Bulgaria, CY - Cyprus, CZ - Czech Republic, D - Germany, DK - Denmark, E - Spain, EST - Estonia, F - France, FIN - Finland, GR - Greece, H - Hungary, HR - Croatia, I - Italy, IRL - Ireland, IS - Iceland, L - Luxembourg, LT - Lithuania, LV - Latvia, M - Malta, N - Norway, NL - Netherlands, P - Portugal, PL - Poland, RO - Romania, S - Sweden, SK - Slovakia, SLO - Slovenia, CH - Switzerland.
+
+latest_deal:
+  title_label: "TITLE"
+  policy_number_label: "Policy number"
+  policy_status_label: "Policy status"
+  comments_label: "COMMENTS"
+  not_found: "No latest application was found."
+  unavailable: "Could not get your latest application. Please try again later."
+  delivery_prompt: "How would you like to receive the policy?"
+  delivery_email_button: "Send by e-mail"
+  delivery_chat_button: "Send here"
+  delivery_request_sent: "The request has been sent to an operator."
+  payment_instructions: |
+    Your application for car insurance for {license_plate} has been approved.
+
+    After payment, please send the payment confirmation.
+
+    Payment options
+
+    BLIK to +48 664 914 738
+    Payment reference: za ubezpieczenie auto {license_plate}
+
+
+    Bank transfer in Poland:
+    Account holder: DZIANIS BARAVOI
+    Account number: 44 1020 1332 0000 1602 1435 6564
+    Bank: Powszechna Kasa Oszczędności Bank Polski SA
+    Payment reference: za ubezpieczenie auto {license_plate}
+
+
+    International bank transfer:
+    Account holder: DZIANIS BARAVOI
+    Currency: PLN
+    IBAN: PL44 1020 1332 0000 1602 1435 6564
+    SWIFT/BIC: BPKOPLPW
+    Bank: Powszechna Kasa Oszczędności Bank Polski SA
+    Country: Polska
+    Address: ul. H. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    Payment reference: za ubezpieczenie auto {license_plate}
+
+
+    Card transfer:
+    Card number: 4213 5239 3578 6679
+    Valid thru: 09/26
+    Cardholder: DZIANIS BARAVOI
+    Payment reference: za ubezpieczenie auto {license_plate}
+payment_confirmation:
+  attach_prompt: "Attach a screenshot showing that funds were sent or a PDF confirmation from your bank."
+  file_received: "File received. Send the confirmation to the operator or add another file?"
+  send_button: "Send confirmation"
+  add_more_button: "Add another file"
+  sent: "Payment confirmation was sent to the operator."
+  no_unpaid: "You have no unpaid invoices. You can press “My latest application”."
+my_applications:
+  title: "Your latest applications:"
+  empty: "You do not have applications linked to this Telegram account yet. If you bought a policy before, contact an operator and we will link your history."
+  unavailable: "Applications are temporarily unavailable. Please try again later."
+  not_found: "Application was not found or is not available for this Telegram account."
+  policy_status_button: "Where is my policy?"
+  repeat_button: "Apply again"
+  open_button: "Open"
+  operator_button: "Contact operator"
+  payment_button: "Confirm payment"
+  policy_button: "Get policy"
+  policy_not_found: "Policy file was not found yet. We sent a request to an operator."
+repeat_application:
+  start_prompt: |
+    Re-apply using the previous application
+
+    Vehicle: {vehicle_plate_masked}
+    Type: {vehicle_type}
+    Registration country: {registration_country}
+
+    Enter the new policy start date in DD.MM.YYYY format.
+  ask_start_date: "Enter the new policy start date in DD.MM.YYYY format."
+  invalid_start_date: "Enter a valid start date: not in the past and in DD.MM.YYYY format."
+  ask_period: "Choose the insurance period."
+  ask_docs: "Use documents from the previous application or upload new ones?"
+  docs_reuse_button: "Use previous documents"
+  docs_upload_new_button: "Upload new documents"
+  preview: |
+    Check the new application:
+
+    Type: OC graniczne (border insurance)
+    Vehicle: {vehicle_plate_masked}
+    Start date: {new_start_date}
+    Period: {new_period_days} days
+    Documents: {docs_mode_title}
+
+    The price is preliminary. Final price is confirmed by an operator after checking the data.
+  confirm_button: "Confirm"
+  change_button: "Change"
+  cancel_button: "Cancel"
+  cancelled: "Repeat application was cancelled."
+  unavailable: "Repeat application is temporarily unavailable. Try again later or contact an operator."
+  created: |
+    New application was created.
+
+    Number: {request_id}
+    Status: {public_status}
+
+    An operator will check the data and tell you the next step.
+policy_status:
+  unavailable: "We could not check the policy status right now. Please try again later."
+  check_later_button: "Check later"
+  back_to_applications_button: "My applications"

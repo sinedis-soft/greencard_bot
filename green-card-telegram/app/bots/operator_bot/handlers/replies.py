@@ -145,7 +145,9 @@ async def _send_operator_reply(message: Message, request_id: str, text: str) -> 
     is_first_operator_reply = ticket.operator_id is None
 
     svc.assign_operator_if_empty(request_id, message.from_user.id)
-    ClientNotifierService().send_to_client(ticket.telegram_user_id, text)
+    ClientNotifierService().send_to_client(
+        ticket.telegram_user_id, text, client_bot=ticket.client_bot
+    )
     svc.set_status(request_id, "waiting_client")
     svc.log_action(request_id, message.from_user.id, "reply", text)
     if is_first_operator_reply:
@@ -179,7 +181,9 @@ async def _send_operator_file_reply(message: Message, request_id: str) -> None:
     svc.assign_operator_if_empty(request_id, message.from_user.id)
     with tempfile.TemporaryDirectory() as tmp_dir:
         local_path = await _download_operator_file(message, file_info, tmp_dir)
-        ClientNotifierService().send_document_to_client(ticket.telegram_user_id, local_path)
+        ClientNotifierService().send_document_to_client(
+            ticket.telegram_user_id, local_path, client_bot=ticket.client_bot
+        )
 
     svc.set_status(request_id, "waiting_client")
     svc.log_action(
@@ -248,7 +252,7 @@ async def _send_policy_file_session(
                 target_message, file_info, tmp_dir, index
             )
             ClientNotifierService().send_document_to_client(
-                ticket.telegram_user_id, local_path
+                ticket.telegram_user_id, local_path, client_bot=ticket.client_bot
             )
     svc.set_status(request_id, "waiting_client")
     svc.log_action(
