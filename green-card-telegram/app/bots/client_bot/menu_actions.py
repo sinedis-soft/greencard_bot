@@ -36,9 +36,30 @@ COMMAND_ACTIONS = {
     "/lang": "language",
 }
 
+_EMOJI_PREFIX_CHARS = frozenset(
+    "🧮❓🌍📝📄💳👨💼🌐👩‍️☘️✅🔘▫️▪️• "
+)
+_VARIATION_CHARS = "\ufe0e\ufe0f\u200d"
+
+
+def _without_emoji_variation(text: str) -> str:
+    return "".join(char for char in text if char not in _VARIATION_CHARS)
+
+
+def _without_leading_icon(text: str) -> str:
+    return text.lstrip("".join(_EMOJI_PREFIX_CHARS)).strip()
+
 
 def _normalized(text: str) -> str:
-    return " ".join(text.casefold().split())
+    return " ".join(_without_emoji_variation(text).casefold().split())
+
+
+def _normalized_variants(text: str) -> tuple[str, ...]:
+    normalized = _normalized(text)
+    without_icon = _normalized(_without_leading_icon(text))
+    return tuple(
+        dict.fromkeys(value for value in (normalized, without_icon) if value)
+    )
 
 
 def _languages_to_check(
@@ -52,14 +73,24 @@ def _languages_to_check(
 def menu_action_for_text(
     i18n: MenuI18n, text: str, lang: str, default_language: str
 ) -> str | None:
-    normalized_text = _normalized(text)
-    if normalized_text in COMMAND_ACTIONS:
-        return COMMAND_ACTIONS[normalized_text]
+    normalized_texts = _normalized_variants(text)
+    if not normalized_texts:
+        return None
+    if normalized_texts[0] in COMMAND_ACTIONS:
+        return COMMAND_ACTIONS[normalized_texts[0]]
 
     languages = _languages_to_check(i18n, lang, default_language)
     for action, keys in MENU_ACTION_TEXT_KEYS.items():
         for language in languages:
             for key in keys:
-                if normalized_text == _normalized(i18n.get_text(language, key)):
+                localized_variants = _normalized_variants(
+                    i18n.get_text(language, key)
+                )
+                if any(
+                    normalized_text == localized_text
+                    for normalized_text in normalized_texts
+                    for localized_text in localized_variants
+                ):
                     return action
+
     return None
