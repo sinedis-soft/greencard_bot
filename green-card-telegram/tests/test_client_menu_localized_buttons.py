@@ -149,12 +149,26 @@ def test_europolis_belarusian_menu_buttons_match_after_telegram_emoji_variation(
     assert menu_action_for_text(i18n, "Мои заявки", "be", "ru") == "my_applications"
 
 
-def test_europolis_belarusian_menu_aliases_work_without_dictionary_context():
-    i18n = FakeI18n()
 
-    assert menu_action_for_text(i18n, "🌍 Дзе дзейнічае?", "be", "ru") == "coverage"
-    assert menu_action_for_text(i18n, "📝 Аформіць", "be", "ru") == "apply"
+def test_europolis_belarusian_menu_buttons_match_without_leading_icon():
+    i18n = FakeI18n()
+    i18n.dictionaries["be"] = {
+        "main_menu.calculator": "🧮 Калькулятар",
+        "main_menu.faq": "❓ FAQ",
+        "main_menu.coverage": "🌍 Дзе дзейнічае?",
+        "main_menu.apply": "📝 Аформіць",
+        "main_menu.operator": "👨‍💼 Звязацца з аператарам",
+        "main_menu.latest_deal": "📄 Мая апошняя заяўка",
+        "main_menu.my_applications": "📄 Мои заявки",
+        "main_menu.payment_confirmation": "💳 Пацвярджэнне аплаты",
+        "main_menu.language": "🌐 Мова",
+        "calculator.apply_cta": "📝 Аформіць заяўку",
+    }
+
+    assert menu_action_for_text(i18n, "Дзе дзейнічае?", "be", "ru") == "coverage"
+    assert menu_action_for_text(i18n, "Аформіць", "be", "ru") == "apply"
     assert (
-        menu_action_for_text(i18n, "💳 Пацвярджэнне аплаты", "be", "ru")
+        menu_action_for_text(i18n, "Пацвярджэнне аплаты", "be", "ru")
+
         == "payment_confirmation"
     )

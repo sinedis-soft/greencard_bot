@@ -36,38 +36,6 @@ COMMAND_ACTIONS = {
     "/lang": "language",
 }
 
-MENU_ACTION_ALIASES = {
-    "calculator": ("калькулятор", "калькулятар", "calculator"),
-    "faq": ("faq",),
-    "coverage": (
-        "где работает?",
-        "дзе дзейнічае?",
-        "where does it work?",
-    ),
-    "apply": (
-        "оформить заявку",
-        "аформіць заяўку",
-        "аформіць",
-        "submit an application",
-    ),
-    "operator": (
-        "связаться с оператором",
-        "звязацца з аператарам",
-        "contact an operator",
-    ),
-    "latest_deal": (
-        "моя последняя заявка",
-        "мая апошняя заяўка",
-        "my latest application",
-    ),
-    "my_applications": ("мои заявки", "мае заяўкі", "my applications"),
-    "payment_confirmation": (
-        "подтверждение оплаты",
-        "пацвярджэнне аплаты",
-        "payment confirmation",
-    ),
-    "language": ("язык", "мова", "language"),
-}
 
 _EMOJI_PREFIX_CHARS = frozenset(
     "🧮❓🌍📝📄💳👨💼🌐👩‍️☘️✅🔘▫️▪️• "
@@ -90,7 +58,11 @@ def _normalized(text: str) -> str:
 def _normalized_variants(text: str) -> tuple[str, ...]:
     normalized = _normalized(text)
     without_icon = _normalized(_without_leading_icon(text))
-    return tuple(dict.fromkeys(value for value in (normalized, without_icon) if value))
+
+    return tuple(
+        dict.fromkeys(value for value in (normalized, without_icon) if value)
+    )
+
 
 
 def _languages_to_check(
@@ -114,7 +86,11 @@ def menu_action_for_text(
     for action, keys in MENU_ACTION_TEXT_KEYS.items():
         for language in languages:
             for key in keys:
-                localized_variants = _normalized_variants(i18n.get_text(language, key))
+
+                localized_variants = _normalized_variants(
+                    i18n.get_text(language, key)
+                )
+
                 if any(
                     normalized_text == localized_text
                     for normalized_text in normalized_texts
@@ -122,11 +98,5 @@ def menu_action_for_text(
                 ):
                     return action
 
-    for action, aliases in MENU_ACTION_ALIASES.items():
-        if any(
-            normalized_text == _normalized(alias)
-            for normalized_text in normalized_texts
-            for alias in aliases
-        ):
-            return action
+
     return None
