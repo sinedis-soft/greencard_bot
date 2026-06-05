@@ -2,34 +2,34 @@ main_menu:
   calculator: "🧮 Calculator"
   faq: "❓ FAQ"
   coverage: "🌍 Unde este valabil?"
-  apply: "📝 Perfectare"
+  apply: "📝 Solicitați polița"
   operator: "👨‍💼 Contactați operatorul"
   payment_confirmation: "💳 Confirmarea plății"
-  latest_deal: "📄 Ultima mea cerere"
-  my_applications: "📄 Мои заявки"
+  latest_deal: "📄 Ultima mea solicitare"
+  my_applications: "📄 Solicitările mele"
   language: "🌐 Limbă"
 
 menu:
   title: "Meniul principal"
 
 language:
-  select: "Vă rugăm să alegeți limba"
+  select: "Vă rugăm să selectați limba"
   changed: "Limba a fost actualizată"
 
 calculator:
-  result_title: "Cost preliminar"
+  result_title: "Cost estimativ"
   disclaimer: "Calcul preliminar"
-  apply_cta: "📝 Trimiteți cererea"
-  select_vehicle_type: "Alegeți tipul mijlocului de transport"
-  select_period: "Alegeți perioada de asigurare (zile)"
-  result_template: "Cost preliminar: {estimated_price} {currency}\n{disclaimer}"
+  apply_cta: "📝 Solicitați polița"
+  select_vehicle_type: "Selectați tipul vehiculului"
+  select_period: "Selectați perioada asigurării (zile)"
+  result_template: "Cost estimativ: {estimated_price} {currency}\n{disclaimer}"
   vehicle:
     car: "Autoturism"
     truck: "Camion"
     bus: "Autobuz"
     moto: "Motocicletă"
     trailer: "Remorcă"
-    special: "Utilaj special"
+    special: "Vehicul special"
 
 application:
 
@@ -61,180 +61,226 @@ application:
       trailer: "Remorcă"
     fuel_types:
       petrol: "Benzină"
-      diesel: "Diesel"
-      gas_petrol: "Gaz / benzină"
+      diesel: "Motorină"
+      gas_petrol: "GPL / benzină"
       electric: "Electric"
       hybrid: "Hibrid"
     power_units:
       hp: "Cai putere"
       kw: "Kilowați"
-  submitted: "Cererea a fost trimisă. Vom pregăti polița și vă vom trimite datele pentru plată."
+
+  submitted: "Solicitarea a fost trimisă. Vom pregăti polița și vă vom transmite detaliile pentru plată."
   validation_error: "Eroare la verificarea datelor"
   bitrix_error: "Eroare Bitrix"
-  mini_app_soon: "Formularul Mini App va fi conectat la etapa următoare."
-  open_form_button: "Deschideți formularul cererii"
-  temporarily_unavailable: "Formularul cererii este temporar indisponibil."
+  mini_app_soon: "Formularul Mini App va fi disponibil în etapa următoare."
+  open_form_button: "Deschide formularul"
+  temporarily_unavailable: "Formularul este temporar indisponibil."
+
   form_header: |
-    Cerere pentru perfectarea poliței
-    Completați datele. Vom pregăti polița și vă vom trimite datele pentru plată.
-    ⚠️ATENȚIE! Continuând să utilizați aplicația, sunteți de acord cu prelucrarea username-ului dvs. Telegram.⚠️
+    Cerere pentru emiterea poliței
+    Completați datele. Vom pregăti polița și vă vom trimite detaliile pentru plată.
+    ⚠️ATENȚIE! Continuând utilizarea aplicației, sunteți de acord cu prelucrarea username-ului dumneavoastră Telegram.⚠️
+
   step_1: "1. Contacte"
-  step_2: "2. Date despre asigurare și mijlocul de transport"
-  prefilled_from_bitrix: "Am găsit profilul dvs. în baza noastră după username-ul Telegram. Contactele și datele asiguratului au fost completate automat."
-  prefilled_from_bitrix_editable: "Am găsit profilul dvs. în baza noastră după username-ul Telegram. Datele au fost completate — verificați-le și corectați-le dacă este necesar. Dacă totul este corect, puteți trimite un mesaj gol la acest pas."
+  step_2: "2. Date despre asigurare și vehicul"
+
+  prefilled_from_bitrix: "Am găsit profilul dumneavoastră în baza noastră de date după username-ul Telegram. Datele de contact și informațiile asiguratului au fost completate automat."
+
+  prefilled_from_bitrix_editable: "Am găsit profilul dumneavoastră în baza noastră de date după username-ul Telegram. Datele au fost completate automat — verificați-le și corectați-le dacă este necesar. Dacă totul este corect, puteți trimite un mesaj gol la acest pas."
+
   ask_email_lookup: |
     Nu am găsit profilul după username-ul Telegram.
-    Vă rugăm să introduceți e-mailul pentru căutarea clientului.
+    Vă rugăm să introduceți adresa de e-mail pentru căutarea clientului.
+
   contact_not_found_manual: "Clientul nu a fost găsit după e-mail. Completați manual datele personale."
-  ask_passport_verify: "Clientul a fost găsit după e-mail. Introduceți seria și numărul pașaportului fără spații pentru confirmarea identității."
-  passport_verify_failed_manual: "Pașaportul nu corespunde datelor din bază. Pentru siguranță, completați manual datele personale."
+
+  ask_passport_verify: "Client găsit după e-mail. Introduceți seria și numărul pașaportului fără spații pentru verificarea identității."
+
+  passport_verify_failed_manual: "Datele pașaportului nu coincid cu cele din baza de date. Din motive de securitate, completați manual datele personale."
+
   personal_data_summary: |
     Verificați datele personale:
-    Numele și prenumele: {last_name} {first_name}
+    Nume și prenume: {last_name} {first_name}
     Data nașterii: {birth_date}
-    Numărul pașaportului: {passport}
+    Număr pașaport: {passport}
     Adresa de domiciliu: {registration_address}
     E-mail: {email}
     Telefon: {phone}
 
-    Datele sunt actuale sau trebuie modificate?
+    Datele sunt corecte sau trebuie modificate?
+
   vehicle_data_summary: |
     {vehicle_type} cu numărul de înmatriculare: {license_plate}
-    Mijlocul de transport este înregistrat în țara: {vehicle_country}
-    Anul fabricației: {manufacture_year}
+    Vehiculul este înmatriculat în: {vehicle_country}
+    An fabricație: {manufacture_year}
     VIN: {vin}
-    {fuel_type}, capacitatea motorului {engine_capacity} cm.cub., putere {engine_power}, {power_unit}
+    {fuel_type}, capacitate cilindrică {engine_capacity} cmc, putere {engine_power}, {power_unit}
 
-    Datele sunt actuale sau trebuie modificate?
-  data_actual: "Datele sunt actuale"
-  data_edit: "Trebuie efectuate modificări"
-  ask_first_name_prefilled: "Prenume * (Utilizați: {value})"
+    Datele sunt corecte sau trebuie modificate?
+
+  data_actual: "Datele sunt corecte"
+  data_edit: "Este necesară modificarea datelor"
+
+  ask_first_name_prefilled: "Prenume * (Folosiți: {value})"
 
   prefill_next_button: "DA, URMĂTOAREA ÎNTREBARE"
 
-  ask_last_name_prefilled: "Nume * (Utilizați: {value})"
-  ask_phone_prefilled: "Telefon (cu codul țării) * (Utilizați: {value})"
-  ask_email_prefilled: "E-mail * (Utilizați: {value})"
-  ask_first_name: "Prenume (cu litere latine)*"
-  ask_last_name: "Nume (cu litere latine)*"
+  ask_last_name_prefilled: "Nume * (Folosiți: {value})"
+  ask_phone_prefilled: "Telefon (cu prefix de țară) * (Folosiți: {value})"
+  ask_email_prefilled: "E-mail * (Folosiți: {value})"
+
+  ask_first_name: "Prenume (cu caractere latine)*"
+  ask_last_name: "Nume (cu caractere latine)*"
+
   ask_phone: |
-    Telefon (cu codul țării)
+    Telefon (cu prefix de țară)
     Exemplu: +48123456789
+
   ask_email: |
     E-mail
     Exemplu: exempl@mail.pl"
+
   ask_birth_date: |
     Data nașterii
     Format: zz.ll.aaaa
-  ask_birth_date_prefilled: "Data nașterii * (Utilizați: {value})"
-  ask_passport: "Seria și numărul pașaportului fără spații (cu litere latine)*"
-  ask_passport_prefilled: "Seria și numărul pașaportului fără spații * (Utilizați: {value})"
-  ask_registration_address: "Adresa de înregistrare (cu litere latine)*"
-  ask_registration_address_prefilled: "Adresa de înregistrare * (Utilizați: {value})"
-  ask_insurance_period: "Perioada de asigurare (alegeți) *"
+
+  ask_birth_date_prefilled: "Data nașterii * (Folosiți: {value})"
+
+  ask_passport: "Seria și numărul pașaportului fără spații (cu caractere latine)*"
+  ask_passport_prefilled: "Seria și numărul pașaportului fără spații * (Folosiți: {value})"
+
+  ask_registration_address: "Adresa de domiciliu (cu caractere latine)*"
+  ask_registration_address_prefilled: "Adresa de domiciliu * (Folosiți: {value})"
+
+  ask_insurance_period: "Perioada asigurării (selectați) *"
+
   ask_insurance_start_date: |
     Data începerii asigurării
     Format: zz.ll.aaaa
-  ask_vehicle_country: "Țara de înmatriculare a automobilului *"
-  validation_vehicle_country: "Indicați țara de înmatriculare a automobilului."
-  ask_vehicle_country_prefilled: "Țara de înmatriculare a automobilului * (curentă: {value})"
 
-  choose_from_buttons: "Alegeți valoarea folosind butonul de mai jos."
+  ask_vehicle_country: "Țara de înmatriculare a vehiculului *"
+  validation_vehicle_country: "Indicați țara de înmatriculare a vehiculului."
+  ask_vehicle_country_prefilled: "Țara de înmatriculare a vehiculului * (actuală: {value})"
 
-  ask_vehicle_type: "Tipul mijlocului de transport *"
-  ask_vehicle_type_prefilled: "Tipul mijlocului de transport * (curent: {value})"
+  choose_from_buttons: "Selectați o valoare folosind butoanele de mai jos."
+
+  ask_vehicle_type: "Tipul vehiculului *"
+  ask_vehicle_type_prefilled: "Tipul vehiculului * (actual: {value})"
+
   ask_license_plate: "Număr de înmatriculare *"
-  ask_license_plate_after_start: "Număr de înmatriculare (cu litere latine)*"
-  validation_license_plate_strict: "Număr de înmatriculare: doar litere latine și cifre, fără spații/cratime, maximum 8 caractere."
-  prefilled_vehicle_from_bitrix_editable: "Am găsit datele automobilului în baza noastră după numărul de înmatriculare. Valorile au fost completate — verificați-le și corectați-le dacă este necesar."
-  vehicle_not_found_manual: "Automobilul nu a fost găsit în bază. Vă rugăm să introduceți manual datele automobilului."
-  ask_vin: "Număr VIN *"
-  ask_brand_model: "Marca și modelul mijlocului de transport (cu litere latine)*"
-  ask_manufacture_year: "Anul fabricației mijlocului de transport *"
-  ask_fuel_type: "Tipul combustibilului *"
-  ask_engine_capacity: "Capacitatea motorului, cm. cub. *"
-  ask_engine_capacity_prefilled: "Capacitatea motorului, cm. cub. * (Utilizați: {value})"
-  ask_engine_power: "Puterea motorului *"
-  ask_engine_power_prefilled: "Puterea motorului * (Utilizați: {value})"
-  skip_engine_capacity_electric: "Pentru tipul de combustibil Electric, capacitatea motorului nu este necesară."
-  ask_power_unit: "Unitatea de măsură a puterii *"
+  ask_license_plate_after_start: "Număr de înmatriculare (cu caractere latine)*"
 
-  ask_power_unit_prefilled: "Unitatea de măsură a puterii * (curentă: {value})"
+  validation_license_plate_strict: "Numărul de înmatriculare: doar litere latine și cifre, fără spații sau cratime, maximum 8 caractere."
+
+  prefilled_vehicle_from_bitrix_editable: "Am găsit datele vehiculului în baza noastră de date după numărul de înmatriculare. Valorile au fost completate automat — verificați-le și corectați-le dacă este necesar."
+
+  vehicle_not_found_manual: "Vehiculul nu a fost găsit în baza de date. Vă rugăm să introduceți manual datele vehiculului."
+
+  ask_vin: "Număr VIN *"
+  ask_brand_model: "Marca și modelul vehiculului (cu caractere latine)*"
+  ask_manufacture_year: "Anul fabricației vehiculului *"
+  ask_fuel_type: "Tip combustibil *"
+  ask_engine_capacity: "Capacitate cilindrică, cmc *"
+  ask_engine_capacity_prefilled: "Capacitate cilindrică, cmc * (Folosiți: {value})"
+
+  ask_engine_power: "Puterea motorului *"
+  ask_engine_power_prefilled: "Puterea motorului * (Folosiți: {value})"
+
+  skip_engine_capacity_electric: "Pentru tipul de combustibil Electric, capacitatea cilindrică nu este necesară."
+
+  ask_power_unit: "Unitatea de măsură a puterii *"
+  ask_power_unit_prefilled: "Unitatea de măsură a puterii * (actuală: {value})"
+
   ask_comment: "Comentariu (opțional)"
   skip_comment_button: "OMITE"
 
   ask_vehicle_docs: |
-    Certificatul de înmatriculare / pașaportul tehnic (foto sau PDF)
+    Certificatul de înmatriculare (foto sau PDF)
     Puteți atașa mai multe fișiere.
 
-  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
-  add_more_docs: "Add more documents"
-  all_docs_uploaded: "All documents uploaded"
-  ask_techpass_changed: "În baza de date există deja fotografia certificatului de înmatriculare. Certificatul a fost schimbat?"
+  ask_vehicle_docs_complete: "Documentul a fost atașat. Doriți să adăugați și alte documente?"
+
+  add_more_docs: "Mai trebuie adăugate documente"
+  all_docs_uploaded: "Toate documentele au fost încărcate"
+
+  ask_techpass_changed: "În baza noastră există deja o fotografie a certificatului de înmatriculare. Certificatul a fost schimbat?"
 
   techpass_changed_yes: "Da, a fost schimbat"
   techpass_changed_no: "Nu, nu a fost schimbat"
-  ask_vehicle_finalize: "Adăugați încă un automobil sau finalizați perfectarea?"
-  add_vehicle: "Adăugați încă un automobil"
-  finish_application: "Finalizați perfectarea"
+
+  ask_vehicle_finalize: "Doriți să adăugați încă un vehicul sau să finalizați solicitarea?"
+  add_vehicle: "Adaugă încă un vehicul"
+  finish_application: "Finalizează solicitarea"
   ask_consent: |
     Politica de prelucrare a datelor cu caracter personal SINEDIS
+
     SINEDIS Sp. z o.o. prelucrează datele cu caracter personal în conformitate cu Regulamentul UE 2016/679 (GDPR / RODO) și legislația Poloniei.
+
     Datele sunt utilizate pentru:
     • calcularea ofertelor de asigurare;
-    • perfectarea și administrarea contractelor de asigurare;
+    • emiterea și administrarea contractelor de asigurare;
     • comunicarea cu clientul;
-    • îndeplinirea cerințelor legale;
-    • comunicări de marketing în cazul existenței consimțământului utilizatorului.
+    • îndeplinirea obligațiilor legale;
+    • comunicări de marketing, în cazul existenței consimțământului utilizatorului.
+
     Pot fi prelucrate:
-    numele, telefonul, e-mailul, adresa, datele mijlocului de transport, informațiile de asigurare, datele de plată și datele tehnice.
-    Datele pot fi transmise companiilor de asigurări, contractorilor IT și altor parteneri necesari pentru prestarea serviciilor.
+    numele, telefonul, e-mailul, adresa, datele vehiculului, informațiile de asigurare, datele de plată și datele tehnice.
+
+    Datele pot fi transmise companiilor de asigurări, furnizorilor IT și altor parteneri necesari pentru furnizarea serviciilor.
+
     Utilizatorul are dreptul:
     • să obțină acces la date;
     • să corecteze sau să șteargă datele;
     • să restricționeze prelucrarea;
-    • să retragă consimțământul;
-    • să depună plângere la PUODO.
-    Administratorul datelor poate fi compania de asigurări care a emis polița sau SINEDIS Sp. z o.o.
+    • să își retragă consimțământul;
+    • să depună o plângere la PUODO.
+
+    Operatorul datelor poate fi compania de asigurări care a emis polița sau SINEDIS Sp. z o.o.
+
     Contacte:
     SINEDIS Sp. z o.o.
     ul. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
     info@sinedis.pl
-    odo@sinedis.pl - inspector pentru protecția datelor
+    odo@sinedis.pl - responsabil cu protecția datelor
+
     Versiunea completă a politicii:
     https://greencard.agency
+
     ________________________
-    Sunteți de acord cu prelucrarea și transmiterea datelor cu caracter personal?
+
+    Sunteți de acord cu prelucrarea și transmiterea datelor cu caracter personal?"
+
   consent_agree: "✅ Sunt de acord și trimit"
   consent_decline: "❌ Refuz"
-  declined: "Ați refuzat transmiterea datelor. Cererea a fost anulată."
-  validation_name: "Introduceți cel puțin 2 caractere."
-  validation_phone: "Telefon incorect. Utilizați formatul +48123456789."
-  validation_email: "E-mail incorect."
+  declined: "Ați refuzat transmiterea datelor. Solicitarea a fost anulată."
 
-  validation_date: "Dată incorectă. Formate acceptate: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. Formatul ll/zz/aaaa este interzis."
+  validation_name: "Introduceți minimum 2 caractere."
+  validation_phone: "Număr de telefon incorect. Utilizați formatul +48123456789."
+  validation_email: "Adresă e-mail incorectă."
 
-  validation_age_18: "Asiguratul trebuie să aibă cel puțin 18 ani împliniți."
+  validation_date: "Dată incorectă. Formate acceptate: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. Formatul mm/dd/yyyy nu este permis."
+
+  validation_age_18: "Asiguratul trebuie să aibă minimum 18 ani împliniți."
   validation_insurance_start_not_past: "Data începerii asigurării nu poate fi în trecut."
-  ask_vin_prefilled: "Număr VIN * (Utilizați: {value})"
-  ask_brand_model_prefilled: "Marca și modelul mijlocului de transport * (Utilizați: {value})"
-  ask_manufacture_year_prefilled: "Anul fabricației mijlocului de transport * (Utilizați: {value})"
-  ask_fuel_type_prefilled: "Tipul combustibilului * (curent: {value})"
 
-  validation_passport: "Seria și numărul pașaportului sunt incorecte (introduceți fără spații)."
-  validation_address: "Indicați adresa completă de înregistrare."
+  ask_vin_prefilled: "Număr VIN * (Folosiți: {value})"
+  ask_brand_model_prefilled: "Marca și modelul vehiculului * (Folosiți: {value})"
+  ask_manufacture_year_prefilled: "Anul fabricației vehiculului * (Folosiți: {value})"
+  ask_fuel_type_prefilled: "Tip combustibil * (actual: {value})"
+
+  validation_passport: "Serie și număr de pașaport incorecte (introduceți fără spații)."
+  validation_address: "Indicați adresa completă de domiciliu."
   validation_license_plate: "Număr de înmatriculare incorect."
-  validation_vin: "VIN trebuie să conțină 17 caractere."
+  validation_vin: "VIN-ul trebuie să conțină 17 caractere."
   validation_brand_model: "Indicați marca și modelul."
-  validation_year: "Indicați un an de fabricație corect."
+  validation_year: "Indicați un an de fabricație valid."
   validation_positive_integer: "Introduceți un număr întreg pozitiv."
   validation_positive_number: "Introduceți un număr pozitiv."
-  validation_docs: "Trimiteți o fotografie sau un PDF/document al pașaportului tehnic."
-
+  validation_docs: "Trimiteți o fotografie sau un PDF/document al certificatului de înmatriculare."
 
 operator:
-  request_received: "Cererea a fost primită"
-  operator_connected: "Operatorul este conectat"
+  request_received: "Solicitarea a fost primită"
+  operator_connected: "Operator conectat"
   access_denied: "Acces interzis"
   no_tickets: "Nu există solicitări"
   taken: "Solicitarea a fost preluată"
@@ -242,139 +288,298 @@ operator:
   reply_sent: "Răspunsul a fost trimis"
 
 faq:
-  title: "Alegeți categoria FAQ"
+  title: "Selectați categoria FAQ"
+
   categories:
-    documents: "Documente pentru perfectare"
-    payment: "Plată"
-    coverage: "Acoperire"
-    mistakes: "Atenție"
-    refund: "Rambursare"
+    documents: "📄 Documente"
+    payment: "💳 Plată"
+    coverage: "🌍 Teritoriu de acoperire"
+    validity: "📅 Perioada de valabilitate"
+    delivery: "📧 Primirea poliței"
+    border: "🛂 Trecerea frontierei"
+    accident: "🚗 Accident și caz asigurat"
+    mistakes: "⚠️ Informații importante"
+    refund: "↩️ Rambursare"
+    whatis: "ℹ️ Ce este Europolis?"
+    nogreencard: "🟢 Diferența față de Green Card"
+    vehicles: "🚘 Tipuri de vehicule"
+    extension: "🔄 Prelungirea poliței"
+    legalentity: "🏢 Persoane juridice"
+    online: "📱 Emitere online"
+    database: "🔍 Verificarea poliței"
+    restrictions: "⛔ Restricții"
+    support: "👨‍💼 Contact operator"
+
   answers:
+
     documents: |
-      Pentru perfectarea poliței vor fi necesare următoarele date: datele pașaportului, datele mijlocului de transport și datele privind perioada de valabilitate a asigurării.
-      De aceea, trebuie să pregătiți:
-      - pașaportul
-      - certificatul de înmatriculare al mijlocului de transport
-      - datele tehnice ale automobilului
-      - numărul de telefon
-      - e-mailul
+      Pentru emiterea poliței sunt necesare:
+
+      • Pașaportul sau actul de identitate al proprietarului;
+      • Certificatul de înmatriculare al vehiculului;
+      • Numărul de înmatriculare;
+      • Numărul VIN;
+      • Număr de telefon de contact;
+      • E-mail pentru primirea poliței;
+      • Data începerii și perioada asigurării.
+
+      După primirea documentelor, operatorul va verifica datele și va pregăti polița.
+
     payment: |
-      Disponibil:
-      - plata prin transfer pe card polonez,
-      - plata prin BLIK la numărul de telefon,
-      - plata prin transfer în cont bancar polonez
-    coverage: "Teritoriul de acoperire: A - Austria, B - Belgia, BG - Bulgaria, CY - Cipru, CZ - Cehia, D - Germania, DK - Danemarca, E - Spania, EST - Estonia, F - Franța, FIN - Finlanda, GR - Grecia, H - Ungaria, HR - Croația, I - Italia, IRL - Irlanda, IS - Islanda, L - Luxemburg, LT - Lituania, LV - Letonia, M - Malta, N - Norvegia, NL - Țările de Jos, P - Portugalia, PL - Polonia, RO - România, S - Suedia, SK - Slovacia, SLO - Slovenia, CH - Elveția."
-    mistakes: "Vă rugăm să verificați de două ori VIN-ul, numărul de înmatriculare și perioada de asigurare înainte de trimitere. Ulterior nu va fi posibilă efectuarea modificărilor!"
-    refund: "Rambursarea banilor nu se efectuează."
+      Sunt disponibile următoarele metode de plată:
+
+      • Transfer către un cont bancar polonez;
+      • Transfer către un card bancar polonez;
+      • BLIK către un număr de telefon polonez.
+
+      Polița este emisă după confirmarea primirii plății.
+
+    coverage: |
+      Polița este valabilă pe teritoriul țărilor Uniunii Europene și al Spațiului Economic European.
+
+      Înainte de călătorie, verificați obligatoriu lista țărilor indicate în certificatul de asigurare.
+
+    validity: |
+      Protecția de asigurare începe de la data și ora indicate în poliță.
+
+      Asigurarea poate fi emisă în avans pentru o dată viitoare, dar nu mai devreme de 7 zile înainte de începerea acoperirii.
+
+      Recomandăm emiterea poliței cu cel puțin câteva ore înainte de trecerea frontierei, deoarece datele vehiculului sunt transmise de compania de asigurări către UFG într-un interval de la câteva ore până la o zi.
+
+      ☝️Vă rugăm să rețineți! Nu toate mărcile și modelele de vehicule există în baza de date a companiei de asigurări. Unele vehicule sunt produse pentru țările CSI sau SUA și nu sunt populare în UE. Astfel de vehicule pot fi asigurate doar în zilele lucrătoare între 09:00 și 21:00, ora Varșoviei, iar sâmbăta între 09:00 și 15:00.
+
+    delivery: |
+      După emiterea poliței și confirmarea plății, aceasta va fi trimisă la adresa de e-mail indicată în format PDF.
+
+      Se recomandă imprimarea certificatului alb-negru.
+
+      Dacă mesajul nu a fost primit, verificați folderul „Spam” sau contactați operatorul.
+
+    border: |
+      La trecerea frontierei se recomandă să aveți:
+
+      • Polița tipărită;
+      • Documentele vehiculului;
+      • Pașaportul sau actul de identitate.
+
+      Decizia finală privind permiterea intrării aparține autorităților de frontieră.
+
+    accident: |
+      În caz de accident este necesar:
+
+      • Să asigurați siguranța;
+      • Dacă este necesar, să chemați poliția;
+      • Să documentați circumstanțele incidentului;
+      • Să informați asigurătorul (https://www.warta.pl/pomoc-i-obsluga/zgloszenie-szkody/formularz-majatek/#/dla-ciebie/pojazd/informacje-o-zdarzeniu).
+
+      Nu părăsiți locul accidentului fără întocmirea documentelor necesare.
+
+    mistakes: |
+      Înainte de confirmarea solicitării, verificați cu atenție:
+
+      • Numărul VIN;
+      • Numărul de înmatriculare;
+      • Tipul vehiculului;
+      • Datele asigurării.
+
+      Erorile pot duce la refuzul trecerii frontierei sau la probleme în procesul de despăgubire.
+
+    refund: |
+      După emiterea poliței de asigurare, rambursarea primei de asigurare, de regulă, nu este posibilă.
+
+      În anumite cazuri, cererea de rambursare sau anulare este analizată individual de către asigurător.
+
+    whatis: |
+      OC Graniczne este o asigurare obligatorie de răspundere civilă pentru vehiculele înmatriculate în afara UE.
+
+      Polița permite circulația legală pe teritoriul țărilor indicate în certificat.
+        nogreencard: |
+      Green Card și OC Graniczne sunt produse de asigurare diferite.
+
+      Green Card se emite în țara în care este înmatriculat vehiculul.
+
+      OC Graniczne este utilizat pentru intrarea în UE în lipsa unei Green Card valabile.
+
+    vehicles: |
+      Emiterea este posibilă pentru:
+
+      • Autoturisme;
+      • Camioane;
+      • Autobuze;
+      • Remorci;
+      • Motociclete;
+      • Vehicule speciale.
+
+      Posibilitatea emiterii depinde de țara de înmatriculare și de condițiile asigurătorului.
+
+    extension: |
+      În practică, polița nu poate fi prelungită.
+
+      Se poate emite doar o poliță nouă.
+
+    legalentity: |
+      Polița poate fi emisă doar pe numele unei persoane fizice.
+
+      Pentru clienții корпоративativi, polița trebuie emisă pe numele șoferului.
+
+    online: |
+      Emiterea se realizează complet la distanță.
+
+      Documentele sunt primite online, iar polița finală este trimisă prin e-mail.
+
+    database: |
+      După emitere, datele poliței pot apărea în bazele de date ale asiguratorilor cu întârziere.
+
+      Actualizarea informațiilor poate dura până la 24 de ore.
+
+      Polița poate fi verificată pe site-ul https://www.ufg.pl/
+
+    restrictions: |
+      Asigurarea de frontieră acoperă doar răspunderea civilă față de terți.
+
+      Daunele produse propriului vehicul nu sunt acoperite.
+
+    support: |
+      Dacă aveți întrebări privind emiterea, plata sau valabilitatea poliței, contactați operatorul prin Telegram sau WhatsApp.
 
 coverage:
   text: |
-    Harta de acoperire OC graniczne (border insurance).
-    Înainte de călătorie, verificați codul țării din polița dvs.
+    Harta de acoperire OC graniczne (asigurare de frontieră).
+
+    Înainte de călătorie, verificați codul țării indicat în polița dumneavoastră.
+
     A - Austria, B - Belgia, BG - Bulgaria, CY - Cipru, CZ - Cehia, D - Germania, DK - Danemarca, E - Spania, EST - Estonia, F - Franța, FIN - Finlanda, GR - Grecia, H - Ungaria, HR - Croația, I - Italia, IRL - Irlanda, IS - Islanda, L - Luxemburg, LT - Lituania, LV - Letonia, M - Malta, N - Norvegia, NL - Țările de Jos, P - Portugalia, PL - Polonia, RO - România, S - Suedia, SK - Slovacia, SLO - Slovenia, CH - Elveția.
 
 latest_deal:
   title_label: "TITLE"
-  policy_number_label: "Policy number"
-  policy_status_label: "Policy status"
+  policy_number_label: "Numărul poliței"
+  policy_status_label: "Statusul poliței"
   comments_label: "COMMENTS"
-  not_found: "No latest application was found."
-  unavailable: "Could not get your latest application. Please try again later."
+
+  not_found: "Ultima solicitare nu a fost găsită."
+  unavailable: "Nu s-a putut obține ultima solicitare. Încercați din nou mai târziu."
+
   delivery_prompt: "Cum doriți să primiți polița?"
   delivery_email_button: "Trimite pe e-mail"
   delivery_chat_button: "Trimite aici"
-  delivery_request_sent: "Solicitarea a fost trimisă operatorului."
+
+  delivery_request_sent: "Solicitarea a fost transmisă operatorului."
+
   payment_instructions: |
-    Your application for car insurance for {license_plate} has been approved.
+    Solicitarea dumneavoastră pentru asigurarea vehiculului {license_plate} a fost aprobată.
 
-    After payment, please send the payment confirmation.
+    După efectuarea plății, vă rugăm să trimiteți confirmarea plății.
 
-    Payment options
+    Modalități de plată
 
-    BLIK to +48 664 914 738
-    Payment reference: za ubezpieczenie auto {license_plate}
-
-
-    Bank transfer in Poland:
-    Account holder: DZIANIS BARAVOI
-    Account number: 44 1020 1332 0000 1602 1435 6564
-    Bank: Powszechna Kasa Oszczędności Bank Polski SA
-    Payment reference: za ubezpieczenie auto {license_plate}
+    BLIK la numărul +48 664 914 738
+    Detalii plată: za ubezpieczenie auto {license_plate}
 
 
-    International bank transfer:
-    Account holder: DZIANIS BARAVOI
-    Currency: PLN
+    Transfer bancar în Polonia:
+    Titular cont: DZIANIS BARAVOI
+    Număr cont: 44 1020 1332 0000 1602 1435 6564
+    Bancă: Powszechna Kasa Oszczędności Bank Polski SA
+    Detalii plată: za ubezpieczenie auto {license_plate}
+
+
+    Transfer bancar internațional:
+    Titular cont: DZIANIS BARAVOI
+    Valută: PLN
     IBAN: PL44 1020 1332 0000 1602 1435 6564
     SWIFT/BIC: BPKOPLPW
-    Bank: Powszechna Kasa Oszczędności Bank Polski SA
-    Country: Polska
-    Address: ul. H. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
-    Payment reference: za ubezpieczenie auto {license_plate}
+    Bancă: Powszechna Kasa Oszczędności Bank Polski SA
+    Țară: Polska
+    Adresă: ul. H. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    Detalii plată: za ubezpieczenie auto {license_plate}
 
 
-    Card transfer:
-    Card number: 4213 5239 3578 6679
-    Valid thru: 09/26
-    Cardholder: DZIANIS BARAVOI
-    Payment reference: za ubezpieczenie auto {license_plate}
+    Transfer pe card:
+    Număr card: 4213 5239 3578 6679
+    Expirare: 09/26
+    Titular: DZIANIS BARAVOI
+    Detalii plată: za ubezpieczenie auto {license_plate}
+
 payment_confirmation:
-  attach_prompt: "Atașați o captură de ecran privind trimiterea fondurilor sau confirmarea PDF de la bancă."
-  file_received: "Fișier primit. Trimiteți confirmarea operatorului sau adăugați încă un fișier?"
-  send_button: "Trimiteți confirmarea"
-  add_more_button: "Adăugați încă un fișier"
+  attach_prompt: "Atașați o captură de ecran a transferului sau confirmarea PDF emisă de bancă."
+
+  file_received: "Fișierul a fost primit. Doriți să trimiteți confirmarea operatorului sau să adăugați încă un fișier?"
+
+  send_button: "Trimite confirmarea"
+  add_more_button: "Adaugă încă un fișier"
+
   sent: "Confirmarea plății a fost trimisă operatorului."
-  no_unpaid: "Nu aveți facturi neplătite. Puteți apăsa butonul „Ultima mea cerere”."
+
+  no_unpaid: "Nu aveți facturi neplătite. Puteți apăsa butonul «Ultima mea solicitare»."
+
 my_applications:
-  title: "Ваши последние заявки:"
-  empty: "У вас пока нет заявок, связанных с этим Telegram-аккаунтом. Если вы уже оформляли полис ранее, напишите оператору — мы свяжем вашу историю заявок."
-  unavailable: "Сейчас не удалось загрузить заявки. Попробуйте позже."
-  not_found: "Заявка не найдена или недоступна для этого Telegram-аккаунта."
-  policy_status_button: "Где мой полис?"
-  repeat_button: "Оформить снова"
-  open_button: "Открыть"
-  operator_button: "Связаться с оператором"
-  payment_button: "Подтвердить оплату"
-  policy_button: "Получить полис"
-  policy_not_found: "Полис пока не найден. Мы передали запрос оператору."
+  title: "Ultimele dumneavoastră solicitări:"
+
+  empty: "Momentan nu aveți solicitări asociate acestui cont Telegram. Dacă ați emis deja o poliță anterior, contactați operatorul — vom conecta istoricul solicitărilor dumneavoastră."
+
+  unavailable: "Momentan nu s-au putut încărca solicitările. Încercați din nou mai târziu."
+
+  not_found: "Solicitarea nu a fost găsită sau nu este disponibilă pentru acest cont Telegram."
+
+  policy_status_button: "Unde este polița mea?"
+  repeat_button: "Emite din nou"
+  open_button: "Deschide"
+  operator_button: "Contactează operatorul"
+  payment_button: "Confirmă plata"
+  policy_button: "Primește polița"
+
+  policy_not_found: "Polița nu a fost încă găsită. Am transmis solicitarea operatorului."
+
 repeat_application:
   start_prompt: |
-    Оформление по предыдущей заявке
+    Emitere pe baza unei solicitări anterioare
 
-    Авто: {vehicle_plate_masked}
-    Тип: {vehicle_type}
-    Страна регистрации: {registration_country}
+    Vehicul: {vehicle_plate_masked}
+    Tip: {vehicle_type}
+    Țara de înmatriculare: {registration_country}
 
-    Для нового полиса введите дату начала страховки в формате ДД.ММ.ГГГГ.
-  ask_start_date: "Введите новую дату начала страховки в формате ДД.ММ.ГГГГ."
-  invalid_start_date: "Введите корректную дату начала: не в прошлом и в формате ДД.ММ.ГГГГ."
-  ask_period: "Выберите срок страхования."
-  ask_docs: "Использовать документы из предыдущей заявки или загрузить новые?"
-  docs_reuse_button: "Да, использовать прежние"
-  docs_upload_new_button: "Нет, загрузить новые"
+    Pentru noua poliță introduceți data începerii asigurării în format ZZ.LL.AAAA.
+
+  ask_start_date: "Introduceți noua dată de începere a asigurării în format ZZ.LL.AAAA."
+
+  invalid_start_date: "Introduceți o dată validă: să nu fie în trecut și să respecte formatul ZZ.LL.AAAA."
+
+  ask_period: "Selectați perioada asigurării."
+
+  ask_docs: "Doriți să utilizați documentele din solicitarea anterioară sau să încărcați altele noi?"
+
+  docs_reuse_button: "Da, folosește documentele anterioare"
+  docs_upload_new_button: "Nu, încarcă documente noi"
+
   preview: |
-    Проверьте новую заявку:
+    Verificați noua solicitare:
 
-    Тип: OC graniczne (border insurance)
-    Авто: {vehicle_plate_masked}
-    Дата начала: {new_start_date}
-    Срок: {new_period_days} дней
-    Документы: {docs_mode_title}
+    Tip: OC graniczne (asigurare de frontieră)
+    Vehicul: {vehicle_plate_masked}
+    Data începerii: {new_start_date}
+    Perioada: {new_period_days} zile
+    Documente: {docs_mode_title}
 
-    Стоимость предварительная. Окончательная цена подтверждается оператором после проверки данных.
-  confirm_button: "Подтвердить"
-  change_button: "Изменить"
-  cancel_button: "Отмена"
-  cancelled: "Повторное оформление отменено."
-  unavailable: "Повторное оформление сейчас недоступно. Попробуйте позже или свяжитесь с оператором."
+    Costul este estimativ. Prețul final este confirmat de operator după verificarea datelor.
+
+  confirm_button: "Confirmă"
+  change_button: "Modifică"
+  cancel_button: "Anulare"
+
+  cancelled: "Reemiterea a fost anulată."
+
+  unavailable: "Reemiterea nu este disponibilă momentan. Încercați mai târziu sau contactați operatorul."
+
   created: |
-    Новая заявка создана.
+    Noua solicitare a fost creată.
 
-    Номер: {request_id}
-    Статус: {public_status}
+    Număr: {request_id}
+    Status: {public_status}
 
-    Оператор проверит данные и сообщит следующий шаг.
+    Operatorul va verifica datele și vă va comunica următorul pas.
+
 policy_status:
-  unavailable: "Сейчас не удалось проверить статус полиса. Попробуйте позже."
-  check_later_button: "Проверить позже"
-  back_to_applications_button: "Мои заявки"
+  unavailable: "Momentan nu s-a putut verifica statusul poliței. Încercați din nou mai târziu."
+
+  check_later_button: "Verifică mai târziu"
+  back_to_applications_button: "Solicitările mele"

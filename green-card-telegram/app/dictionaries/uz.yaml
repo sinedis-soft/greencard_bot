@@ -4,9 +4,9 @@ main_menu:
   coverage: "🌍 Qayerda amal qiladi?"
   apply: "📝 Rasmiylashtirish"
   operator: "👨‍💼 Operator bilan bog‘lanish"
-  payment_confirmation: "💳 Toʻlovni tasdiqlash"
-  latest_deal: "📄 Mening oxirgi arizam"
-  my_applications: "📄 Мои заявки"
+  payment_confirmation: "💳 To‘lovni tasdiqlash"
+  latest_deal: "📄 Oxirgi arizam"
+  my_applications: "📄 Mening arizalarim"
   language: "🌐 Til"
 
 menu:
@@ -19,9 +19,9 @@ language:
 calculator:
   result_title: "Dastlabki narx"
   disclaimer: "Dastlabki hisob-kitob"
-  apply_cta: "📝 Ariza rasmiylashtirish"
+  apply_cta: "📝 Ariza yuborish"
   select_vehicle_type: "Transport vositasi turini tanlang"
-  select_period: "Sug‘urta muddatini tanlang (kun)"
+  select_period: "Sug‘urta muddatini tanlang (kunlarda)"
   result_template: "Dastlabki narx: {estimated_price} {currency}\n{disclaimer}"
   vehicle:
     car: "Yengil avtomobil"
@@ -32,6 +32,7 @@ calculator:
     special: "Maxsus texnika"
 
 application:
+
   calendar:
     cancel: "Bekor qilish"
     today: "Bugun"
@@ -44,7 +45,7 @@ application:
       kazakhstan: "Qozog‘iston"
       uzbekistan: "O‘zbekiston"
       turkey: "Turkiya"
-      usa: "AQSH"
+      usa: "AQSh"
       united_kingdom: "Buyuk Britaniya"
       azerbaijan: "Ozarbayjon"
       georgia: "Gruziya"
@@ -53,8 +54,8 @@ application:
       armenia: "Armaniston"
       other: "Boshqa davlat"
     vehicle_types:
-      car: "Yengil avtomobil"
-      truck: "Yuk avtomobili"
+      car: "Yengil"
+      truck: "Yuk"
       moto: "Mototsikl"
       bus: "Avtobus"
       trailer: "Tirkama"
@@ -67,26 +68,35 @@ application:
     power_units:
       hp: "Ot kuchi"
       kw: "Kilovatt"
+
   submitted: "Ariza yuborildi. Biz polisni tayyorlaymiz va to‘lov rekvizitlarini yuboramiz."
-  validation_error: "Ma’lumotlarni tekshirish xatosi"
+  validation_error: "Ma’lumotlarni tekshirishda xatolik"
   bitrix_error: "Bitrix xatosi"
-  mini_app_soon: "Mini App shakli keyingi bosqichda ulanadi."
-  open_form_button: "Ariza shaklini ochish"
-  temporarily_unavailable: "Ariza shakli vaqtincha mavjud emas."
+  mini_app_soon: "Mini App formasi keyingi bosqichda ulanadi."
+  open_form_button: "Ariza formasini ochish"
+  temporarily_unavailable: "Ariza formasi vaqtincha mavjud emas."
+
   form_header: |
-    Polisni rasmiylashtirish uchun ariza
+    Polis rasmiylashtirish uchun ariza
     Ma’lumotlarni to‘ldiring. Biz polisni tayyorlaymiz va to‘lov rekvizitlarini yuboramiz.
-    ⚠️DIQQAT! Ilovadan foydalanishni davom ettirish orqali siz Telegram username’ingizni qayta ishlashga rozilik bildirasiz.⚠️
-  step_1: "1. Kontaktlar"
+    ⚠️DIQQAT! Ilovadan foydalanishni davom ettirib, Telegram username ma’lumotlaringizni qayta ishlashga rozilik bildirasiz.⚠️
+
+  step_1: "1. Kontakt ma’lumotlari"
   step_2: "2. Sug‘urta va transport vositasi ma’lumotlari"
-  prefilled_from_bitrix: "Telegram foydalanuvchi nomi bo‘yicha bazamizdan profilingiz topildi. Kontaktlar va sug‘urta qildiruvchi ma’lumotlari avtomatik to‘ldirildi."
-  prefilled_from_bitrix_editable: "Telegram username bo‘yicha bazamizdan profilingiz topildi. Ma’lumotlar to‘ldirildi — tekshiring va zarur bo‘lsa tuzating. Hammasi to‘g‘ri bo‘lsa, ushbu bosqichda bo‘sh xabar yuborishingiz mumkin."
+
+  prefilled_from_bitrix: "Telegram username orqali profilingiz bazamizdan topildi. Kontakt va sug‘urtalanuvchi ma’lumotlari avtomatik to‘ldirildi."
+  prefilled_from_bitrix_editable: "Telegram username orqali profilingiz bazamizdan topildi. Ma’lumotlar to‘ldirildi — tekshirib chiqing va kerak bo‘lsa tuzating. Agar hammasi to‘g‘ri bo‘lsa, ushbu bosqichda bo‘sh xabar yuborishingiz mumkin."
+
   ask_email_lookup: |
     Telegram username bo‘yicha profil topilmadi.
-    Iltimos, mijozni qidirish uchun e-mail kiriting.
-  contact_not_found_manual: "E-mail bo‘yicha mijoz topilmadi. Shaxsiy ma’lumotlarni qo‘lda to‘ldiring."
-  ask_passport_verify: "Mijoz e-mail bo‘yicha topildi. Shaxsni tasdiqlash uchun pasport seriyasi va raqamini bo‘sh joysiz kiriting."
-  passport_verify_failed_manual: "Pasport ma’lumotlari bazadagi ma’lumotlarga mos kelmadi. Xavfsizlik uchun shaxsiy ma’lumotlarni qo‘lda to‘ldiring."
+    Mijozni qidirish uchun e-mail manzilingizni kiriting.
+
+  contact_not_found_manual: "E-mail bo‘yicha mijoz topilmadi. Shaxsiy ma’lumotlarni qo‘lda kiriting."
+
+  ask_passport_verify: "Mijoz e-mail orqali topildi. Shaxsni tasdiqlash uchun pasport seriyasi va raqamini bo‘sh joysiz kiriting."
+
+  passport_verify_failed_manual: "Pasport ma’lumotlari bazadagi ma’lumotlarga mos kelmadi. Xavfsizlik maqsadida shaxsiy ma’lumotlarni qo‘lda kiriting."
+
   personal_data_summary: |
     Shaxsiy ma’lumotlarni tekshiring:
     Familiya va ism: {last_name} {first_name}
@@ -96,17 +106,20 @@ application:
     E-mail: {email}
     Telefon: {phone}
 
-    Ma’lumotlar dolzarbmi yoki o‘zgartirish kerakmi?
+    Ma’lumotlar dolzarbmi yoki o‘zgartirish kiritish kerakmi?
+
   vehicle_data_summary: |
-    {vehicle_type}, davlat ro‘yxat raqami: {license_plate}
-    TV ro‘yxatdan o‘tgan davlat: {vehicle_country}
+    Davlat raqami: {license_plate} bo‘lgan {vehicle_type}
+    Transport vositasi ro‘yxatdan o‘tgan davlat: {vehicle_country}
     Ishlab chiqarilgan yil: {manufacture_year}
     VIN: {vin}
-    {fuel_type}, dvigatel hajmi {engine_capacity} sm kub., quvvat {engine_power}, {power_unit}
+    {fuel_type}, dvigatel hajmi {engine_capacity} sm.kub., quvvati {engine_power}, {power_unit}
 
-    Ma’lumotlar dolzarbmi yoki o‘zgartirish kerakmi?
-  data_actual: "Ma’lumotlar dolzarb"
+    Ma’lumotlar dolzarbmi yoki o‘zgartirish kiritish kerakmi?
+
+  data_actual: "Ma’lumotlar to‘g‘ri"
   data_edit: "O‘zgartirish kiritish kerak"
+
   ask_first_name_prefilled: "Ism * (Foydalanish: {value})"
 
   prefill_next_button: "HA, KEYINGI SAVOL"
@@ -114,265 +127,460 @@ application:
   ask_last_name_prefilled: "Familiya * (Foydalanish: {value})"
   ask_phone_prefilled: "Telefon (davlat kodi bilan) * (Foydalanish: {value})"
   ask_email_prefilled: "E-mail * (Foydalanish: {value})"
-  ask_first_name: "Ism (lotin yozuvida)*"
-  ask_last_name: "Familiya (lotin yozuvida)*"
+
+  ask_first_name: "Ism (lotin harflarida)*"
+  ask_last_name: "Familiya (lotin harflarida)*"
+
   ask_phone: |
     Telefon (davlat kodi bilan)
     Misol: +48123456789
+
   ask_email: |
     E-mail
     Misol: exempl@mail.pl"
+
   ask_birth_date: |
     Tug‘ilgan sana
     Format: kk.oo.yyyy
+
   ask_birth_date_prefilled: "Tug‘ilgan sana * (Foydalanish: {value})"
-  ask_passport: "Pasport seriyasi va raqami bo‘sh joysiz (lotin yozuvida)*"
+
+  ask_passport: "Pasport seriyasi va raqami bo‘sh joysiz (lotin harflarida)*"
   ask_passport_prefilled: "Pasport seriyasi va raqami bo‘sh joysiz * (Foydalanish: {value})"
-  ask_registration_address: "Ro‘yxatdan o‘tgan manzil (lotin yozuvida)*"
+
+  ask_registration_address: "Ro‘yxatdan o‘tgan manzil (lotin harflarida)*"
   ask_registration_address_prefilled: "Ro‘yxatdan o‘tgan manzil * (Foydalanish: {value})"
+
   ask_insurance_period: "Sug‘urta muddati (tanlang) *"
+
   ask_insurance_start_date: |
-    Sug‘urta amal qilishining boshlanish sanasi
+    Sug‘urta amal qilish boshlanish sanasi
     Format: kk.oo.yyyy
+
   ask_vehicle_country: "Avtomobil ro‘yxatdan o‘tgan davlat *"
   validation_vehicle_country: "Avtomobil ro‘yxatdan o‘tgan davlatni ko‘rsating."
   ask_vehicle_country_prefilled: "Avtomobil ro‘yxatdan o‘tgan davlat * (joriy: {value})"
 
-  choose_from_buttons: "Quyidagi tugma orqali qiymatni tanlang."
+  choose_from_buttons: "Quyidagi tugmalar orqali qiymatni tanlang."
 
-  ask_vehicle_type: "TV turi *"
-  ask_vehicle_type_prefilled: "TV turi * (joriy: {value})"
+  ask_vehicle_type: "Transport vositasi turi *"
+  ask_vehicle_type_prefilled: "Transport vositasi turi * (joriy: {value})"
+
   ask_license_plate: "Davlat raqami *"
-  ask_license_plate_after_start: "Davlat raqami (lotin yozuvida)*"
-  validation_license_plate_strict: "Davlat raqami: faqat lotin harflari va raqamlar, bo‘sh joy/tirelarsiz, ko‘pi bilan 8 belgi."
-  prefilled_vehicle_from_bitrix_editable: "Davlat raqami bo‘yicha bazamizdan avtomobil ma’lumotlari topildi. Qiymatlar to‘ldirildi — tekshiring va zarur bo‘lsa tuzating."
-  vehicle_not_found_manual: "Avtomobil bazadan topilmadi. Iltimos, avtomobil ma’lumotlarini qo‘lda kiriting."
+  ask_license_plate_after_start: "Davlat raqami (lotin harflarida)*"
+
+  validation_license_plate_strict: "Davlat raqami: faqat lotin harflari va raqamlar, bo‘sh joy yoki tire ishlatilmaydi, maksimum 8 ta belgi."
+
+  prefilled_vehicle_from_bitrix_editable: "Davlat raqami orqali avtomobil ma’lumotlari bazamizdan topildi. Ma’lumotlar to‘ldirildi — tekshirib chiqing va kerak bo‘lsa tuzating."
+
+  vehicle_not_found_manual: "Bazadan avtomobil topilmadi. Iltimos, avtomobil ma’lumotlarini qo‘lda kiriting."
+
   ask_vin: "VIN raqami *"
-  ask_brand_model: "TV markasi va modeli (lotin yozuvida)*"
-  ask_manufacture_year: "TV ishlab chiqarilgan yili *"
+  ask_brand_model: "Transport vositasining markasi va modeli (lotin harflarida)*"
+  ask_manufacture_year: "Transport vositasi ishlab chiqarilgan yili *"
   ask_fuel_type: "Yoqilg‘i turi *"
-  ask_engine_capacity: "Dvigatel hajmi, sm kub. *"
-  ask_engine_capacity_prefilled: "Dvigatel hajmi, sm kub. * (Foydalanish: {value})"
+  ask_engine_capacity: "Dvigatel hajmi, sm. kub. *"
+  ask_engine_capacity_prefilled: "Dvigatel hajmi, sm. kub. * (Foydalanish: {value})"
+
   ask_engine_power: "Dvigatel quvvati *"
   ask_engine_power_prefilled: "Dvigatel quvvati * (Foydalanish: {value})"
-  skip_engine_capacity_electric: "Elektr yoqilg‘i turi uchun dvigatel hajmi talab qilinmaydi."
-  ask_power_unit: "Quvvat o‘lchov birligi *"
 
+  skip_engine_capacity_electric: "Elektr yoqilg‘i turi uchun dvigatel hajmi talab qilinmaydi."
+
+  ask_power_unit: "Quvvat o‘lchov birligi *"
   ask_power_unit_prefilled: "Quvvat o‘lchov birligi * (joriy: {value})"
+
   ask_comment: "Izoh (ixtiyoriy)"
   skip_comment_button: "O‘TKAZIB YUBORISH"
 
   ask_vehicle_docs: |
     Texnik pasport (foto yoki PDF)
-    Bir nechta fayl biriktirish mumkin.
+    Bir nechta fayl biriktirishingiz mumkin.
 
-  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
-  add_more_docs: "Add more documents"
-  all_docs_uploaded: "All documents uploaded"
-  ask_techpass_changed: "Bazadan texnik pasport fotosi allaqachon mavjud. Texnik pasport o‘zgarganmi?"
+  ask_vehicle_docs_complete: "Hujjat biriktirildi. Yana hujjat qo‘shish kerakmi?"
 
+  add_more_docs: "Yana hujjat qo‘shish kerak"
+  all_docs_uploaded: "Barcha hujjatlar yuklandi"
+
+  ask_techpass_changed: "Bazamizda texpasport fotosi allaqachon mavjud. Texpasport o‘zgarganmi?"
   techpass_changed_yes: "Ha, o‘zgargan"
   techpass_changed_no: "Yo‘q, o‘zgarmagan"
+
   ask_vehicle_finalize: "Yana avtomobil qo‘shasizmi yoki rasmiylashtirishni yakunlaysizmi?"
   add_vehicle: "Yana avtomobil qo‘shish"
   finish_application: "Rasmiylashtirishni yakunlash"
   ask_consent: |
-    SINEDIS shaxsiy ma’lumotlarni qayta ishlash siyosati
-    SINEDIS Sp. z o.o. shaxsiy ma’lumotlarni YI 2016/679 reglamenti (GDPR / RODO) va Polsha qonunchiligiga muvofiq qayta ishlaydi.
-    Ma’lumotlar quyidagi maqsadlarda ishlatiladi:
+    SINEDIS kompaniyasining shaxsiy ma’lumotlarni qayta ishlash siyosati
+
+    SINEDIS Sp. z o.o. shaxsiy ma’lumotlarni Yevropa Ittifoqining 2016/679-sonli Reglamenti (GDPR / RODO) hamda Polsha qonunchiligiga muvofiq qayta ishlaydi.
+
+    Ma’lumotlar quyidagi maqsadlarda foydalaniladi:
     • sug‘urta takliflarini hisoblash;
-    • sug‘urta shartnomalarini rasmiylashtirish va kuzatib borish;
+    • sug‘urta shartnomalarini rasmiylashtirish va yuritish;
     • mijoz bilan aloqa qilish;
     • qonunchilik talablarini bajarish;
-    • foydalanuvchi roziligi mavjud bo‘lsa, marketing kommunikatsiyasi.
+    • foydalanuvchi roziligi mavjud bo‘lsa, marketing kommunikatsiyasi uchun.
+
     Quyidagi ma’lumotlar qayta ishlanishi mumkin:
-    ism, telefon, e-mail, manzil, transport vositasi ma’lumotlari, sug‘urta ma’lumotlari, to‘lov va texnik ma’lumotlar.
-    Ma’lumotlar sug‘urta kompaniyalariga, IT pudratchilarga va xizmat ko‘rsatish uchun zarur bo‘lgan boshqa hamkorlarga uzatilishi mumkin.
-    Foydalanuvchi quyidagi huquqlarga ega:
-    • ma’lumotlarga kirish;
-    • ma’lumotlarni tuzatish yoki o‘chirish;
-    • qayta ishlashni cheklash;
-    • rozilikni qaytarib olish;
-    • PUODOga shikoyat berish.
+    ism, telefon raqami, e-mail, manzil, transport vositasi ma’lumotlari, sug‘urta ma’lumotlari, to‘lov va texnik ma’lumotlar.
+
+    Ma’lumotlar sug‘urta kompaniyalari, IT-pudratchilar va xizmat ko‘rsatish uchun zarur bo‘lgan boshqa hamkorларга uzatilishi mumkin.
+
+    Foydalanuvchi quyidagi ҳуқуқларга ega:
+    • ma’lumotlarga kirish ҳуқуқi;
+    • ma’lumotlarni tuzatish yoki o‘chirish ҳуқуқи;
+    • qayta ishlashni cheklash ҳуқуқи;
+    • rozilikni bekor qilish ҳуқуқи;
+    • PUODO organiga shikoyat yuborish ҳуқуқи.
+
     Ma’lumotlar administratori polisni rasmiylashtirgan sug‘urta kompaniyasi yoki SINEDIS Sp. z o.o. bo‘lishi mumkin.
+
     Kontaktlar:
     SINEDIS Sp. z o.o.
     ul. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
     info@sinedis.pl
     odo@sinedis.pl - ma’lumotlarni himoya qilish inspektori
+
     Siyosatning to‘liq versiyasi:
     https://greencard.agency
+
     ________________________
-    Shaxsiy ma’lumotlarni qayta ishlash va uzatishga rozimisiz?
-  consent_agree: "✅ Rozilik berish va yuborish"
+
+    Shaxsiy ma’lumotlarni qayta ishlash va uzatishga rozimisiz?"
+
+  consent_agree: "✅ Roziman va yuborish"
   consent_decline: "❌ Rad etish"
-  declined: "Siz ma’lumotlarni uzatishni rad etdingiz. Ariza bekor qilindi."
+  declined: "Siz ma’lumotlarni uzatishga rad javobini berdingiz. Ariza bekor qilindi."
+
   validation_name: "Kamida 2 ta belgi kiriting."
-  validation_phone: "Telefon noto‘g‘ri. +48123456789 formatidan foydalaning."
+  validation_phone: "Telefon raqami noto‘g‘ri. +48123456789 formatidan foydalaning."
   validation_email: "E-mail noto‘g‘ri."
 
-  validation_date: "Sana noto‘g‘ri. Ruxsat etilgan formatlar: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. oo/kk/yyyy formati taqiqlangan."
+  validation_date: "Sana noto‘g‘ri. Ruxsat etilgan formatlar: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. mm/dd/yyyy formati taqiqlanadi."
 
-  validation_age_18: "Sug‘urta qildiruvchi kamida to‘liq 18 yoshda bo‘lishi kerak."
-  validation_insurance_start_not_past: "Sug‘urta boshlanish sanasi o‘tgan sana bo‘lishi mumkin emas."
+  validation_age_18: "Sug‘urtalanuvchi kamida 18 yoshga to‘lgan bo‘lishi kerak."
+
+  validation_insurance_start_not_past: "Sug‘urta boshlanish sanasi o‘tgan sanada bo‘lishi mumkin emas."
+
   ask_vin_prefilled: "VIN raqami * (Foydalanish: {value})"
-  ask_brand_model_prefilled: "TV markasi va modeli * (Foydalanish: {value})"
-  ask_manufacture_year_prefilled: "TV ishlab chiqarilgan yili * (Foydalanish: {value})"
+  ask_brand_model_prefilled: "Transport vositasi markasi va modeli * (Foydalanish: {value})"
+  ask_manufacture_year_prefilled: "Transport vositasi ishlab chiqarilgan yili * (Foydalanish: {value})"
   ask_fuel_type_prefilled: "Yoqilg‘i turi * (joriy: {value})"
 
-  validation_passport: "Pasport seriyasi va raqami noto‘g‘ri (bo‘sh joysiz kiriting)."
-  validation_address: "To‘liq ro‘yxatdan o‘tgan manzilni ko‘rsating."
+  validation_passport: "Pasport seriyasi yoki raqami noto‘g‘ri (bo‘sh joysiz kiriting)."
+  validation_address: "To‘liq ro‘yxatdan o‘tgan manzilni kiriting."
   validation_license_plate: "Davlat raqami noto‘g‘ri."
-  validation_vin: "VIN 17 belgidan iborat bo‘lishi kerak."
-  validation_brand_model: "Marka va modelni ko‘rsating."
-  validation_year: "To‘g‘ri ishlab chiqarilgan yilni ko‘rsating."
+  validation_vin: "VIN 17 ta belgidan iborat bo‘lishi kerak."
+  validation_brand_model: "Marka va modelni kiriting."
+  validation_year: "To‘g‘ri ishlab chiqarilgan yilni kiriting."
   validation_positive_integer: "Musbat butun son kiriting."
   validation_positive_number: "Musbat son kiriting."
-  validation_docs: "Texnik pasportning fotosi yoki PDF/hujjatini yuboring."
+  validation_docs: "Texpasportning fotosi yoki PDF/hujjatini yuboring."
 
 operator:
   request_received: "So‘rov qabul qilindi"
   operator_connected: "Operator ulandi"
-  access_denied: "Ruxsat taqiqlangan"
+  access_denied: "Kirish taqiqlangan"
   no_tickets: "Murojaatlar yo‘q"
   taken: "Murojaat qabul qilindi"
   closed: "Murojaat yopildi"
   reply_sent: "Javob yuborildi"
 
 faq:
-  title: "FAQ kategoriyasini tanlang"
+  title: "FAQ bo‘limini tanlang"
+
   categories:
-    documents: "Rasmiylashtirish uchun hujjatlar"
-    payment: "To‘lov"
-    coverage: "Qamrov"
-    mistakes: "E’tibor berish kerak"
-    refund: "Qaytarish"
+    documents: "📄 Hujjatlar"
+    payment: "💳 To‘lov"
+    coverage: "🌍 Amal qilish hududi"
+    validity: "📅 Amal qilish muddati"
+    delivery: "📧 Polisni olish"
+    border: "🛂 Chegaradan o‘tish"
+    accident: "🚗 YTH va sug‘urta hodisasi"
+    mistakes: "⚠️ Muhim ma’lumot"
+    refund: "↩️ Qaytarish"
+    whatis: "ℹ️ Europolis nima?"
+    nogreencard: "🟢 Green Card’dan farqi"
+    vehicles: "🚘 Transport vositalari turlari"
+    extension: "🔄 Polisni uzaytirish"
+    legalentity: "🏢 Yuridik shaxslar"
+    online: "📱 Onlayn rasmiylashtirish"
+    database: "🔍 Polisni tekshirish"
+    restrictions: "⛔ Cheklovlar"
+    support: "👨‍💼 Operator bilan aloqa"
+
   answers:
+
     documents: |
-      Polisni rasmiylashtirish uchun quyidagi ma’lumotlar kerak bo‘ladi: pasport ma’lumotlari, transport vositasi ma’lumotlari va sug‘urta amal qilish sanalari.
-      Shuning uchun quyidagilarni tayyorlashingiz kerak:
-      - pasport
-      - transport vositasining ro‘yxatdan o‘tganlik guvohnomasi
-      - avtomobilning texnik ma’lumotlari
-      - telefon raqami
-      - e-mail
+      Polisni rasmiylashtirish uchun quyidagilar talab qilinadi:
+
+      • Egasining pasporti yoki ID kartasi;
+      • Transport vositasini ro‘yxatdan o‘tkazish guvohnomasi;
+      • Avtomobil davlat raqami;
+      • VIN raqami;
+      • Aloqa uchun telefon raqami;
+      • Polisni olish uchun e-mail;
+      • Sug‘urta boshlanish sanasi va muddati.
+
+      Hujjatlar olingandan so‘ng operator ma’lumotlarni tekshiradi va polisni tayyorlaydi.
+
     payment: |
-      Mavjud to‘lov usullari:
-      - Polsha kartasiga o‘tkazma orqali to‘lov,
-      - telefon raqamiga BLIK orqali to‘lov,
-      - Polsha hisob raqamiga bank o‘tkazmasi orqali to‘lov
-    coverage: "Qamrov hududi: A - Avstriya, B - Belgiya, BG - Bolgariya, CY - Kipr, CZ - Chexiya, D - Germaniya, DK - Daniya, E - Ispaniya, EST - Estoniya, F - Fransiya, FIN - Finlyandiya, GR - Gretsiya, H - Vengriya, HR - Xorvatiya, I - Italiya, IRL - Irlandiya, IS - Islandiya, L - Lyuksemburg, LT - Litva, LV - Latviya, M - Malta, N - Norvegiya, NL - Niderlandiya, P - Portugaliya, PL - Polsha, RO - Ruminiya, S - Shvetsiya, SK - Slovakiya, SLO - Sloveniya, CH - Shveytsariya."
-    mistakes: "Iltimos, yuborishdan oldin VIN, davlat raqami va sug‘urta muddatini ikki marta tekshiring. Keyinchalik tuzatish kiritib bo‘lmaydi!"
-    refund: "Mablag‘ qaytarilishi rasmiylashtirilmaydi."
+      Quyidagi to‘lov usullari mavjud:
+
+      • Polsha bank hisobiga o‘tkazma;
+      • Polsha bank kartasiga o‘tkazma;
+      • Polsha telefon raqamiga BLIK to‘lovi.
+
+      Polis to‘lov tushgani tasdiqlangandan keyin rasmiylashtiriladi.
+
+    coverage: |
+      Polis Yevropa Ittifoqi va Yevropa iqtisodiy hududi davlatlarida amal qiladi.
+
+      Safardan oldin sug‘urta sertifikatida ko‘rsatilgan davlatlar ro‘yxatini albatta tekshiring.
+
+    validity: |
+      Sug‘urta himoyasi polisda ko‘rsatilgan sana va vaqtdan boshlab amal qiladi.
+
+      Sug‘urtani kelajakdagi sana uchun oldindan rasmiylashtirish mumkin, ammo qoplama boshlanishidan 7 kundan oldin emas.
+
+      Polisni chegaradan o‘tishdan kamida bir necha soat oldin rasmiylashtirishni tavsiya qilamiz. Chunki avtomobil ma’lumotlari sug‘urta kompaniyasidan UFG bazasiga bir necha soatdan bir sutkagacha muddatda uzatiladi.
+
+      ☝️E’tibor bering! Barcha avtomobil markalari va modellari sug‘urta kompaniyasi bazasida mavjud emas. Ayrim avtomobillar MDH davlatlari yoki AQSh bozori uchun ishlab chiqarilgan bo‘lib, Yevropa Ittifoqida kam uchraydi. Bunday avtomobillarni faqat ish kunlari Varshava vaqti bilan 9:00 dan 21:00 gacha va shanba kuni 09:00 dan 15:00 gacha sug‘urtalash mumkin.
+
+    delivery: |
+      Polis rasmiylashtirilib, to‘lov tasdiqlangandan so‘ng PDF formatida ko‘rsatilgan e-mail manziliga yuboriladi.
+
+      Sertifikatni oq-qora shaklda chop etish tavsiya etiladi.
+
+      Agar xat kelmagan bo‘lsa, “Spam” papkasini tekshiring yoki operator bilan bog‘laning.
+
+    border: |
+      Chegaradan o‘tishda quyidagilarni yoningizda olib yurish tavsiya etiladi:
+
+      • Chop etilgan polis;
+      • Avtomobil hujjatlari;
+      • Pasport yoki ID karta.
+
+      O‘tkazish bo‘yicha yakuniy qarorni chegara xizmati qabul qiladi.
+
+    accident: |
+      YTH sodir bo‘lganda quyidagilarni bajarish kerak:
+
+      • Xavfsizlikni ta’minlash;
+      • Zarurat bo‘lsa, politsiyani chaqirish;
+      • Hodisa holatlarini qayd etish;
+      • Sug‘urtalovchiga xabar berish (https://www.warta.pl/pomoc-i-obsluga/zgloszenie-szkody/formularz-majatek/#/dla-ciebie/pojazd/informacje-o-zdarzeniu).
+
+      Hodisa rasmiylashtirilmasdan voqea joyini tark etmang.
+
+    mistakes: |
+      Arizani tasdiqlashdan oldin quyidagilarni diqqat bilan tekshiring:
+
+      • VIN raqami;
+      • Davlat raqami;
+      • Transport vositasi turi;
+      • Sug‘urta sanalari.
+
+      Xatolar chegaradan o‘tishni rad etilishiga yoki zararlarni qoplashda muammolarga olib kelishi mumkin.
+
+    refund: |
+      Sug‘urta polisi chiqarilgandan keyin sug‘urta mukofotini qaytarish odatda mumkin emas.
+
+      Ayrim hollarda qaytarish yoki polisni bekor qilish masalasi sug‘urtalovchi tomonidan individual tarzda ko‘rib chiqiladi.
+
+    whatis: |
+      OC Graniczne — Yevropa Ittifoqidan tashqarida ro‘yxatdan o‘tgan transport vositalari uchun majburiy fuqarolik javobgarligi sug‘urtasi.
+
+      Polis sertifikatda ko‘rsatilgan davlatlar hududida qonuniy harakatlanish imkonini beradi.
+
+        nogreencard: |
+      Green Card va OC Graniczne — turli sug‘urta mahsulotlari.
+
+      Green Card avtomobil ro‘yxatdan o‘tgan davlatda rasmiylashtiriladi.
+
+      OC Graniczne esa amaldagi Green Card mavjud bo‘lmaganda Yevropa Ittifoqiga kirish uchun qo‘llaniladi.
+
+    vehicles: |
+      Quyidagi transport vositalari uchun rasmiylashtirish mumkin:
+
+      • Yengil avtomobillar;
+      • Yuk avtomobillari;
+      • Avtobuslar;
+      • Tirkamalar;
+      • Mototsikllar;
+      • Maxsus texnikalar.
+
+      Rasmiylashtirish imkoniyati transport vositasi ro‘yxatdan o‘tgan davlat va sug‘urtalovchi shartlariga bog‘liq.
+
+    extension: |
+      Polisni uzaytirish imkoniyati mavjud emas.
+
+      Faqat yangi polis rasmiylashtiriladi.
+
+    legalentity: |
+      Polis faqat jismoniy shaxs nomiga rasmiylashtirilishi mumkin.
+
+      Korporativ mijozlar uchun polis haydovchi nomiga rasmiylashtiriladi.
+
+    online: |
+      Rasmiylashtirish to‘liq masofadan turib amalga oshiriladi.
+
+      Hujjatlar onlayn qabul qilinadi, tayyor polis esa elektron pochta orqali yuboriladi.
+
+    database: |
+      Polis rasmiylashtirilgandan keyin ma’lumotlar sug‘urta bazalarida darhol ko‘rinmasligi mumkin.
+
+      Ma’lumotlar yangilanishi ba’zan 24 soatgacha davom etadi.
+
+      Polisni quyidagi sayt orqali tekshirish mumkin:
+      https://www.ufg.pl/
+
+    restrictions: |
+      Chegara sug‘urtasi faqat uchinchi shaxslar oldidagi fuqarolik javobgarligini qoplaydi.
+
+      O‘zingizning avtomobilingizga yetgan zarar qoplanmaydi.
+
+    support: |
+      Agar rasmiylashtirish, to‘lov yoki polis amal qilishi bo‘yicha savollaringiz bo‘lsa, Telegram yoki WhatsApp orqali operator bilan bog‘laning.
 
 coverage:
   text: |
-    OC graniczne (border insurance) qamrov xaritasi.
-    Safar oldidan polisingizdagi davlat kodini tekshiring.
+    OC graniczne (border insurance) qoplama hududi xaritasi.
+
+    Safardan oldin polisingizdagi davlat kodlarini albatta tekshiring.
+
     A - Avstriya, B - Belgiya, BG - Bolgariya, CY - Kipr, CZ - Chexiya, D - Germaniya, DK - Daniya, E - Ispaniya, EST - Estoniya, F - Fransiya, FIN - Finlyandiya, GR - Gretsiya, H - Vengriya, HR - Xorvatiya, I - Italiya, IRL - Irlandiya, IS - Islandiya, L - Lyuksemburg, LT - Litva, LV - Latviya, M - Malta, N - Norvegiya, NL - Niderlandiya, P - Portugaliya, PL - Polsha, RO - Ruminiya, S - Shvetsiya, SK - Slovakiya, SLO - Sloveniya, CH - Shveytsariya.
 
 latest_deal:
   title_label: "TITLE"
-  policy_number_label: "Policy number"
-  policy_status_label: "Policy status"
+  policy_number_label: "Polis raqami"
+  policy_status_label: "Polis holati"
   comments_label: "COMMENTS"
-  not_found: "No latest application was found."
-  unavailable: "Could not get your latest application. Please try again later."
-  delivery_prompt: "Polisni qanday olishni xohlaysiz?"
-  delivery_email_button: "Pochtaga yuborish"
+
+  not_found: "Oxirgi ariza topilmadi."
+  unavailable: "Oxirgi arizani olishning imkoni bo‘lmadi. Keyinroq qayta urinib ko‘ring."
+
+  delivery_prompt: "Polisni sizga qanday yuboraylik?"
+  delivery_email_button: "E-mail orqali yuborish"
   delivery_chat_button: "Shu yerga yuborish"
-  delivery_request_sent: "Soʻrov operatorga yuborildi."
+
+  delivery_request_sent: "So‘rov operatorga yuborildi."
+
   payment_instructions: |
-    Your application for car insurance for {license_plate} has been approved.
+    {license_plate} davlat raqamli avtomobil uchun sug‘urta arizangiz tasdiqlandi.
 
-    After payment, please send the payment confirmation.
+    To‘lov amalga oshirilgandan so‘ng, iltimos, to‘lov tasdig‘ini yuboring.
 
-    Payment options
+    To‘lov variantlari
 
-    BLIK to +48 664 914 738
-    Payment reference: za ubezpieczenie auto {license_plate}
+    +48 664 914 738 raqamiga BLIK
+    To‘lov izohi: za ubezpieczenie auto {license_plate}
 
 
-    Bank transfer in Poland:
-    Account holder: DZIANIS BARAVOI
-    Account number: 44 1020 1332 0000 1602 1435 6564
+    Polsha ichidagi bank o‘tkazmasi:
+    Hisob egasi: DZIANIS BARAVOI
+    Hisob рақами: 44 1020 1332 0000 1602 1435 6564
     Bank: Powszechna Kasa Oszczędności Bank Polski SA
-    Payment reference: za ubezpieczenie auto {license_plate}
+    To‘lov izohi: za ubezpieczenie auto {license_plate}
 
 
-    International bank transfer:
-    Account holder: DZIANIS BARAVOI
-    Currency: PLN
+    Xalqaro bank o‘tkazmasi:
+    Hisob egasi: DZIANIS BARAVOI
+    Valyuta: PLN
     IBAN: PL44 1020 1332 0000 1602 1435 6564
     SWIFT/BIC: BPKOPLPW
     Bank: Powszechna Kasa Oszczędności Bank Polski SA
-    Country: Polska
-    Address: ul. H. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
-    Payment reference: za ubezpieczenie auto {license_plate}
+    Mamlakat: Polska
+    Manzil: ul. H. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    To‘lov izohi: za ubezpieczenie auto {license_plate}
 
 
-    Card transfer:
-    Card number: 4213 5239 3578 6679
-    Valid thru: 09/26
-    Cardholder: DZIANIS BARAVOI
-    Payment reference: za ubezpieczenie auto {license_plate}
+    Kartaga o‘tkazma:
+    Karta raqami: 4213 5239 3578 6679
+    Amal qilish muddati: 09/26
+    Egasi: DZIANIS BARAVOI
+    To‘lov izohi: za ubezpieczenie auto {license_plate}
+
 payment_confirmation:
-  attach_prompt: "Mablagʻ yuborilganini ko‘rsatuvchi ekran skanini yoki bankdan PDF tasdiqnomani biriktiring."
-  file_received: "Fayl qabul qilindi. Tasdiqnomani operatorga yuborasizmi yoki yana fayl qo‘shasizmi?"
-  send_button: "Tasdiqnomani yuborish"
+  attach_prompt: "Pul yuborilganini tasdiqlovchi skrinshot yoki bankdan olingan PDF tasdiqnomani biriktiring."
+
+  file_received: "Fayl qabul qilindi. Tasdiqni operatorga yuborasizmi yoki yana fayl qo‘shasizmi?"
+
+  send_button: "Tasdiqni yuborish"
   add_more_button: "Yana fayl qo‘shish"
-  sent: "Toʻlov tasdiqnomasi operatorga yuborildi."
-  no_unpaid: "Sizda toʻlanmagan hisoblar yoʻq. «Mening oxirgi arizam» tugmasini bosishingiz mumkin."
+
+  sent: "To‘lov tasdig‘i operatorga yuborildi."
+
+  no_unpaid: "Sizda to‘lanmagan hisoblar yo‘q. «Oxirgi arizam» tugmasini bosishingiz mumkin."
+
 my_applications:
-  title: "Ваши последние заявки:"
-  empty: "У вас пока нет заявок, связанных с этим Telegram-аккаунтом. Если вы уже оформляли полис ранее, напишите оператору — мы свяжем вашу историю заявок."
-  unavailable: "Сейчас не удалось загрузить заявки. Попробуйте позже."
-  not_found: "Заявка не найдена или недоступна для этого Telegram-аккаунта."
-  policy_status_button: "Где мой полис?"
-  repeat_button: "Оформить снова"
-  open_button: "Открыть"
-  operator_button: "Связаться с оператором"
-  payment_button: "Подтвердить оплату"
-  policy_button: "Получить полис"
-  policy_not_found: "Полис пока не найден. Мы передали запрос оператору."
+  title: "So‘nggi arizalaringiz:"
+
+  empty: "Hozircha ushbu Telegram akkaunti bilan bog‘langan arizalar topilmadi. Agar avval polis rasmiylashtirgan bo‘lsangiz, operatorga yozing — biz arizalar tarixingizni bog‘laymiz."
+
+  unavailable: "Hozir arizalarni yuklab bo‘lmadi. Keyinroq qayta urinib ko‘ring."
+
+  not_found: "Ariza topilmadi yoki ushbu Telegram akkaunti uchun mavjud emas."
+
+  policy_status_button: "Polisim qayerda?"
+  repeat_button: "Qayta rasmiylashtirish"
+  open_button: "Ochish"
+  operator_button: "Operator bilan bog‘lanish"
+  payment_button: "To‘lovni tasdiqlash"
+  policy_button: "Polisni olish"
+
+  policy_not_found: "Polis hali topilmadi. So‘rov operatorga yuborildi."
+
 repeat_application:
   start_prompt: |
-    Оформление по предыдущей заявке
+    Oldingi ariza asosida rasmiylashtirish
 
-    Авто: {vehicle_plate_masked}
-    Тип: {vehicle_type}
-    Страна регистрации: {registration_country}
+    Avtomobil: {vehicle_plate_masked}
+    Turi: {vehicle_type}
+    Ro‘yxatdan o‘tgan davlat: {registration_country}
 
-    Для нового полиса введите дату начала страховки в формате ДД.ММ.ГГГГ.
-  ask_start_date: "Введите новую дату начала страховки в формате ДД.ММ.ГГГГ."
-  invalid_start_date: "Введите корректную дату начала: не в прошлом и в формате ДД.ММ.ГГГГ."
-  ask_period: "Выберите срок страхования."
-  ask_docs: "Использовать документы из предыдущей заявки или загрузить новые?"
-  docs_reuse_button: "Да, использовать прежние"
-  docs_upload_new_button: "Нет, загрузить новые"
+    Yangi polis uchun sug‘urta boshlanish sanasini DD.MM.YYYY formatida kiriting.
+
+  ask_start_date: "Sug‘urta boshlanishining yangi sanasini DD.MM.YYYY formatida kiriting."
+
+  invalid_start_date: "To‘g‘ri boshlanish sanasini kiriting: sana o‘tgan bo‘lmasligi va DD.MM.YYYY formatida bo‘lishi kerak."
+
+  ask_period: "Sug‘urta muddatini tanlang."
+
+  ask_docs: "Oldingi arizadagi hujjatlardan foydalanilsinmi yoki yangilarini yuklaysizmi?"
+
+  docs_reuse_button: "Ha, avvalgilaridan foydalanish"
+  docs_upload_new_button: "Yo‘q, yangilarini yuklash"
+
   preview: |
-    Проверьте новую заявку:
+    Yangi arizani tekshiring:
 
-    Тип: OC graniczne (border insurance)
-    Авто: {vehicle_plate_masked}
-    Дата начала: {new_start_date}
-    Срок: {new_period_days} дней
-    Документы: {docs_mode_title}
+    Turi: OC graniczne (border insurance)
+    Avtomobil: {vehicle_plate_masked}
+    Boshlanish sanasi: {new_start_date}
+    Muddat: {new_period_days} kun
+    Hujjatlar: {docs_mode_title}
 
-    Стоимость предварительная. Окончательная цена подтверждается оператором после проверки данных.
-  confirm_button: "Подтвердить"
-  change_button: "Изменить"
-  cancel_button: "Отмена"
-  cancelled: "Повторное оформление отменено."
-  unavailable: "Повторное оформление сейчас недоступно. Попробуйте позже или свяжитесь с оператором."
+    Narx dastlabki hisoblanadi. Yakuniy narx operator ma’lumotlarni tekshirgandan so‘ng tasdiqlanadi.
+
+  confirm_button: "Tasdiqlash"
+  change_button: "O‘zgartirish"
+  cancel_button: "Bekor qilish"
+
+  cancelled: "Qayta rasmiylashtirish bekor qilindi."
+
+  unavailable: "Hozir qayta rasmiylashtirish mavjud emas. Keyinroq urinib ko‘ring yoki operator bilan bog‘laning."
+
   created: |
-    Новая заявка создана.
+    Yangi ariza yaratildi.
 
-    Номер: {request_id}
-    Статус: {public_status}
+    Raqam: {request_id}
+    Holat: {public_status}
 
-    Оператор проверит данные и сообщит следующий шаг.
+    Operator ma’lumotlarni tekshiradi va keyingi bosqich haqida хабар беради.
+
 policy_status:
-  unavailable: "Сейчас не удалось проверить статус полиса. Попробуйте позже."
-  check_later_button: "Проверить позже"
-  back_to_applications_button: "Мои заявки"
+  unavailable: "Hozir polis holatini tekshirib bo‘lmadi. Keyinroq qayta urinib ko‘ring."
+
+  check_later_button: "Keyinroq tekshirish"
+  back_to_applications_button: "Mening arizalarim"

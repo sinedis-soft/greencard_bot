@@ -2,36 +2,37 @@ main_menu:
   calculator: "🧮 Hesaplayıcı"
   faq: "❓ SSS"
   coverage: "🌍 Nerede geçerli?"
-  apply: "📝 Başvuru yap"
-  operator: "👨‍💼 Operatörle iletişime geç"
-  payment_confirmation: "💳 Ödeme onayı"
-  latest_deal: "📄 Son başvurum"
-  my_applications: "📄 Мои заявки"
+  apply: "📝 Başvuru Yap"
+  operator: "👨‍💼 Operatör ile iletişime geç"
+  payment_confirmation: "💳 Ödeme Onayı"
+  latest_deal: "📄 Son Başvurum"
+  my_applications: "📄 Başvurularım"
   language: "🌐 Dil"
 
 menu:
-  title: "Ana menü"
+  title: "Ana Menü"
 
 language:
-  select: "Lütfen dil seçin"
+  select: "Lütfen dili seçin"
   changed: "Dil güncellendi"
 
 calculator:
-  result_title: "Ön maliyet"
+  result_title: "Ön fiyat"
   disclaimer: "Ön hesaplama"
-  apply_cta: "📝 Başvuru gönder"
+  apply_cta: "📝 Başvuru Yap"
   select_vehicle_type: "Araç türünü seçin"
   select_period: "Sigorta süresini seçin (gün)"
-  result_template: "Ön maliyet: {estimated_price} {currency}\n{disclaimer}"
+  result_template: "Ön fiyat: {estimated_price} {currency}\n{disclaimer}"
   vehicle:
-    car: "Binek otomobil"
+    car: "Binek araç"
     truck: "Kamyon"
     bus: "Otobüs"
     moto: "Motosiklet"
     trailer: "Römork"
-    special: "Özel ekipman"
+    special: "Özel amaçlı araç"
 
 application:
+
   calendar:
     cancel: "İptal"
     today: "Bugün"
@@ -51,7 +52,7 @@ application:
       moldova: "Moldova"
       ukraine: "Ukrayna"
       armenia: "Ermenistan"
-      other: "Başka ülke"
+      other: "Diğer ülke"
     vehicle_types:
       car: "Binek"
       truck: "Kamyon"
@@ -67,312 +68,568 @@ application:
     power_units:
       hp: "Beygir gücü"
       kw: "Kilovat"
-  submitted: "Başvuru gönderildi. Poliçeyi hazırlayıp ödeme bilgilerini göndereceğiz."
+
+  submitted: "Başvurunuz gönderildi. Poliçeyi hazırlayıp ödeme bilgilerini size ileteceğiz."
   validation_error: "Veri doğrulama hatası"
   bitrix_error: "Bitrix hatası"
-  mini_app_soon: "Mini App formu bir sonraki aşamada bağlanacaktır."
+  mini_app_soon: "Mini App formu bir sonraki aşamada eklenecektir."
   open_form_button: "Başvuru formunu aç"
   temporarily_unavailable: "Başvuru formu geçici olarak kullanılamıyor."
+
   form_header: |
-    Poliçe düzenleme başvurusu
-    Bilgileri doldurun. Poliçeyi hazırlayıp ödeme bilgilerini göndereceğiz.
+    Poliçe başvuru formu
+    Bilgileri doldurun. Poliçeyi hazırlayıp ödeme bilgilerini size göndereceğiz.
     ⚠️DİKKAT! Uygulamayı kullanmaya devam ederek Telegram kullanıcı adınızın işlenmesini kabul etmiş olursunuz.⚠️
+
   step_1: "1. İletişim bilgileri"
   step_2: "2. Sigorta ve araç bilgileri"
-  prefilled_from_bitrix: "Telegram kullanıcı adınıza göre profilinizi veri tabanımızda bulduk. İletişim ve sigortalı bilgileri otomatik olarak dolduruldu."
-  prefilled_from_bitrix_editable: "Telegram kullanıcı adınıza göre profilinizi veri tabanımızda bulduk. Bilgiler dolduruldu — kontrol edin ve gerekirse düzeltin. Her şey doğruysa bu adımda boş mesaj gönderebilirsiniz."
+
+  prefilled_from_bitrix: "Telegram kullanıcı adınıza göre profiliniz veritabanımızda bulundu. İletişim ve sigortalı bilgileri otomatik olarak dolduruldu."
+
+  prefilled_from_bitrix_editable: "Telegram kullanıcı adınıza göre profiliniz veritabanımızda bulundu. Bilgiler dolduruldu — kontrol edin ve gerekirse düzeltin. Her şey doğruysa bu adımda boş mesaj gönderebilirsiniz."
+
   ask_email_lookup: |
     Telegram kullanıcı adına göre profil bulunamadı.
-    Müşteriyi aramak için lütfen e-mail adresinizi girin.
-  contact_not_found_manual: "E-mail ile müşteri bulunamadı. Kişisel bilgileri manuel olarak doldurun."
-  ask_passport_verify: "Müşteri e-mail ile bulundu. Kimlik doğrulaması için pasaport seri ve numarasını boşluksuz girin."
-  passport_verify_failed_manual: "Pasaport bilgileri veri tabanındaki bilgilerle eşleşmedi. Güvenlik nedeniyle kişisel bilgileri manuel olarak doldurun."
+    Lütfen müşteri araması için e-posta adresinizi girin.
+
+  contact_not_found_manual: "E-posta adresine göre müşteri bulunamadı. Lütfen kişisel bilgileri manuel olarak doldurun."
+
+  ask_passport_verify: "Müşteri e-posta adresine göre bulundu. Kimlik doğrulaması için pasaport seri ve numarasını boşluksuz girin."
+
+  passport_verify_failed_manual: "Pasaport bilgileri veritabanındaki bilgilerle eşleşmedi. Güvenlik nedeniyle kişisel bilgileri manuel olarak doldurun."
+
   personal_data_summary: |
     Kişisel bilgileri kontrol edin:
-    Soyadı ve adı: {last_name} {first_name}
+    Ad ve soyad: {last_name} {first_name}
     Doğum tarihi: {birth_date}
     Pasaport numarası: {passport}
     İkamet adresi: {registration_address}
-    E-mail: {email}
+    E-posta: {email}
     Telefon: {phone}
 
-    Bilgiler güncel mi yoksa değişiklik yapılması gerekiyor mu?
+    Bilgiler güncel mi, yoksa değişiklik yapılması gerekiyor mu?
+
   vehicle_data_summary: |
-    Devlet plaka numarası: {license_plate} olan {vehicle_type}
+    Plakası: {license_plate} olan {vehicle_type}
     Araç kayıt ülkesi: {vehicle_country}
     Üretim yılı: {manufacture_year}
     VIN: {vin}
-    {fuel_type}, motor hacmi {engine_capacity} cm³, güç {engine_power}, {power_unit}
+    {fuel_type}, motor hacmi {engine_capacity} cc, motor gücü {engine_power}, {power_unit}
 
-    Bilgiler güncel mi yoksa değişiklik yapılması gerekiyor mu?
+    Bilgiler güncel mi, yoksa değişiklik yapılması gerekiyor mu?
+
   data_actual: "Bilgiler güncel"
-  data_edit: "Değişiklik yapılması gerekiyor"
+  data_edit: "Değişiklik yapılmalı"
+
   ask_first_name_prefilled: "Ad * (Kullan: {value})"
 
   prefill_next_button: "EVET, SONRAKİ SORU"
 
-  ask_last_name_prefilled: "Soyadı * (Kullan: {value})"
-  ask_phone_prefilled: "Telefon (ülke koduyla) * (Kullan: {value})"
-  ask_email_prefilled: "E-mail * (Kullan: {value})"
+  ask_last_name_prefilled: "Soyad * (Kullan: {value})"
+  ask_phone_prefilled: "Telefon (ülke koduyla birlikte) * (Kullan: {value})"
+  ask_email_prefilled: "E-posta * (Kullan: {value})"
+
   ask_first_name: "Ad (Latin harfleriyle)*"
-  ask_last_name: "Soyadı (Latin harfleriyle)*"
+  ask_last_name: "Soyad (Latin harfleriyle)*"
+
   ask_phone: |
-    Telefon (ülke koduyla)
+    Telefon (ülke koduyla birlikte)
     Örnek: +48123456789
+
   ask_email: |
-    E-mail
+    E-posta
     Örnek: exempl@mail.pl"
+
   ask_birth_date: |
     Doğum tarihi
     Format: gg.aa.yyyy
+
   ask_birth_date_prefilled: "Doğum tarihi * (Kullan: {value})"
+
   ask_passport: "Pasaport seri ve numarası, boşluksuz (Latin harfleriyle)*"
+
   ask_passport_prefilled: "Pasaport seri ve numarası, boşluksuz * (Kullan: {value})"
+
   ask_registration_address: "Kayıt adresi (Latin harfleriyle)*"
+
   ask_registration_address_prefilled: "Kayıt adresi * (Kullan: {value})"
-  ask_insurance_period: "Sigorta süresi (seçin) *"
+
+  ask_insurance_period: "Sigorta süresi (seçiniz) *"
+
   ask_insurance_start_date: |
-    Sigortanın başlangıç tarihi
+    Sigorta başlangıç tarihi
     Format: gg.aa.yyyy
+
   ask_vehicle_country: "Araç kayıt ülkesi *"
+
   validation_vehicle_country: "Araç kayıt ülkesini belirtin."
+
   ask_vehicle_country_prefilled: "Araç kayıt ülkesi * (mevcut: {value})"
 
-  choose_from_buttons: "Aşağıdaki düğmeden değer seçin."
+  choose_from_buttons: "Aşağıdaki butonlardan bir değer seçin."
 
   ask_vehicle_type: "Araç türü *"
-  ask_vehicle_type_prefilled: "Araç türü * (mevcut: {value})"
-  ask_license_plate: "Plaka *"
-  ask_license_plate_after_start: "Plaka (Latin harfleriyle)*"
-  validation_license_plate_strict: "Plaka: yalnızca Latin harfleri ve rakamlar, boşluk/tire olmadan, en fazla 8 karakter."
-  prefilled_vehicle_from_bitrix_editable: "Plakaya göre aracın bilgilerini veri tabanımızda bulduk. Değerler dolduruldu — kontrol edin ve gerekirse düzeltin."
-  vehicle_not_found_manual: "Araç veri tabanında bulunamadı. Lütfen araç bilgilerini manuel olarak girin."
-  ask_vin: "VIN numarası *"
-  ask_brand_model: "Araç marka ve modeli (Latin harfleriyle)*"
-  ask_manufacture_year: "Araç üretim yılı *"
-  ask_fuel_type: "Yakıt türü *"
-  ask_engine_capacity: "Motor hacmi, cm³ *"
-  ask_engine_capacity_prefilled: "Motor hacmi, cm³ * (Kullan: {value})"
-  ask_engine_power: "Motor gücü *"
-  ask_engine_power_prefilled: "Motor gücü * (Kullan: {value})"
-  skip_engine_capacity_electric: "Elektrikli yakıt türü için motor hacmi gerekli değildir."
-  ask_power_unit: "Güç ölçü birimi *"
 
-  ask_power_unit_prefilled: "Güç ölçü birimi * (mevcut: {value})"
+  ask_vehicle_type_prefilled: "Araç türü * (mevcut: {value})"
+
+  ask_license_plate: "Plaka *"
+
+  ask_license_plate_after_start: "Plaka (Latin harfleriyle)*"
+
+  validation_license_plate_strict: "Plaka: yalnızca Latin harfleri ve rakamlar, boşluk veya tire olmadan, maksimum 8 karakter."
+
+  prefilled_vehicle_from_bitrix_editable: "Plakaya göre araç bilgileri veritabanımızda bulundu. Bilgiler dolduruldu — kontrol edin ve gerekirse düzeltin."
+
+  vehicle_not_found_manual: "Araç veritabanında bulunamadı. Lütfen araç bilgilerini manuel olarak girin."
+
+  ask_vin: "VIN numarası *"
+
+  ask_brand_model: "Araç marka ve modeli (Latin harfleriyle)*"
+
+  ask_manufacture_year: "Araç üretim yılı *"
+
+  ask_fuel_type: "Yakıt türü *"
+
+  ask_engine_capacity: "Motor hacmi, cc *"
+
+  ask_engine_capacity_prefilled: "Motor hacmi, cc * (Kullan: {value})"
+
+  ask_engine_power: "Motor gücü *"
+
+  ask_engine_power_prefilled: "Motor gücü * (Kullan: {value})"
+
+  skip_engine_capacity_electric: "Elektrikli araçlar için motor hacmi gerekli değildir."
+
+  ask_power_unit: "Güç birimi *"
+
+  ask_power_unit_prefilled: "Güç birimi * (mevcut: {value})"
+
   ask_comment: "Yorum (isteğe bağlı)"
+
   skip_comment_button: "ATLA"
 
   ask_vehicle_docs: |
-    Araç tescil belgesi (fotoğraf veya PDF)
-    Birkaç dosya ekleyebilirsiniz.
-  ask_vehicle_docs_complete: "The document has been attached. Do you need to add more documents?"
-  add_more_docs: "Add more documents"
-  all_docs_uploaded: "All documents uploaded"
-  ask_techpass_changed: "Veritabanında araç tescil belgesinin fotoğrafı zaten mevcut. Tescil belgesi değişti mi?"
+    Ruhsat (fotoğraf veya PDF)
+    Birden fazla dosya ekleyebilirsiniz.
 
-  techpass_changed_yes: "Evet, değişti"
-  techpass_changed_no: "Hayır, değişmedi"
-  ask_vehicle_finalize: "Başka araç eklemek mi yoksa düzenlemeyi tamamlamak mı istiyorsunuz?"
+  ask_vehicle_docs_complete: "Belge eklendi. Başka belge eklemek istiyor musunuz?"
+
+  add_more_docs: "Daha fazla belge ekle"
+
+  all_docs_uploaded: "Tüm belgeler yüklendi"
+
+  ask_techpass_changed: "Veritabanında ruhsat fotoğrafı zaten mevcut. Ruhsat değiştirildi mi?"
+
+  techpass_changed_yes: "Evet, değiştirildi"
+
+  techpass_changed_no: "Hayır, değiştirilmedi"
+
+  ask_vehicle_finalize: "Başka araç eklemek mi yoksa başvuruyu tamamlamak mı istiyorsunuz?"
+
   add_vehicle: "Başka araç ekle"
-  finish_application: "Düzenlemeyi tamamla"
+
+  finish_application: "Başvuruyu tamamla"
   ask_consent: |
-    SINEDIS kişisel verilerin işlenmesi politikası
-    SINEDIS Sp. z o.o., kişisel verileri AB 2016/679 Tüzüğü (GDPR / RODO) ve Polonya mevzuatına uygun olarak işler.
-    Veriler şu amaçlarla kullanılır:
-    • sigorta tekliflerinin hesaplanması;
-    • sigorta sözleşmelerinin düzenlenmesi ve takibi;
-    • müşteri ile iletişim;
-    • yasal gerekliliklerin yerine getirilmesi;
-    • kullanıcının onayı varsa pazarlama iletişimi.
-    Aşağıdaki veriler işlenebilir:
-    ad, telefon, e-mail, adres, araç bilgileri, sigorta bilgileri, ödeme ve teknik veriler.
-    Veriler, hizmetlerin sağlanması için gerekli olan sigorta şirketlerine, IT yüklenicilerine ve diğer ortaklara aktarılabilir.
+    SINEDIS kişisel veri işleme politikası
+
+    SINEDIS Sp. z o.o., kişisel verileri AB 2016/679 Tüzüğü (GDPR / RODO) ve Polonya mevzuatına uygun şekilde işlemektedir.
+
+    Veriler aşağıdaki amaçlarla kullanılmaktadır:
+    • sigorta tekliflerinin hazırlanması;
+    • sigorta sözleşmelerinin düzenlenmesi ve yönetimi;
+    • müşteri ile iletişim kurulması;
+    • yasal yükümlülüklerin yerine getirilmesi;
+    • kullanıcının onayı olması halinde pazarlama iletişimi.
+
+    İşlenebilecek veriler:
+    ad-soyad, telefon, e-posta, adres, araç bilgileri, sigorta bilgileri, ödeme ve teknik veriler.
+
+    Veriler, hizmetlerin sağlanabilmesi için sigorta şirketlerine, BT yüklenicilerine ve diğer iş ortaklarına aktarılabilir.
+
     Kullanıcının hakları:
-    • verilere erişim sağlama;
+    • verilere erişim talep etme;
     • verileri düzeltme veya silme;
-    • işlemeyi kısıtlama;
-    • onayı geri çekme;
-    • PUODO'ya şikâyette bulunma.
-    Veri yöneticisi, poliçeyi düzenleyen sigorta şirketi veya SINEDIS Sp. z o.o. olabilir.
+    • veri işlemesini sınırlandırma;
+    • verilen onayı geri çekme;
+    • PUODO’ya şikâyette bulunma.
+
+    Veri sorumlusu, poliçeyi düzenleyen sigorta şirketi veya SINEDIS Sp. z o.o. olabilir.
+
     İletişim:
     SINEDIS Sp. z o.o.
     ul. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
     info@sinedis.pl
-    odo@sinedis.pl - veri koruma görevlisi
+    odo@sinedis.pl - veri koruma sorumlusu
+
     Politikanın tam sürümü:
     https://greencard.agency
+
     ________________________
-    Kişisel verilerin işlenmesini ve aktarılmasını kabul ediyor musunuz?
+
+    Kişisel verilerinizin işlenmesini ve aktarılmasını kabul ediyor musunuz?"
+
   consent_agree: "✅ Kabul et ve gönder"
   consent_decline: "❌ Reddet"
-  declined: "Verilerin aktarılmasını reddettiniz. Başvuru iptal edildi."
+  declined: "Verilerin aktarımını reddettiniz. Başvuru iptal edildi."
+
   validation_name: "En az 2 karakter girin."
-  validation_phone: "Telefon numarası hatalı. +48123456789 formatını kullanın."
-  validation_email: "E-mail hatalı."
 
-  validation_date: "Tarih hatalı. Kabul edilen formatlar: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. aa/gg/yyyy formatı yasaktır."
+  validation_phone: "Geçersiz telefon numarası. +48123456789 formatını kullanın."
 
-  validation_age_18: "Sigortalı en az 18 yaşını doldurmuş olmalıdır."
-  validation_insurance_start_not_past: "Sigorta başlangıç tarihi geçmişte olamaz."
+  validation_email: "Geçersiz e-posta adresi."
+
+  validation_date: "Geçersiz tarih. Kabul edilen formatlar: 16/06/1985, 16.06.1985, 16.06.85, 16-06-1985, 1985-06-16. mm/dd/yyyy formatına izin verilmez."
+
+  validation_age_18: "Sigorta ettiren kişi en az 18 yaşında olmalıdır."
+
+  validation_insurance_start_not_past: "Sigorta başlangıç tarihi geçmiş bir tarih olamaz."
+
   ask_vin_prefilled: "VIN numarası * (Kullan: {value})"
+
   ask_brand_model_prefilled: "Araç marka ve modeli * (Kullan: {value})"
+
   ask_manufacture_year_prefilled: "Araç üretim yılı * (Kullan: {value})"
+
   ask_fuel_type_prefilled: "Yakıt türü * (mevcut: {value})"
 
-  validation_passport: "Pasaport seri ve numarası hatalıdır (boşluksuz girin)."
-  validation_address: "Tam kayıt adresini belirtin."
-  validation_license_plate: "Plaka hatalı."
-  validation_vin: "VIN 17 karakter içermelidir."
-  validation_brand_model: "Marka ve modeli belirtin."
-  validation_year: "Geçerli üretim yılını belirtin."
-  validation_positive_integer: "Pozitif tam sayı girin."
-  validation_positive_number: "Pozitif sayı girin."
-  validation_docs: "Araç ruhsatının fotoğrafını veya PDF/belgesini gönderin."
+  validation_passport: "Geçersiz pasaport seri ve numarası (boşluksuz giriniz)."
+
+  validation_address: "Lütfen tam kayıt adresini girin."
+
+  validation_license_plate: "Geçersiz plaka numarası."
+
+  validation_vin: "VIN 17 karakterden oluşmalıdır."
+
+  validation_brand_model: "Lütfen araç marka ve modelini belirtin."
+
+  validation_year: "Lütfen geçerli bir üretim yılı girin."
+
+  validation_positive_integer: "Pozitif bir tam sayı girin."
+
+  validation_positive_number: "Pozitif bir sayı girin."
+
+  validation_docs: "Lütfen ruhsatın fotoğrafını veya PDF/belgesini gönderin."
 
 
 operator:
   request_received: "Talep alındı"
   operator_connected: "Operatör bağlandı"
   access_denied: "Erişim reddedildi"
-  no_tickets: "Talep yok"
-  taken: "Talep kabul edildi"
+  no_tickets: "Talep bulunmuyor"
+  taken: "Talep işleme alındı"
   closed: "Talep kapatıldı"
-  reply_sent: "Cevap gönderildi"
+  reply_sent: "Yanıt gönderildi"
+
 
 faq:
   title: "SSS kategorisini seçin"
+
   categories:
-    documents: "Düzenleme için belgeler"
-    payment: "Ödeme"
-    coverage: "Kapsam"
-    mistakes: "Dikkat edilecekler"
-    refund: "İade"
+    documents: "📄 Belgeler"
+    payment: "💳 Ödeme"
+    coverage: "🌍 Geçerlilik bölgesi"
+    validity: "📅 Geçerlilik süresi"
+    delivery: "📧 Poliçenin teslimi"
+    border: "🛂 Sınır geçişi"
+    accident: "🚗 Kaza ve sigorta olayı"
+    mistakes: "⚠️ Önemli bilgiler"
+    refund: "↩️ İade"
+    whatis: "ℹ️ Europolis nedir?"
+    nogreencard: "🟢 Green Card’dan farkı"
+    vehicles: "🚘 Araç türleri"
+    extension: "🔄 Poliçe uzatma"
+    legalentity: "🏢 Tüzel kişiler"
+    online: "📱 Online düzenleme"
+    database: "🔍 Poliçe kontrolü"
+    restrictions: "⛔ Kısıtlamalar"
+    support: "👨‍💼 Operatör ile iletişim"
+
   answers:
+
     documents: |
-      Poliçenin düzenlenmesi için şu bilgiler gereklidir: pasaport bilgileri, araç bilgileri ve sigorta geçerlilik tarihleri.
-      Bu nedenle şunları hazırlamanız gerekir:
-      - pasaport
-      - araç tescil belgesi
-      - aracın teknik bilgileri
-      - telefon numarası
-      - e-mail
+      Poliçe düzenlenmesi için aşağıdaki belgeler gereklidir:
+
+      • Araç sahibinin pasaportu veya kimlik belgesi;
+      • Araç ruhsatı;
+      • Araç plaka numarası;
+      • VIN numarası;
+      • İletişim telefonu;
+      • Poliçenin gönderileceği e-posta adresi;
+      • Sigorta başlangıç tarihi ve süresi.
+
+      Belgeler alındıktan sonra operatör bilgileri kontrol eder ve poliçeyi hazırlar.
+
     payment: |
-      Mevcut ödeme yöntemleri:
-      - Polonya kartına havale,
-      - telefon numarasına BLIK ödemesi,
-      - Polonya banka hesabına havale
-    coverage: "Kapsam bölgesi: A - Avusturya, B - Belçika, BG - Bulgaristan, CY - Kıbrıs, CZ - Çekya, D - Almanya, DK - Danimarka, E - İspanya, EST - Estonya, F - Fransa, FIN - Finlandiya, GR - Yunanistan, H - Macaristan, HR - Hırvatistan, I - İtalya, IRL - İrlanda, IS - İzlanda, L - Lüksemburg, LT - Litvanya, LV - Letonya, M - Malta, N - Norveç, NL - Hollanda, P - Portekiz, PL - Polonya, RO - Romanya, S - İsveç, SK - Slovakya, SLO - Slovenya, CH - İsviçre."
-    mistakes: "Göndermeden önce lütfen VIN, plaka ve sigorta süresini iki kez kontrol edin. Daha sonra düzeltme yapılamaz!"
-    refund: "Para iadesi yapılmaz."
+      Aşağıdaki ödeme yöntemleri kullanılabilir:
+
+      • Polonya banka hesabına havale;
+      • Polonya banka kartına transfer;
+      • Polonya telefon numarasına BLIK ödemesi.
+
+      Poliçe, ödemenin ulaştığı onaylandıktan sonra düzenlenir.
+
+    coverage: |
+      Poliçe, Avrupa Birliği ve Avrupa Ekonomik Alanı ülkelerinde geçerlidir.
+
+      Seyahatten önce sigorta sertifikanızda belirtilen ülke listesini mutlaka kontrol edin.
+
+    validity: |
+      Sigorta teminatı, poliçede belirtilen tarih ve saatten itibaren geçerli olur.
+
+      Sigorta gelecekteki bir tarih için önceden düzenlenebilir, ancak teminat başlangıcından en erken 7 gün önce yapılabilir.
+
+      Araç bilgileri sigorta şirketinden UFG sistemine birkaç saat ile bir gün arasında aktarıldığı için, poliçeyi sınır geçişinden en az birkaç saat önce düzenlemenizi tavsiye ederiz.
+
+      ☝️Lütfen dikkat edin! Tüm araç marka ve modelleri sigorta şirketinin veri tabanında bulunmamaktadır. Bazı araçlar BDT ülkeleri veya ABD pazarı için üretilmiştir ve AB’de yaygın değildir. Bu tür araçlar yalnızca hafta içi Varşova saatiyle 09:00–21:00 arasında ve cumartesi günleri 09:00–15:00 saatleri arasında sigortalanabilir.
+
+    delivery: |
+      Poliçe düzenlenip ödeme onaylandıktan sonra PDF formatında belirtilen e-posta adresine gönderilir.
+
+      Sertifikanın siyah-beyaz çıktı olarak yazdırılması tavsiye edilir.
+
+      E-posta ulaşmadıysa “Spam” klasörünü kontrol edin veya operatör ile iletişime geçin.
+
+    border: |
+      Sınır geçişi sırasında aşağıdakilerin yanınızda bulunması tavsiye edilir:
+
+      • Yazdırılmış poliçe;
+      • Araç belgeleri;
+      • Pasaport veya kimlik.
+
+      Geçişe izin verilmesi konusundaki nihai karar sınır görevlilerine aittir.
+
+    accident: |
+      Trafik kazası durumunda:
+
+      • Güvenliği sağlayın;
+      • Gerekirse polisi çağırın;
+      • Olayın koşullarını belgeleyin;
+      • Sigorta şirketine bildirim yapın
+      (https://www.warta.pl/pomoc-i-obsluga/zgloszenie-szkody/formularz-majatek/#/dla-ciebie/pojazd/informacje-o-zdarzeniu).
+
+      Resmî işlem yapılmadan kaza yerini terk etmeyin.
+
+    mistakes: |
+      Başvuruyu onaylamadan önce aşağıdakileri dikkatlice kontrol edin:
+
+      • VIN numarası;
+      • Plaka numarası;
+      • Araç türü;
+      • Sigorta tarihleri.
+
+      Hatalar, sınır geçişinin reddedilmesine veya hasar dosyasında sorun yaşanmasına neden olabilir.
+
+    refund: |
+      Sigorta poliçesi düzenlendikten sonra sigorta priminin iadesi genellikle mümkün değildir.
+
+      Bazı durumlarda iptal veya iade talepleri sigorta şirketi tarafından bireysel olarak değerlendirilir.
+
+    whatis: |
+      OC Graniczne, AB dışında kayıtlı araçlar için zorunlu mali sorumluluk sigortasıdır.
+
+      Poliçe, sertifikada belirtilen ülkelerde yasal olarak araç kullanmanıza olanak sağlar.
+
+        nogreencard: |
+      Green Card ve OC Graniczne farklı sigorta ürünleridir.
+
+      Green Card, aracın kayıtlı olduğu ülkede düzenlenir.
+
+      OC Graniczne ise geçerli bir Green Card bulunmadığında AB’ye giriş için kullanılır.
+
+    vehicles: |
+      Aşağıdaki araçlar için düzenleme mümkündür:
+
+      • Binek araçlar;
+      • Kamyonlar;
+      • Otobüsler;
+      • Römorklar;
+      • Motosikletler;
+      • Özel amaçlı araçlar.
+
+      Poliçe düzenlenebilmesi, aracın kayıtlı olduğu ülkeye ve sigorta şirketinin şartlarına bağlıdır.
+
+    extension: |
+      Teknik olarak poliçe uzatma işlemi yoktur.
+
+      Sadece yeni bir poliçe düzenlenebilir.
+
+    legalentity: |
+      Poliçe yalnızca gerçek kişi adına düzenlenebilir.
+
+      Kurumsal müşteriler için poliçe sürücü adına düzenlenmelidir.
+
+    online: |
+      Tüm işlem tamamen uzaktan gerçekleştirilir.
+
+      Belgeler online olarak kabul edilir ve hazır poliçe e-posta ile gönderilir.
+
+    database: |
+      Poliçe düzenlendikten sonra bilgiler sigorta veri tabanlarında hemen görünmeyebilir.
+
+      Bilgilerin güncellenmesi bazen 24 saate kadar sürebilir.
+
+      Poliçeyi şu siteden kontrol edebilirsiniz:
+      https://www.ufg.pl/
+
+    restrictions: |
+      Sınır sigortası yalnızca üçüncü şahıslara karşı mali sorumluluğu kapsar.
+
+      Kendi aracınızda oluşan hasarlar teminat kapsamında değildir.
+
+    support: |
+      Poliçenin düzenlenmesi, ödemesi veya geçerliliği ile ilgili sorularınız varsa Telegram veya WhatsApp üzerinden operatör ile iletişime geçin.
 
 coverage:
   text: |
-    OC graniczne (border insurance) kapsam haritası.
-    Seyahatten önce poliçenizdeki ülke kodunu kontrol edin.
+    OC graniczne (sınır sigortası) geçerlilik haritası.
+
+    Seyahatten önce poliçenizde belirtilen ülke kodlarını mutlaka kontrol edin.
+
     A - Avusturya, B - Belçika, BG - Bulgaristan, CY - Kıbrıs, CZ - Çekya, D - Almanya, DK - Danimarka, E - İspanya, EST - Estonya, F - Fransa, FIN - Finlandiya, GR - Yunanistan, H - Macaristan, HR - Hırvatistan, I - İtalya, IRL - İrlanda, IS - İzlanda, L - Lüksemburg, LT - Litvanya, LV - Letonya, M - Malta, N - Norveç, NL - Hollanda, P - Portekiz, PL - Polonya, RO - Romanya, S - İsveç, SK - Slovakya, SLO - Slovenya, CH - İsviçre.
 
 latest_deal:
   title_label: "TITLE"
-  policy_number_label: "Policy number"
-  policy_status_label: "Policy status"
+  policy_number_label: "Poliçe numarası"
+  policy_status_label: "Poliçe durumu"
   comments_label: "COMMENTS"
-  not_found: "No latest application was found."
-  unavailable: "Could not get your latest application. Please try again later."
-  delivery_prompt: "Poliçeyi nasıl almak istersiniz?"
-  delivery_email_button: "E-postaya gönder"
+
+  not_found: "Son başvuru bulunamadı."
+
+  unavailable: "Son başvuru alınamadı. Lütfen daha sonra tekrar deneyin."
+
+  delivery_prompt: "Poliçeyi size nasıl gönderelim?"
+
+  delivery_email_button: "E-posta ile gönder"
+
   delivery_chat_button: "Buraya gönder"
+
   delivery_request_sent: "Talep operatöre gönderildi."
+
   payment_instructions: |
-    Your application for car insurance for {license_plate} has been approved.
+    {license_plate} plakalı araç için sigorta başvurunuz onaylandı.
 
-    After payment, please send the payment confirmation.
+    Ödeme yaptıktan sonra lütfen ödeme dekontunu gönderin.
 
-    Payment options
+    Ödeme seçenekleri
 
-    BLIK to +48 664 914 738
-    Payment reference: za ubezpieczenie auto {license_plate}
-
-
-    Bank transfer in Poland:
-    Account holder: DZIANIS BARAVOI
-    Account number: 44 1020 1332 0000 1602 1435 6564
-    Bank: Powszechna Kasa Oszczędności Bank Polski SA
-    Payment reference: za ubezpieczenie auto {license_plate}
+    +48 664 914 738 numarasına BLIK
+    Ödeme açıklaması: za ubezpieczenie auto {license_plate}
 
 
-    International bank transfer:
-    Account holder: DZIANIS BARAVOI
-    Currency: PLN
+    Polonya içi banka havalesi:
+    Hesap sahibi: DZIANIS BARAVOI
+    Hesap numarası: 44 1020 1332 0000 1602 1435 6564
+    Banka: Powszechna Kasa Oszczędności Bank Polski SA
+    Ödeme açıklaması: za ubezpieczenie auto {license_plate}
+
+
+    Uluslararası banka havalesi:
+    Hesap sahibi: DZIANIS BARAVOI
+    Para birimi: PLN
     IBAN: PL44 1020 1332 0000 1602 1435 6564
     SWIFT/BIC: BPKOPLPW
-    Bank: Powszechna Kasa Oszczędności Bank Polski SA
-    Country: Polska
-    Address: ul. H. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
-    Payment reference: za ubezpieczenie auto {license_plate}
+    Banka: Powszechna Kasa Oszczędności Bank Polski SA
+    Ülke: Polska
+    Adres: ul. H. Dobrzańskiego Hubala 22D, 01-473 Warszawa, Polska
+    Ödeme açıklaması: za ubezpieczenie auto {license_plate}
 
 
-    Card transfer:
-    Card number: 4213 5239 3578 6679
-    Valid thru: 09/26
-    Cardholder: DZIANIS BARAVOI
-    Payment reference: za ubezpieczenie auto {license_plate}
+    Karta transfer:
+    Kart numarası: 4213 5239 3578 6679
+    Son kullanma tarihi: 09/26
+    Hesap sahibi: DZIANIS BARAVOI
+    Ödeme açıklaması: za ubezpieczenie auto {license_plate}
+
 payment_confirmation:
-  attach_prompt: "Paranın gönderildiğini gösteren ekran görüntüsünü veya bankadan PDF onayını ekleyin."
-  file_received: "Dosya alındı. Onayı operatöre göndermek mi yoksa başka bir dosya eklemek mi istersiniz?"
+  attach_prompt: "Lütfen ödeme ekran görüntüsünü veya bankadan alınan PDF ödeme onayını ekleyin."
+
+  file_received: "Dosya alındı. Onayı operatöre göndermek ister misiniz yoksa başka dosya mı ekleyeceksiniz?"
+
   send_button: "Onayı gönder"
+
   add_more_button: "Başka dosya ekle"
+
   sent: "Ödeme onayı operatöre gönderildi."
-  no_unpaid: "Ödenmemiş faturanız yok. “Son başvurum” düğmesine basabilirsiniz."
+
+  no_unpaid: "Ödenmemiş faturanız bulunmamaktadır. «Son başvurum» butonuna tıklayabilirsiniz."
+
 my_applications:
-  title: "Ваши последние заявки:"
-  empty: "У вас пока нет заявок, связанных с этим Telegram-аккаунтом. Если вы уже оформляли полис ранее, напишите оператору — мы свяжем вашу историю заявок."
-  unavailable: "Сейчас не удалось загрузить заявки. Попробуйте позже."
-  not_found: "Заявка не найдена или недоступна для этого Telegram-аккаунта."
-  policy_status_button: "Где мой полис?"
-  repeat_button: "Оформить снова"
-  open_button: "Открыть"
-  operator_button: "Связаться с оператором"
-  payment_button: "Подтвердить оплату"
-  policy_button: "Получить полис"
-  policy_not_found: "Полис пока не найден. Мы передали запрос оператору."
+  title: "Son başvurularınız:"
+
+  empty: "Bu Telegram hesabıyla bağlantılı henüz bir başvurunuz bulunmuyor. Daha önce poliçe düzenlediyseniz operatöre yazın — başvuru geçmişinizi hesabınıza bağlayacağız."
+
+  unavailable: "Başvurular şu anda yüklenemiyor. Lütfen daha sonra tekrar deneyin."
+
+  not_found: "Başvuru bulunamadı veya bu Telegram hesabı için erişilebilir değil."
+
+  policy_status_button: "Poliçem nerede?"
+
+  repeat_button: "Tekrar düzenle"
+
+  open_button: "Aç"
+
+  operator_button: "Operatör ile iletişime geç"
+
+  payment_button: "Ödemeyi onayla"
+
+  policy_button: "Poliçeyi al"
+
+  policy_not_found: "Poliçe henüz bulunamadı. Talebi operatöre ilettik."
+
 repeat_application:
   start_prompt: |
-    Оформление по предыдущей заявке
+    Önceki başvuruya göre yeni düzenleme
 
-    Авто: {vehicle_plate_masked}
-    Тип: {vehicle_type}
-    Страна регистрации: {registration_country}
+    Araç: {vehicle_plate_masked}
+    Tür: {vehicle_type}
+    Kayıt ülkesi: {registration_country}
 
-    Для нового полиса введите дату начала страховки в формате ДД.ММ.ГГГГ.
-  ask_start_date: "Введите новую дату начала страховки в формате ДД.ММ.ГГГГ."
-  invalid_start_date: "Введите корректную дату начала: не в прошлом и в формате ДД.ММ.ГГГГ."
-  ask_period: "Выберите срок страхования."
-  ask_docs: "Использовать документы из предыдущей заявки или загрузить новые?"
-  docs_reuse_button: "Да, использовать прежние"
-  docs_upload_new_button: "Нет, загрузить новые"
+    Yeni poliçe için sigorta başlangıç tarihini GG.AA.YYYY formatında girin.
+
+  ask_start_date: "Yeni sigorta başlangıç tarihini GG.AA.YYYY formatında girin."
+
+  invalid_start_date: "Geçerli bir başlangıç tarihi girin: geçmiş bir tarih olmamalı ve GG.AA.YYYY formatında olmalıdır."
+
+  ask_period: "Sigorta süresini seçin."
+
+  ask_docs: "Önceki başvurudaki belgeler kullanılsın mı yoksa yenileri mi yüklensin?"
+
+  docs_reuse_button: "Evet, önceki belgeleri kullan"
+
+  docs_upload_new_button: "Hayır, yeni belgeler yükle"
+
   preview: |
-    Проверьте новую заявку:
+    Yeni başvuruyu kontrol edin:
 
-    Тип: OC graniczne (border insurance)
-    Авто: {vehicle_plate_masked}
-    Дата начала: {new_start_date}
-    Срок: {new_period_days} дней
-    Документы: {docs_mode_title}
+    Tür: OC graniczne (sınır sigortası)
+    Araç: {vehicle_plate_masked}
+    Başlangıç tarihi: {new_start_date}
+    Süre: {new_period_days} gün
+    Belgeler: {docs_mode_title}
 
-    Стоимость предварительная. Окончательная цена подтверждается оператором после проверки данных.
-  confirm_button: "Подтвердить"
-  change_button: "Изменить"
-  cancel_button: "Отмена"
-  cancelled: "Повторное оформление отменено."
-  unavailable: "Повторное оформление сейчас недоступно. Попробуйте позже или свяжитесь с оператором."
+    Fiyat ön bilgidir. Nihai fiyat, veriler kontrol edildikten sonra operatör tarafından onaylanır.
+
+  confirm_button: "Onayla"
+
+  change_button: "Değiştir"
+
+  cancel_button: "İptal"
+
+  cancelled: "Yeniden düzenleme iptal edildi."
+
+  unavailable: "Yeniden düzenleme şu anda kullanılamıyor. Daha sonra tekrar deneyin veya operatör ile iletişime geçin."
+
   created: |
-    Новая заявка создана.
+    Yeni başvuru oluşturuldu.
 
-    Номер: {request_id}
-    Статус: {public_status}
+    Numara: {request_id}
+    Durum: {public_status}
 
-    Оператор проверит данные и сообщит следующий шаг.
+    Operatör bilgileri kontrol edecek ve sonraki adımı bildirecektir.
+
 policy_status:
-  unavailable: "Сейчас не удалось проверить статус полиса. Попробуйте позже."
-  check_later_button: "Проверить позже"
-  back_to_applications_button: "Мои заявки"
+  unavailable: "Poliçe durumu şu anda kontrol edilemiyor. Lütfen daha sonra tekrar deneyin."
+
+  check_later_button: "Daha sonra kontrol et"
+
+  back_to_applications_button: "Başvurularım"
