@@ -168,7 +168,9 @@ async def check_policy_status(callback: CallbackQuery) -> None:
             deal_id=int(deal_id),
             preferred_language=lang,
             client_name=callback.from_user.full_name,
+
             client_bot=client_bot,
+
         )
     except (RuntimeError, PolicyStatusError):
         await callback.message.answer(callback.bot.i18n.get_text(lang, "policy_status.unavailable"))
@@ -430,6 +432,7 @@ async def _create_operator_ticket(callback: CallbackQuery, card: dict, reason: s
             insurance_start_date=str(card.get("insurance_start_date") or ""),
             comment=f"{reason}; Bitrix deal {deal_id or '—'}",
             client_bot=client_bot,
+
         )
     )
     _service(callback.bot).log_action(

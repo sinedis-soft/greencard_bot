@@ -63,6 +63,7 @@ def run_sla_checks() -> dict:
                     "Reminder: please complete your application",
                     client_bot=t.client_bot,
                 )
+
             t.reminder_sent_at = now
             AnalyticsService().track("application_reminder_sent", request_id=t.request_id, telegram_user_id=t.telegram_user_id)
             reminded_clients += 1

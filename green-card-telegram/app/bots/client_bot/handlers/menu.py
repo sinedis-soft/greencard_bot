@@ -151,7 +151,9 @@ async def _create_policy_delivery_ticket(
                 f"Policy delivery request ({delivery_method}) "
                 f"for Bitrix deal {deal_id}."
             ),
+
             client_bot=client_bot,
+
         )
     )
     OperatorNotifierService().notify_new_ticket(
