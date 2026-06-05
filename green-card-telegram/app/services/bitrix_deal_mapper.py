@@ -47,7 +47,7 @@ def safe_deal_card(deal: dict[str, Any]) -> dict[str, Any]:
     return {
         "deal_id": _int_or_none(deal.get("ID")),
         "request_number": request_number,
-        "product_type": "Green Card",
+        "product_type": "OC graniczne (border insurance)",
         "vehicle_plate_masked": mask_plate(_clean(deal.get(LICENSE_PLATE_FIELD))),
         "insurance_start_date": _clean(deal.get(INSURANCE_START_FIELD)) or None,
         "insurance_period_days": _int_or_none(deal.get(INSURANCE_PERIOD_FIELD)),
@@ -70,7 +70,7 @@ def safe_deal_text(card: dict[str, Any], index: int | None = None) -> str:
     parts = [f"{prefix}{card.get('request_number') or 'Заявка'}"]
     parts.extend(
         [
-            f"Тип: {card.get('product_type') or 'Green Card'}",
+            f"Тип: {card.get('product_type') or 'OC graniczne (border insurance)'}",
             f"Авто: {card.get('vehicle_plate_masked') or '—'}",
             f"Дата начала: {card.get('insurance_start_date') or '—'}",
             f"Срок: {_period_text(card.get('insurance_period_days'))}",

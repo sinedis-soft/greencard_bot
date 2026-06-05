@@ -494,7 +494,7 @@ async def apply_command(message: Message, state: FSMContext, i18n: I18nService, 
         draft = reminder_service.create_application_draft(
             telegram_user_id=message.from_user.id,
             telegram_chat_id=message.chat.id,
-            product_type="green_card",
+            product_type="border_insurance",
             source_channel="telegram_bot",
             current_step="started",
             safe_context={"language": lang},

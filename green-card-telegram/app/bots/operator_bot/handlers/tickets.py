@@ -488,7 +488,7 @@ def _ticket_card_text(ticket: OperatorTicket, summary: dict, comments: list = No
         f"SLA: {_sla_text(ticket)}\n\n"
         f"Заявка: {summary.get('request_number') or ticket.request_id}\n"
         f"Сделка Bitrix: {ticket.bitrix_deal_id or '—'}\n"
-        f"Продукт: {summary.get('product_type') or 'Green Card'}\n"
+        f"Продукт: {summary.get('product_type') or 'OC graniczne (border insurance)'}\n"
         f"Авто: {summary.get('vehicle_plate_masked') or '—'}\n"
         f"Дата начала: {summary.get('insurance_start_date') or '—'}\n"
         f"Статус: {summary.get('public_status') or '—'}\n\n"

@@ -129,7 +129,7 @@ class PolicyStatusService:
                 client_name=client_name,
                 client_phone="",
                 preferred_language=preferred_language,
-                vehicle_type=str(card.get("product_type") or "Green Card"),
+                vehicle_type=str(card.get("product_type") or "OC graniczne (border insurance)"),
                 license_plate=str(card.get("vehicle_plate_masked") or ""),
                 vin="",
                 insurance_period_days=int(card.get("insurance_period_days") or 0),

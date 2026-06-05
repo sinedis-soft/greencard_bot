@@ -1,5 +1,5 @@
 currency: "PLN"
-disclaimer: "Estimated price. Final quote is calculated by operator."
+disclaimer: "Preliminary quotation"
 tariffs:
   car:
     "30": 157.5

@@ -1,4 +1,4 @@
-# Green Card Telegram MVP — пошаговый запуск для новичка
+# OC graniczne (border insurance) Telegram MVP — пошаговый запуск для новичка
 
 Ниже инструкция максимально простыми шагами: **что установить, как заполнить `.env`, как поднять локально, как проверить работу**, и отдельно — **как развернуть в продакшене на Ubuntu**, чтобы сервис стартовал после перезагрузки.
 
@@ -53,7 +53,7 @@ OPERATOR_IDS=123456789,987654321
 
 MINI_APP_URL=https://miniapp.example.com
 BITRIX24_WEBHOOK_URL=https://yourcompany.bitrix24.com/rest/1/your_webhook/
-DATABASE_URL=postgresql+psycopg://postgres:postgres@postgres:5432/green_card
+DATABASE_URL=postgresql+psycopg://postgres:postgres@postgres:5432/oc_graniczne
 REDIS_URL=redis://redis:6379/0
 
 ADMIN_API_TOKEN=super-secret-admin-token
@@ -323,7 +323,7 @@ docker compose exec backend python -c "from app.workers.reminder_worker import r
 Смотреть pending reminders:
 
 ```bash
-docker compose exec postgres psql -U postgres -d green_card -c "select id, reminder_type, status, scheduled_at, dedupe_key from reminder_tasks order by scheduled_at desc limit 20;"
+docker compose exec postgres psql -U postgres -d oc_graniczne -c "select id, reminder_type, status, scheduled_at, dedupe_key from reminder_tasks order by scheduled_at desc limit 20;"
 ```
 
 ---

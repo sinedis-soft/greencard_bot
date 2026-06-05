@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    app_name: str = "Green Card Telegram API"
+    app_name: str = "OC graniczne (border insurance) Telegram API"
     app_version: str = "0.1.0"
     bitrix24_webhook_url: str = "https://example.bitrix24.com/rest"
     default_currency: str = "USD"

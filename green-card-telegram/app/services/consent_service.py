@@ -13,13 +13,13 @@ CONSENTS_PATH = Path(__file__).resolve().parents[1] / "consents" / "consents.yam
 DEFAULT_CONSENTS = {
     "terms_of_service": {
         "version": "2026-06-01",
-        "ru": "Я принимаю условия сервиса Green Card Agency и подтверждаю корректность данных заявки.",
-        "en": "I accept the Green Card Agency terms of service and confirm that the application data is correct.",
+        "ru": "Я принимаю условия сервиса OC graniczne (border insurance) Agency и подтверждаю корректность данных заявки.",
+        "en": "I accept the OC graniczne (border insurance) Agency terms of service and confirm that the application data is correct.",
     },
     "privacy_policy": {
         "version": "2026-06-01",
-        "ru": "Я подтверждаю, что ознакомлен с политикой конфиденциальности Green Card Agency.",
-        "en": "I confirm that I have read the Green Card Agency privacy policy.",
+        "ru": "Я подтверждаю, что ознакомлен с политикой конфиденциальности OC graniczne (border insurance) Agency.",
+        "en": "I confirm that I have read the OC graniczne (border insurance) Agency privacy policy.",
     },
     "personal_data_processing": {
         "version": "2026-06-01",

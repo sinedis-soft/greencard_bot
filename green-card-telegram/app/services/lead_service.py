@@ -252,7 +252,7 @@ class LeadService:
         if request_id:
             payload[REQUEST_ID_FIELD] = request_id
         payload[SHOW_IN_TELEGRAM_FIELD] = "1"
-        payload[PRODUCT_TYPE_FIELD] = "Green Card"
+        payload[PRODUCT_TYPE_FIELD] = "OC graniczne (border insurance)"
 
         # Vehicle documents are Bitrix file fields. They are uploaded after deal creation
         # via BitrixFileService, so do not send textual Telegram/API metadata here.

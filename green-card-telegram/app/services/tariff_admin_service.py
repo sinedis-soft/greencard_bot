@@ -63,7 +63,7 @@ class TariffAdminService:
     def create_tariff(self, data: dict, admin_user_id: int | None = None) -> dict[str, Any]:
         with SessionLocal() as db:
             tariff = Tariff(
-                product_type=str(data.get("product_type") or "green_card"),
+                product_type=str(data.get("product_type") or "border_insurance"),
                 vehicle_type=str(data["vehicle_type"]),
                 insurance_period_days=int(data["insurance_period_days"]),
                 price=Decimal(str(data["price"])),
